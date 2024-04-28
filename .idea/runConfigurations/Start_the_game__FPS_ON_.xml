@@ -1,0 +1,16 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Start the game (FPS ON)" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="GameStart" />
+    <module name="Kenshins-Journey" />
+    <option name="PROGRAM_PARAMETERS" value="true" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value=".*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
