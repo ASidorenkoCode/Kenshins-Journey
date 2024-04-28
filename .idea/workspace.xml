@@ -4,14 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b91aae81-7ada-4dc7-9d93-d4383ba70810" name="Changes" comment="closes gameEngine, gameView and gameStart with some open issues">
-      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations/Start_the_game__FPS_ON_.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/game/logic/GameEngine.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/keyboardinputs/logic/KeyboardInputsIngame.java" afterDir="false" />
+    <list default="true" id="b91aae81-7ada-4dc7-9d93-d4383ba70810" name="Changes" comment="closes gameEngine, gameView and gameStart with some open issues (marked with TODO)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/logic/GameStart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameStart.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/logic/GameView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/UI/GameView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/UI/GameView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/UI/GameView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/logic/GameEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/logic/GameEngine.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,7 +91,7 @@
       <workItem from="1714329270267" duration="1147000" />
       <workItem from="1714330456548" duration="377000" />
       <workItem from="1714330865804" duration="65000" />
-      <workItem from="1714330944339" duration="7236000" />
+      <workItem from="1714330944339" duration="9005000" />
     </task>
     <task id="LOCAL-00001" summary="init commit">
       <option name="closed" value="true" />
@@ -121,7 +117,15 @@
       <option name="project" value="LOCAL" />
       <updated>1714330198222</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="closes gameEngine, gameView and gameStart with some open issues (marked with TODO)">
+      <option name="closed" value="true" />
+      <created>1714339825777</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1714339825777</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -132,6 +136,7 @@
     <MESSAGE value="init GameStart + GameView" />
     <MESSAGE value="merge request: redundant variable" />
     <MESSAGE value="closes gameEngine, gameView and gameStart with some open issues" />
-    <option name="LAST_COMMIT_MESSAGE" value="closes gameEngine, gameView and gameStart with some open issues" />
+    <MESSAGE value="closes gameEngine, gameView and gameStart with some open issues (marked with TODO)" />
+    <option name="LAST_COMMIT_MESSAGE" value="closes gameEngine, gameView and gameStart with some open issues (marked with TODO)" />
   </component>
 </project>

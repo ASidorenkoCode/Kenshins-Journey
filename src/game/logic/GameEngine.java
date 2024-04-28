@@ -33,41 +33,44 @@ public class GameEngine implements Runnable {
 
     @Override
     public void run() {
-
-        double timePerFrame = 1e9 / FPS_SET;
-        double timePerUpdate = 1e9 / UPS_SET;
+        final double timePerUpdate = 1e9 / UPS_SET;
+        final double timePerFrame = 1e9 / FPS_SET;
         long prevTime = System.nanoTime();
-        setLastCheck(System.currentTimeMillis());
-        double UpdateDelta = 0;
-        double FrameDelta = 0;
+        double updateAccumulator = 0;
+        double frameAccumulator = 0;
 
         while (true) {
             long currTime = System.nanoTime();
-            UpdateDelta += (currTime - prevTime) / timePerUpdate;
-            FrameDelta += (currTime - prevTime) / timePerFrame;
+            double elapsed = currTime - prevTime;
             prevTime = currTime;
+            updateAccumulator += elapsed;
+            frameAccumulator += elapsed;
 
-            if (UpdateDelta >= 1) {
+            while (updateAccumulator >= timePerUpdate) {
                 update();
                 setUpdates(getUpdates() + 1);
-                UpdateDelta--;
+                updateAccumulator -= timePerUpdate;
             }
 
-            if (FrameDelta >= 1) {
+            if (frameAccumulator >= timePerFrame) {
                 gameView.repaint();
                 setFrames(getFrames() + 1);
-                FrameDelta--;
+                frameAccumulator -= timePerFrame;
             }
 
             if (getSHOW_FPS_UPS() && System.currentTimeMillis() - getLastCheck() >= 1000) {
                 showFPS();
+                resetFPSandUPS();
             }
         }
     }
 
     private void showFPS() {
+        gameView.showFPS(getFrames(), getUpdates());
+    }
+
+    private void resetFPSandUPS() {
         setLastCheck(System.currentTimeMillis());
-        System.out.println("FPS: " + getFrames() + " | UPS: " + getUpdates());
         setFrames(0);
         setUpdates(0);
     }

@@ -62,4 +62,14 @@ public class GameView extends JPanel {
     public GameEngine getGameEngine() {
         return gameEngine;
     }
+
+    public void showFPS(int frames, int updates) {
+        String fpsUpsText = "Kenshins Journey | FPS: " + frames + " | UPS: " + updates;
+        setFrameTitle(fpsUpsText);
+    }
+
+    public void setFrameTitle(String fpsUpsText) {
+        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+        frame.setTitle(fpsUpsText);
+    }
 }
