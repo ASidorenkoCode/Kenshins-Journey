@@ -8,13 +8,14 @@ public class PlayerUI extends EntityUI {
     Player player;
 
 
-    PlayerUI(Player player) {
+    public PlayerUI(Player player, float tile_scale) {
         this.player = player;
-        SPRITE_PX_WIDTH = 64;
-        SPRITE_PX_HEIGHT = 32;
-        ENTITY_SPRITE_PATH = "kenshin_sprite.png";
-        SPRITE_Y_DIMENSION = 8;
+        SPRITE_PX_WIDTH = 96;
+        SPRITE_PX_HEIGHT = 64;
+        ENTITY_SPRITE_PATH = "kenshin/kenshin_sprites_black.png";
+        SPRITE_Y_DIMENSION = 13;
         SPRITE_X_DIMENSION = 8;
+        TILE_SCALE = tile_scale;
         loadAnimations();
     }
 
@@ -35,23 +36,24 @@ public class PlayerUI extends EntityUI {
             aniTick = 0;
             aniIndex++;
 
-            //TODO: GetSpriteAmount
-            if (aniIndex >= GetSpriteAmount(state)) {
+            //TODO: GetSpriteAmount, static for testing purposes
+           // if (aniIndex >= GetSpriteAmount(state)) {
+            if(aniIndex >= 8) {
                 aniIndex = 0;
             }
         }
     }
 
     @Override
-    void drawAnimations(Graphics g) {
+    public void drawAnimations(Graphics g) {
         updateAnimationTick();
 
         //TODO: Make animations dynamic
         g.drawImage(animations[0][aniIndex],
                 (int) player.getX(),
                 (int) player.getY(),
-                player.getWidth(),
-                player.getHeight(), null);
+                (int) (SPRITE_PX_WIDTH * TILE_SCALE),
+                (int) (SPRITE_PX_HEIGHT * TILE_SCALE), null);
     }
 
 

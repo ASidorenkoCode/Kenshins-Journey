@@ -1,7 +1,11 @@
 package entities.ui;
 
+import spriteControl.SpriteManager;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
+
+
 
 abstract public class EntityUI {
     protected BufferedImage[][] animations;
@@ -14,12 +18,14 @@ abstract public class EntityUI {
     protected int SPRITE_Y_DIMENSION;
     protected int SPRITE_X_DIMENSION;
 
+    protected float TILE_SCALE;
+
 
     abstract void drawAttackBox();
     abstract void drawHitBox();
     protected void loadAnimations() {
         //TODO: Implement GetSpriteAtlas
-        BufferedImage img = LoadSave.GetSpriteAtlas(ENTITY_SPRITE_PATH);
+        BufferedImage img = SpriteManager.GetSpriteAtlas(ENTITY_SPRITE_PATH);
         animations = new BufferedImage[SPRITE_Y_DIMENSION][SPRITE_X_DIMENSION];
         for (int j = 0; j < animations.length; j++)
             for (int i = 0; i < animations[j].length; i++)

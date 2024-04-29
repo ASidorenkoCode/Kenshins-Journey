@@ -1,5 +1,7 @@
 package game.UI;
 
+import entities.logic.Player;
+import entities.ui.PlayerUI;
 import game.controller.GameController;
 import keyboardinputs.logic.KeyboardInputsIngame;
 
@@ -9,6 +11,8 @@ import java.awt.*;
 public class GameView extends JPanel {
 
     private GameController gameController;
+
+    private PlayerUI playerUI;
 
     private final static int TILES_DEFAULT_SIZE = 32;
     private final static float TILE_SCALE = 2f;
@@ -24,6 +28,7 @@ public class GameView extends JPanel {
         setFocusable(true);
         requestFocusInWindow();
         addKeyListener(new KeyboardInputsIngame(this));
+        playerUI = new PlayerUI(new Player(200,200), TILE_SCALE);
     }
 
     public void gameWindow() {
@@ -45,6 +50,7 @@ public class GameView extends JPanel {
 
     public void render(Graphics g) {
         //TODO: Implement rendering
+        playerUI.drawAnimations(g);
     }
 
     public void calculateScreenCenter(JFrame frame) {
