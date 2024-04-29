@@ -1,99 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="AutoImportSettings">
-    <option name="autoReloadType" value="SELECTIVE" />
-  </component>
   <component name="ChangeListManager">
-    <list default="true" id="b91aae81-7ada-4dc7-9d93-d4383ba70810" name="Changes" comment="created blueprints for abstract Entity and EntityUI">
-      <change afterPath="$PROJECT_DIR$/res/kenshin_sprites.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Kenshins-Journey.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Kenshins-Journey.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/ui/EntityUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/ui/EntityUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/ui/PlayerUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/ui/PlayerUI.java" afterDir="false" />
-    </list>
+    <list default="true" id="b91aae81-7ada-4dc7-9d93-d4383ba70810" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Class" />
-      </list>
-    </option>
-  </component>
-  <component name="Git.Rebase.Settings">
-    <option name="NEW_BASE" value="origin/master" />
-  </component>
-  <component name="Git.Settings">
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="GameView-+-GameStart" />
-      </map>
-    </option>
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="KubernetesApiProvider">{
-  &quot;isMigrated&quot;: true
-}</component>
-  <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 8
-}</component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 8
+}]]></component>
   <component name="ProjectId" id="2fjzRbdowOQYYYzpqX1AHEGr1W0" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
-    <ConfirmationsSetting value="2" id="Add" />
-  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.GameStart.executor": "Run",
-    "Application.Start the game (FPS OFF).executor": "Run",
-    "Application.Start the game (FPS ON).executor": "Run",
-    "Application.Start the game.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "4-entity-+-player-+-enemies-each-enemy-receives-a-separate-class-gamelogi…ui-ui",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/hendriksteen/StudiumDHSH/Workspaces/Programmierung2/Kenshins-Journey/res",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
-    "show.migrate.to.gradle.popup": "false",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/res" />
-    </key>
-  </component>
-  <component name="RunManager" selected="Application.Start the game (FPS ON)">
-    <configuration name="Start the game (FPS OFF)" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="GameStart" />
-      <module name="Kenshins-Journey" />
-      <option name="PROGRAM_PARAMETERS" value="false" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <list>
-      <item itemvalue="Application.Start the game (FPS ON)" />
-      <item itemvalue="Application.Start the game (FPS OFF)" />
-    </list>
-  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="jdk-21.0.1-openjdk-21.0.1-f644763e9732-2f79fb23" />
+        <option value="jdk-21.0.1-openjdk-21.0.1-f644763e9732-f98dd351" />
       </set>
     </attachedChunks>
   </component>
@@ -105,75 +40,11 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1714329269192</updated>
-      <workItem from="1714329270267" duration="1147000" />
-      <workItem from="1714330456548" duration="377000" />
-      <workItem from="1714330865804" duration="65000" />
-      <workItem from="1714330944339" duration="9005000" />
-      <workItem from="1714369722993" duration="732000" />
-      <workItem from="1714373877692" duration="1550000" />
+      <workItem from="1714329270267" duration="1000" />
     </task>
-    <task id="LOCAL-00001" summary="init commit">
-      <option name="closed" value="true" />
-      <created>1714329377980</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1714329377980</updated>
-    </task>
-    <task id="LOCAL-00002" summary="init GameStart + GameView">
-      <option name="closed" value="true" />
-      <created>1714329781389</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1714329781389</updated>
-    </task>
-    <task id="LOCAL-00003" summary="merge request: redundant variable">
-      <option name="closed" value="true" />
-      <created>1714330198222</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1714330198222</updated>
-    </task>
-    <task id="LOCAL-00004" summary="closes gameEngine, gameView and gameStart with some open issues (marked with TODO)">
-      <option name="closed" value="true" />
-      <created>1714339825777</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1714339825777</updated>
-    </task>
-    <task id="LOCAL-00005" summary="init Entity and EntityUI">
-      <option name="closed" value="true" />
-      <created>1714369853865</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1714369853865</updated>
-    </task>
-    <task id="LOCAL-00006" summary="created blueprints for abstract Entity and EntityUI">
-      <option name="closed" value="true" />
-      <created>1714370391495</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1714370391495</updated>
-    </task>
-    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="init commit" />
-    <MESSAGE value="init GameStart + GameView" />
-    <MESSAGE value="merge request: redundant variable" />
-    <MESSAGE value="closes gameEngine, gameView and gameStart with some open issues" />
-    <MESSAGE value="closes gameEngine, gameView and gameStart with some open issues (marked with TODO)" />
-    <MESSAGE value="init Entity and EntityUI" />
-    <MESSAGE value="created blueprints for abstract Entity and EntityUI" />
-    <option name="LAST_COMMIT_MESSAGE" value="created blueprints for abstract Entity and EntityUI" />
   </component>
 </project>
