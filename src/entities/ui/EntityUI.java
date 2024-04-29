@@ -6,7 +6,6 @@ import java.awt.image.BufferedImage;
 abstract public class EntityUI {
     protected BufferedImage[][] animations;
     protected int aniTick;
-<<<<<<< HEAD
     protected int aniIndex;
     protected final static int ANI_SPEED = 25;
     protected int SPRITE_PX_WIDTH;
@@ -30,14 +29,6 @@ abstract public class EntityUI {
                         SPRITE_PX_WIDTH,
                         SPRITE_PX_HEIGHT);
     };
-=======
-
-    protected int aniIndex;
-    protected final static int ANI_SPEED = 25;
-    abstract void drawAttackBox();
-    abstract void drawHitBox();
-    abstract void loadAnimations();
->>>>>>> origin/4-entity-+-player-+-enemies-each-enemy-receives-a-separate-class-gamelogic-+-entityui-ui
     abstract void drawAnimations(Graphics g);
     abstract void drawHealthBar();
 }

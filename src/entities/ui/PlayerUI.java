@@ -8,7 +8,6 @@ public class PlayerUI extends EntityUI {
     Player player;
 
 
-<<<<<<< HEAD
     PlayerUI(Player player) {
         this.player = player;
         SPRITE_PX_WIDTH = 64;
@@ -17,15 +16,6 @@ public class PlayerUI extends EntityUI {
         SPRITE_Y_DIMENSION = 8;
         SPRITE_X_DIMENSION = 8;
         loadAnimations();
-
-=======
-    public final static int SPRITE_PX_WIDTH = 64;
-    public final static int SPRITE_PX_HEIGHT = 32;
-    public final static String PlAYER_SPRITE_PATH = "";
-
-    PlayerUI(Player player) {
-        this.player = player;
->>>>>>> origin/4-entity-+-player-+-enemies-each-enemy-receives-a-separate-class-gamelogic-+-entityui-ui
     }
 
 
@@ -38,25 +28,6 @@ public class PlayerUI extends EntityUI {
     void drawHitBox() {
 
     }
-
-<<<<<<< HEAD
-=======
-    @Override
-    void loadAnimations() {
-        //TODO: Implement GetSpriteAtlas
-        BufferedImage img = LoadSave.GetSpriteAtlas(PlAYER_SPRITE_PATH);
-        animations = new BufferedImage[7][8];
-        for (int j = 0; j < animations.length; j++)
-            for (int i = 0; i < animations[j].length; i++)
-                animations[j][i] = img.getSubimage(
-                        i * SPRITE_PX_WIDTH,
-                        j * SPRITE_PX_HEIGHT,
-                        SPRITE_PX_WIDTH,
-                        SPRITE_PX_HEIGHT);
-
-    }
-
->>>>>>> origin/4-entity-+-player-+-enemies-each-enemy-receives-a-separate-class-gamelogic-+-entityui-ui
 
     private void updateAnimationTick() {
         aniTick++;
