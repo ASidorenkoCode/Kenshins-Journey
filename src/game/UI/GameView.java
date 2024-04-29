@@ -1,6 +1,6 @@
 package game.UI;
 
-import game.logic.GameEngine;
+import game.controller.GameController;
 import keyboardinputs.logic.KeyboardInputsIngame;
 
 import javax.swing.*;
@@ -8,7 +8,7 @@ import java.awt.*;
 
 public class GameView extends JPanel {
 
-    private GameEngine gameEngine;
+    private GameController gameController;
 
     private final static int TILES_DEFAULT_SIZE = 32;
     private final static float TILE_SCALE = 2f;
@@ -18,8 +18,8 @@ public class GameView extends JPanel {
     private final static int GAME_HEIGHT = (int) (TILES_DEFAULT_SIZE * TILE_SCALE) * TILES_IN_HEIGHT;
 
 
-    public GameView(GameEngine gameEngine) {
-        this.gameEngine = gameEngine;
+    public GameView(GameController gameController) {
+        this.gameController = gameController;
         setPreferredSize(new Dimension(GAME_WIDTH, GAME_HEIGHT));
         setFocusable(true);
         requestFocusInWindow();
@@ -40,8 +40,7 @@ public class GameView extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        GameEngine gameEngine = getGameEngine();
-        if (gameEngine != null) render(g);
+        if (gameController != null) render(g);
     }
 
     public void render(Graphics g) {
@@ -59,11 +58,7 @@ public class GameView extends JPanel {
         frame.setLocation(x, y);
     }
 
-    public GameEngine getGameEngine() {
-        return gameEngine;
-    }
-
-    public void showFPS(int frames, int updates) {
+    public void showFPS_UPS(int frames, int updates) {
         String fpsUpsText = "Kenshins Journey | FPS: " + frames + " | UPS: " + updates;
         setFrameTitle(fpsUpsText);
     }

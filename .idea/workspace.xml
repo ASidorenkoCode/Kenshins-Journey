@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b91aae81-7ada-4dc7-9d93-d4383ba70810" name="Changes" comment="closes gameEngine, gameView and gameStart with some open issues (marked with TODO)">
+    <list default="true" id="b91aae81-7ada-4dc7-9d93-d4383ba70810" name="Changes" comment="updated gameEngine run method, added run config FPS on / off in Game title">
+      <change afterPath="$PROJECT_DIR$/src/game/controller/GameController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GameStart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameStart.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/UI/GameView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/UI/GameView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/logic/GameEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/logic/GameEngine.java" afterDir="false" />
     </list>
@@ -40,25 +42,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.GameStart.executor": "Run",
-    "Application.Start the game (FPS OFF).executor": "Run",
-    "Application.Start the game (FPS ON).executor": "Run",
-    "Application.Start the game.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "GameView-+-GameStart",
-    "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.GameStart.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Start the game (FPS OFF).executor&quot;: &quot;Run&quot;,
+    &quot;Application.Start the game (FPS ON).executor&quot;: &quot;Run&quot;,
+    &quot;Application.Start the game.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;GameView-+-GameStart&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Application.Start the game (FPS ON)">
     <configuration name="Start the game (FPS OFF)" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="GameStart" />
@@ -91,7 +93,8 @@
       <workItem from="1714329270267" duration="1147000" />
       <workItem from="1714330456548" duration="377000" />
       <workItem from="1714330865804" duration="65000" />
-      <workItem from="1714330944339" duration="9005000" />
+      <workItem from="1714330944339" duration="9511000" />
+      <workItem from="1714370728946" duration="2008000" />
     </task>
     <task id="LOCAL-00001" summary="init commit">
       <option name="closed" value="true" />
@@ -125,7 +128,15 @@
       <option name="project" value="LOCAL" />
       <updated>1714339825777</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="updated gameEngine run method, added run config FPS on / off in Game title">
+      <option name="closed" value="true" />
+      <created>1714341561472</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1714341561472</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -137,6 +148,7 @@
     <MESSAGE value="merge request: redundant variable" />
     <MESSAGE value="closes gameEngine, gameView and gameStart with some open issues" />
     <MESSAGE value="closes gameEngine, gameView and gameStart with some open issues (marked with TODO)" />
-    <option name="LAST_COMMIT_MESSAGE" value="closes gameEngine, gameView and gameStart with some open issues (marked with TODO)" />
+    <MESSAGE value="updated gameEngine run method, added run config FPS on / off in Game title" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated gameEngine run method, added run config FPS on / off in Game title" />
   </component>
 </project>

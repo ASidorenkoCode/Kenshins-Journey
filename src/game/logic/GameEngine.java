@@ -1,12 +1,11 @@
 package game.logic;
 
-import game.UI.GameView;
-
+import game.controller.GameController;
 
 public class GameEngine implements Runnable {
 
     private Thread gameThread;
-    private GameView gameView;
+    private GameController gameController;
     private final int FPS_SET = 120;
     private final int UPS_SET = 200;
     private volatile boolean SHOW_FPS_UPS;
@@ -15,18 +14,16 @@ public class GameEngine implements Runnable {
     private int updates = 0;
 
 
-    public GameEngine(boolean showFPS_UPS) {
-        gameView = new GameView(this);
-        gameView.gameWindow();
+    public GameEngine(boolean showFPS_UPS, GameController gameController) {
         this.SHOW_FPS_UPS = showFPS_UPS;
-        startGameLoop();
+        this.gameController = gameController;
     }
 
     private void initClasses() {
         // TODO: init all necessary Classes for the game (ex. AudioOptions, AudioPlayer, Menu, Playing, GameOptions)
     }
 
-    private void startGameLoop() {
+    public void startGameLoop() {
         gameThread = new Thread(this);
         gameThread.start();
     }
@@ -53,20 +50,16 @@ public class GameEngine implements Runnable {
             }
 
             if (frameAccumulator >= timePerFrame) {
-                gameView.repaint();
+                gameController.callRepaint();
                 setFrames(getFrames() + 1);
                 frameAccumulator -= timePerFrame;
             }
 
             if (getSHOW_FPS_UPS() && System.currentTimeMillis() - getLastCheck() >= 1000) {
-                showFPS();
+                gameController.showFPS_UPS();
                 resetFPSandUPS();
             }
         }
-    }
-
-    private void showFPS() {
-        gameView.showFPS(getFrames(), getUpdates());
     }
 
     private void resetFPSandUPS() {
