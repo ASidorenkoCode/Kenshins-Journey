@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b91aae81-7ada-4dc7-9d93-d4383ba70810" name="Changes" comment="closes gameEngine, gameView and gameStart with some open issues (marked with TODO)">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="b91aae81-7ada-4dc7-9d93-d4383ba70810" name="Changes" comment="init Entity and EntityUI">
+      <change beforePath="$PROJECT_DIR$/src/entities/logic/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/logic/Entity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/ui/EntityUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/ui/EntityUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,7 +89,7 @@
       <workItem from="1714330456548" duration="377000" />
       <workItem from="1714330865804" duration="65000" />
       <workItem from="1714330944339" duration="9005000" />
-      <workItem from="1714369722993" duration="82000" />
+      <workItem from="1714369722993" duration="440000" />
     </task>
     <task id="LOCAL-00001" summary="init commit">
       <option name="closed" value="true" />
@@ -123,7 +123,15 @@
       <option name="project" value="LOCAL" />
       <updated>1714339825777</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="init Entity and EntityUI">
+      <option name="closed" value="true" />
+      <created>1714369853865</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1714369853865</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -135,6 +143,7 @@
     <MESSAGE value="merge request: redundant variable" />
     <MESSAGE value="closes gameEngine, gameView and gameStart with some open issues" />
     <MESSAGE value="closes gameEngine, gameView and gameStart with some open issues (marked with TODO)" />
-    <option name="LAST_COMMIT_MESSAGE" value="closes gameEngine, gameView and gameStart with some open issues (marked with TODO)" />
+    <MESSAGE value="init Entity and EntityUI" />
+    <option name="LAST_COMMIT_MESSAGE" value="init Entity and EntityUI" />
   </component>
 </project>
