@@ -4,13 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b91aae81-7ada-4dc7-9d93-d4383ba70810" name="Changes" comment="implement last and current animation">
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Start_the_game__FPS_ON_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Start_the_game__FPS_ON_.xml" afterDir="false" />
+    <list default="true" id="b91aae81-7ada-4dc7-9d93-d4383ba70810" name="Changes" comment="added DEBUG ON and OFF">
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Start_the_game__DEBUG_ON_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Start_the_game__DEBUG_ON_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GameStart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameStart.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/controller/EntityController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/controller/EntityController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/ui/PlayerUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/ui/PlayerUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/controller/GameController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,6 +40,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.Start the game (DEBUG ON).executor": "Run",
     "Application.Start the game (FPS OFF).executor": "Run",
     "Application.Start the game (FPS ON).executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
@@ -65,11 +62,11 @@
       <recent name="$PROJECT_DIR$/res" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Start the game (DEBUG ON)">
+  <component name="RunManager" selected="Application.Start the game (DEBUG OFF)">
     <configuration name="Start the game (DEBUG OFF)" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="GameStart" />
       <module name="Kenshins-Journey" />
-      <option name="PROGRAM_PARAMETERS" value="false, false" />
+      <option name="PROGRAM_PARAMETERS" value="false false" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value=".*" />
@@ -175,7 +172,15 @@
       <option name="project" value="LOCAL" />
       <updated>1714486380512</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="added DEBUG ON and OFF">
+      <option name="closed" value="true" />
+      <created>1714492526029</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1714492526029</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -191,6 +196,7 @@
     <MESSAGE value="player left and right movement" />
     <MESSAGE value="improved switch with switch expression" />
     <MESSAGE value="implement last and current animation" />
-    <option name="LAST_COMMIT_MESSAGE" value="implement last and current animation" />
+    <MESSAGE value="added DEBUG ON and OFF" />
+    <option name="LAST_COMMIT_MESSAGE" value="added DEBUG ON and OFF" />
   </component>
 </project>
