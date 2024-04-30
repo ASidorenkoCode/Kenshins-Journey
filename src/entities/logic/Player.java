@@ -4,11 +4,14 @@ import entities.animations.PlayerAnimations;
 import entities.ui.PlayerUI;
 
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 
 public class Player extends Entity {
 
-    private boolean left, right;
-    private Rectangle hitbox;
+    private boolean left, right, jump, inAir;
+
+    private float airMovement = -5f;
+    private Rectangle2D.Float hitbox;
     private PlayerAnimations currentAnimation;
 
     public Player(float x, float y) {
@@ -16,7 +19,7 @@ public class Player extends Entity {
         left = false;
         currentAnimation = PlayerAnimations.IDLE;
         //TODO: variables for values
-        hitbox = new Rectangle((int) x +64 , (int) (y + 16 * 2f),96 -64,96 - 48);
+        hitbox = new Rectangle2D.Float( x + 32 * 2f,  y + 16 * 2f,96 -64,96 - 48);
     }
 
 
@@ -39,15 +42,38 @@ public class Player extends Entity {
     }
     @Override
     public void update() {
+
         if(right && !left) {
-            x++;
-            hitbox.x++;
+            updateXPos(1);
         }
         else if(left && !right) {
-            x--;
-            hitbox.x--;
+            updateXPos(-1);
+        }
+        else if (inAir) {
+            updateYPos(airMovement);
+            //TODO Check if hit bottom
+            airMovement += 0.1f;
+
+
+            if(airMovement >= 0) updateAnimation(PlayerAnimations.FALL);
+
+
+            //Placeholder if for stopping animation
+            if (y > 200) {
+                inAir = false;
+            }
         }
         else updateAnimation(PlayerAnimations.IDLE);
+    }
+
+    private void updateXPos(float by_value) {
+        x += by_value;
+        hitbox.x += by_value;
+    }
+
+    private void updateYPos(float by_value) {
+        y += by_value;
+        hitbox.y += by_value;
     }
 
     public void updateAnimation(PlayerAnimations animation) {
@@ -70,6 +96,13 @@ public class Player extends Entity {
         if(left && right) updateAnimation(PlayerAnimations.IDLE);
     }
 
+    public void jump() {
+        if (!inAir) {
+            inAir = true;
+            airMovement = -5f;
+            updateAnimation(PlayerAnimations.JUMP);
+        }
+    }
     public PlayerAnimations getCurrentPlayerAnimation() {
         return currentAnimation;
     }
@@ -80,7 +113,7 @@ public class Player extends Entity {
         return right;
     }
 
-    public Rectangle getHitbox() {
+    public Rectangle2D.Float getHitbox() {
         return hitbox;
     }
 

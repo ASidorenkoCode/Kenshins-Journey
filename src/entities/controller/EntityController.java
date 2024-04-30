@@ -29,6 +29,8 @@ public class EntityController {
             case KeyEvent.VK_D:
                 player.setRight(true);
                 break;
+            case KeyEvent.VK_SPACE:
+                player.jump();
         }
     }
 

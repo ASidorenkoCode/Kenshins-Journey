@@ -3,6 +3,7 @@ package entities.ui;
 import entities.logic.Player;
 
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 
 public class PlayerUI extends EntityUI {
     Player player;
@@ -32,8 +33,8 @@ public class PlayerUI extends EntityUI {
     @Override
     void drawHitBox(Graphics g) {
         if (showHitBox) {
-            Rectangle hitbox = player.getHitbox();
-            g.drawRect(hitbox.x, hitbox.y, (int) (hitbox.width * TILE_SCALE), (int) (hitbox.height * TILE_SCALE));
+            Rectangle2D.Float hitbox = player.getHitbox();
+            g.drawRect((int) hitbox.x, (int) hitbox.y, (int) (hitbox.width * TILE_SCALE), (int) (hitbox.height * TILE_SCALE));
         }
     }
 
@@ -57,7 +58,6 @@ public class PlayerUI extends EntityUI {
     private void resetAnimationTick() {
         aniIndex = 0;
         aniTick = 0;
-        player.updateAnimation(player.getCurrentPlayerAnimation());
     }
 
     @Override
