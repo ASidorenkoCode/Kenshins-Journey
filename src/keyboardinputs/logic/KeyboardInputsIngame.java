@@ -19,11 +19,11 @@ public class KeyboardInputsIngame implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        gameView.handleUserInput(e);
+        gameView.handleUserInputKeyPressed(e);
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-
+        gameView.handleUserInputKeyReleased(e);
     }
 }

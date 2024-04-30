@@ -1,8 +1,6 @@
 package game.UI;
 
 import entities.controller.EntityController;
-import entities.logic.Player;
-import entities.ui.PlayerUI;
 import game.controller.GameController;
 import keyboardinputs.logic.KeyboardInputsIngame;
 
@@ -75,7 +73,11 @@ public class GameView extends JPanel {
         frame.setTitle(fpsUpsText);
     }
 
-    public void handleUserInput(KeyEvent e) {
-        entityController.handleUserInput(e);
+    public void handleUserInputKeyPressed(KeyEvent e) {
+        entityController.handleUserInputKeyPressed(e);
+    }
+
+    public void handleUserInputKeyReleased(KeyEvent e) {
+        entityController.handleUserInputKeyReleased(e);
     }
 }

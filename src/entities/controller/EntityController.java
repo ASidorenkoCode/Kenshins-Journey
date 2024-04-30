@@ -21,8 +21,26 @@ public class EntityController {
         player.update();
     }
 
-    public void handleUserInput(KeyEvent e) {
-        player.setLeft(true);
+    public void handleUserInputKeyPressed(KeyEvent e) {
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_A:
+                player.setLeft(true);
+                break;
+            case KeyEvent.VK_D:
+                player.setRight(true);
+                break;
+        }
+    }
+
+    public void handleUserInputKeyReleased(KeyEvent e) {
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_A:
+                player.setLeft(false);
+                break;
+            case KeyEvent.VK_D:
+                player.setRight(false);
+                break;
+        }
     }
 
     public void drawEntities(Graphics g) {

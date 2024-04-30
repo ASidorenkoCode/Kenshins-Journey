@@ -4,12 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b91aae81-7ada-4dc7-9d93-d4383ba70810" name="Changes" comment="add res folder to git">
-      <change afterPath="$PROJECT_DIR$/src/entities/controller/EntityController.java" afterDir="false" />
+    <list default="true" id="b91aae81-7ada-4dc7-9d93-d4383ba70810" name="Changes" comment="init EntityController">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/controller/EntityController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/controller/EntityController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/logic/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/logic/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/UI/GameView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/UI/GameView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/controller/GameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/logic/GameEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/logic/GameEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/keyboardinputs/logic/KeyboardInputsIngame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/keyboardinputs/logic/KeyboardInputsIngame.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,7 +74,7 @@
       <option name="presentableId" value="Default" />
       <updated>1714329269192</updated>
       <workItem from="1714329270267" duration="1000" />
-      <workItem from="1714454641245" duration="3556000" />
+      <workItem from="1714454641245" duration="4864000" />
     </task>
     <task id="LOCAL-00001" summary="constants for entityUI and playerUI">
       <option name="closed" value="true" />
@@ -108,7 +108,15 @@
       <option name="project" value="LOCAL" />
       <updated>1714458172456</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="init EntityController">
+      <option name="closed" value="true" />
+      <created>1714459458754</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1714459458754</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -119,6 +127,7 @@
     <MESSAGE value="player is shown on screen" />
     <MESSAGE value="started with connection between input and player logic" />
     <MESSAGE value="add res folder to git" />
-    <option name="LAST_COMMIT_MESSAGE" value="add res folder to git" />
+    <MESSAGE value="init EntityController" />
+    <option name="LAST_COMMIT_MESSAGE" value="init EntityController" />
   </component>
 </project>
