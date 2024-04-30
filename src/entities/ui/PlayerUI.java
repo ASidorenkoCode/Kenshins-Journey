@@ -6,9 +6,11 @@ import java.awt.*;
 
 public class PlayerUI extends EntityUI {
     Player player;
+    boolean showHitBox;
 
-    public PlayerUI(Player player, float tile_scale) {
+    public PlayerUI(Player player, float tile_scale, boolean showHitBox) {
         this.player = player;
+        this.showHitBox = showHitBox;
         SPRITE_PX_WIDTH = 96;
         SPRITE_PX_HEIGHT = 96;
         ENTITY_SPRITE_PATH_RIGHT = "kenshin/kenshin_sprites_black_right.png";
@@ -29,8 +31,10 @@ public class PlayerUI extends EntityUI {
 
     @Override
     void drawHitBox(Graphics g) {
-        Rectangle hitbox = player.getHitbox();
-        g.drawRect(hitbox.x, hitbox.y, (int) (hitbox.width * TILE_SCALE), (int) (hitbox.height * TILE_SCALE));
+        if (showHitBox) {
+            Rectangle hitbox = player.getHitbox();
+            g.drawRect(hitbox.x, hitbox.y, (int) (hitbox.width * TILE_SCALE), (int) (hitbox.height * TILE_SCALE));
+        }
     }
 
     private void updateAnimationTick() {

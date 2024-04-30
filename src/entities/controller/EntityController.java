@@ -11,10 +11,10 @@ public class EntityController {
     private PlayerUI playerUI;
     private Player player;
 
-    public EntityController() {
+    public EntityController(boolean showHitBox) {
         player = new Player(200,200);
         //TODO: Improve TileScale
-        playerUI = new PlayerUI(player, 2f);
+        playerUI = new PlayerUI(player, 2f, showHitBox);
     }
 
     public void update() {

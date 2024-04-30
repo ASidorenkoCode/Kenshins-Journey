@@ -15,8 +15,8 @@ public class GameController {
 
     private EntityController entityController;
 
-    public GameController(boolean showFPS_UPS) {
-        entityController = new EntityController();
+    public GameController(boolean showFPS_UPS, boolean showHitBox) {
+        entityController = new EntityController(showHitBox);
         gameEngine = new GameEngine(showFPS_UPS, this, entityController);
         gameView = new GameView(this, entityController);
         gameView.gameWindow();

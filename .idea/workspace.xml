@@ -5,9 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b91aae81-7ada-4dc7-9d93-d4383ba70810" name="Changes" comment="implement last and current animation">
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Start_the_game__FPS_ON_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Start_the_game__FPS_ON_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/logic/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/logic/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GameStart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameStart.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/controller/EntityController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/controller/EntityController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/entities/ui/PlayerUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/ui/PlayerUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/controller/GameController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,9 +28,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="KubernetesApiProvider"><![CDATA[{
-  "isMigrated": true
-}]]></component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
 }</component>
@@ -41,6 +44,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.Start the game (FPS OFF).executor": "Run",
     "Application.Start the game (FPS ON).executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -60,6 +64,26 @@
       <recent name="$PROJECT_DIR$/res/kenshin" />
       <recent name="$PROJECT_DIR$/res" />
     </key>
+  </component>
+  <component name="RunManager" selected="Application.Start the game (DEBUG ON)">
+    <configuration name="Start the game (DEBUG OFF)" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="GameStart" />
+      <module name="Kenshins-Journey" />
+      <option name="PROGRAM_PARAMETERS" value="false, false" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value=".*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.Start the game (DEBUG ON)" />
+      <item itemvalue="Application.Start the game (DEBUG OFF)" />
+    </list>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
