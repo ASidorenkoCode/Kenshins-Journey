@@ -11,13 +11,10 @@ public class Player extends Entity {
     private Rectangle hitbox;
     private PlayerAnimations currentAnimation;
 
-    private PlayerAnimations lastAnimation;
-
     public Player(float x, float y) {
         super(x, y);
         left = false;
         currentAnimation = PlayerAnimations.IDLE;
-        lastAnimation = PlayerAnimations.IDLE;
         //TODO: variables for values
         hitbox = new Rectangle((int) x +64 , (int) (y + 16 * 2f),96 -64,96 - 48);
     }
@@ -54,7 +51,6 @@ public class Player extends Entity {
     }
 
     public void updateAnimation(PlayerAnimations animation) {
-        lastAnimation = currentAnimation;
         currentAnimation = animation;
     }
 
@@ -63,6 +59,7 @@ public class Player extends Entity {
         if(left && !right) updateAnimation(PlayerAnimations.RUN);
         else if(right) updateAnimation(PlayerAnimations.RUN);
         else updateAnimation(PlayerAnimations.IDLE);
+        if(left && right) updateAnimation(PlayerAnimations.IDLE);
     }
 
     public void setRight(boolean right) {
@@ -70,15 +67,12 @@ public class Player extends Entity {
         if(right && !left) updateAnimation(PlayerAnimations.RUN);
         else if (left) updateAnimation(PlayerAnimations.RUN);
         else updateAnimation(PlayerAnimations.IDLE);
+        if(left && right) updateAnimation(PlayerAnimations.IDLE);
     }
 
     public PlayerAnimations getCurrentPlayerAnimation() {
         return currentAnimation;
     }
-    public PlayerAnimations getLastPlayerAnimation() {
-        return lastAnimation;
-    }
-
     public boolean getLeft() {
         return left;
     }

@@ -1,5 +1,7 @@
 package entities.ui;
+
 import entities.logic.Player;
+
 import java.awt.*;
 
 public class PlayerUI extends EntityUI {
@@ -28,14 +30,12 @@ public class PlayerUI extends EntityUI {
     @Override
     void drawHitBox(Graphics g) {
         Rectangle hitbox = player.getHitbox();
-        g.drawRect(hitbox.x,hitbox.y,(int) (hitbox.width * TILE_SCALE),(int) (hitbox.height * TILE_SCALE));
+        g.drawRect(hitbox.x, hitbox.y, (int) (hitbox.width * TILE_SCALE), (int) (hitbox.height * TILE_SCALE));
     }
 
     private void updateAnimationTick() {
-        if(player.getLastPlayerAnimation() != player.getCurrentPlayerAnimation()) {
-            aniIndex = 0;
-            aniTick = 0;
-            player.updateAnimation(player.getCurrentPlayerAnimation());
+        if (aniIndex >= player.getCurrentPlayerAnimation().getAniSize()) {
+            resetAnimationTick();
         }
         aniTick++;
         if (aniTick >= ANI_SPEED) {
@@ -43,11 +43,17 @@ public class PlayerUI extends EntityUI {
             aniIndex++;
 
             //TODO: GetSpriteAmount, static for testing purposes
-            if(aniIndex >= player.getCurrentPlayerAnimation().getAniSize()) {
+            if (aniIndex >= player.getCurrentPlayerAnimation().getAniSize()) {
                 aniIndex = 0;
             }
         }
 
+    }
+
+    private void resetAnimationTick() {
+        aniIndex = 0;
+        aniTick = 0;
+        player.updateAnimation(player.getCurrentPlayerAnimation());
     }
 
     @Override
@@ -55,8 +61,8 @@ public class PlayerUI extends EntityUI {
 
         updateAnimationTick();
 
-        if(player.getRight() && !player.getLeft())
-           animationsDirection = animationsRight;
+        if (player.getRight() && !player.getLeft())
+            animationsDirection = animationsRight;
         else if (player.getLeft() && !player.getRight()) animationsDirection = animationsLeft;
 
         g.drawImage(animationsDirection[player.getCurrentPlayerAnimation().getAniIndex()][aniIndex],
