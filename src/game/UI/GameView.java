@@ -7,6 +7,7 @@ import keyboardinputs.logic.KeyboardInputsIngame;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
 public class GameView extends JPanel {
 
@@ -22,13 +23,13 @@ public class GameView extends JPanel {
     private final static int GAME_HEIGHT = (int) (TILES_DEFAULT_SIZE * TILE_SCALE) * TILES_IN_HEIGHT;
 
 
-    public GameView(GameController gameController) {
+    public GameView(GameController gameController, PlayerUI playerUI) {
         this.gameController = gameController;
         setPreferredSize(new Dimension(GAME_WIDTH, GAME_HEIGHT));
         setFocusable(true);
         requestFocusInWindow();
         addKeyListener(new KeyboardInputsIngame(this));
-        playerUI = new PlayerUI(new Player(200,200), TILE_SCALE);
+        this.playerUI = playerUI;
     }
 
     public void gameWindow() {
@@ -72,5 +73,9 @@ public class GameView extends JPanel {
     public void setFrameTitle(String fpsUpsText) {
         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
         frame.setTitle(fpsUpsText);
+    }
+
+    public void handleUserInput(KeyEvent e) {
+        playerUI.handleUserInput(e);
     }
 }

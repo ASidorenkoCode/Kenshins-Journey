@@ -11,4 +11,6 @@ public abstract class Entity {
     abstract void updatePushback();
 
     abstract void initHitbox();
+
+    abstract void update();
 }

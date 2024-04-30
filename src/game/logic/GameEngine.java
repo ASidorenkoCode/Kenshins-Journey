@@ -1,6 +1,9 @@
 package game.logic;
 
+import entities.logic.Player;
 import game.controller.GameController;
+
+import java.awt.event.KeyEvent;
 
 public class GameEngine implements Runnable {
 
@@ -13,10 +16,13 @@ public class GameEngine implements Runnable {
     private int frames = 0;
     private int updates = 0;
 
+    private Player player;
 
-    public GameEngine(boolean showFPS_UPS, GameController gameController) {
+
+    public GameEngine(boolean showFPS_UPS, GameController gameController, Player player) {
         this.SHOW_FPS_UPS = showFPS_UPS;
         this.gameController = gameController;
+        this.player = player;
     }
 
     private void initClasses() {
@@ -70,6 +76,7 @@ public class GameEngine implements Runnable {
 
     private void update() {
         // TODO: Update game logic
+        player.update();
     }
 
     public Boolean getSHOW_FPS_UPS() {

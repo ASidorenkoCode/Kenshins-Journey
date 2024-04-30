@@ -2,6 +2,7 @@ package entities.ui;
 import entities.logic.Player;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 public class PlayerUI extends EntityUI {
@@ -60,5 +61,9 @@ public class PlayerUI extends EntityUI {
     @Override
     void drawHealthBar() {
         //TODO: Implement
+    }
+
+    public void handleUserInput(KeyEvent e) {
+        player.setLeft(true);
     }
 }
