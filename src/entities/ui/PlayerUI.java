@@ -32,13 +32,17 @@ public class PlayerUI extends EntityUI {
     }
 
     private void updateAnimationTick() {
+        if(player.getLastPlayerAnimation() != player.getCurrentPlayerAnimation()) {
+            aniIndex = 0;
+            aniTick = 0;
+            player.updateAnimation(player.getCurrentPlayerAnimation());
+        }
         aniTick++;
         if (aniTick >= ANI_SPEED) {
             aniTick = 0;
             aniIndex++;
 
             //TODO: GetSpriteAmount, static for testing purposes
-           // if (aniIndex >= GetSpriteAmount(state)) {
             if(aniIndex >= player.getCurrentPlayerAnimation().getAniSize()) {
                 aniIndex = 0;
             }

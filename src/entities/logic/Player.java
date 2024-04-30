@@ -53,20 +53,22 @@ public class Player extends Entity {
         else updateAnimation(PlayerAnimations.IDLE);
     }
 
-    private void updateAnimation(PlayerAnimations animation) {
+    public void updateAnimation(PlayerAnimations animation) {
         lastAnimation = currentAnimation;
         currentAnimation = animation;
     }
 
     public void setLeft(boolean left) {
         this.left = left;
-        if(left) updateAnimation(PlayerAnimations.RUN);
+        if(left && !right) updateAnimation(PlayerAnimations.RUN);
+        else if(right) updateAnimation(PlayerAnimations.RUN);
         else updateAnimation(PlayerAnimations.IDLE);
     }
 
     public void setRight(boolean right) {
         this.right = right;
-        if(right) updateAnimation(PlayerAnimations.RUN);
+        if(right && !left) updateAnimation(PlayerAnimations.RUN);
+        else if (left) updateAnimation(PlayerAnimations.RUN);
         else updateAnimation(PlayerAnimations.IDLE);
     }
 
