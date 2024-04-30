@@ -4,12 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b91aae81-7ada-4dc7-9d93-d4383ba70810" name="Changes" comment="init EntityController">
+    <list default="true" id="b91aae81-7ada-4dc7-9d93-d4383ba70810" name="Changes" comment="init player movement">
+      <change afterPath="$PROJECT_DIR$/res/kenshin/kenshin_sprites_black_left.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/kenshin/kenshin_sprites_black_right.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/entities/animations/PlayerAnimations.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/controller/EntityController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/controller/EntityController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/kenshin/kenshin_sprites_black.png" beforeDir="false" afterPath="$PROJECT_DIR$/res/kenshin/Samurai Sheet black.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/entities/logic/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/logic/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/UI/GameView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/UI/GameView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/keyboardinputs/logic/KeyboardInputsIngame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/keyboardinputs/logic/KeyboardInputsIngame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/ui/EntityUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/ui/EntityUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/ui/PlayerUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/ui/PlayerUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,12 +23,16 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="KubernetesApiProvider"><![CDATA[{
+  "isMigrated": true
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
 }</component>
@@ -55,6 +62,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/res/kenshin" />
       <recent name="$PROJECT_DIR$/res" />
     </key>
   </component>
@@ -74,7 +82,7 @@
       <option name="presentableId" value="Default" />
       <updated>1714329269192</updated>
       <workItem from="1714329270267" duration="1000" />
-      <workItem from="1714454641245" duration="4864000" />
+      <workItem from="1714454641245" duration="9230000" />
     </task>
     <task id="LOCAL-00001" summary="constants for entityUI and playerUI">
       <option name="closed" value="true" />
@@ -116,7 +124,15 @@
       <option name="project" value="LOCAL" />
       <updated>1714459458754</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="init player movement">
+      <option name="closed" value="true" />
+      <created>1714464385993</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1714464385993</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -128,6 +144,7 @@
     <MESSAGE value="started with connection between input and player logic" />
     <MESSAGE value="add res folder to git" />
     <MESSAGE value="init EntityController" />
-    <option name="LAST_COMMIT_MESSAGE" value="init EntityController" />
+    <MESSAGE value="init player movement" />
+    <option name="LAST_COMMIT_MESSAGE" value="init player movement" />
   </component>
 </project>
