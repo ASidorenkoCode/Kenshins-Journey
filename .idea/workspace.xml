@@ -4,15 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b91aae81-7ada-4dc7-9d93-d4383ba70810" name="Changes" comment="player is shown on screen">
+    <list default="true" id="b91aae81-7ada-4dc7-9d93-d4383ba70810" name="Changes" comment="add res folder to git">
+      <change afterPath="$PROJECT_DIR$/src/entities/controller/EntityController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/logic/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/logic/Entity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/logic/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/logic/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/ui/PlayerUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/ui/PlayerUI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/UI/GameView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/UI/GameView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/controller/GameController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/logic/GameEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/logic/GameEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/keyboardinputs/logic/KeyboardInputsIngame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/keyboardinputs/logic/KeyboardInputsIngame.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,7 +74,7 @@
       <option name="presentableId" value="Default" />
       <updated>1714329269192</updated>
       <workItem from="1714329270267" duration="1000" />
-      <workItem from="1714454641245" duration="1789000" />
+      <workItem from="1714454641245" duration="3556000" />
     </task>
     <task id="LOCAL-00001" summary="constants for entityUI and playerUI">
       <option name="closed" value="true" />
@@ -95,7 +92,23 @@
       <option name="project" value="LOCAL" />
       <updated>1714406055050</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="started with connection between input and player logic">
+      <option name="closed" value="true" />
+      <created>1714456491894</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1714456491894</updated>
+    </task>
+    <task id="LOCAL-00004" summary="add res folder to git">
+      <option name="closed" value="true" />
+      <created>1714458172456</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1714458172456</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -104,6 +117,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="constants for entityUI and playerUI" />
     <MESSAGE value="player is shown on screen" />
-    <option name="LAST_COMMIT_MESSAGE" value="player is shown on screen" />
+    <MESSAGE value="started with connection between input and player logic" />
+    <MESSAGE value="add res folder to git" />
+    <option name="LAST_COMMIT_MESSAGE" value="add res folder to git" />
   </component>
 </project>

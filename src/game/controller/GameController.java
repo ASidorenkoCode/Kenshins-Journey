@@ -1,5 +1,6 @@
 package game.controller;
 
+import entities.controller.EntityController;
 import entities.logic.Player;
 import entities.ui.PlayerUI;
 import game.UI.GameView;
@@ -12,15 +13,12 @@ public class GameController {
     private GameEngine gameEngine;
     private GameView gameView;
 
-    private PlayerUI playerUI;
-    private Player player;
+    private EntityController entityController;
 
     public GameController(boolean showFPS_UPS) {
-        player = new Player(200,200);
-        //TODO: Improve TileScale
-        playerUI = new PlayerUI(player, 2f);
-        gameEngine = new GameEngine(showFPS_UPS, this, player);
-        gameView = new GameView(this, playerUI);
+        entityController = new EntityController();
+        gameEngine = new GameEngine(showFPS_UPS, this, entityController);
+        gameView = new GameView(this, entityController);
         gameView.gameWindow();
         gameEngine.startGameLoop();
 

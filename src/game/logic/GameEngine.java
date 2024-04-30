@@ -1,5 +1,6 @@
 package game.logic;
 
+import entities.controller.EntityController;
 import entities.logic.Player;
 import game.controller.GameController;
 
@@ -16,13 +17,12 @@ public class GameEngine implements Runnable {
     private int frames = 0;
     private int updates = 0;
 
-    private Player player;
+    private EntityController entityController;
 
-
-    public GameEngine(boolean showFPS_UPS, GameController gameController, Player player) {
+    public GameEngine(boolean showFPS_UPS, GameController gameController, EntityController entityController) {
         this.SHOW_FPS_UPS = showFPS_UPS;
         this.gameController = gameController;
-        this.player = player;
+        this.entityController = entityController;
     }
 
     private void initClasses() {
@@ -76,7 +76,7 @@ public class GameEngine implements Runnable {
 
     private void update() {
         // TODO: Update game logic
-        player.update();
+        entityController.update();
     }
 
     public Boolean getSHOW_FPS_UPS() {

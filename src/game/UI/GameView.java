@@ -1,5 +1,6 @@
 package game.UI;
 
+import entities.controller.EntityController;
 import entities.logic.Player;
 import entities.ui.PlayerUI;
 import game.controller.GameController;
@@ -12,9 +13,6 @@ import java.awt.event.KeyEvent;
 public class GameView extends JPanel {
 
     private GameController gameController;
-
-    private PlayerUI playerUI;
-
     private final static int TILES_DEFAULT_SIZE = 32;
     private final static float TILE_SCALE = 2f;
     private final static int TILES_IN_WIDTH = 26;
@@ -22,14 +20,16 @@ public class GameView extends JPanel {
     private final static int GAME_WIDTH = (int) (TILES_DEFAULT_SIZE * TILE_SCALE) * TILES_IN_WIDTH;
     private final static int GAME_HEIGHT = (int) (TILES_DEFAULT_SIZE * TILE_SCALE) * TILES_IN_HEIGHT;
 
+    private EntityController entityController;
 
-    public GameView(GameController gameController, PlayerUI playerUI) {
+
+    public GameView(GameController gameController, EntityController entityController) {
         this.gameController = gameController;
         setPreferredSize(new Dimension(GAME_WIDTH, GAME_HEIGHT));
         setFocusable(true);
         requestFocusInWindow();
         addKeyListener(new KeyboardInputsIngame(this));
-        this.playerUI = playerUI;
+        this.entityController = entityController;
     }
 
     public void gameWindow() {
@@ -51,7 +51,7 @@ public class GameView extends JPanel {
 
     public void render(Graphics g) {
         //TODO: Implement rendering
-        playerUI.drawAnimations(g);
+        entityController.drawEntities(g);
     }
 
     public void calculateScreenCenter(JFrame frame) {
@@ -76,6 +76,6 @@ public class GameView extends JPanel {
     }
 
     public void handleUserInput(KeyEvent e) {
-        playerUI.handleUserInput(e);
+        entityController.handleUserInput(e);
     }
 }
