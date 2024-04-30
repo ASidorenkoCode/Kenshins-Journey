@@ -11,6 +11,8 @@ abstract public class EntityUI {
     protected BufferedImage[][] animationsLeft;
 
     protected BufferedImage[][] animationsRight;
+
+    protected BufferedImage[][] animationsDirection;
     protected int aniTick;
     protected int aniIndex;
     protected final static int ANI_SPEED = 25;
@@ -20,35 +22,30 @@ abstract public class EntityUI {
     protected String ENTITY_SPRITE_PATH_RIGHT;
     protected int SPRITE_Y_DIMENSION;
     protected int SPRITE_X_DIMENSION;
-
     protected float TILE_SCALE;
 
 
     abstract void drawAttackBox();
-    abstract void drawHitBox();
-    protected void loadAnimations() {
-        //TODO: Implement GetSpriteAtlas#
-        BufferedImage img = SpriteManager.GetSpriteAtlas(ENTITY_SPRITE_PATH_LEFT);
-        animationsLeft = new BufferedImage[SPRITE_Y_DIMENSION][SPRITE_X_DIMENSION];
-        for (int j = 0; j < animationsLeft.length; j++)
-            for (int i = 0; i < animationsLeft[j].length; i++)
-                animationsLeft[j][i] = img.getSubimage(
-                        i * SPRITE_PX_WIDTH,
-                        j * SPRITE_PX_HEIGHT,
-                        SPRITE_PX_WIDTH,
-                        SPRITE_PX_HEIGHT);
+    abstract void drawHitBox(Graphics g);
 
-        //TODO: DRY Pattern betrachten
-        img = SpriteManager.GetSpriteAtlas(ENTITY_SPRITE_PATH_RIGHT);
-        animationsRight = new BufferedImage[SPRITE_Y_DIMENSION][SPRITE_X_DIMENSION];
-        for (int j = 0; j < animationsRight.length; j++)
-            for (int i = 0; i < animationsRight[j].length; i++)
-                animationsRight[j][i] = img.getSubimage(
+
+    protected void loadAnimations() {
+        animationsLeft = loadAnimationSprites(ENTITY_SPRITE_PATH_LEFT);
+        animationsRight = loadAnimationSprites(ENTITY_SPRITE_PATH_RIGHT);
+    }
+
+    private BufferedImage[][] loadAnimationSprites(String spritePath) {
+        BufferedImage img = SpriteManager.GetSpriteAtlas(spritePath);
+        BufferedImage[][] animations = new BufferedImage[SPRITE_Y_DIMENSION][SPRITE_X_DIMENSION];
+        for (int j = 0; j < animations.length; j++)
+            for (int i = 0; i < animations[j].length; i++)
+                animations[j][i] = img.getSubimage(
                         i * SPRITE_PX_WIDTH,
                         j * SPRITE_PX_HEIGHT,
                         SPRITE_PX_WIDTH,
                         SPRITE_PX_HEIGHT);
-    };
+        return animations;
+    }
     abstract void drawAnimations(Graphics g);
     abstract void drawHealthBar();
 }

@@ -1,13 +1,9 @@
 package entities.ui;
 import entities.logic.Player;
-
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
 
 public class PlayerUI extends EntityUI {
     Player player;
-
 
     public PlayerUI(Player player, float tile_scale) {
         this.player = player;
@@ -19,6 +15,8 @@ public class PlayerUI extends EntityUI {
         SPRITE_X_DIMENSION = 17;
         TILE_SCALE = tile_scale;
         loadAnimations();
+        animationsDirection = animationsLeft;
+
     }
 
 
@@ -28,8 +26,9 @@ public class PlayerUI extends EntityUI {
     }
 
     @Override
-    void drawHitBox() {
-
+    void drawHitBox(Graphics g) {
+        Rectangle hitbox = player.getHitbox();
+        g.drawRect(hitbox.x,hitbox.y,(int) (hitbox.width * TILE_SCALE),(int) (hitbox.height * TILE_SCALE));
     }
 
     private void updateAnimationTick() {
@@ -40,37 +39,35 @@ public class PlayerUI extends EntityUI {
 
             //TODO: GetSpriteAmount, static for testing purposes
            // if (aniIndex >= GetSpriteAmount(state)) {
-            if(aniIndex >= player.currentPlayerAnimation().getAniSize()) {
+            if(aniIndex >= player.getCurrentPlayerAnimation().getAniSize()) {
                 aniIndex = 0;
             }
         }
+
     }
 
     @Override
     public void drawAnimations(Graphics g) {
+
         updateAnimationTick();
 
+        if(player.getRight() && !player.getLeft())
+           animationsDirection = animationsRight;
+        else if (player.getLeft() && !player.getRight()) animationsDirection = animationsLeft;
 
-        BufferedImage[][] animations;
-        if(player.getRight())
-           animations = animationsRight;
-        else animations = animationsLeft;
-
-
-        g.drawImage(animations[player.currentPlayerAnimation().getAniIndex()][aniIndex],
+        g.drawImage(animationsDirection[player.getCurrentPlayerAnimation().getAniIndex()][aniIndex],
                 (int) player.getX(),
                 (int) player.getY(),
                 (int) (SPRITE_PX_WIDTH * TILE_SCALE),
                 (int) (SPRITE_PX_HEIGHT * TILE_SCALE), null);
+        drawHitBox(g);
+
+
     }
 
 
     @Override
     void drawHealthBar() {
         //TODO: Implement
-    }
-
-    public void handleUserInput(KeyEvent e) {
-        player.setLeft(true);
     }
 }
