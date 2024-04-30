@@ -45,11 +45,13 @@ public class Player extends Entity {
 
         if(right && !left) {
             updateXPos(1);
+            updateAnimation(PlayerAnimations.RUN);
         }
         else if(left && !right) {
             updateXPos(-1);
+            updateAnimation(PlayerAnimations.RUN);
         }
-        else if (inAir) {
+        if (inAir) {
             updateYPos(airMovement);
             //TODO Check if hit bottom
             airMovement += 0.1f;
@@ -61,9 +63,9 @@ public class Player extends Entity {
             //Placeholder if for stopping animation
             if (y > 200) {
                 inAir = false;
+                updateAnimation(PlayerAnimations.IDLE);
             }
         }
-        else updateAnimation(PlayerAnimations.IDLE);
     }
 
     private void updateXPos(float by_value) {
@@ -82,6 +84,7 @@ public class Player extends Entity {
 
     public void setLeft(boolean left) {
         this.left = left;
+        if(inAir) return;
         if(left && !right) updateAnimation(PlayerAnimations.RUN);
         else if(right) updateAnimation(PlayerAnimations.RUN);
         else updateAnimation(PlayerAnimations.IDLE);
@@ -90,6 +93,7 @@ public class Player extends Entity {
 
     public void setRight(boolean right) {
         this.right = right;
+        if(inAir) return;
         if(right && !left) updateAnimation(PlayerAnimations.RUN);
         else if (left) updateAnimation(PlayerAnimations.RUN);
         else updateAnimation(PlayerAnimations.IDLE);
