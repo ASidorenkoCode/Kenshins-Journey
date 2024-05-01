@@ -12,7 +12,7 @@ import java.util.Arrays;
 public class Player extends Entity {
 
     private boolean left, right, jump, inAir;
-    private float airMovement = -5f;
+    private float airMovement = -6.5f;
     private PlayerAnimations currentAnimation;
 
     public Player(float x, float y) {
@@ -46,14 +46,16 @@ public class Player extends Entity {
             updateXPos(map, -1);
             updateAnimation(PlayerAnimations.RUN);
         }
+
         if (inAir) {
-            updateYPos(airMovement);
-            //TODO Check if hit bottom
+            updateYPos(map, airMovement);
             airMovement += 0.1f;
 
-
             if(airMovement >= 0) updateAnimation(PlayerAnimations.FALL);
-
+            if (checkCollisionForPosition(map, hitbox.x, hitbox.y + hitbox.height + 1)) {
+                inAir = false;
+                updateAnimation(PlayerAnimations.IDLE);
+            }
         }
     }
 
@@ -63,7 +65,8 @@ public class Player extends Entity {
         hitbox.x += by_value;
     }
 
-    private void updateYPos(float by_value) {
+    private void updateYPos(Map map, float by_value) {
+        if(!checkIfPlayerCanMoveToPosition(map, hitbox.x, hitbox.y + by_value, hitbox.width, hitbox.height)) return;
         y += by_value;
         hitbox.y += by_value;
     }
@@ -119,6 +122,9 @@ public class Player extends Entity {
         int[][] mapData = map.getMapData();
         int tile_x = (int) (x / 64);
         int tile_y = (int) (y / 64);
+
+        if (tile_y >= mapData.length || tile_x >= mapData[0].length) return true;
+
         return mapData[tile_y][tile_x] != 11;
     }
 
