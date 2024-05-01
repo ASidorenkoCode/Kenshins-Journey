@@ -1,5 +1,6 @@
 package entities.logic;
 
+import constants.Constants;
 import entities.animations.PlayerAnimations;
 import entities.ui.PlayerUI;
 
@@ -9,7 +10,6 @@ import java.awt.geom.Rectangle2D;
 public class Player extends Entity {
 
     private boolean left, right, jump, inAir;
-
     private float airMovement = -5f;
     private Rectangle2D.Float hitbox;
     private PlayerAnimations currentAnimation;
@@ -19,7 +19,7 @@ public class Player extends Entity {
         left = false;
         currentAnimation = PlayerAnimations.IDLE;
         //TODO: variables for values
-        hitbox = new Rectangle2D.Float( x + 32 * 2f,  y + 16 * 2f,96 -64,96 - 48);
+        hitbox = new Rectangle2D.Float( x + 32 * Constants.TILE_SCALE,  y + 16 * Constants.TILE_SCALE,96 -32 * Constants.TILE_SCALE,96 - 48);
     }
 
 

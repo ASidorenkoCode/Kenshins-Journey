@@ -1,5 +1,6 @@
 package entities.ui;
 
+import constants.Constants;
 import entities.logic.Player;
 
 import java.awt.*;
@@ -9,7 +10,7 @@ public class PlayerUI extends EntityUI {
     Player player;
     boolean showHitBox;
 
-    public PlayerUI(Player player, float tile_scale, boolean showHitBox) {
+    public PlayerUI(Player player, boolean showHitBox) {
         this.player = player;
         this.showHitBox = showHitBox;
         SPRITE_PX_WIDTH = 96;
@@ -18,7 +19,6 @@ public class PlayerUI extends EntityUI {
         ENTITY_SPRITE_PATH_LEFT = "kenshin/kenshin_sprites_black_left.png";
         SPRITE_Y_DIMENSION = 15;
         SPRITE_X_DIMENSION = 17;
-        TILE_SCALE = tile_scale;
         loadAnimations();
         animationsDirection = animationsLeft;
 
@@ -34,7 +34,7 @@ public class PlayerUI extends EntityUI {
     void drawHitBox(Graphics g) {
         if (showHitBox) {
             Rectangle2D.Float hitbox = player.getHitbox();
-            g.drawRect((int) hitbox.x, (int) hitbox.y, (int) (hitbox.width * TILE_SCALE), (int) (hitbox.height * TILE_SCALE));
+            g.drawRect((int) hitbox.x, (int) hitbox.y, (int) (hitbox.width * Constants.TILE_SCALE), (int) (hitbox.height * Constants.TILE_SCALE));
         }
     }
 
@@ -72,8 +72,8 @@ public class PlayerUI extends EntityUI {
         g.drawImage(animationsDirection[player.getCurrentPlayerAnimation().getAniIndex()][aniIndex],
                 (int) player.getX(),
                 (int) player.getY(),
-                (int) (SPRITE_PX_WIDTH * TILE_SCALE),
-                (int) (SPRITE_PX_HEIGHT * TILE_SCALE), null);
+                (int) (SPRITE_PX_WIDTH * Constants.TILE_SCALE),
+                (int) (SPRITE_PX_HEIGHT * Constants.TILE_SCALE), null);
         drawHitBox(g);
 
 

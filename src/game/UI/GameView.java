@@ -4,6 +4,7 @@ import entities.controller.EntityController;
 import game.controller.GameController;
 import keyboardinputs.logic.KeyboardInputsIngame;
 import maps.UI.MapUI;
+import constants.Constants;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,11 +15,10 @@ public class GameView extends JPanel {
     private GameController gameController;
     private MapUI mapUI;
     public final static int TILES_DEFAULT_SIZE = 32;
-    public final static float TILE_SCALE = 2f;
     public final static int TILES_IN_WIDTH = 26;
     public final static int TILES_IN_HEIGHT = 14;
-    public final static int GAME_WIDTH = (int) (TILES_DEFAULT_SIZE * TILE_SCALE) * TILES_IN_WIDTH;
-    public final static int GAME_HEIGHT = (int) (TILES_DEFAULT_SIZE * TILE_SCALE) * TILES_IN_HEIGHT;
+    public final static int GAME_WIDTH = (int) (TILES_DEFAULT_SIZE * Constants.TILE_SCALE) * TILES_IN_WIDTH;
+    public final static int GAME_HEIGHT = (int) (TILES_DEFAULT_SIZE * Constants.TILE_SCALE) * TILES_IN_HEIGHT;
 
     private EntityController entityController;
 

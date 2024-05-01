@@ -1,5 +1,6 @@
 package entities.controller;
 
+import constants.Constants;
 import entities.logic.Player;
 import entities.ui.PlayerUI;
 
@@ -14,7 +15,7 @@ public class EntityController {
     public EntityController(boolean showHitBox) {
         player = new Player(200,200);
         //TODO: Improve TileScale
-        playerUI = new PlayerUI(player, 2f, showHitBox);
+        playerUI = new PlayerUI(player, showHitBox);
     }
 
     public void update() {

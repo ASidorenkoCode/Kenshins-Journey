@@ -22,7 +22,6 @@ abstract public class EntityUI {
     protected String ENTITY_SPRITE_PATH_RIGHT;
     protected int SPRITE_Y_DIMENSION;
     protected int SPRITE_X_DIMENSION;
-    protected float TILE_SCALE;
 
 
     abstract void drawAttackBox();
