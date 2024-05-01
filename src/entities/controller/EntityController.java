@@ -1,8 +1,7 @@
 package entities.controller;
-
-import constants.Constants;
 import entities.logic.Player;
 import entities.ui.PlayerUI;
+import maps.logic.Map;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -13,13 +12,12 @@ public class EntityController {
     private Player player;
 
     public EntityController(boolean showHitBox) {
-        player = new Player(200,200);
-        //TODO: Improve TileScale
+        player = new Player(100,500);
         playerUI = new PlayerUI(player, showHitBox);
     }
 
-    public void update() {
-        player.update();
+    public void update(Map map) {
+        player.update(map);
     }
 
     public void handleUserInputKeyPressed(KeyEvent e) {
@@ -48,9 +46,5 @@ public class EntityController {
 
     public void drawEntities(Graphics g) {
         playerUI.drawAnimations(g);
-    }
-
-    public boolean checkCollisonOfEntity() {
-        return true;
     }
 }

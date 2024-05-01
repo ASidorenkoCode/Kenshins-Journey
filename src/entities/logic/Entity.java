@@ -1,5 +1,7 @@
 package entities.logic;
 
+import maps.logic.Map;
+
 import java.awt.geom.Rectangle2D;
 
 public abstract class Entity {
@@ -15,11 +17,13 @@ public abstract class Entity {
 
     abstract void updatePushback();
 
-    abstract void update();
+    abstract void update(Map map);
 
 
     public Rectangle2D.Float getHitbox() {
         return hitbox;
     }
+
+
 
 }

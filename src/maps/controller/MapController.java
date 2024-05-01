@@ -1,19 +1,14 @@
 package maps.controller;
-
-import entities.logic.Entity;
 import maps.UI.MapUI;
 import maps.logic.Map;
 import spriteControl.SpriteManager;
-
 import java.awt.*;
-import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class MapController {
     private ArrayList<Map> maps;
     private BufferedImage[] mapSprites;
-
     private MapUI mapUI;
     private final static String MAPSPRITE_PATH = "mapsprites.png";
 
@@ -62,20 +57,5 @@ public class MapController {
     public void draw(Graphics g) {
         int mapOffset = mapUI.getCurrentMap().getMaxTilesOffset();
         mapUI.draw(g, mapOffset);
-    }
-
-    public boolean checkCollisionOfEntityWithCurrentMapTiles(Entity entity) {
-        Rectangle2D.Float hitbox = entity.getHitbox();
-        int[][] mapData = getCurrentMap().getMapData();
-        //bottom left corner
-        int tile_x = (int) (hitbox.x / mapData.length);
-        int tile_y = (int) (hitbox.y + hitbox.height / mapData[0].length);
-        if(mapData[tile_x][tile_y] != 11) return true;
-
-        //bottom right corner
-        tile_x = (int) (hitbox.x + hitbox.width / mapData.length);
-        tile_y = (int) (hitbox.y + hitbox.height / mapData[0].length);
-        return mapData[tile_x][tile_y] != 11;
-
     }
 }

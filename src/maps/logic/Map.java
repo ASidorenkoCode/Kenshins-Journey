@@ -37,6 +37,7 @@ public class Map {
                 loadEntities(green, x, y);
                 loadObjects(blue, x, y);
             }
+
     }
 
     private void loadMapData(int redValue, int x, int y) {
