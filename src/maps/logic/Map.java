@@ -1,8 +1,10 @@
 package maps.logic;
 
+import entities.logic.Entity;
 import game.UI.GameView;
 
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 public class Map {
@@ -75,4 +77,6 @@ public class Map {
     public Point getPlayerSpawn() {
         return playerSpawn;
     }
+
+
 }

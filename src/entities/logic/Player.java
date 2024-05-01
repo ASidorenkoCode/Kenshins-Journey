@@ -11,15 +11,12 @@ public class Player extends Entity {
 
     private boolean left, right, jump, inAir;
     private float airMovement = -5f;
-    private Rectangle2D.Float hitbox;
     private PlayerAnimations currentAnimation;
 
     public Player(float x, float y) {
-        super(x, y);
+        super(x, y, new Rectangle2D.Float( x + 32 * Constants.TILE_SCALE,  y + 16 * Constants.TILE_SCALE,96 -32 * Constants.TILE_SCALE,96 - 48));
         left = false;
         currentAnimation = PlayerAnimations.IDLE;
-        //TODO: variables for values
-        hitbox = new Rectangle2D.Float( x + 32 * Constants.TILE_SCALE,  y + 16 * Constants.TILE_SCALE,96 -32 * Constants.TILE_SCALE,96 - 48);
     }
 
 
@@ -36,10 +33,6 @@ public class Player extends Entity {
 
     }
 
-    @Override
-    void initHitbox() {
-
-    }
     @Override
     public void update() {
 
