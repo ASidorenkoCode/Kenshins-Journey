@@ -39,6 +39,7 @@ public class Map {
 
     }
 
+
     private void loadMapData(int redValue, int x, int y) {
         if (redValue >= 48)
             mapData[y][x] = 0;
@@ -59,10 +60,10 @@ public class Map {
     private void calculateMapOffsets() {
         mapTilesWide = mapImage.getWidth();
         maxTilesOffset = mapTilesWide - GameView.TILES_IN_WIDTH;
-        maxMapOffsetX = GameView.TILES_DEFAULT_SIZE * maxTilesOffset;
+        maxMapOffsetX = (int) (GameView.TILES_DEFAULT_SIZE * Constants.TILE_SCALE * maxTilesOffset);
     }
 
-    public int getMaxTilesOffset() {
+    public int getmaxMapOffsetX() {
         return maxMapOffsetX;
     }
 

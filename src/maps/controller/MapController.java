@@ -1,4 +1,7 @@
 package maps.controller;
+import constants.Constants;
+import entities.controller.EntityController;
+import game.UI.GameView;
 import maps.UI.MapUI;
 import maps.logic.Map;
 import spriteControl.SpriteManager;
@@ -10,13 +13,19 @@ public class MapController {
     private ArrayList<Map> maps;
     private BufferedImage[] mapSprites;
     private MapUI mapUI;
+    private EntityController entityController;
+    private int mapOffset;
+    private int leftBorder = (int) (0.49 * GameView.GAME_WIDTH);
+    private int rightBorder = (int) (0.51 * GameView.GAME_WIDTH);
     private final static String MAPSPRITE_PATH = "mapsprites.png";
 
-    public MapController() {
+    public MapController(EntityController entityController) {
+        this.entityController = entityController;
         importTileSheets();
         maps = new ArrayList<>();
         mapUI = new MapUI(this);
         buildAllMaps();
+
     }
 
     private void importTileSheets() {
@@ -54,8 +63,23 @@ public class MapController {
         return mapSprites;
     }
 
-    public void draw(Graphics g) {
-        int mapOffset = mapUI.getCurrentMap().getMaxTilesOffset();
-        mapUI.draw(g);
+    public void draw(Graphics g, int offset) {
+        mapUI.draw(g, offset);
+    }
+
+    public void checkCloseToBorder() {
+        int playerX = (int) entityController.getPlayer().getHitbox().x;
+        int diff = playerX - mapOffset;
+
+        if (diff > rightBorder)
+            mapOffset += diff - rightBorder;
+        else if (diff < leftBorder)
+            mapOffset += diff - leftBorder;
+
+        mapOffset = Math.max(Math.min(mapOffset, getCurrentMap().getmaxMapOffsetX()), 0);
+    }
+
+    public int getMapOffset() {
+        return mapOffset;
     }
 }

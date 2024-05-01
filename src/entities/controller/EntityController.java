@@ -1,6 +1,7 @@
 package entities.controller;
 import entities.logic.Player;
 import entities.ui.PlayerUI;
+import maps.controller.MapController;
 import maps.logic.Map;
 
 import java.awt.*;
@@ -12,12 +13,13 @@ public class EntityController {
     private Player player;
 
     public EntityController(boolean showHitBox) {
-        player = new Player(100,200);
+        player = new Player(100,380);
         playerUI = new PlayerUI(player, showHitBox);
     }
 
     public void update(Map map) {
         player.update(map);
+
     }
 
     public void handleUserInputKeyPressed(KeyEvent e) {
@@ -44,7 +46,11 @@ public class EntityController {
         }
     }
 
-    public void drawEntities(Graphics g) {
-        playerUI.drawAnimations(g);
+    public void drawEntities(Graphics g, int offset) {
+        playerUI.drawAnimations(g, offset);
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 }

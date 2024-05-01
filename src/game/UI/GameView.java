@@ -20,7 +20,6 @@ public class GameView extends JPanel {
     public final static int TILES_IN_HEIGHT = 14;
     public final static int GAME_WIDTH = (int) (TILES_DEFAULT_SIZE * Constants.TILE_SCALE) * TILES_IN_WIDTH;
     public final static int GAME_HEIGHT = (int) (TILES_DEFAULT_SIZE * Constants.TILE_SCALE) * TILES_IN_HEIGHT;
-
     private EntityController entityController;
 
 
@@ -53,8 +52,10 @@ public class GameView extends JPanel {
 
     public void render(Graphics g) {
         //TODO: Implement rendering
-        mapController.draw(g);
-        entityController.drawEntities(g);
+        mapController.checkCloseToBorder();
+        int mapOffset = mapController.getMapOffset();
+        mapController.draw(g, mapOffset);
+        entityController.drawEntities(g, mapOffset);
     }
 
     public void calculateScreenCenter(JFrame frame) {
@@ -84,18 +85,6 @@ public class GameView extends JPanel {
 
     public void handleUserInputKeyReleased(KeyEvent e) {
         entityController.handleUserInputKeyReleased(e);
-    }
-
-    public int getTILES_IN_WIDTH() {
-        return TILES_IN_WIDTH;
-    }
-
-    public int getTILES_IN_HEIGHT() {
-        return TILES_IN_HEIGHT;
-    }
-
-    public int getTILE_SIZE() {
-        return TILES_DEFAULT_SIZE;
     }
 
 }

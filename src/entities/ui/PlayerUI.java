@@ -31,10 +31,10 @@ public class PlayerUI extends EntityUI {
     }
 
     @Override
-    void drawHitBox(Graphics g) {
+    void drawHitBox(Graphics g, int offset) {
         if (showHitBox) {
             Rectangle2D.Float hitbox = player.getHitbox();
-            g.drawRect((int) hitbox.x, (int) hitbox.y, (int) hitbox.width, (int) hitbox.height);
+            g.drawRect((int) hitbox.x - offset, (int) hitbox.y, (int) hitbox.width, (int) hitbox.height);
         }
     }
 
@@ -61,7 +61,7 @@ public class PlayerUI extends EntityUI {
     }
 
     @Override
-    public void drawAnimations(Graphics g) {
+    public void drawAnimations(Graphics g, int offset) {
 
         updateAnimationTick();
 
@@ -70,11 +70,11 @@ public class PlayerUI extends EntityUI {
         else if (player.getLeft() && !player.getRight()) animationsDirection = animationsLeft;
 
         g.drawImage(animationsDirection[player.getCurrentPlayerAnimation().getAniIndex()][aniIndex],
-                (int) player.getX(),
+                (int) player.getX() - offset,
                 (int) player.getY(),
                 (int) (SPRITE_PX_WIDTH * Constants.TILE_SCALE),
                 (int) (SPRITE_PX_HEIGHT * Constants.TILE_SCALE), null);
-        drawHitBox(g);
+        drawHitBox(g, offset);
 
 
     }
