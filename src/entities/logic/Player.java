@@ -47,12 +47,14 @@ public class Player extends Entity {
             updateAnimation(PlayerAnimations.RUN);
         }
         if (inAir) {
-            updateYPos(airMovement);
+            updateYPos(map, airMovement);
             //TODO Check if hit bottom
-            airMovement += 0.1f;
+            if(inAir) {
+                airMovement += 0.1f;
 
 
-            if(airMovement >= 0) updateAnimation(PlayerAnimations.FALL);
+                if(airMovement >= 0) updateAnimation(PlayerAnimations.FALL);
+            }
 
         }
     }
@@ -63,7 +65,22 @@ public class Player extends Entity {
         hitbox.x += by_value;
     }
 
-    private void updateYPos(float by_value) {
+    private void updateYPos(Map map, float by_value) {
+        if(!checkIfPlayerCanMoveToPosition(map, hitbox.x, hitbox.y + by_value, hitbox.width, hitbox.height)) {
+            inAir = false;
+            updateAnimation(PlayerAnimations.IDLE);
+
+            //set player to position of ground
+
+            float playerYPos =  (hitbox.y + by_value + hitbox.height);
+            int groundSpriteNumber = (int) (playerYPos / (32 * Constants.TILE_SCALE));
+            hitbox.y = groundSpriteNumber * (32 * Constants.TILE_SCALE);
+            hitbox.y -= hitbox.height + 1;
+            y = hitbox.y;
+            y -= 16 * Constants.TILE_SCALE;
+
+            return;
+        }
         y += by_value;
         hitbox.y += by_value;
     }
