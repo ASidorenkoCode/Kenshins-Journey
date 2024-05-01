@@ -56,6 +56,6 @@ public class MapController {
 
     public void draw(Graphics g) {
         int mapOffset = mapUI.getCurrentMap().getMaxTilesOffset();
-        mapUI.draw(g, mapOffset);
+        mapUI.draw(g);
     }
 }

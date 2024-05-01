@@ -1,5 +1,6 @@
 package maps.UI;
 
+import constants.Constants;
 import game.UI.GameView;
 import maps.controller.MapController;
 import maps.logic.Map;
@@ -17,19 +18,20 @@ public class MapUI {
         this.maps = mapController.getMaps();
     }
 
-    public void draw(Graphics g, int lvlOffset) {
+    public void draw(Graphics g) {
         for (int j = 0; j < GameView.TILES_IN_HEIGHT; j++)
             for (int i = 0; i < maps.get(mapIndex).getMapData()[0].length; i++) {
                 int index = maps.get(mapIndex).getSpriteIndex(i, j);
                 if (index >= 0 && index < mapController.getMapSprites().length) {
-                    int x = GameView.TILES_DEFAULT_SIZE * 2 * i - lvlOffset;
-                    int y = GameView.TILES_DEFAULT_SIZE * 2 * j;
-                    g.drawImage(mapController.getMapSprites()[index], x, y, GameView.TILES_DEFAULT_SIZE* 2, GameView.TILES_DEFAULT_SIZE * 2, null);
+                    int x = (int) (GameView.TILES_DEFAULT_SIZE * Constants.TILE_SCALE * i);
+                    int y = (int) (GameView.TILES_DEFAULT_SIZE * Constants.TILE_SCALE * j);
+                    g.drawImage(mapController.getMapSprites()[index], x, y, (int) (GameView.TILES_DEFAULT_SIZE * Constants.TILE_SCALE), (int) (GameView.TILES_DEFAULT_SIZE * Constants.TILE_SCALE), null);
                 } else {
                     System.out.println("Index out of bounds: " + index);
                 }
             }
     }
+
     public Map getCurrentMap() {
         return mapController.getCurrentMap();
     }

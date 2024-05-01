@@ -12,7 +12,7 @@ public class EntityController {
     private Player player;
 
     public EntityController(boolean showHitBox) {
-        player = new Player(100,500);
+        player = new Player(100,200);
         playerUI = new PlayerUI(player, showHitBox);
     }
 

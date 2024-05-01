@@ -34,7 +34,7 @@ public class PlayerUI extends EntityUI {
     void drawHitBox(Graphics g) {
         if (showHitBox) {
             Rectangle2D.Float hitbox = player.getHitbox();
-            g.drawRect((int) hitbox.x, (int) hitbox.y, (int) (hitbox.width * Constants.TILE_SCALE), (int) (hitbox.height * Constants.TILE_SCALE));
+            g.drawRect((int) hitbox.x, (int) hitbox.y, (int) hitbox.width, (int) hitbox.height);
         }
     }
 

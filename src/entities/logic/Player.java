@@ -16,7 +16,7 @@ public class Player extends Entity {
     private PlayerAnimations currentAnimation;
 
     public Player(float x, float y) {
-        super(x, y, new Rectangle2D.Float( x + 32 * Constants.TILE_SCALE,  y + 16 * Constants.TILE_SCALE,96 -32 * Constants.TILE_SCALE,96 - 48));
+        super(x, y, new Rectangle2D.Float( x + 32 * Constants.TILE_SCALE,  y + 16 * Constants.TILE_SCALE,(96 - 64) * Constants.TILE_SCALE,(96 - 48) * Constants.TILE_SCALE));
         left = false;
         currentAnimation = PlayerAnimations.IDLE;
     }
@@ -117,13 +117,8 @@ public class Player extends Entity {
 
         //TODO: Constants for Tile width and height
         int[][] mapData = map.getMapData();
-        //bottom left corner
         int tile_x = (int) (x / 64);
         int tile_y = (int) (y / 64);
-        System.out.println("x_tile " + tile_x);
-        System.out.println("y-tile " + tile_y);
-        System.out.println("y " + y + "x " + x);
-        System.out.println(64 - map.getMaxTilesOffset());
         return mapData[tile_y][tile_x] != 11;
     }
 

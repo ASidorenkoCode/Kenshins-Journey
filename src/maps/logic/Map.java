@@ -1,10 +1,9 @@
 package maps.logic;
 
-import entities.logic.Entity;
+import constants.Constants;
 import game.UI.GameView;
 
 import java.awt.*;
-import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 public class Map {
