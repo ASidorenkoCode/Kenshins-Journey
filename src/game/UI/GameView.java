@@ -3,6 +3,7 @@ package game.UI;
 import entities.controller.EntityController;
 import game.controller.GameController;
 import keyboardinputs.logic.KeyboardInputsIngame;
+import maps.UI.MapUI;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,18 +12,20 @@ import java.awt.event.KeyEvent;
 public class GameView extends JPanel {
 
     private GameController gameController;
-    private final static int TILES_DEFAULT_SIZE = 32;
-    private final static float TILE_SCALE = 2f;
-    private final static int TILES_IN_WIDTH = 26;
-    private final static int TILES_IN_HEIGHT = 14;
-    private final static int GAME_WIDTH = (int) (TILES_DEFAULT_SIZE * TILE_SCALE) * TILES_IN_WIDTH;
-    private final static int GAME_HEIGHT = (int) (TILES_DEFAULT_SIZE * TILE_SCALE) * TILES_IN_HEIGHT;
+    private MapUI mapUI;
+    public final static int TILES_DEFAULT_SIZE = 32;
+    public final static float TILE_SCALE = 2f;
+    public final static int TILES_IN_WIDTH = 26;
+    public final static int TILES_IN_HEIGHT = 14;
+    public final static int GAME_WIDTH = (int) (TILES_DEFAULT_SIZE * TILE_SCALE) * TILES_IN_WIDTH;
+    public final static int GAME_HEIGHT = (int) (TILES_DEFAULT_SIZE * TILE_SCALE) * TILES_IN_HEIGHT;
 
     private EntityController entityController;
 
 
-    public GameView(GameController gameController, EntityController entityController) {
+    public GameView(GameController gameController, EntityController entityController, MapUI mapUI) {
         this.gameController = gameController;
+        this.mapUI = mapUI;
         setPreferredSize(new Dimension(GAME_WIDTH, GAME_HEIGHT));
         setFocusable(true);
         requestFocusInWindow();
@@ -49,6 +52,8 @@ public class GameView extends JPanel {
 
     public void render(Graphics g) {
         //TODO: Implement rendering
+        int mapOffset = mapUI.getCurrentMap().getMaxTilesOffset();
+        mapUI.draw(g, mapOffset);
         entityController.drawEntities(g);
     }
 
@@ -80,4 +85,17 @@ public class GameView extends JPanel {
     public void handleUserInputKeyReleased(KeyEvent e) {
         entityController.handleUserInputKeyReleased(e);
     }
+
+    public int getTILES_IN_WIDTH() {
+        return TILES_IN_WIDTH;
+    }
+
+    public int getTILES_IN_HEIGHT() {
+        return TILES_IN_HEIGHT;
+    }
+
+    public int getTILE_SIZE() {
+        return TILES_DEFAULT_SIZE;
+    }
+
 }
