@@ -56,6 +56,10 @@ public class Player extends Entity {
                 if(airMovement >= 0) updateAnimation(PlayerAnimations.FALL);
             }
 
+        } else if(!checkIfPlayerCollidesUnderHim(map, hitbox.x, hitbox.y + 1, hitbox.width, hitbox.height)) {
+            airMovement = 0;
+            inAir = true;
+
         }
     }
 
@@ -66,7 +70,12 @@ public class Player extends Entity {
     }
 
     private void updateYPos(Map map, float by_value) {
-        if(!checkIfPlayerCanMoveToPosition(map, hitbox.x, hitbox.y + by_value, hitbox.width, hitbox.height)) {
+        if(checkIfPlayerCollidesOverHim(map, hitbox.x, hitbox.y + by_value, hitbox.width)) {
+
+            airMovement = 0;
+            return;
+
+        } else if(checkIfPlayerCollidesUnderHim(map, hitbox.x, hitbox.y + by_value, hitbox.width, hitbox.height)) {
             inAir = false;
             updateAnimation(PlayerAnimations.IDLE);
 
@@ -140,12 +149,23 @@ public class Player extends Entity {
     }
 
     private boolean checkIfPlayerCanMoveToPosition(Map map, float x, float y, float width, float height) {
+        if(checkIfPlayerCollidesOverHim(map, x, y, width))
+            return false;
+        return !checkIfPlayerCollidesUnderHim(map, x, y, width, height);
+    }
+
+    private boolean checkIfPlayerCollidesUnderHim(Map map, float x, float y, float width, float height) {
+        if (!checkCollisionForPosition(map, x,y + height))
+            if (!checkCollisionForPosition(map, x+width,y+height))
+                return false;
+        return true;
+    }
+
+    private boolean checkIfPlayerCollidesOverHim(Map map, float x, float y, float width) {
         if (!checkCollisionForPosition(map, x,y))
-            if (!checkCollisionForPosition(map, x+width, y))
-                if (!checkCollisionForPosition(map, x,y + height))
-                    if (!checkCollisionForPosition(map, x+width,y+height))
-                        return true;
-        return false;
+            if (!checkCollisionForPosition(map, x+width,y))
+                return false;
+        return true;
     }
 
 
