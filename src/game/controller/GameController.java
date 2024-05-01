@@ -21,7 +21,7 @@ public class GameController {
     public GameController(boolean showFPS_UPS, boolean showHitBox) {
         entityController = new EntityController(showHitBox);
         mapController = new MapController();
-        gameEngine = new GameEngine(showFPS_UPS, this, entityController);
+        gameEngine = new GameEngine(showFPS_UPS, this);
         gameView = new GameView(this, entityController, mapController);
         gameView.gameWindow();
         gameEngine.startGameLoop();
@@ -34,6 +34,10 @@ public class GameController {
 
     public void callRepaint() {
         gameView.repaint();
+    }
+
+    public void update() {
+        entityController.update();
     }
 
 }

@@ -49,4 +49,8 @@ public class EntityController {
     public void drawEntities(Graphics g) {
         playerUI.drawAnimations(g);
     }
+
+    public boolean checkCollisonOfEntity() {
+        return true;
+    }
 }

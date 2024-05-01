@@ -17,12 +17,10 @@ public class GameEngine implements Runnable {
     private int frames = 0;
     private int updates = 0;
 
-    private EntityController entityController;
 
-    public GameEngine(boolean showFPS_UPS, GameController gameController, EntityController entityController) {
+    public GameEngine(boolean showFPS_UPS, GameController gameController) {
         this.SHOW_FPS_UPS = showFPS_UPS;
         this.gameController = gameController;
-        this.entityController = entityController;
     }
 
     private void initClasses() {
@@ -76,7 +74,7 @@ public class GameEngine implements Runnable {
 
     private void update() {
         // TODO: Update game logic
-        entityController.update();
+        gameController.update();
     }
 
     public Boolean getSHOW_FPS_UPS() {
