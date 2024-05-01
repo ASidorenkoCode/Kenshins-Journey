@@ -5,6 +5,7 @@ import game.controller.GameController;
 import keyboardinputs.logic.KeyboardInputsIngame;
 import maps.UI.MapUI;
 import constants.Constants;
+import maps.controller.MapController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +14,7 @@ import java.awt.event.KeyEvent;
 public class GameView extends JPanel {
 
     private GameController gameController;
-    private MapUI mapUI;
+    private MapController mapController;
     public final static int TILES_DEFAULT_SIZE = 32;
     public final static int TILES_IN_WIDTH = 26;
     public final static int TILES_IN_HEIGHT = 14;
@@ -23,9 +24,9 @@ public class GameView extends JPanel {
     private EntityController entityController;
 
 
-    public GameView(GameController gameController, EntityController entityController, MapUI mapUI) {
+    public GameView(GameController gameController, EntityController entityController, MapController mapController) {
         this.gameController = gameController;
-        this.mapUI = mapUI;
+        this.mapController = mapController;
         setPreferredSize(new Dimension(GAME_WIDTH, GAME_HEIGHT));
         setFocusable(true);
         requestFocusInWindow();
@@ -52,8 +53,7 @@ public class GameView extends JPanel {
 
     public void render(Graphics g) {
         //TODO: Implement rendering
-        int mapOffset = mapUI.getCurrentMap().getMaxTilesOffset();
-        mapUI.draw(g, mapOffset);
+        mapController.draw(g);
         entityController.drawEntities(g);
     }
 

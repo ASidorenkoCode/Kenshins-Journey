@@ -12,8 +12,8 @@ public class MapUI {
     private ArrayList<Map> maps;
     private int mapIndex = 0;
 
-    public MapUI() {
-        this.mapController = new MapController();
+    public MapUI(MapController mapController) {
+        this.mapController = mapController;
         this.maps = mapController.getMaps();
     }
 

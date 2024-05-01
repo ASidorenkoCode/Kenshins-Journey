@@ -14,11 +14,13 @@ public class MapController {
     private ArrayList<Map> maps;
     private BufferedImage[] mapSprites;
 
+    private MapUI mapUI;
     private final static String MAPSPRITE_PATH = "mapsprites.png";
 
     public MapController() {
         importTileSheets();
         maps = new ArrayList<>();
+        mapUI = new MapUI(this);
         buildAllMaps();
     }
 
@@ -55,6 +57,11 @@ public class MapController {
 
     public BufferedImage[] getMapSprites() {
         return mapSprites;
+    }
+
+    public void draw(Graphics g) {
+        int mapOffset = mapUI.getCurrentMap().getMaxTilesOffset();
+        mapUI.draw(g, mapOffset);
     }
 
     public boolean checkCollisionOfEntityWithCurrentMapTiles(Entity entity) {

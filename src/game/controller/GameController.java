@@ -22,7 +22,7 @@ public class GameController {
         entityController = new EntityController(showHitBox);
         mapController = new MapController();
         gameEngine = new GameEngine(showFPS_UPS, this, entityController);
-        gameView = new GameView(this, entityController, new MapUI());
+        gameView = new GameView(this, entityController, mapController);
         gameView.gameWindow();
         gameEngine.startGameLoop();
 
