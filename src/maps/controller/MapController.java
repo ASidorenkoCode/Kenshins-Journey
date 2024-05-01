@@ -1,23 +1,22 @@
 package maps.controller;
-import constants.Constants;
+
 import entities.controller.EntityController;
 import game.UI.GameView;
 import maps.UI.MapUI;
 import maps.logic.Map;
 import spriteControl.SpriteManager;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class MapController {
+    private final static String MAPSPRITE_PATH = "mapsprites.png";
     private ArrayList<Map> maps;
     private BufferedImage[] mapSprites;
     private MapUI mapUI;
     private EntityController entityController;
     private int mapOffset;
-    private int leftBorder = (int) (0.49 * GameView.GAME_WIDTH);
-    private int rightBorder = (int) (0.51 * GameView.GAME_WIDTH);
-    private final static String MAPSPRITE_PATH = "mapsprites.png";
 
     public MapController(EntityController entityController) {
         this.entityController = entityController;
@@ -35,7 +34,8 @@ public class MapController {
             for (int i = 0; i < 12; i++) {
                 int index = j * 12 + i;
                 mapSprites[index] = img.getSubimage(i * 32, j * 32, 32, 32);
-            }    }
+            }
+    }
 
     private void buildAllMaps() {
         BufferedImage[] allLevels = SpriteManager.GetAllMaps();
@@ -69,14 +69,12 @@ public class MapController {
 
     public void checkCloseToBorder() {
         int playerX = (int) entityController.getPlayer().getHitbox().x;
-        int diff = playerX - mapOffset;
+        int middleOfScreen = GameView.GAME_WIDTH / 2;
+        int maxMapOffsetX = getCurrentMap().getmaxMapOffsetX();
+        double smoothingFactor = 0.05;
 
-        if (diff > rightBorder)
-            mapOffset += diff - rightBorder;
-        else if (diff < leftBorder)
-            mapOffset += diff - leftBorder;
-
-        mapOffset = Math.max(Math.min(mapOffset, getCurrentMap().getmaxMapOffsetX()), 0);
+        mapOffset += (int) (((playerX - middleOfScreen) - mapOffset) * smoothingFactor);
+        mapOffset = Math.max(Math.min(mapOffset, maxMapOffsetX), 0);
     }
 
     public int getMapOffset() {
