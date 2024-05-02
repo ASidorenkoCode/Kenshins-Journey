@@ -16,6 +16,7 @@ public class Map {
     private int maxTilesOffset;
     private int maxMapOffsetX;
     private Point playerSpawn;
+    private Point finishSpawn;
 
     public Map(BufferedImage img) {
         this.mapImage = img;
@@ -48,11 +49,14 @@ public class Map {
     }
 
     private void loadEntities(int greenValue, int x, int y) {
-        int scaledX = (int) (x * GameView.TILES_DEFAULT_SIZE * Constants.TILE_SCALE) - 96;
-        int scaledY = (int) (y * GameView.TILES_DEFAULT_SIZE * Constants.TILE_SCALE) - 65;
+        int originalX = (int) (x * GameView.TILES_DEFAULT_SIZE * Constants.TILE_SCALE);
+        int scaledX = originalX - 96;
+        int originalY = (int) (y * GameView.TILES_DEFAULT_SIZE * Constants.TILE_SCALE);
+        int scaledY = originalY - 65;
 
         switch (greenValue) {
             case 100 -> playerSpawn = new Point(scaledX, scaledY);
+            case 101 -> finishSpawn = new Point(originalX, originalY);
         }
     }
 
@@ -85,4 +89,7 @@ public class Map {
     public BufferedImage getMapImage() { return mapImage;}
 
 
+    public Point getFinishSpawn() {
+        return finishSpawn;
+    }
 }

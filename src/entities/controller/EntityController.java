@@ -18,16 +18,16 @@ public class EntityController {
     private FinishUI finishUI;
     private Finish finish;
 
-    public EntityController(boolean showHitBox, Point point, float mapWidth) {
-        player = new Player(point.x, point.y);
+    public EntityController(boolean showHitBox, Point PlayerPoint, Point FinishPoint) {
+        player = new Player(PlayerPoint.x, PlayerPoint.y);
         playerUI = new PlayerUI(player, showHitBox);
-        finish = new Finish(mapWidth * 32 * Constants.TILE_SCALE - (32 * Constants.TILE_SCALE * 2), 576);
+        finish = new Finish(FinishPoint.x, FinishPoint.y);
         finishUI = new FinishUI(finish, showHitBox);
     }
 
     public void update(MapController mapController) {
         player.update(mapController.getCurrentMap());
-        finish.checkIfPlayerIsInFinish(player, mapController.getMapOffset());
+        finish.checkIfPlayerIsInFinish(player);
     }
 
     public void handleUserInputKeyPressed(KeyEvent e) {

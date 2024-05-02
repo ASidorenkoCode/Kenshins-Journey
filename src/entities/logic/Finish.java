@@ -21,7 +21,7 @@ public class Finish extends Entity {
 
     }
 
-    public void checkIfPlayerIsInFinish(Player player, int offset) {
+    public void checkIfPlayerIsInFinish(Player player) {
         if(hitbox.intersects(player.getHitbox())) System.out.println("player hits finish");
     }
 }

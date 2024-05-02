@@ -19,7 +19,7 @@ public class GameController {
 
     public GameController(boolean showFPS_UPS, boolean showHitBox) {
         mapController = new MapController(null);
-        entityController = new EntityController(showHitBox, mapController.getCurrentPlayerSpawn(), mapController.getCurrentMap().getMapImage().getWidth());
+        entityController = new EntityController(showHitBox, mapController.getCurrentPlayerSpawn(), mapController.getCurrentFinishSpawn());
         mapController.setEntityController(entityController);
         gameEngine = new GameEngine(showFPS_UPS, this);
         gameView = new GameView(this, entityController, mapController);

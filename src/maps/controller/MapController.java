@@ -87,6 +87,10 @@ public class MapController {
         return maps.getFirst().getPlayerSpawn();
     }
 
+    public Point getCurrentFinishSpawn() {
+        return maps.getFirst().getFinishSpawn();
+    }
+
     public void setEntityController(EntityController entityController) {
         this.entityController = entityController;
     }
