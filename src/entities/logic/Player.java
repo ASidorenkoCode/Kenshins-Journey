@@ -10,8 +10,6 @@ public class Player extends Entity {
 
     private boolean left, right, attack, inAir;
     private float airMovement = -5f;
-    private PlayerAnimations currentAnimation;
-    private PlayerAnimations lastAnimation;
 
     private Rectangle2D.Float rightAttackHitBox;
 
@@ -26,8 +24,6 @@ public class Player extends Entity {
         right = false;
         inAir = false;
         attack = false;
-        currentAnimation = PlayerAnimations.IDLE;
-        lastAnimation = PlayerAnimations.IDLE;
     }
 
 
@@ -67,9 +63,6 @@ public class Player extends Entity {
             updateYPos(map, airMovement);
             if(inAir) {
                 airMovement += 0.1f;
-
-
-                if(airMovement >= 0) updateAnimation(PlayerAnimations.FALL);
             }
 
         } else if(!checkIfPlayerCollidesUnderHim(map, hitbox.x, hitbox.y + 1, hitbox.width, hitbox.height)) {
@@ -94,8 +87,6 @@ public class Player extends Entity {
 
         } else if(checkIfPlayerCollidesUnderHim(map, hitbox.x, hitbox.y + by_value, hitbox.width, hitbox.height)) {
             inAir = false;
-            updateAnimation(PlayerAnimations.IDLE);
-            if((left && !right)|| (!left && right)) updateAnimation(PlayerAnimations.RUN);
 
             //set player to position of ground
 
@@ -114,51 +105,27 @@ public class Player extends Entity {
         leftAttackHitBox.y += by_value;
     }
 
-    public void updateAnimation(PlayerAnimations animation) {
-        lastAnimation = currentAnimation;
-        currentAnimation = animation;
-    }
 
     public void setLeft(boolean left) {
         this.left = left;
-        if(currentAnimation == PlayerAnimations.RUN_SLASH || inAir) return;
-        if(left && !right) updateAnimation(PlayerAnimations.RUN);
-        else if(right) updateAnimation(PlayerAnimations.RUN);
-        else updateAnimation(PlayerAnimations.IDLE);
-        if(left && right) updateAnimation(PlayerAnimations.IDLE);
     }
 
     public void setRight(boolean right) {
         this.right = right;
-        if(currentAnimation == PlayerAnimations.RUN_SLASH || inAir) return;
-        if(right && !left) updateAnimation(PlayerAnimations.RUN);
-        else if (left) updateAnimation(PlayerAnimations.RUN);
-        else updateAnimation(PlayerAnimations.IDLE);
-        if(left && right) updateAnimation(PlayerAnimations.IDLE);
     }
 
     public void jump() {
         if (!inAir) {
+            attack = false;
             inAir = true;
             airMovement = -5f;
-            updateAnimation(PlayerAnimations.JUMP);
         }
     }
 
     public void attack() {
         if(!attack && !inAir) {
             setAttack(true);
-            //TODO: Different attack animations based on running etc.
-            updateAnimation(PlayerAnimations.RUN_SLASH);
-            if((left && right) || (!left && !right)) updateAnimation(PlayerAnimations.IDLE_SLASH);
         }
-    }
-    public PlayerAnimations getCurrentPlayerAnimation() {
-        return currentAnimation;
-    }
-
-    public PlayerAnimations getLastAnimation() {
-        return lastAnimation;
     }
     public boolean getLeft() {
         return left;
@@ -168,10 +135,7 @@ public class Player extends Entity {
     }
 
     public void setAttack(boolean attack) {
-        if(this.attack && !attack) {
-            if(currentAnimation == PlayerAnimations.RUN_SLASH) updateAnimation(PlayerAnimations.RUN);
-            else updateAnimation(PlayerAnimations.IDLE);
-        }
+
         this.attack = attack;
 
     }
@@ -213,5 +177,17 @@ public class Player extends Entity {
 
     public Rectangle2D.Float getLeftAttackHitBox() {
         return leftAttackHitBox;
+    }
+
+    public boolean getInAir() {
+        return inAir;
+    }
+
+    public boolean getAttack() {
+        return attack;
+    }
+
+    public float getAirMovement() {
+        return airMovement;
     }
 }

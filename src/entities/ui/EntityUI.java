@@ -15,7 +15,7 @@ abstract public class EntityUI {
     protected BufferedImage[][] animationsDirection;
     protected int aniTick;
     protected int aniIndex;
-    protected final static int ANI_SPEED = 10;
+    protected final static int ANI_SPEED = 20;
     protected int SPRITE_PX_WIDTH;
     protected int SPRITE_PX_HEIGHT;
     protected String ENTITY_SPRITE_PATH_LEFT;
