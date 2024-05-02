@@ -27,7 +27,7 @@ public class FinishUI extends EntityUI {
     public void drawHitBox(Graphics g, int offset) {
         if (showHitBox) {
             Rectangle2D.Float hitbox = finish.getHitbox();
-            g.drawRect((int) hitbox.x, (int) hitbox.y, (int) hitbox.width, (int) hitbox.height);
+            g.drawRect((int) hitbox.x - offset, (int) hitbox.y, (int) hitbox.width, (int) hitbox.height);
         }
     }
 

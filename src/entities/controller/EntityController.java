@@ -1,4 +1,5 @@
 package entities.controller;
+import constants.Constants;
 import entities.logic.Finish;
 import entities.logic.Player;
 import entities.ui.FinishUI;
@@ -17,10 +18,10 @@ public class EntityController {
     private FinishUI finishUI;
     private Finish finish;
 
-    public EntityController(boolean showHitBox, Point point) {
+    public EntityController(boolean showHitBox, Point point, float mapWidth) {
         player = new Player(point.x, point.y);
         playerUI = new PlayerUI(player, showHitBox);
-        finish = new Finish(1500, 576);
+        finish = new Finish(mapWidth * 32 * Constants.TILE_SCALE - (32 * Constants.TILE_SCALE * 2), 576);
         finishUI = new FinishUI(finish, showHitBox);
     }
 

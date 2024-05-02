@@ -82,5 +82,7 @@ public class Map {
         return playerSpawn;
     }
 
+    public BufferedImage getMapImage() { return mapImage;}
+
 
 }

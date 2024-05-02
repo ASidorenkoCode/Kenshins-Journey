@@ -22,7 +22,6 @@ public class Finish extends Entity {
     }
 
     public void checkIfPlayerIsInFinish(Player player, int offset) {
-        Rectangle2D.Float playerHitbox = new Rectangle2D.Float(player.getHitbox().x - offset, player.getHitbox().y, player.getHitbox().width, player.getHitbox().height);
-        if(hitbox.intersects(playerHitbox)) System.out.println("player hits finish");
+        if(hitbox.intersects(player.getHitbox())) System.out.println("player hits finish");
     }
 }
