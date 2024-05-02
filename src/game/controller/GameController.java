@@ -7,6 +7,7 @@ import game.UI.GameView;
 import game.logic.GameEngine;
 import maps.UI.MapUI;
 import maps.controller.MapController;
+import screens.LoadingScreen;
 
 import java.awt.event.KeyEvent;
 
@@ -16,6 +17,7 @@ public class GameController {
     private GameView gameView;
     private EntityController entityController;
     private MapController mapController;
+    private LoadingScreen loadingScreen;
 
     public GameController(boolean showFPS_UPS, boolean showHitBox) {
         mapController = new MapController(null);
@@ -25,6 +27,7 @@ public class GameController {
         gameView = new GameView(this, entityController, mapController);
         gameView.gameWindow();
         gameEngine.startGameLoop();
+        this.loadingScreen = new LoadingScreen(gameView.getFrame());
 
     }
 
@@ -37,7 +40,7 @@ public class GameController {
     }
 
     public void update() {
-        entityController.update(mapController);
+        entityController.update(mapController, loadingScreen);
     }
 
 }

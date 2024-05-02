@@ -22,6 +22,8 @@ public class GameView extends JPanel {
     public final static int GAME_HEIGHT = (int) (TILES_DEFAULT_SIZE * Constants.TILE_SCALE) * TILES_IN_HEIGHT;
     private EntityController entityController;
 
+    private JFrame frame = new JFrame("Kenshins Journey");
+
 
     public GameView(GameController gameController, EntityController entityController, MapController mapController) {
         this.gameController = gameController;
@@ -34,7 +36,6 @@ public class GameView extends JPanel {
     }
 
     public void gameWindow() {
-        JFrame frame = new JFrame("Kenshins Journey");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
@@ -51,7 +52,7 @@ public class GameView extends JPanel {
     }
 
     public void render(Graphics g) {
-        //TODO: Implement rendering
+        //TODO: Implement rendering for more stuff
         int mapOffset = mapController.getMapOffset();
         mapController.draw(g);
         entityController.drawEntities(g, mapOffset);
@@ -86,4 +87,7 @@ public class GameView extends JPanel {
         entityController.handleUserInputKeyReleased(e);
     }
 
+    public JFrame getFrame() {
+        return frame;
+    }
 }

@@ -73,7 +73,6 @@ public class GameEngine implements Runnable {
     }
 
     private void update() {
-        // TODO: Update game logic
         gameController.update();
     }
 
