@@ -49,6 +49,10 @@ public class Player extends Entity {
         this.y = y;
         this.hitbox.x = x + 32 * Constants.TILE_SCALE;
         this.hitbox.y = y + 16 * Constants.TILE_SCALE;
+        this.leftAttackHitBox.x = (x + 32 * Constants.TILE_SCALE) - 32 * Constants.TILE_SCALE;
+        this.leftAttackHitBox.y = y + 8 * Constants.TILE_SCALE;
+        this.rightAttackHitBox.x = (x + 32 * Constants.TILE_SCALE) + 32 * Constants.TILE_SCALE;
+        this.rightAttackHitBox.y = y + 8 * Constants.TILE_SCALE;
     }
 
     @Override
