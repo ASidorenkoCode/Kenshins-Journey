@@ -4,6 +4,8 @@ import game.UI.GameView;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.plaf.basic.BasicProgressBarUI;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -25,48 +27,52 @@ public class LoadingScreen {
 
         frame.setPreferredSize(new Dimension(GameView.GAME_WIDTH, GameView.GAME_HEIGHT));
 
-        // Create a progress bar
         JProgressBar progressBar = new JProgressBar();
         progressBar.setMinimum(0);
         progressBar.setMaximum(100);
-        progressBar.setStringPainted(true);
-        progressBar.setForeground(Color.BLUE); // Change the color of the progress bar
-        progressBar.setBackground(Color.WHITE); // Change the background color of the progress bar
-        progressBar.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2)); // Add a border to the progress bar
+        progressBar.setStringPainted(false);
+        progressBar.setForeground(Color.WHITE);
+        progressBar.setBackground(Color.BLACK);
+        Border emptyBorder = BorderFactory.createEmptyBorder(10, 10, 10, 10); // 10 pixels of spacing
+        Border lineBorder = BorderFactory.createLineBorder(Color.WHITE, 5); // 5 pixels of border width
+        progressBar.setBorder(BorderFactory.createCompoundBorder(lineBorder, emptyBorder));
 
-        // Create a panel to hold the progress bar
+        progressBar.setUI(new BasicProgressBarUI() {
+            protected void paintDeterminate(Graphics g, JComponent c) {
+                // Always paint the progress bar black
+                g.setColor(Color.BLACK);
+                g.fillRect(0, 0, c.getWidth(), c.getHeight());
+                super.paintDeterminate(g, c);
+            }
+        });
+
         JPanel progressBarPanel = new JPanel();
         progressBarPanel.setLayout(new BoxLayout(progressBarPanel, BoxLayout.X_AXIS));
 
-        // Set the background color of the progressBarPanel to black
         progressBarPanel.setBackground(Color.BLACK);
 
-        // Add padding panels on the left and right
         progressBarPanel.add(Box.createHorizontalGlue());
         progressBarPanel.add(progressBar);
         progressBarPanel.add(Box.createHorizontalGlue());
 
-        // Set the maximum size of the progress bar to be 50% of the screen width and increase the height
-        progressBar.setMaximumSize(new Dimension(frame.getWidth() / 2, 100)); // Adjust the height as needed
+        progressBar.setMaximumSize(new Dimension(GameView.GAME_WIDTH, 200)); // Adjust the height as needed
+        progressBar.setPreferredSize(new Dimension(GameView.GAME_WIDTH/2, 50)); // Adjust the height as needed
 
-        // Create a panel to center the progress bar vertically
         JPanel centerPanel = new JPanel();
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
         centerPanel.add(Box.createVerticalGlue());
         centerPanel.add(progressBarPanel);
         centerPanel.add(Box.createVerticalGlue());
 
-        // Set the background color of the centerPanel to black
         centerPanel.setBackground(Color.BLACK);
 
         centerPanel.setBounds(0, 0, frame.getWidth(), frame.getHeight());
 
         JLayeredPane layeredPane = frame.getLayeredPane();
-        layeredPane.add(centerPanel, JLayeredPane.POPUP_LAYER); // Add to the popup layer, which is above all others
+        layeredPane.add(centerPanel, JLayeredPane.POPUP_LAYER);
 
         frame.setVisible(true);
 
-        // Update the progress bar over time
         new Timer().schedule(new TimerTask() {
             int progress = 0;
 
