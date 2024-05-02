@@ -6,6 +6,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.plaf.basic.BasicProgressBarUI;
 import java.awt.*;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -113,10 +114,11 @@ public class LoadingScreen {
     private void startProgressUpdateTimer(JProgressBar progressBar, JPanel centerPanel, JLayeredPane layeredPane) {
         new Timer().schedule(new TimerTask() {
             int progress = 0;
+            Random random = new Random();
 
             @Override
             public void run() {
-                progress += 20;
+                progress += 10 + random.nextInt(26);
                 progressBar.setValue(progress);
 
                 if (progress >= 100) {
