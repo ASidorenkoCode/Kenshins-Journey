@@ -2,13 +2,10 @@ package screens;
 
 import game.UI.GameView;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.plaf.basic.BasicProgressBarUI;
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -23,10 +20,21 @@ public class LoadingScreen {
     }
 
     public void displayLoadingScreen() {
-        System.out.println("displayLoadingScreen method called");
-
         frame.setPreferredSize(new Dimension(GameView.GAME_WIDTH, GameView.GAME_HEIGHT));
 
+        JProgressBar progressBar = setupProgressBar();
+        JPanel progressBarPanel = setupProgressBarPanel(progressBar);
+        JPanel centerPanel = setupCenterPanel(progressBarPanel);
+
+        JLayeredPane layeredPane = frame.getLayeredPane();
+        layeredPane.add(centerPanel, JLayeredPane.POPUP_LAYER);
+
+        frame.setVisible(true);
+
+        startProgressUpdateTimer(progressBar, centerPanel, layeredPane);
+    }
+
+    private JProgressBar setupProgressBar() {
         JProgressBar progressBar = new JProgressBar();
         progressBar.setMinimum(0);
         progressBar.setMaximum(100);
@@ -39,40 +47,70 @@ public class LoadingScreen {
 
         progressBar.setUI(new BasicProgressBarUI() {
             protected void paintDeterminate(Graphics g, JComponent c) {
-                // Always paint the progress bar black
                 g.setColor(Color.BLACK);
                 g.fillRect(0, 0, c.getWidth(), c.getHeight());
                 super.paintDeterminate(g, c);
             }
         });
 
+        progressBar.setMaximumSize(new Dimension(GameView.GAME_WIDTH, 200)); // Adjust the height as needed
+        progressBar.setPreferredSize(new Dimension(GameView.GAME_WIDTH/2, 50)); // Adjust the height as needed
+
+        return progressBar;
+    }
+
+    private JPanel setupProgressBarPanel(JProgressBar progressBar) {
         JPanel progressBarPanel = new JPanel();
         progressBarPanel.setLayout(new BoxLayout(progressBarPanel, BoxLayout.X_AXIS));
-
         progressBarPanel.setBackground(Color.BLACK);
-
         progressBarPanel.add(Box.createHorizontalGlue());
         progressBarPanel.add(progressBar);
         progressBarPanel.add(Box.createHorizontalGlue());
 
-        progressBar.setMaximumSize(new Dimension(GameView.GAME_WIDTH, 200)); // Adjust the height as needed
-        progressBar.setPreferredSize(new Dimension(GameView.GAME_WIDTH/2, 50)); // Adjust the height as needed
+        return progressBarPanel;
+    }
 
+    private JPanel setupCenterPanel(JPanel progressBarPanel) {
         JPanel centerPanel = new JPanel();
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
+        loadingLabel = new JLabel("Loading...") {
+            @Override
+            public Dimension getMaximumSize() {
+                return new Dimension(centerPanel.getWidth(), super.getPreferredSize().height);
+            }
+        };
+        loadingLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 30));
+        loadingLabel.setForeground(Color.WHITE);
+        loadingLabel.setHorizontalAlignment(JLabel.CENTER);
+        loadingLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        loadingLabel.setMaximumSize(new Dimension(centerPanel.getWidth(), loadingLabel.getPreferredSize().height));
+
+        JLabel factLabel = new JLabel("Did you know? Game development with Java Swing is not fun.") {
+            @Override
+            public Dimension getMaximumSize() {
+                return new Dimension(centerPanel.getWidth(), super.getPreferredSize().height);
+            }
+        };
+        factLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
+        factLabel.setForeground(Color.WHITE);
+        factLabel.setHorizontalAlignment(JLabel.CENTER);
+        factLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        factLabel.setMaximumSize(new Dimension(centerPanel.getWidth(), factLabel.getPreferredSize().height));
+
         centerPanel.add(Box.createVerticalGlue());
+        centerPanel.add(loadingLabel);
+        centerPanel.add(Box.createRigidArea(new Dimension(0, 20))); // Add some vertical space
         centerPanel.add(progressBarPanel);
+        centerPanel.add(Box.createRigidArea(new Dimension(0, 20))); // Add some vertical space
+        centerPanel.add(factLabel);
         centerPanel.add(Box.createVerticalGlue());
-
         centerPanel.setBackground(Color.BLACK);
-
         centerPanel.setBounds(0, 0, frame.getWidth(), frame.getHeight());
 
-        JLayeredPane layeredPane = frame.getLayeredPane();
-        layeredPane.add(centerPanel, JLayeredPane.POPUP_LAYER);
+        return centerPanel;
+    }
 
-        frame.setVisible(true);
-
+    private void startProgressUpdateTimer(JProgressBar progressBar, JPanel centerPanel, JLayeredPane layeredPane) {
         new Timer().schedule(new TimerTask() {
             int progress = 0;
 
@@ -82,7 +120,6 @@ public class LoadingScreen {
                 progressBar.setValue(progress);
 
                 if (progress >= 100) {
-                    System.out.println("Removing centerPanel");
                     layeredPane.remove(centerPanel);
                     frame.revalidate();
                     frame.repaint();
