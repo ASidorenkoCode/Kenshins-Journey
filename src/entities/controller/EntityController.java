@@ -1,11 +1,10 @@
 package entities.controller;
-import constants.Constants;
+
 import entities.logic.Finish;
 import entities.logic.Player;
 import entities.ui.FinishUI;
 import entities.ui.PlayerUI;
 import maps.controller.MapController;
-import maps.logic.Map;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -26,8 +25,12 @@ public class EntityController {
     }
 
     public void update(MapController mapController) {
+        if (finish.checkIfPlayerIsInFinish(player)) {
+            mapController.loadNextMap();
+            player.updateSpawnPoint(mapController.getCurrentPlayerSpawn().x, mapController.getCurrentPlayerSpawn().y);
+            finish.updateFinishPoint(mapController.getCurrentFinishSpawn().x, mapController.getCurrentFinishSpawn().y);
+        }
         player.update(mapController.getCurrentMap());
-        finish.checkIfPlayerIsInFinish(player);
     }
 
     public void handleUserInputKeyPressed(KeyEvent e) {
