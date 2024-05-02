@@ -29,19 +29,10 @@ public class EntityController {
 
     public void update(MapController mapController, LoadingScreen loadingScreen) {
         if (finish.checkIfPlayerIsInFinish(player)) {
-            loadingScreen.displayLoadingScreen();
             mapController.loadNextMap();
+            loadingScreen.displayLoadingScreen(); // This will blur the window
             player.updateSpawnPoint(mapController.getCurrentPlayerSpawn().x, mapController.getCurrentPlayerSpawn().y);
             finish.updateFinishPoint(mapController.getCurrentFinishSpawn().x, mapController.getCurrentFinishSpawn().y);
-            // Create a Timer instance
-            Timer timer = new Timer();
-            // Schedule a task to be executed after 2 seconds
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    loadingScreen.hideLoadingScreen();
-                }
-            }, 2000); // Delay in milliseconds
         }
         player.update(mapController.getCurrentMap());
     }
