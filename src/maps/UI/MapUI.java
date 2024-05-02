@@ -30,6 +30,7 @@ public class MapUI {
                     System.out.println("Index out of bounds: " + index);
                 }
             }
+
     }
 
     public Map getCurrentMap() {

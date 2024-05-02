@@ -1,5 +1,7 @@
 package entities.controller;
+import entities.logic.Finish;
 import entities.logic.Player;
+import entities.ui.FinishUI;
 import entities.ui.PlayerUI;
 import maps.controller.MapController;
 import maps.logic.Map;
@@ -12,14 +14,19 @@ public class EntityController {
     private PlayerUI playerUI;
     private Player player;
 
+    private FinishUI finishUI;
+    private Finish finish;
+
     public EntityController(boolean showHitBox, Point point) {
         player = new Player(point.x, point.y);
         playerUI = new PlayerUI(player, showHitBox);
+        finish = new Finish(1500, 576);
+        finishUI = new FinishUI(finish, showHitBox);
     }
 
-    public void update(Map map) {
-        player.update(map);
-
+    public void update(MapController mapController) {
+        player.update(mapController.getCurrentMap());
+        finish.checkIfPlayerIsInFinish(player, mapController.getMapOffset());
     }
 
     public void handleUserInputKeyPressed(KeyEvent e) {
@@ -48,6 +55,7 @@ public class EntityController {
 
     public void drawEntities(Graphics g, int offset) {
         playerUI.drawAnimations(g, offset);
+        finishUI.drawHitBox(g, offset);
     }
 
     public Player getPlayer() {

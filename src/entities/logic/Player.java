@@ -3,6 +3,7 @@ package entities.logic;
 import constants.Constants;
 import entities.animations.PlayerAnimations;
 import entities.ui.PlayerUI;
+import maps.controller.MapController;
 import maps.logic.Map;
 
 import java.awt.*;
@@ -48,7 +49,6 @@ public class Player extends Entity {
         }
         if (inAir) {
             updateYPos(map, airMovement);
-            //TODO Check if hit bottom
             if(inAir) {
                 airMovement += 0.1f;
 

@@ -1,5 +1,6 @@
 package entities.logic;
 
+import maps.controller.MapController;
 import maps.logic.Map;
 
 import java.awt.geom.Rectangle2D;

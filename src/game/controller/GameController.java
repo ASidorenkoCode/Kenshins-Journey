@@ -37,7 +37,7 @@ public class GameController {
     }
 
     public void update() {
-        entityController.update(mapController.getCurrentMap());
+        entityController.update(mapController);
     }
 
 }

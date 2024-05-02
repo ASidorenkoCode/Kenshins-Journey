@@ -26,8 +26,6 @@ abstract public class EntityUI {
 
     abstract void drawAttackBox();
     abstract void drawHitBox(Graphics g, int offset);
-
-
     protected void loadAnimations() {
         animationsLeft = loadAnimationSprites(ENTITY_SPRITE_PATH_LEFT);
         animationsRight = loadAnimationSprites(ENTITY_SPRITE_PATH_RIGHT);
