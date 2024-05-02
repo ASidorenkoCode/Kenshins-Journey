@@ -49,7 +49,7 @@ public class Map {
 
     private void loadEntities(int greenValue, int x, int y) {
         switch (greenValue) {
-            case 100 -> playerSpawn = new Point(x * GameView.TILES_DEFAULT_SIZE, y * GameView.TILES_DEFAULT_SIZE);
+            case 100 -> playerSpawn = new Point((int) (x * GameView.TILES_DEFAULT_SIZE * Constants.TILE_SCALE) - 96, (int) (y * GameView.TILES_DEFAULT_SIZE * Constants.TILE_SCALE) - 96);
         }
     }
 

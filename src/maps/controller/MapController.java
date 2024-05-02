@@ -81,4 +81,13 @@ public class MapController {
     public int getMapOffset() {
         return mapOffset;
     }
+
+    public Point getCurrentPlayerSpawn() {
+        // TODO: make it dynamic
+        return maps.getFirst().getPlayerSpawn();
+    }
+
+    public void setEntityController(EntityController entityController) {
+        this.entityController = entityController;
+    }
 }

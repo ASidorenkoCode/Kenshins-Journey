@@ -15,12 +15,12 @@ public class GameController {
     private GameEngine gameEngine;
     private GameView gameView;
     private EntityController entityController;
-
     private MapController mapController;
 
     public GameController(boolean showFPS_UPS, boolean showHitBox) {
-        entityController = new EntityController(showHitBox);
-        mapController = new MapController(entityController);
+        mapController = new MapController(null);
+        entityController = new EntityController(showHitBox, mapController.getCurrentPlayerSpawn());
+        mapController.setEntityController(entityController);
         gameEngine = new GameEngine(showFPS_UPS, this);
         gameView = new GameView(this, entityController, mapController);
         gameView.gameWindow();

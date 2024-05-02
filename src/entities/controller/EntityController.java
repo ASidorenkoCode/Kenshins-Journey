@@ -12,8 +12,8 @@ public class EntityController {
     private PlayerUI playerUI;
     private Player player;
 
-    public EntityController(boolean showHitBox) {
-        player = new Player(400,380);
+    public EntityController(boolean showHitBox, Point point) {
+        player = new Player(point.x, point.y);
         playerUI = new PlayerUI(player, showHitBox);
     }
 
