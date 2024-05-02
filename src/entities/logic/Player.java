@@ -13,8 +13,15 @@ public class Player extends Entity {
     private PlayerAnimations currentAnimation;
     private PlayerAnimations lastAnimation;
 
+    private Rectangle2D.Float rightAttackHitBox;
+
+    private Rectangle2D.Float leftAttackHitBox;
+
+
     public Player(float x, float y) {
-        super(x, y, new Rectangle2D.Float( x + 32 * Constants.TILE_SCALE,  y + 16 * Constants.TILE_SCALE,(96 - 64) * Constants.TILE_SCALE,(96 - 48) * Constants.TILE_SCALE));
+        super(x, y, new Rectangle2D.Float(x + 32 * Constants.TILE_SCALE,  y + 16 * Constants.TILE_SCALE,(96 - 64) * Constants.TILE_SCALE,(96 - 48) * Constants.TILE_SCALE));
+        rightAttackHitBox = new Rectangle2D.Float((x + 32 * Constants.TILE_SCALE) + 32 * Constants.TILE_SCALE,  y + 8 * Constants.TILE_SCALE ,(96 - 64) * Constants.TILE_SCALE,(96 - 48) * Constants.TILE_SCALE);
+        leftAttackHitBox = new Rectangle2D.Float((x + 32 * Constants.TILE_SCALE) - 32 * Constants.TILE_SCALE,  y + 8 * Constants.TILE_SCALE ,(96 - 64) * Constants.TILE_SCALE,(96 - 48) * Constants.TILE_SCALE);
         left = false;
         right = false;
         inAir = false;
@@ -71,6 +78,8 @@ public class Player extends Entity {
         if(!checkIfPlayerCanMoveToPosition(map, hitbox.x + by_value, hitbox.y, hitbox.width, hitbox.height)) return;
         x += by_value;
         hitbox.x += by_value;
+        rightAttackHitBox.x += by_value;
+        leftAttackHitBox.x += by_value;
     }
 
     private void updateYPos(Map map, float by_value) {
@@ -97,6 +106,8 @@ public class Player extends Entity {
         }
         y += by_value;
         hitbox.y += by_value;
+        rightAttackHitBox.y += by_value;
+        leftAttackHitBox.y += by_value;
     }
 
     public void updateAnimation(PlayerAnimations animation) {
@@ -192,5 +203,11 @@ public class Player extends Entity {
         return true;
     }
 
+    public Rectangle2D.Float getRightAttackHitBox() {
+        return rightAttackHitBox;
+    }
 
+    public Rectangle2D.Float getLeftAttackHitBox() {
+        return leftAttackHitBox;
+    }
 }

@@ -35,6 +35,10 @@ public class PlayerUI extends EntityUI {
         if (showHitBox) {
             Rectangle2D.Float hitbox = player.getHitbox();
             g.drawRect((int) hitbox.x - offset, (int) hitbox.y, (int) hitbox.width, (int) hitbox.height);
+            hitbox = player.getRightAttackHitBox();
+            g.drawRect((int) hitbox.x - offset, (int) hitbox.y, (int) hitbox.width, (int) hitbox.height);
+            hitbox = player.getLeftAttackHitBox();
+            g.drawRect((int) hitbox.x - offset, (int) hitbox.y, (int) hitbox.width, (int) hitbox.height);
         }
     }
 
