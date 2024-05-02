@@ -63,8 +63,9 @@ public class MapController {
         return mapSprites;
     }
 
-    public void draw(Graphics g, int offset) {
-        mapUI.draw(g, offset);
+    public void draw(Graphics g) {
+        checkCloseToBorder();
+        mapUI.draw(g, getMapOffset());
     }
 
     public void checkCloseToBorder() {

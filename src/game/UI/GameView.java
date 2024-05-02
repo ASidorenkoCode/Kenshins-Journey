@@ -52,9 +52,8 @@ public class GameView extends JPanel {
 
     public void render(Graphics g) {
         //TODO: Implement rendering
-        mapController.checkCloseToBorder();
         int mapOffset = mapController.getMapOffset();
-        mapController.draw(g, mapOffset);
+        mapController.draw(g);
         entityController.drawEntities(g, mapOffset);
     }
 

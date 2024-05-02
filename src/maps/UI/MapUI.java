@@ -18,12 +18,12 @@ public class MapUI {
         this.maps = mapController.getMaps();
     }
 
-    public void draw(Graphics g, int maxMapOffsetX) {
+    public void draw(Graphics g, int mapOffset) {
         for (int j = 0; j < GameView.TILES_IN_HEIGHT; j++)
             for (int i = 0; i < maps.get(mapIndex).getMapData()[0].length; i++) {
                 int index = maps.get(mapIndex).getSpriteIndex(i, j);
                 if (index >= 0 && index < mapController.getMapSprites().length) {
-                    int x = (int) (GameView.TILES_DEFAULT_SIZE * Constants.TILE_SCALE * i - maxMapOffsetX);
+                    int x = (int) (GameView.TILES_DEFAULT_SIZE * Constants.TILE_SCALE * i - mapOffset);
                     int y = (int) (GameView.TILES_DEFAULT_SIZE * Constants.TILE_SCALE * j);
                     g.drawImage(mapController.getMapSprites()[index], x, y, (int) (GameView.TILES_DEFAULT_SIZE * Constants.TILE_SCALE), (int) (GameView.TILES_DEFAULT_SIZE * Constants.TILE_SCALE), null);
                 } else {

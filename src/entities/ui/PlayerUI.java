@@ -47,7 +47,6 @@ public class PlayerUI extends EntityUI {
             aniTick = 0;
             aniIndex++;
 
-            //TODO: GetSpriteAmount, static for testing purposes
             if (aniIndex >= player.getCurrentPlayerAnimation().getAniSize()) {
                 aniIndex = 0;
             }
