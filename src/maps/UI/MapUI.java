@@ -11,14 +11,13 @@ import java.util.ArrayList;
 public class MapUI {
     private final MapController mapController;
     private ArrayList<Map> maps;
-    private int mapIndex = 0;
 
     public MapUI(MapController mapController) {
         this.mapController = mapController;
         this.maps = mapController.getMaps();
     }
 
-    public void draw(Graphics g, int mapOffset) {
+    public void draw(Graphics g, int mapOffset, int mapIndex) {
         for (int j = 0; j < GameView.TILES_IN_HEIGHT; j++)
             for (int i = 0; i < maps.get(mapIndex).getMapData()[0].length; i++) {
                 int index = maps.get(mapIndex).getSpriteIndex(i, j);
@@ -31,9 +30,5 @@ public class MapUI {
                 }
             }
 
-    }
-
-    public Map getCurrentMap() {
-        return mapController.getCurrentMap();
     }
 }

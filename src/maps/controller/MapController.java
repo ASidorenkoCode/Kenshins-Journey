@@ -17,6 +17,7 @@ public class MapController {
     private MapUI mapUI;
     private EntityController entityController;
     private int mapOffset;
+    private int currentMapIndex = 0;
 
     public MapController(EntityController entityController) {
         this.entityController = entityController;
@@ -43,16 +44,21 @@ public class MapController {
             maps.add(new Map(img));
     }
 
-    public void loadNextMap() {
-        int currentMapIndex = 0;
-    }
+        public void loadNextMap() {
+            currentMapIndex++;
+            if (currentMapIndex >= maps.size()) {
+                // TODO: For now: it resets to the first map
+                currentMapIndex = 0;
+            }
+        }
+
 
     public int getAmountOfMaps() {
         return maps.size();
     }
 
     public Map getCurrentMap() {
-        return maps.get(0);
+        return maps.get(currentMapIndex);
     }
 
     public ArrayList<Map> getMaps() {
@@ -65,7 +71,7 @@ public class MapController {
 
     public void draw(Graphics g) {
         checkCloseToBorder();
-        mapUI.draw(g, getMapOffset());
+        mapUI.draw(g, getMapOffset(), currentMapIndex);
     }
 
     public void checkCloseToBorder() {
@@ -83,12 +89,11 @@ public class MapController {
     }
 
     public Point getCurrentPlayerSpawn() {
-        // TODO: make it dynamic
-        return maps.getFirst().getPlayerSpawn();
+        return maps.get(currentMapIndex).getPlayerSpawn();
     }
 
     public Point getCurrentFinishSpawn() {
-        return maps.getFirst().getFinishSpawn();
+        return maps.get(currentMapIndex).getFinishSpawn();
     }
 
     public void setEntityController(EntityController entityController) {

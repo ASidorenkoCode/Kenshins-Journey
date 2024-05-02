@@ -8,7 +8,7 @@ import java.awt.geom.Rectangle2D;
 public class Finish extends Entity {
 
     public Finish(float x, float y) {
-        super(x, y, new Rectangle2D.Float(x,  y,32 * Constants.TILE_SCALE,32 * Constants.TILE_SCALE));
+        super(x, y, new Rectangle2D.Float(x, y, 32 * Constants.TILE_SCALE, 32 * Constants.TILE_SCALE));
     }
 
     @Override
@@ -21,7 +21,14 @@ public class Finish extends Entity {
 
     }
 
-    public void checkIfPlayerIsInFinish(Player player) {
-        if(hitbox.intersects(player.getHitbox())) System.out.println("player hits finish");
+    public void updateFinishPoint(int x, int y) {
+        this.x = x;
+        this.y = y;
+        this.hitbox.x = x;
+        this.hitbox.y = y;
+    }
+
+    public boolean checkIfPlayerIsInFinish(Player player) {
+        return hitbox.intersects(player.getHitbox());
     }
 }

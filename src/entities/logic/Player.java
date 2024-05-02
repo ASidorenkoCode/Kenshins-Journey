@@ -37,6 +37,13 @@ public class Player extends Entity {
 
     }
 
+    public void updateSpawnPoint (int x, int y) {
+        this.x = x;
+        this.y = y;
+        this.hitbox.x = x + 32 * Constants.TILE_SCALE;
+        this.hitbox.y = y + 16 * Constants.TILE_SCALE;
+    }
+
     @Override
     public void update(Map map) {
         if(right && !left) {
