@@ -2,24 +2,25 @@ package entities.logic;
 
 import constants.Constants;
 import entities.animations.PlayerAnimations;
-import entities.ui.PlayerUI;
-import maps.controller.MapController;
 import maps.logic.Map;
 
-import java.awt.*;
 import java.awt.geom.Rectangle2D;
-import java.util.Arrays;
 
 public class Player extends Entity {
 
-    private boolean left, right, jump, inAir;
+    private boolean left, right, attack, inAir;
     private float airMovement = -5f;
     private PlayerAnimations currentAnimation;
+    private PlayerAnimations lastAnimation;
 
     public Player(float x, float y) {
         super(x, y, new Rectangle2D.Float( x + 32 * Constants.TILE_SCALE,  y + 16 * Constants.TILE_SCALE,(96 - 64) * Constants.TILE_SCALE,(96 - 48) * Constants.TILE_SCALE));
         left = false;
+        right = false;
+        inAir = false;
+        attack = false;
         currentAnimation = PlayerAnimations.IDLE;
+        lastAnimation = PlayerAnimations.IDLE;
     }
 
 
@@ -38,14 +39,11 @@ public class Player extends Entity {
 
     @Override
     public void update(Map map) {
-
         if(right && !left) {
             updateXPos(map, 1);
-            updateAnimation(PlayerAnimations.RUN);
         }
         else if(left && !right) {
             updateXPos(map, -1);
-            updateAnimation(PlayerAnimations.RUN);
         }
         if (inAir) {
             updateYPos(map, airMovement);
@@ -59,7 +57,6 @@ public class Player extends Entity {
         } else if(!checkIfPlayerCollidesUnderHim(map, hitbox.x, hitbox.y + 1, hitbox.width, hitbox.height)) {
             airMovement = 0;
             inAir = true;
-
         }
     }
 
@@ -78,6 +75,7 @@ public class Player extends Entity {
         } else if(checkIfPlayerCollidesUnderHim(map, hitbox.x, hitbox.y + by_value, hitbox.width, hitbox.height)) {
             inAir = false;
             updateAnimation(PlayerAnimations.IDLE);
+            if((left && !right)|| (!left && right)) updateAnimation(PlayerAnimations.RUN);
 
             //set player to position of ground
 
@@ -95,12 +93,13 @@ public class Player extends Entity {
     }
 
     public void updateAnimation(PlayerAnimations animation) {
+        lastAnimation = currentAnimation;
         currentAnimation = animation;
     }
 
     public void setLeft(boolean left) {
         this.left = left;
-        if(inAir) return;
+        if(currentAnimation == PlayerAnimations.RUN_SLASH || inAir) return;
         if(left && !right) updateAnimation(PlayerAnimations.RUN);
         else if(right) updateAnimation(PlayerAnimations.RUN);
         else updateAnimation(PlayerAnimations.IDLE);
@@ -109,7 +108,7 @@ public class Player extends Entity {
 
     public void setRight(boolean right) {
         this.right = right;
-        if(inAir) return;
+        if(currentAnimation == PlayerAnimations.RUN_SLASH || inAir) return;
         if(right && !left) updateAnimation(PlayerAnimations.RUN);
         else if (left) updateAnimation(PlayerAnimations.RUN);
         else updateAnimation(PlayerAnimations.IDLE);
@@ -123,8 +122,21 @@ public class Player extends Entity {
             updateAnimation(PlayerAnimations.JUMP);
         }
     }
+
+    public void attack() {
+        if(!attack && !inAir) {
+            setAttack(true);
+            //TODO: Different attack animations based on running etc.
+            updateAnimation(PlayerAnimations.RUN_SLASH);
+            if((left && right) || (!left && !right)) updateAnimation(PlayerAnimations.IDLE_SLASH);
+        }
+    }
     public PlayerAnimations getCurrentPlayerAnimation() {
         return currentAnimation;
+    }
+
+    public PlayerAnimations getLastAnimation() {
+        return lastAnimation;
     }
     public boolean getLeft() {
         return left;
@@ -133,8 +145,13 @@ public class Player extends Entity {
         return right;
     }
 
-    public Rectangle2D.Float getHitbox() {
-        return hitbox;
+    public void setAttack(boolean attack) {
+        if(this.attack && !attack) {
+            if(currentAnimation == PlayerAnimations.RUN_SLASH) updateAnimation(PlayerAnimations.RUN);
+            else updateAnimation(PlayerAnimations.IDLE);
+        }
+        this.attack = attack;
+
     }
 
     public boolean checkCollisionForPosition(Map map, float x, float y) {

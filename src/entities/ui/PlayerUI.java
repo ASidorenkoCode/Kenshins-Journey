@@ -39,7 +39,8 @@ public class PlayerUI extends EntityUI {
     }
 
     private void updateAnimationTick() {
-        if (aniIndex >= player.getCurrentPlayerAnimation().getAniSize()) {
+        if (player.getLastAnimation() != player.getCurrentPlayerAnimation()) {
+            player.updateAnimation(player.getCurrentPlayerAnimation());
             resetAnimationTick();
         }
         aniTick++;
@@ -48,6 +49,7 @@ public class PlayerUI extends EntityUI {
             aniIndex++;
 
             if (aniIndex >= player.getCurrentPlayerAnimation().getAniSize()) {
+                player.setAttack(false);
                 aniIndex = 0;
             }
         }

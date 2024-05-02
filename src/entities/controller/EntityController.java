@@ -40,6 +40,9 @@ public class EntityController {
                 break;
             case KeyEvent.VK_SPACE:
                 player.jump();
+                break;
+            case KeyEvent.VK_SHIFT:
+                player.attack();
         }
     }
 
