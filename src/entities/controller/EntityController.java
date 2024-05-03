@@ -29,8 +29,8 @@ public class EntityController {
 
     public void update(MapController mapController, LoadingScreen loadingScreen) {
         if (finish.checkIfPlayerIsInFinish(player)) {
+            loadingScreen.displayLoadingScreen();
             mapController.loadNextMap();
-            loadingScreen.displayLoadingScreen(); // This will blur the window
             player.updateSpawnPoint(mapController.getCurrentPlayerSpawn().x, mapController.getCurrentPlayerSpawn().y);
             finish.updateFinishPoint(mapController.getCurrentFinishSpawn().x, mapController.getCurrentFinishSpawn().y);
         }
