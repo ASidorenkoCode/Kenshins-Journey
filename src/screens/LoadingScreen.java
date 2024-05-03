@@ -6,14 +6,20 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.plaf.basic.BasicProgressBarUI;
 import java.awt.*;
-import java.util.Random;
+import java.util.List;
 import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 public class LoadingScreen {
     private JFrame frame;
     private JLabel loadingLabel;
     private Dimension originalSize;
+
+    List<String> facts = Arrays.asList(
+            "Did you know? Game development with Java Swing is not fun.",
+            "Did you know? Bauer has a first name.",
+            "Did you know? This loading screen is not useless, because the map is already loaded."
+    );
 
     public LoadingScreen(JFrame frame) {
         this.frame = frame;
@@ -86,17 +92,7 @@ public class LoadingScreen {
         loadingLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         loadingLabel.setMaximumSize(new Dimension(centerPanel.getWidth(), loadingLabel.getPreferredSize().height));
 
-        JLabel factLabel = new JLabel("Did you know? Game development with Java Swing is not fun.") {
-            @Override
-            public Dimension getMaximumSize() {
-                return new Dimension(centerPanel.getWidth(), super.getPreferredSize().height);
-            }
-        };
-        factLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
-        factLabel.setForeground(Color.WHITE);
-        factLabel.setHorizontalAlignment(JLabel.CENTER);
-        factLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        factLabel.setMaximumSize(new Dimension(centerPanel.getWidth(), factLabel.getPreferredSize().height));
+        JLabel factLabel = getFactLabel(centerPanel);
 
         centerPanel.add(Box.createVerticalGlue());
         centerPanel.add(loadingLabel);
@@ -109,6 +105,23 @@ public class LoadingScreen {
         centerPanel.setBounds(0, 0, frame.getWidth(), frame.getHeight());
 
         return centerPanel;
+    }
+
+    private JLabel getFactLabel(JPanel centerPanel) {
+        Random random = new Random();
+        String randomFact = facts.get(random.nextInt(facts.size()));
+        JLabel factLabel = new JLabel(randomFact) {
+            @Override
+            public Dimension getMaximumSize() {
+                return new Dimension(centerPanel.getWidth(), super.getPreferredSize().height);
+            }
+        };
+        factLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
+        factLabel.setForeground(Color.WHITE);
+        factLabel.setHorizontalAlignment(JLabel.CENTER);
+        factLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        factLabel.setMaximumSize(new Dimension(centerPanel.getWidth(), factLabel.getPreferredSize().height));
+        return factLabel;
     }
 
     private void startProgressUpdateTimer(JProgressBar progressBar, JPanel centerPanel, JLayeredPane layeredPane) {
