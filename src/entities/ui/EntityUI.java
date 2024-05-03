@@ -15,7 +15,7 @@ abstract public class EntityUI {
     protected BufferedImage[][] animationsDirection;
     protected int aniTick;
     protected int aniIndex;
-    protected final static int ANI_SPEED = 20;
+    protected int aniSpeed = 20;
     protected int SPRITE_PX_WIDTH;
     protected int SPRITE_PX_HEIGHT;
     protected String ENTITY_SPRITE_PATH_LEFT;
@@ -27,8 +27,9 @@ abstract public class EntityUI {
     abstract void drawAttackBox();
     abstract void drawHitBox(Graphics g, int offset);
     protected void loadAnimations() {
-        animationsLeft = loadAnimationSprites(ENTITY_SPRITE_PATH_LEFT);
         animationsRight = loadAnimationSprites(ENTITY_SPRITE_PATH_RIGHT);
+        if(ENTITY_SPRITE_PATH_LEFT != null)
+            animationsLeft = loadAnimationSprites(ENTITY_SPRITE_PATH_LEFT);
     }
 
     private BufferedImage[][] loadAnimationSprites(String spritePath) {
@@ -43,6 +44,8 @@ abstract public class EntityUI {
                         SPRITE_PX_HEIGHT);
         return animations;
     }
+
+    abstract void updateAnimationTick();
     abstract void drawAnimations(Graphics g, int offset);
     abstract void drawHealthBar();
 }

@@ -62,9 +62,8 @@ public class EntityController {
 
     public void drawEntities(Graphics g, int offset) {
         playerUI.drawAnimations(g, offset);
-        finishUI.drawHitBox(g, offset);
+        finishUI.drawAnimations(g, offset);
     }
-
     public Player getPlayer() {
         return player;
     }

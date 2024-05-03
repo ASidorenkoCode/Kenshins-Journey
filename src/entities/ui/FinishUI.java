@@ -14,6 +14,12 @@ public class FinishUI extends EntityUI {
     public FinishUI(Finish finish, boolean showHitBox) {
         this.finish = finish;
         this.showHitBox = showHitBox;
+        SPRITE_PX_WIDTH = 60;
+        SPRITE_PX_HEIGHT = 60;
+        ENTITY_SPRITE_PATH_RIGHT = "flag_animation.png"; //when there is only one direction, use the default option right
+        SPRITE_Y_DIMENSION = 1;
+        SPRITE_X_DIMENSION = 5;
+        loadAnimations();
 
     }
 
@@ -38,7 +44,14 @@ public class FinishUI extends EntityUI {
 
     @Override
     public void drawAnimations(Graphics g, int offset) {
-        //TODO: Animations of portal
+        updateAnimationTick();
+        //TODO Better way for different animations
+        g.drawImage(animationsRight[0][aniIndex], //only one dimension and only one direction
+                (int) finish.getX() - offset,
+                (int) finish.getY(),
+                (int) (SPRITE_PX_WIDTH * Constants.TILE_SCALE),
+                (int) (SPRITE_PX_HEIGHT * Constants.TILE_SCALE), null);
+        drawHitBox(g, offset);
 
     }
 
@@ -46,5 +59,18 @@ public class FinishUI extends EntityUI {
     @Override
     void drawHealthBar() {
         //TODO: Not needed, maybe delete for all entites
+    }
+
+    @Override
+    void updateAnimationTick() {
+        aniTick++;
+        if (aniTick >= aniSpeed) {
+            aniTick = 0;
+            aniIndex++;
+
+            if (aniIndex >= 4) {
+                aniIndex = 0;
+            }
+        }
     }
 }

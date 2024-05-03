@@ -46,10 +46,12 @@ public class PlayerUI extends EntityUI {
         }
     }
 
-    private void updateAnimationTick() {
+    @Override
+    void updateAnimationTick() {
+
         setAnimation();
         aniTick++;
-        if (aniTick >= ANI_SPEED) {
+        if (aniTick >= aniSpeed) {
             aniTick = 0;
             aniIndex++;
 
@@ -76,6 +78,9 @@ public class PlayerUI extends EntityUI {
         //reset index
         if(currentAnimation != lastAnimation) {
             if(!(lastAnimation == PlayerAnimations.IDLE_SLASH || lastAnimation == PlayerAnimations.RUN_SLASH)) aniIndex = 0;
+
+            if(currentAnimation == PlayerAnimations.IDLE_SLASH || currentAnimation == PlayerAnimations.RUN_SLASH) aniSpeed = 10;
+            else aniSpeed = 15;
         }
     }
 
