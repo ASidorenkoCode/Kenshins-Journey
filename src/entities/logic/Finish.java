@@ -28,6 +28,9 @@ public class Finish extends Entity {
         this.y = y - HORIZONTAL_OFFSET;
         this.hitbox.x = x;
         this.hitbox.y = y - HORIZONTAL_OFFSET;
+        this.y = y;
+        this.hitbox.x = x;
+        this.hitbox.y = y;
     }
 
     public boolean checkIfPlayerIsInFinish(Player player) {

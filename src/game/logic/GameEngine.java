@@ -1,10 +1,6 @@
 package game.logic;
 
-import entities.controller.EntityController;
-import entities.logic.Player;
 import game.controller.GameController;
-
-import java.awt.event.KeyEvent;
 
 public class GameEngine implements Runnable {
 
@@ -16,6 +12,8 @@ public class GameEngine implements Runnable {
     private long lastCheck;
     private int frames = 0;
     private int updates = 0;
+    private final Object lock = new Object();
+    private boolean isPaused = false;
 
 
     public GameEngine(boolean showFPS_UPS, GameController gameController) {
@@ -32,8 +30,22 @@ public class GameEngine implements Runnable {
         gameThread.start();
     }
 
+    public void resume() {
+        synchronized (lock) {
+            isPaused = false;
+            lock.notify();
+        }
+    }
+
+    public void pause() {
+        synchronized (lock) {
+            isPaused = true;
+        }
+    }
+
     @Override
     public void run() {
+
         final double timePerUpdate = 1e9 / UPS_SET;
         final double timePerFrame = 1e9 / FPS_SET;
         long prevTime = System.nanoTime();
@@ -41,6 +53,16 @@ public class GameEngine implements Runnable {
         double frameAccumulator = 0;
 
         while (true) {
+            synchronized (lock) {
+                while (isPaused) {
+                    try {
+                        lock.wait();
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                        System.out.println("Thread was interrupted, Failed to complete operation");
+                    }
+                }
+            }
             long currTime = System.nanoTime();
             double elapsed = currTime - prevTime;
             prevTime = currTime;
@@ -73,7 +95,6 @@ public class GameEngine implements Runnable {
     }
 
     private void update() {
-        // TODO: Update game logic
         gameController.update();
     }
 

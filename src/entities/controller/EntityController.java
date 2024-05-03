@@ -5,9 +5,12 @@ import entities.logic.Player;
 import entities.ui.FinishUI;
 import entities.ui.PlayerUI;
 import maps.controller.MapController;
+import screens.LoadingScreen;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class EntityController {
 
@@ -24,8 +27,9 @@ public class EntityController {
         finishUI = new FinishUI(finish, showHitBox);
     }
 
-    public void update(MapController mapController) {
+    public void update(MapController mapController, LoadingScreen loadingScreen) {
         if (finish.checkIfPlayerIsInFinish(player)) {
+            loadingScreen.displayLoadingScreen();
             mapController.loadNextMap();
             player.updateSpawnPoint(mapController.getCurrentPlayerSpawn().x, mapController.getCurrentPlayerSpawn().y);
             finish.updateFinishPoint(mapController.getCurrentFinishSpawn().x, mapController.getCurrentFinishSpawn().y);
@@ -63,7 +67,9 @@ public class EntityController {
     public void drawEntities(Graphics g, int offset) {
         playerUI.drawAnimations(g, offset);
         finishUI.drawAnimations(g, offset);
+        finishUI.drawHitBox(g, offset);
     }
+
     public Player getPlayer() {
         return player;
     }
