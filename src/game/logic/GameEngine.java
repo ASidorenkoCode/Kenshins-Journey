@@ -1,6 +1,10 @@
 package game.logic;
 
+import entities.controller.EntityController;
+import entities.logic.Player;
 import game.controller.GameController;
+
+import java.awt.event.KeyEvent;
 
 public class GameEngine implements Runnable {
 
@@ -70,6 +74,7 @@ public class GameEngine implements Runnable {
 
     private void update() {
         // TODO: Update game logic
+        gameController.update();
     }
 
     public Boolean getSHOW_FPS_UPS() {
