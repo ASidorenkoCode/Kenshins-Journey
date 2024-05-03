@@ -27,7 +27,6 @@ abstract public class EntityUI {
     protected void loadAnimations() {
         animations = new BufferedImage[SPRITE_Y_DIMENSION * 2][SPRITE_X_DIMENSION];
         loadAnimationSprites(ENTITY_SPRITE_PATH, animations, 0);
-        System.out.println(true);
         if(ENTITY_SPRITE_PATH_LEFT != null) loadAnimationSprites(ENTITY_SPRITE_PATH_LEFT, animations, SPRITE_Y_DIMENSION);
     }
 
