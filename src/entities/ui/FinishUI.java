@@ -16,7 +16,7 @@ public class FinishUI extends EntityUI {
         this.showHitBox = showHitBox;
         SPRITE_PX_WIDTH = 60;
         SPRITE_PX_HEIGHT = 60;
-        ENTITY_SPRITE_PATH_RIGHT = "flag_animation.png"; //when there is only one direction, use the default option right
+        ENTITY_SPRITE_PATH = "flag_animation.png"; //when there is only one direction, use the default option right
         SPRITE_Y_DIMENSION = 1;
         SPRITE_X_DIMENSION = 5;
         loadAnimations();
@@ -45,8 +45,7 @@ public class FinishUI extends EntityUI {
     @Override
     public void drawAnimations(Graphics g, int offset) {
         updateAnimationTick();
-        //TODO Better way for different animations
-        g.drawImage(animationsRight[0][aniIndex], //only one dimension and only one direction
+        g.drawImage(animations[0][aniIndex], //only one dimension and only one direction
                 (int) finish.getX() - offset,
                 (int) finish.getY(),
                 (int) (SPRITE_PX_WIDTH * Constants.TILE_SCALE),

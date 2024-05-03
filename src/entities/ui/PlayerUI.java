@@ -17,12 +17,11 @@ public class PlayerUI extends EntityUI {
         this.showHitBox = showHitBox;
         SPRITE_PX_WIDTH = 96;
         SPRITE_PX_HEIGHT = 96;
-        ENTITY_SPRITE_PATH_RIGHT = "kenshin/kenshin_sprites_black_right.png";
+        ENTITY_SPRITE_PATH = "kenshin/kenshin_sprites_black_right.png";
         ENTITY_SPRITE_PATH_LEFT = "kenshin/kenshin_sprites_black_left.png";
         SPRITE_Y_DIMENSION = 15;
         SPRITE_X_DIMENSION = 17;
         loadAnimations();
-        animationsDirection = animationsLeft;
         currentAnimation = PlayerAnimations.IDLE;
 
     }
@@ -39,14 +38,14 @@ public class PlayerUI extends EntityUI {
             Rectangle2D.Float hitbox = player.getHitbox();
             g.drawRect((int) hitbox.x - offset, (int) hitbox.y, (int) hitbox.width, (int) hitbox.height);
 
-            if(player.getRightAttackHitBoxIsActive()) {
-                hitbox = player.getRightAttackHitBox();
-                g.drawRect((int) hitbox.x - offset, (int) hitbox.y, (int) hitbox.width, (int) hitbox.height);
-            }
-
-            if(player.getLeftAttackHitBoxIsActive()) {
-                hitbox = player.getLeftAttackHitBox();
-                g.drawRect((int) hitbox.x - offset, (int) hitbox.y, (int) hitbox.width, (int) hitbox.height);
+            if(player.getAttackHitBoxIsActive()) {
+                if(showLeftAnimations) {
+                    hitbox = player.getLeftAttackHitBox();
+                    g.drawRect((int) hitbox.x - offset, (int) hitbox.y, (int) hitbox.width, (int) hitbox.height);
+                } else {
+                    hitbox = player.getRightAttackHitBox();
+                    g.drawRect((int) hitbox.x - offset, (int) hitbox.y, (int) hitbox.width, (int) hitbox.height);
+                }
             }
         }
     }
@@ -80,18 +79,8 @@ public class PlayerUI extends EntityUI {
 
 
             //control hitbox of attack based on animation status
-            if((aniIndex == 0) || (aniIndex == 1) || (aniIndex == 4) || (aniIndex == 5)) {
-                if(animationsDirection == animationsLeft) {
-                    player.setRightAttackHitBoxIsActive(false);
-                    player.setLeftAttackHitBoxIsActive(true);
-                } else {
-                    player.setRightAttackHitBoxIsActive(true);
-                    player.setLeftAttackHitBoxIsActive(false);
-                }
-            } else {
-                player.setLeftAttackHitBoxIsActive(false);
-                player.setRightAttackHitBoxIsActive(false);
-            }
+            if((aniIndex == 0) || (aniIndex == 1) || (aniIndex == 4) || (aniIndex == 5)) player.setAttackHitBoxIsActive(true);
+            else player.setAttackHitBoxIsActive(false);
         } else if((player.getLeft() && !player.getRight()) || (!player.getLeft() && player.getRight())) currentAnimation = PlayerAnimations.RUN;
         else currentAnimation = PlayerAnimations.IDLE;
 
@@ -99,7 +88,7 @@ public class PlayerUI extends EntityUI {
         if(currentAnimation != lastAnimation) {
             if(!(lastAnimation == PlayerAnimations.IDLE_SLASH || lastAnimation == PlayerAnimations.RUN_SLASH)) aniIndex = 0;
 
-            if(currentAnimation == PlayerAnimations.IDLE_SLASH || currentAnimation == PlayerAnimations.RUN_SLASH) aniSpeed = 30;
+            if(currentAnimation == PlayerAnimations.IDLE_SLASH || currentAnimation == PlayerAnimations.RUN_SLASH) aniSpeed = 10;
             else aniSpeed = 15;
         }
     }
@@ -115,10 +104,10 @@ public class PlayerUI extends EntityUI {
         updateAnimationTick();
 
         if (player.getRight() && !player.getLeft())
-            animationsDirection = animationsRight;
-        else if (player.getLeft() && !player.getRight()) animationsDirection = animationsLeft;
+            showLeftAnimations = false;
+        else if (player.getLeft() && !player.getRight()) showLeftAnimations = true;
 
-        g.drawImage(animationsDirection[currentAnimation.getAniIndex()][aniIndex],
+        g.drawImage(animations[currentAnimation.getAniIndex() + (showLeftAnimations ? SPRITE_Y_DIMENSION : 0)][aniIndex],
                 (int) player.getX() - offset,
                 (int) player.getY(),
                 (int) (SPRITE_PX_WIDTH * Constants.TILE_SCALE),

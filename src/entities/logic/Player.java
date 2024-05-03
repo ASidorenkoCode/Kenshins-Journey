@@ -1,14 +1,13 @@
 package entities.logic;
 
 import constants.Constants;
-import entities.animations.PlayerAnimations;
 import maps.logic.Map;
 
 import java.awt.geom.Rectangle2D;
 
 public class Player extends Entity {
 
-    private boolean left, right, attack, inAir, leftAttackHitBoxIsActive, rightAttackHitBoxIsActive;
+    private boolean left, right, attack, inAir, attackHitBoxIsActive;
     private float airMovement = -5f;
 
     private Rectangle2D.Float rightAttackHitBox;
@@ -140,23 +139,16 @@ public class Player extends Entity {
 
     }
 
-    public void setLeftAttackHitBoxIsActive(boolean leftAttackHitBoxIsActive) {
-        this.leftAttackHitBoxIsActive = leftAttackHitBoxIsActive;
+    public void setAttackHitBoxIsActive(boolean attackHitBoxIsActive) {
+        this.attackHitBoxIsActive = attackHitBoxIsActive;
     }
 
-    public boolean getLeftAttackHitBoxIsActive() {
-        return leftAttackHitBoxIsActive;
+    public boolean getAttackHitBoxIsActive() {
+        return attackHitBoxIsActive;
     }
 
-    public void setRightAttackHitBoxIsActive(boolean rightAttackHitBoxIsActive) {
-        this.rightAttackHitBoxIsActive = rightAttackHitBoxIsActive;
-    }
 
-    public boolean getRightAttackHitBoxIsActive() {
-        return rightAttackHitBoxIsActive;
-    }
-
-    public boolean checkCollisionForPosition(Map map, float x, float y) {
+    public boolean checkForCollisonOnPosition(Map map, float x, float y) {
         if(x < 0) return true;
         if(y < 0) return true;
 
@@ -174,15 +166,15 @@ public class Player extends Entity {
     }
 
     private boolean checkIfPlayerCollidesUnderHim(Map map, float x, float y, float width, float height) {
-        if (!checkCollisionForPosition(map, x,y + height))
-            if (!checkCollisionForPosition(map, x+width,y+height))
+        if (!checkForCollisonOnPosition(map, x,y + height))
+            if (!checkForCollisonOnPosition(map, x+width,y+height))
                 return false;
         return true;
     }
 
     private boolean checkIfPlayerCollidesOverHim(Map map, float x, float y, float width) {
-        if (!checkCollisionForPosition(map, x,y))
-            if (!checkCollisionForPosition(map, x+width,y))
+        if (!checkForCollisonOnPosition(map, x,y))
+            if (!checkForCollisonOnPosition(map, x+width,y))
                 return false;
         return true;
     }
