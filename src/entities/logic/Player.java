@@ -8,7 +8,7 @@ import java.awt.geom.Rectangle2D;
 
 public class Player extends Entity {
 
-    private boolean left, right, attack, inAir;
+    private boolean left, right, attack, inAir, leftAttackHitBoxIsActive, rightAttackHitBoxIsActive;
     private float airMovement = -5f;
 
     private Rectangle2D.Float rightAttackHitBox;
@@ -138,6 +138,22 @@ public class Player extends Entity {
 
         this.attack = attack;
 
+    }
+
+    public void setLeftAttackHitBoxIsActive(boolean leftAttackHitBoxIsActive) {
+        this.leftAttackHitBoxIsActive = leftAttackHitBoxIsActive;
+    }
+
+    public boolean getLeftAttackHitBoxIsActive() {
+        return leftAttackHitBoxIsActive;
+    }
+
+    public void setRightAttackHitBoxIsActive(boolean rightAttackHitBoxIsActive) {
+        this.rightAttackHitBoxIsActive = rightAttackHitBoxIsActive;
+    }
+
+    public boolean getRightAttackHitBoxIsActive() {
+        return rightAttackHitBoxIsActive;
     }
 
     public boolean checkCollisionForPosition(Map map, float x, float y) {
