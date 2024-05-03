@@ -18,7 +18,7 @@ public class LoadingScreen {
     List<String> facts = Arrays.asList(
             "Did you know? Game development with Java Swing is not fun.",
             "Did you know? Bauer has a first name.",
-            "Did you know? This loading screen is not useless, because the map is already loaded."
+            "Did you know? This loading screen is useless, because the map is already loaded."
     );
 
     public LoadingScreen(JFrame frame) {
