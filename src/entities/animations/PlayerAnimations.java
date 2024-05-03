@@ -26,12 +26,12 @@ public enum PlayerAnimations {
 
     public int getAniSize() {
         return switch (this) {
-            case IDLE, LANDING, RESTING -> 4;
-            case RUN, WALK, RUN_SLASH, IDLE_SLASH -> 7;
-            case JUMP, FALL, WALL_SLIDE, BLOCK, BLOCK_HIT -> 3;
-            case HEAVY_ATTACK -> 12;
-            case DASH -> 5;
-            case DEATH -> 16;
+            case IDLE, LANDING, RESTING -> 5;
+            case RUN, WALK, RUN_SLASH, IDLE_SLASH -> 8;
+            case JUMP, FALL, WALL_SLIDE, BLOCK, BLOCK_HIT -> 4;
+            case HEAVY_ATTACK -> 13;
+            case DASH -> 6;
+            case DEATH -> 17;
         };
     }
 }

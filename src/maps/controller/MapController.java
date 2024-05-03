@@ -44,13 +44,13 @@ public class MapController {
             maps.add(new Map(img));
     }
 
-        public void loadNextMap() {
-            currentMapIndex++;
-            if (currentMapIndex >= maps.size()) {
-                // TODO: For now: it resets to the first map
-                currentMapIndex = 0;
-            }
+    public void loadNextMap() {
+        currentMapIndex++;
+        if (currentMapIndex >= maps.size()) {
+            // TODO: For now: it resets to the first map
+            currentMapIndex = 0;
         }
+    }
 
 
     public int getAmountOfMaps() {
@@ -94,6 +94,14 @@ public class MapController {
 
     public Point getCurrentFinishSpawn() {
         return maps.get(currentMapIndex).getFinishSpawn();
+    }
+
+    public Point getCurrentBigOrcSpawn() {
+        return maps.get(currentMapIndex).getBigOrcSpawn();
+    }
+
+    public Point getCurrentBigOrcRouteFinish() {
+        return maps.get(currentMapIndex).getBigOrcRouteFinish();
     }
 
     public void setEntityController(EntityController entityController) {

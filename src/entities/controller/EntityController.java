@@ -1,7 +1,9 @@
 package entities.controller;
 
+import entities.logic.BigOrc;
 import entities.logic.Finish;
 import entities.logic.Player;
+import entities.ui.BigOrcUI;
 import entities.ui.FinishUI;
 import entities.ui.PlayerUI;
 import maps.controller.MapController;
@@ -9,8 +11,6 @@ import screens.LoadingScreen;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class EntityController {
 
@@ -20,11 +20,16 @@ public class EntityController {
     private FinishUI finishUI;
     private Finish finish;
 
-    public EntityController(boolean showHitBox, Point PlayerPoint, Point FinishPoint) {
+    private BigOrc bigOrc;
+    private BigOrcUI bigOrcUI;
+
+    public EntityController(boolean showHitBox, Point PlayerPoint, Point FinishPoint, Point BigOrcPoint, Point BigOrcRoutePoint) {
         player = new Player(PlayerPoint.x, PlayerPoint.y);
         playerUI = new PlayerUI(player, showHitBox);
         finish = new Finish(FinishPoint.x, FinishPoint.y);
         finishUI = new FinishUI(finish, showHitBox);
+        bigOrc = new BigOrc(BigOrcPoint.x, BigOrcPoint.y, BigOrcPoint.x, BigOrcRoutePoint.x, 1);
+        bigOrcUI = new BigOrcUI(bigOrc, showHitBox);
     }
 
     public void update(MapController mapController, LoadingScreen loadingScreen) {
@@ -33,8 +38,10 @@ public class EntityController {
             mapController.loadNextMap();
             player.updateSpawnPoint(mapController.getCurrentPlayerSpawn().x, mapController.getCurrentPlayerSpawn().y);
             finish.updateFinishPoint(mapController.getCurrentFinishSpawn().x, mapController.getCurrentFinishSpawn().y);
+            bigOrc.updateSpawnPoint(mapController.getCurrentBigOrcSpawn().x, mapController.getCurrentBigOrcSpawn().y);
         }
         player.update(mapController.getCurrentMap());
+        bigOrc.update(mapController.getCurrentMap());
     }
 
     public void handleUserInputKeyPressed(KeyEvent e) {
@@ -68,6 +75,7 @@ public class EntityController {
         playerUI.drawAnimations(g, offset);
         finishUI.drawAnimations(g, offset);
         finishUI.drawHitBox(g, offset);
+        bigOrcUI.drawAnimations(g, offset);
     }
 
     public Player getPlayer() {
