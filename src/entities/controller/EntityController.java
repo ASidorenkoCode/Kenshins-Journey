@@ -47,6 +47,9 @@ public class EntityController {
                 break;
             case KeyEvent.VK_SPACE:
                 player.jump();
+                break;
+            case KeyEvent.VK_SHIFT:
+                player.attack();
         }
     }
 
@@ -63,6 +66,7 @@ public class EntityController {
 
     public void drawEntities(Graphics g, int offset) {
         playerUI.drawAnimations(g, offset);
+        finishUI.drawAnimations(g, offset);
         finishUI.drawHitBox(g, offset);
     }
 

@@ -1,25 +1,28 @@
 package entities.logic;
 
 import constants.Constants;
-import entities.animations.PlayerAnimations;
-import entities.ui.PlayerUI;
-import maps.controller.MapController;
 import maps.logic.Map;
 
-import java.awt.*;
 import java.awt.geom.Rectangle2D;
-import java.util.Arrays;
 
 public class Player extends Entity {
 
-    private boolean left, right, jump, inAir;
+    private boolean left, right, attack, inAir, attackHitBoxIsActive;
     private float airMovement = -5f;
-    private PlayerAnimations currentAnimation;
+
+    private Rectangle2D.Float rightAttackHitBox;
+
+    private Rectangle2D.Float leftAttackHitBox;
+
 
     public Player(float x, float y) {
-        super(x, y, new Rectangle2D.Float( x + 32 * Constants.TILE_SCALE,  y + 16 * Constants.TILE_SCALE,(96 - 64) * Constants.TILE_SCALE,(96 - 48) * Constants.TILE_SCALE));
+        super(x, y, new Rectangle2D.Float(x + 32 * Constants.TILE_SCALE,  y + 16 * Constants.TILE_SCALE,(96 - 64) * Constants.TILE_SCALE,(96 - 48) * Constants.TILE_SCALE));
+        rightAttackHitBox = new Rectangle2D.Float((x + 32 * Constants.TILE_SCALE) + 32 * Constants.TILE_SCALE,  y + 8 * Constants.TILE_SCALE ,(96 - 64) * Constants.TILE_SCALE,(96 - 48) * Constants.TILE_SCALE);
+        leftAttackHitBox = new Rectangle2D.Float((x + 32 * Constants.TILE_SCALE) - 32 * Constants.TILE_SCALE,  y + 8 * Constants.TILE_SCALE ,(96 - 64) * Constants.TILE_SCALE,(96 - 48) * Constants.TILE_SCALE);
         left = false;
-        currentAnimation = PlayerAnimations.IDLE;
+        right = false;
+        inAir = false;
+        attack = false;
     }
 
 
@@ -41,32 +44,29 @@ public class Player extends Entity {
         this.y = y;
         this.hitbox.x = x + 32 * Constants.TILE_SCALE;
         this.hitbox.y = y + 16 * Constants.TILE_SCALE;
+        this.leftAttackHitBox.x = (x + 32 * Constants.TILE_SCALE) - 32 * Constants.TILE_SCALE;
+        this.leftAttackHitBox.y = y + 8 * Constants.TILE_SCALE;
+        this.rightAttackHitBox.x = (x + 32 * Constants.TILE_SCALE) + 32 * Constants.TILE_SCALE;
+        this.rightAttackHitBox.y = y + 8 * Constants.TILE_SCALE;
     }
 
     @Override
     public void update(Map map) {
-
         if(right && !left) {
             updateXPos(map, 1);
-            updateAnimation(PlayerAnimations.RUN);
         }
         else if(left && !right) {
             updateXPos(map, -1);
-            updateAnimation(PlayerAnimations.RUN);
         }
         if (inAir) {
             updateYPos(map, airMovement);
             if(inAir) {
                 airMovement += 0.1f;
-
-
-                if(airMovement >= 0) updateAnimation(PlayerAnimations.FALL);
             }
 
         } else if(!checkIfPlayerCollidesUnderHim(map, hitbox.x, hitbox.y + 1, hitbox.width, hitbox.height)) {
             airMovement = 0;
             inAir = true;
-
         }
     }
 
@@ -74,6 +74,8 @@ public class Player extends Entity {
         if(!checkIfPlayerCanMoveToPosition(map, hitbox.x + by_value, hitbox.y, hitbox.width, hitbox.height)) return;
         x += by_value;
         hitbox.x += by_value;
+        rightAttackHitBox.x += by_value;
+        leftAttackHitBox.x += by_value;
     }
 
     private void updateYPos(Map map, float by_value) {
@@ -84,7 +86,6 @@ public class Player extends Entity {
 
         } else if(checkIfPlayerCollidesUnderHim(map, hitbox.x, hitbox.y + by_value, hitbox.width, hitbox.height)) {
             inAir = false;
-            updateAnimation(PlayerAnimations.IDLE);
 
             //set player to position of ground
 
@@ -99,39 +100,31 @@ public class Player extends Entity {
         }
         y += by_value;
         hitbox.y += by_value;
+        rightAttackHitBox.y += by_value;
+        leftAttackHitBox.y += by_value;
     }
 
-    public void updateAnimation(PlayerAnimations animation) {
-        currentAnimation = animation;
-    }
 
     public void setLeft(boolean left) {
         this.left = left;
-        if(inAir) return;
-        if(left && !right) updateAnimation(PlayerAnimations.RUN);
-        else if(right) updateAnimation(PlayerAnimations.RUN);
-        else updateAnimation(PlayerAnimations.IDLE);
-        if(left && right) updateAnimation(PlayerAnimations.IDLE);
     }
 
     public void setRight(boolean right) {
         this.right = right;
-        if(inAir) return;
-        if(right && !left) updateAnimation(PlayerAnimations.RUN);
-        else if (left) updateAnimation(PlayerAnimations.RUN);
-        else updateAnimation(PlayerAnimations.IDLE);
-        if(left && right) updateAnimation(PlayerAnimations.IDLE);
     }
 
     public void jump() {
         if (!inAir) {
+            attack = false;
             inAir = true;
             airMovement = -5f;
-            updateAnimation(PlayerAnimations.JUMP);
         }
     }
-    public PlayerAnimations getCurrentPlayerAnimation() {
-        return currentAnimation;
+
+    public void attack() {
+        if(!attack && !inAir) {
+            setAttack(true);
+        }
     }
     public boolean getLeft() {
         return left;
@@ -140,11 +133,22 @@ public class Player extends Entity {
         return right;
     }
 
-    public Rectangle2D.Float getHitbox() {
-        return hitbox;
+    public void setAttack(boolean attack) {
+
+        this.attack = attack;
+
     }
 
-    public boolean checkCollisionForPosition(Map map, float x, float y) {
+    public void setAttackHitBoxIsActive(boolean attackHitBoxIsActive) {
+        this.attackHitBoxIsActive = attackHitBoxIsActive;
+    }
+
+    public boolean getAttackHitBoxIsActive() {
+        return attackHitBoxIsActive;
+    }
+
+
+    public boolean checkForCollisonOnPosition(Map map, float x, float y) {
         if(x < 0) return true;
         if(y < 0) return true;
 
@@ -162,18 +166,36 @@ public class Player extends Entity {
     }
 
     private boolean checkIfPlayerCollidesUnderHim(Map map, float x, float y, float width, float height) {
-        if (!checkCollisionForPosition(map, x,y + height))
-            if (!checkCollisionForPosition(map, x+width,y+height))
+        if (!checkForCollisonOnPosition(map, x,y + height))
+            if (!checkForCollisonOnPosition(map, x+width,y+height))
                 return false;
         return true;
     }
 
     private boolean checkIfPlayerCollidesOverHim(Map map, float x, float y, float width) {
-        if (!checkCollisionForPosition(map, x,y))
-            if (!checkCollisionForPosition(map, x+width,y))
+        if (!checkForCollisonOnPosition(map, x,y))
+            if (!checkForCollisonOnPosition(map, x+width,y))
                 return false;
         return true;
     }
 
+    public Rectangle2D.Float getRightAttackHitBox() {
+        return rightAttackHitBox;
+    }
 
+    public Rectangle2D.Float getLeftAttackHitBox() {
+        return leftAttackHitBox;
+    }
+
+    public boolean getInAir() {
+        return inAir;
+    }
+
+    public boolean getAttack() {
+        return attack;
+    }
+
+    public float getAirMovement() {
+        return airMovement;
+    }
 }

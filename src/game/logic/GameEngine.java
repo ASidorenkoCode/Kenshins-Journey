@@ -4,10 +4,10 @@ import game.controller.GameController;
 
 public class GameEngine implements Runnable {
 
-    private final int FPS_SET = 120;
-    private final int UPS_SET = 200;
     private Thread gameThread;
     private GameController gameController;
+    private final int FPS_SET = 120;
+    private final int UPS_SET = 200;
     private volatile boolean SHOW_FPS_UPS;
     private long lastCheck;
     private int frames = 0;

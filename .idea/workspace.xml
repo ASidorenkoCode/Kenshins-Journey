@@ -4,6 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+    <list default="true" id="b91aae81-7ada-4dc7-9d93-d4383ba70810" name="Changes" comment="added DEBUG ON and OFF">
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Start_the_game__DEBUG_ON_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Start_the_game__DEBUG_ON_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -11,6 +13,20 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="Enum" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
 }</component>
@@ -24,7 +40,30 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-
+    "Application.Start the game (DEBUG ON).executor": "Run",
+    "Application.Start the game (FPS OFF).executor": "Run",
+    "Application.Start the game (FPS ON).executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "4-entity-+-player-+-enemies-each-enemy-receives-a-separate-class-gamelogi…ui-ui",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "show.migrate.to.gradle.popup": "false",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/res/kenshin" />
+      <recent name="$PROJECT_DIR$/res" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.Start the game (DEBUG OFF)">
+    <configuration name="Start the game (DEBUG OFF)" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="GameStart" />
       <module name="Kenshins-Journey" />
       <option name="PROGRAM_PARAMETERS" value="false false" />
@@ -59,9 +98,106 @@
       <option name="presentableId" value="Default" />
       <updated>1714329269192</updated>
       <workItem from="1714329270267" duration="1000" />
+      <workItem from="1714454641245" duration="13377000" />
+    </task>
+    <task id="LOCAL-00001" summary="constants for entityUI and playerUI">
+      <option name="closed" value="true" />
+      <created>1714396517554</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1714396517554</updated>
+    </task>
+    <task id="LOCAL-00002" summary="player is shown on screen">
+      <option name="closed" value="true" />
+      <created>1714406055050</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1714406055050</updated>
+    </task>
+    <task id="LOCAL-00003" summary="started with connection between input and player logic">
+      <option name="closed" value="true" />
+      <created>1714456491894</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1714456491894</updated>
+    </task>
+    <task id="LOCAL-00004" summary="add res folder to git">
+      <option name="closed" value="true" />
+      <created>1714458172456</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1714458172456</updated>
+    </task>
+    <task id="LOCAL-00005" summary="init EntityController">
+      <option name="closed" value="true" />
+      <created>1714459458754</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1714459458754</updated>
+    </task>
+    <task id="LOCAL-00006" summary="init player movement">
+      <option name="closed" value="true" />
+      <created>1714464385993</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1714464385993</updated>
+    </task>
+    <task id="LOCAL-00007" summary="player left and right movement">
+      <option name="closed" value="true" />
+      <created>1714482335091</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1714482335091</updated>
+    </task>
+    <task id="LOCAL-00008" summary="improved switch with switch expression">
+      <option name="closed" value="true" />
+      <created>1714482764904</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1714482764904</updated>
+    </task>
+    <task id="LOCAL-00009" summary="implement last and current animation">
+      <option name="closed" value="true" />
+      <created>1714486380512</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1714486380512</updated>
+    </task>
+    <task id="LOCAL-00010" summary="added DEBUG ON and OFF">
+      <option name="closed" value="true" />
+      <created>1714492526029</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1714492526029</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
+      <workItem from="1714329270267" duration="1000" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="constants for entityUI and playerUI" />
+    <MESSAGE value="player is shown on screen" />
+    <MESSAGE value="started with connection between input and player logic" />
+    <MESSAGE value="add res folder to git" />
+    <MESSAGE value="init EntityController" />
+    <MESSAGE value="init player movement" />
+    <MESSAGE value="player left and right movement" />
+    <MESSAGE value="improved switch with switch expression" />
+    <MESSAGE value="implement last and current animation" />
+    <MESSAGE value="added DEBUG ON and OFF" />
+    <option name="LAST_COMMIT_MESSAGE" value="added DEBUG ON and OFF" />
   </component>
 </project>

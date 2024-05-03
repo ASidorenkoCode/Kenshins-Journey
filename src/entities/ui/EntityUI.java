@@ -8,41 +8,40 @@ import java.awt.image.BufferedImage;
 
 
 abstract public class EntityUI {
-    protected BufferedImage[][] animationsLeft;
-
-    protected BufferedImage[][] animationsRight;
-
-    protected BufferedImage[][] animationsDirection;
+    protected BufferedImage[][] animations;
+    protected boolean showLeftAnimations;
     protected int aniTick;
     protected int aniIndex;
-    protected final static int ANI_SPEED = 10;
+    protected int aniSpeed = 20;
     protected int SPRITE_PX_WIDTH;
     protected int SPRITE_PX_HEIGHT;
+    protected String ENTITY_SPRITE_PATH;
     protected String ENTITY_SPRITE_PATH_LEFT;
-    protected String ENTITY_SPRITE_PATH_RIGHT;
     protected int SPRITE_Y_DIMENSION;
     protected int SPRITE_X_DIMENSION;
 
 
     abstract void drawAttackBox();
     abstract void drawHitBox(Graphics g, int offset);
+
     protected void loadAnimations() {
-        animationsLeft = loadAnimationSprites(ENTITY_SPRITE_PATH_LEFT);
-        animationsRight = loadAnimationSprites(ENTITY_SPRITE_PATH_RIGHT);
+        animations = new BufferedImage[SPRITE_Y_DIMENSION * 2][SPRITE_X_DIMENSION];
+        loadAnimationSprites(ENTITY_SPRITE_PATH, animations, 0);
+        if(ENTITY_SPRITE_PATH_LEFT != null) loadAnimationSprites(ENTITY_SPRITE_PATH_LEFT, animations, SPRITE_Y_DIMENSION);
     }
 
-    private BufferedImage[][] loadAnimationSprites(String spritePath) {
+    private void loadAnimationSprites(String spritePath, BufferedImage[][] animations, int offset) {
         BufferedImage img = SpriteManager.GetSpriteAtlas(spritePath);
-        BufferedImage[][] animations = new BufferedImage[SPRITE_Y_DIMENSION][SPRITE_X_DIMENSION];
-        for (int j = 0; j < animations.length; j++)
+        for (int j = 0; j < animations.length / 2; j++)
             for (int i = 0; i < animations[j].length; i++)
-                animations[j][i] = img.getSubimage(
+                animations[j+offset][i] = img.getSubimage(
                         i * SPRITE_PX_WIDTH,
                         j * SPRITE_PX_HEIGHT,
                         SPRITE_PX_WIDTH,
                         SPRITE_PX_HEIGHT);
-        return animations;
     }
+
+    abstract void updateAnimationTick();
     abstract void drawAnimations(Graphics g, int offset);
     abstract void drawHealthBar();
 }
