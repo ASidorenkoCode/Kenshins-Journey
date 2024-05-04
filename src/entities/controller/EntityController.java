@@ -42,6 +42,8 @@ public class EntityController {
         }
         player.update(mapController.getCurrentMap());
         bigOrc.update(mapController.getCurrentMap());
+
+        player.collisionWithEntity(bigOrc);
     }
 
     public void handleUserInputKeyPressed(KeyEvent e) {

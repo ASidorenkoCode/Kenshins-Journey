@@ -38,8 +38,8 @@ public class PlayerUI extends EntityUI {
             Rectangle2D.Float hitbox = player.getHitbox();
             g.drawRect((int) hitbox.x - offset, (int) hitbox.y, (int) hitbox.width, (int) hitbox.height);
 
-            if(player.getAttackHitBoxIsActive()) {
-                if(showLeftAnimations) {
+            if (player.getAttackHitBoxIsActive()) {
+                if (showLeftAnimations) {
                     hitbox = player.getLeftAttackHitBox();
                     g.drawRect((int) hitbox.x - offset, (int) hitbox.y, (int) hitbox.width, (int) hitbox.height);
                 } else {
@@ -71,24 +71,29 @@ public class PlayerUI extends EntityUI {
         PlayerAnimations lastAnimation = currentAnimation;
         //Set animation
         if (player.getInAir()) {
-            if(player.getAirMovement() < 0) currentAnimation = PlayerAnimations.JUMP;
+            if (player.getAirMovement() < 0) currentAnimation = PlayerAnimations.JUMP;
             else currentAnimation = PlayerAnimations.FALL;
-        } else if(player.getAttack()) {
-            if((player.getLeft() && !player.getRight()) || (!player.getLeft() && player.getRight())) currentAnimation = PlayerAnimations.RUN_SLASH;
+        } else if (player.getAttack()) {
+            if ((player.getLeft() && !player.getRight()) || (!player.getLeft() && player.getRight()))
+                currentAnimation = PlayerAnimations.RUN_SLASH;
             else currentAnimation = PlayerAnimations.IDLE_SLASH;
 
 
             //control hitbox of attack based on animation status
-            if((aniIndex == 0) || (aniIndex == 1) || (aniIndex == 4) || (aniIndex == 5)) player.setAttackHitBoxIsActive(true);
+            if ((aniIndex == 0) || (aniIndex == 1) || (aniIndex == 4) || (aniIndex == 5))
+                player.setAttackHitBoxIsActive(true);
             else player.setAttackHitBoxIsActive(false);
-        } else if((player.getLeft() && !player.getRight()) || (!player.getLeft() && player.getRight())) currentAnimation = PlayerAnimations.RUN;
+        } else if ((player.getLeft() && !player.getRight()) || (!player.getLeft() && player.getRight()))
+            currentAnimation = PlayerAnimations.RUN;
         else currentAnimation = PlayerAnimations.IDLE;
 
         //reset index
-        if(currentAnimation != lastAnimation) {
-            if(!(lastAnimation == PlayerAnimations.IDLE_SLASH || lastAnimation == PlayerAnimations.RUN_SLASH)) aniIndex = 0;
+        if (currentAnimation != lastAnimation) {
+            if (!(lastAnimation == PlayerAnimations.IDLE_SLASH || lastAnimation == PlayerAnimations.RUN_SLASH))
+                aniIndex = 0;
 
-            if(currentAnimation == PlayerAnimations.IDLE_SLASH || currentAnimation == PlayerAnimations.RUN_SLASH) aniSpeed = 10;
+            if (currentAnimation == PlayerAnimations.IDLE_SLASH || currentAnimation == PlayerAnimations.RUN_SLASH)
+                aniSpeed = 10;
             else aniSpeed = 15;
         }
     }
@@ -113,8 +118,6 @@ public class PlayerUI extends EntityUI {
                 (int) (SPRITE_PX_WIDTH * Constants.TILE_SCALE),
                 (int) (SPRITE_PX_HEIGHT * Constants.TILE_SCALE), null);
         drawHitBox(g, offset);
-
-
     }
 
 

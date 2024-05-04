@@ -16,9 +16,9 @@ public class Player extends Entity {
 
 
     public Player(float x, float y) {
-        super(x, y, new Rectangle2D.Float(x + 32 * Constants.TILE_SCALE,  y + 16 * Constants.TILE_SCALE,(96 - 64) * Constants.TILE_SCALE,(96 - 48) * Constants.TILE_SCALE));
-        rightAttackHitBox = new Rectangle2D.Float((x + 32 * Constants.TILE_SCALE) + 32 * Constants.TILE_SCALE,  y + 8 * Constants.TILE_SCALE ,(96 - 64) * Constants.TILE_SCALE,(96 - 48) * Constants.TILE_SCALE);
-        leftAttackHitBox = new Rectangle2D.Float((x + 32 * Constants.TILE_SCALE) - 32 * Constants.TILE_SCALE,  y + 8 * Constants.TILE_SCALE ,(96 - 64) * Constants.TILE_SCALE,(96 - 48) * Constants.TILE_SCALE);
+        super(x, y, new Rectangle2D.Float(x + 32 * Constants.TILE_SCALE, y + 16 * Constants.TILE_SCALE, (96 - 64) * Constants.TILE_SCALE, (96 - 48) * Constants.TILE_SCALE));
+        rightAttackHitBox = new Rectangle2D.Float((x + 32 * Constants.TILE_SCALE) + 32 * Constants.TILE_SCALE, y + 8 * Constants.TILE_SCALE, (96 - 64) * Constants.TILE_SCALE, (96 - 48) * Constants.TILE_SCALE);
+        leftAttackHitBox = new Rectangle2D.Float((x + 32 * Constants.TILE_SCALE) - 32 * Constants.TILE_SCALE, y + 8 * Constants.TILE_SCALE, (96 - 64) * Constants.TILE_SCALE, (96 - 48) * Constants.TILE_SCALE);
         left = false;
         right = false;
         inAir = false;
@@ -30,8 +30,16 @@ public class Player extends Entity {
         return x;
     }
 
+    public void setX(float x) {
+        this.x = x;
+    }
+
     public float getY() {
         return y;
+    }
+
+    public void setY(float y) {
+        this.y = y;
     }
 
     @Override
@@ -39,7 +47,7 @@ public class Player extends Entity {
 
     }
 
-    public void updateSpawnPoint (int x, int y) {
+    public void updateSpawnPoint(int x, int y) {
         this.x = x;
         this.y = y;
         this.hitbox.x = x + 32 * Constants.TILE_SCALE;
@@ -52,26 +60,25 @@ public class Player extends Entity {
 
     @Override
     public void update(Map map) {
-        if(right && !left) {
+        if (right && !left) {
             updateXPos(map, 1);
-        }
-        else if(left && !right) {
+        } else if (left && !right) {
             updateXPos(map, -1);
         }
         if (inAir) {
             updateYPos(map, airMovement);
-            if(inAir) {
+            if (inAir) {
                 airMovement += 0.1f;
             }
 
-        } else if(!checkIfPlayerCollidesUnderHim(map, hitbox.x, hitbox.y + 1, hitbox.width, hitbox.height)) {
+        } else if (!checkIfPlayerCollidesUnderHim(map, hitbox.x, hitbox.y + 1, hitbox.width, hitbox.height)) {
             airMovement = 0;
             inAir = true;
         }
     }
 
     private void updateXPos(Map map, float by_value) {
-        if(!checkIfPlayerCanMoveToPosition(map, hitbox.x + by_value, hitbox.y, hitbox.width, hitbox.height)) return;
+        if (!checkIfPlayerCanMoveToPosition(map, hitbox.x + by_value, hitbox.y, hitbox.width, hitbox.height)) return;
         x += by_value;
         hitbox.x += by_value;
         rightAttackHitBox.x += by_value;
@@ -79,17 +86,17 @@ public class Player extends Entity {
     }
 
     private void updateYPos(Map map, float by_value) {
-        if(checkIfPlayerCollidesOverHim(map, hitbox.x, hitbox.y + by_value, hitbox.width)) {
+        if (checkIfPlayerCollidesOverHim(map, hitbox.x, hitbox.y + by_value, hitbox.width)) {
 
             airMovement = 0;
             return;
 
-        } else if(checkIfPlayerCollidesUnderHim(map, hitbox.x, hitbox.y + by_value, hitbox.width, hitbox.height)) {
+        } else if (checkIfPlayerCollidesUnderHim(map, hitbox.x, hitbox.y + by_value, hitbox.width, hitbox.height)) {
             inAir = false;
 
             //set player to position of ground
 
-            float playerYPos =  (hitbox.y + by_value + hitbox.height);
+            float playerYPos = (hitbox.y + by_value + hitbox.height);
             int groundSpriteNumber = (int) (playerYPos / (32 * Constants.TILE_SCALE));
             hitbox.y = groundSpriteNumber * (32 * Constants.TILE_SCALE);
             hitbox.y -= hitbox.height + 1;
@@ -104,15 +111,6 @@ public class Player extends Entity {
         leftAttackHitBox.y += by_value;
     }
 
-
-    public void setLeft(boolean left) {
-        this.left = left;
-    }
-
-    public void setRight(boolean right) {
-        this.right = right;
-    }
-
     public void jump() {
         if (!inAir) {
             attack = false;
@@ -122,35 +120,42 @@ public class Player extends Entity {
     }
 
     public void attack() {
-        if(!attack && !inAir) {
+        if (!attack && !inAir) {
             setAttack(true);
         }
     }
+
     public boolean getLeft() {
         return left;
     }
+
+    public void setLeft(boolean left) {
+        this.left = left;
+    }
+
     public boolean getRight() {
         return right;
     }
 
-    public void setAttack(boolean attack) {
-
-        this.attack = attack;
-
-    }
-
-    public void setAttackHitBoxIsActive(boolean attackHitBoxIsActive) {
-        this.attackHitBoxIsActive = attackHitBoxIsActive;
+    public void setRight(boolean right) {
+        this.right = right;
     }
 
     public boolean getAttackHitBoxIsActive() {
         return attackHitBoxIsActive;
     }
 
+    public void setAttackHitBoxIsActive(boolean attackHitBoxIsActive) {
+        this.attackHitBoxIsActive = attackHitBoxIsActive;
+    }
+
+    public boolean collidesWith(Entity entity) {
+        return this.hitbox.intersects(entity.getHitbox().getBounds2D());
+    }
 
     public boolean checkForCollisonOnPosition(Map map, float x, float y) {
-        if(x < 0) return true;
-        if(y < 0) return true;
+        if (x < 0) return true;
+        if (y < 0) return true;
 
         //TODO: Constants for Tile width and height
         int[][] mapData = map.getMapData();
@@ -160,21 +165,21 @@ public class Player extends Entity {
     }
 
     private boolean checkIfPlayerCanMoveToPosition(Map map, float x, float y, float width, float height) {
-        if(checkIfPlayerCollidesOverHim(map, x, y, width))
+        if (checkIfPlayerCollidesOverHim(map, x, y, width))
             return false;
         return !checkIfPlayerCollidesUnderHim(map, x, y, width, height);
     }
 
     private boolean checkIfPlayerCollidesUnderHim(Map map, float x, float y, float width, float height) {
-        if (!checkForCollisonOnPosition(map, x,y + height))
-            if (!checkForCollisonOnPosition(map, x+width,y+height))
+        if (!checkForCollisonOnPosition(map, x, y + height))
+            if (!checkForCollisonOnPosition(map, x + width, y + height))
                 return false;
         return true;
     }
 
     private boolean checkIfPlayerCollidesOverHim(Map map, float x, float y, float width) {
-        if (!checkForCollisonOnPosition(map, x,y))
-            if (!checkForCollisonOnPosition(map, x+width,y))
+        if (!checkForCollisonOnPosition(map, x, y))
+            if (!checkForCollisonOnPosition(map, x + width, y))
                 return false;
         return true;
     }
@@ -195,7 +200,31 @@ public class Player extends Entity {
         return attack;
     }
 
+    public void setAttack(boolean attack) {
+
+        this.attack = attack;
+
+    }
+
     public float getAirMovement() {
         return airMovement;
+    }
+
+    private float calculateNewPosition(Entity entity) {
+        if (getHitbox().x < entity.getHitbox().x) {
+            return entity.getHitbox().x - getHitbox().width;
+        } else {
+            return entity.getHitbox().x + entity.getHitbox().width;
+        }
+    }
+
+    public void collisionWithEntity(Entity entity) {
+        if (collidesWith(entity)) {
+            float newPosX = calculateNewPosition(entity);
+            getHitbox().x = newPosX;
+            setX(newPosX - 64);
+            getRightAttackHitBox().x = newPosX + 64;
+            getLeftAttackHitBox().x = newPosX - 64;
+        }
     }
 }
