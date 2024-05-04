@@ -50,6 +50,8 @@ public class GameView extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (gameController != null) render(g);
+        interfaceGame.updatePlayerHealth(entityController.getPlayer().getPlayerHealth());
+        interfaceGame.draw(g);
     }
 
     public void render(Graphics g) {
@@ -85,7 +87,6 @@ public class GameView extends JPanel {
         entityController.handleUserInputKeyPressed(e);
         if (e.getKeyChar() == 'i') {
             entityController.getPlayer().decreaseHealth();
-            interfaceGame.updatePlayerHealth(entityController.getPlayer().getPlayerHealth());
         }
     }
 

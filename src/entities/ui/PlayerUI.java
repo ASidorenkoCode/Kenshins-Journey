@@ -54,9 +54,15 @@ public class PlayerUI extends EntityUI {
     void updateAnimationTick() {
         setAnimation();
         aniTick++;
+
+
         if (aniTick >= aniSpeed) {
             aniTick = 0;
             aniIndex++;
+
+            if (aniIndex >= PlayerAnimations.DEATH.getAniSize() - 1) {
+                player.setDeathAnimationFinished(true);
+            }
 
             if (aniIndex >= currentAnimation.getAniSize()) {
                 player.setAttack(false);
@@ -70,26 +76,28 @@ public class PlayerUI extends EntityUI {
     private void setAnimation() {
         PlayerAnimations lastAnimation = currentAnimation;
         //Set animation
+            if (player.getInAir() && player.getAttack()) {
+                if (player.getAirMovement() < 0) currentAnimation = PlayerAnimations.JUMP_SLASH;
+                else currentAnimation = PlayerAnimations.FALL_SLASH;
+            } else if (player.getInAir() && !player.getAttack()) {
+                if (player.getAirMovement() < 0) currentAnimation = PlayerAnimations.JUMP;
+                else currentAnimation = PlayerAnimations.FALL;
+            } else if (player.getAttack()) {
+                if ((player.getLeft() && !player.getRight()) || (!player.getLeft() && player.getRight()))
+                    currentAnimation = PlayerAnimations.RUN_SLASH;
+                else currentAnimation = PlayerAnimations.IDLE_SLASH;
 
-        if (player.getInAir() && player.getAttack()) {
-            if (player.getAirMovement() < 0) currentAnimation = PlayerAnimations.JUMP_SLASH;
-            else currentAnimation = PlayerAnimations.FALL_SLASH;
-        } else if (player.getInAir() && !player.getAttack()) {
-            if (player.getAirMovement() < 0) currentAnimation = PlayerAnimations.JUMP;
-            else currentAnimation = PlayerAnimations.FALL;
-        } else if (player.getAttack()) {
-            if ((player.getLeft() && !player.getRight()) || (!player.getLeft() && player.getRight()))
-                currentAnimation = PlayerAnimations.RUN_SLASH;
-            else currentAnimation = PlayerAnimations.IDLE_SLASH;
+                if ((aniIndex == 0) || (aniIndex == 1) || (aniIndex == 4) || (aniIndex == 5))
+                    player.setAttackHitBoxIsActive(true);
+                else player.setAttackHitBoxIsActive(false);
+            } else if ((player.getLeft() && !player.getRight()) || (!player.getLeft() && player.getRight()))
+                currentAnimation = PlayerAnimations.RUN;
+            else currentAnimation = PlayerAnimations.IDLE;
 
-
-            //control hitbox of attack based on animation status
-            if ((aniIndex == 0) || (aniIndex == 1) || (aniIndex == 4) || (aniIndex == 5))
-                player.setAttackHitBoxIsActive(true);
-            else player.setAttackHitBoxIsActive(false);
-        } else if ((player.getLeft() && !player.getRight()) || (!player.getLeft() && player.getRight()))
-            currentAnimation = PlayerAnimations.RUN;
-        else currentAnimation = PlayerAnimations.IDLE;
+        if (player.isDead()) {
+            currentAnimation = PlayerAnimations.DEATH;
+            aniSpeed = 15;
+        }
 
         //reset index
         if (currentAnimation != lastAnimation) {

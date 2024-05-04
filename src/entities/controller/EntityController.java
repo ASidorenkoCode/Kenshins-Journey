@@ -31,13 +31,21 @@ public class EntityController {
     }
 
     public void update(MapController mapController, LoadingScreen loadingScreen) {
-        if (finish.checkIfPlayerIsInFinish(player)) {
+        if (finish.checkIfPlayerIsInFinish(player) && !player.isDead()) {
             loadingScreen.displayLoadingScreen();
             mapController.loadNextMap();
             player.updateSpawnPoint(mapController.getCurrentPlayerSpawn().x, mapController.getCurrentPlayerSpawn().y);
             finish.updateFinishPoint(mapController.getCurrentFinishSpawn().x, mapController.getCurrentFinishSpawn().y);
         }
-        player.update(mapController.getCurrentMap());
+
+            if (player.isDead() && player.getDeathAnimationFinished()) {
+                loadingScreen.displayLoadingScreen();
+                player.updateSpawnPoint(mapController.getCurrentPlayerSpawn().x, mapController.getCurrentPlayerSpawn().y);
+                finish.updateFinishPoint(mapController.getCurrentFinishSpawn().x, mapController.getCurrentFinishSpawn().y);
+                player.setPlayerHealth(6);
+                player.setDeathAnimationFinished(false);
+            }
+            player.update(mapController.getCurrentMap());
     }
 
     public void handleBigOrc(MapController mapController, boolean showHitBox, Point BigOrcPoint, Point BigOrcRoutePoint) {

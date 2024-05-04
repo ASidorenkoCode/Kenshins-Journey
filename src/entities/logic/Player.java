@@ -13,6 +13,7 @@ public class Player extends Entity {
     private Rectangle2D.Float leftAttackHitBox;
     private int playerHealth = 6;
     private boolean hasDynamicAdjustedPlayerDirectionHitbox = false;
+    private boolean isDead = false;
 
 
     public Player(float x, float y) {
@@ -60,20 +61,22 @@ public class Player extends Entity {
 
     @Override
     public void update(Map map) {
-        if (right && !left) {
-            updateXPos(map, 1);
-        } else if (left && !right) {
-            updateXPos(map, -1);
-        }
-        if (inAir) {
-            updateYPos(map, airMovement);
-            if (inAir) {
-                airMovement += 0.1f;
+        if(!isDead()) {
+            if (right && !left) {
+                updateXPos(map, 1);
+            } else if (left && !right) {
+                updateXPos(map, -1);
             }
+            if (inAir) {
+                updateYPos(map, airMovement);
+                if (inAir) {
+                    airMovement += 0.1f;
+                }
 
-        } else if (!checkIfPlayerCollidesUnderHim(map, hitbox.x, hitbox.y + 1, hitbox.width, hitbox.height)) {
-            airMovement = 0;
-            inAir = true;
+            } else if (!checkIfPlayerCollidesUnderHim(map, hitbox.x, hitbox.y + 1, hitbox.width, hitbox.height)) {
+                airMovement = 0;
+                inAir = true;
+            }
         }
     }
 
@@ -252,5 +255,17 @@ public class Player extends Entity {
         if (playerHealth > 0) {
             playerHealth--;
         }
+    }
+
+    public boolean isDead() {
+        return playerHealth == 0;
+    }
+
+    public void setDeathAnimationFinished(boolean isDead) {
+        this.isDead = isDead;
+    }
+
+    public boolean getDeathAnimationFinished() {
+        return this.isDead;
     }
 }

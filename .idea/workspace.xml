@@ -4,12 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b91aae81-7ada-4dc7-9d93-d4383ba70810" name="Changes" comment="added first enemy">
+    <list default="true" id="b91aae81-7ada-4dc7-9d93-d4383ba70810" name="Changes" comment="- added bigOrc handler, to check if enemy is present on map&#10;- healthbar for the player&#10;- for now the player health can only be decreased by pressing the key &quot;I&quot;&#10;- added jump slash and fall slash&#10;- added dynamic hitbox and attack hitbox is sticked to player hitbox">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/entities/controller/EntityController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/controller/EntityController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/entities/logic/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/logic/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/entities/ui/PlayerUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/ui/PlayerUI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/UI/GameView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/UI/GameView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/controller/GameController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,8 +20,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -68,14 +69,16 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.Start the game (DEBUG OFF).executor": "Run",
     "Application.Start the game (DEBUG ON).executor": "Run",
     "Application.Start the game (FPS OFF).executor": "Run",
     "Application.Start the game (FPS ON).executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "first-enemy",
+    "git-widget-placeholder": "healthbar-logic-and-ui",
     "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Artur/Documents/Uni/JAVA/Kenshins-Journey/res/kenshin",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
@@ -85,13 +88,17 @@
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Artur\Documents\Uni\JAVA\Kenshins-Journey\res\kenshin" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Artur\Documents\Uni\JAVA\Kenshins-Journey\res\healthPlayer" />
       <recent name="C:\Users\Artur\Documents\Uni\JAVA\Kenshins-Journey\res\bigOrc" />
       <recent name="$PROJECT_DIR$/res/kenshin" />
       <recent name="$PROJECT_DIR$/res" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Start the game (DEBUG ON)">
+  <component name="RunManager" selected="Application.Start the game (DEBUG OFF)">
     <configuration name="Start the game (DEBUG OFF)" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="GameStart" />
       <module name="Kenshins-Journey" />
@@ -217,7 +224,31 @@
       <option name="project" value="LOCAL" />
       <updated>1714734898526</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="added collision with Entities">
+      <option name="closed" value="true" />
+      <created>1714829059894</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1714829059894</updated>
+    </task>
+    <task id="LOCAL-00013" summary="added collision with Entities">
+      <option name="closed" value="true" />
+      <created>1714829105329</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1714829105329</updated>
+    </task>
+    <task id="LOCAL-00014" summary="- added bigOrc handler, to check if enemy is present on map&#10;- healthbar for the player&#10;- for now the player health can only be decreased by pressing the key &quot;I&quot;&#10;- added jump slash and fall slash&#10;- added dynamic hitbox and attack hitbox is sticked to player hitbox">
+      <option name="closed" value="true" />
+      <created>1714834705437</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1714834705437</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -235,6 +266,8 @@
     <MESSAGE value="implement last and current animation" />
     <MESSAGE value="added DEBUG ON and OFF" />
     <MESSAGE value="added first enemy" />
-    <option name="LAST_COMMIT_MESSAGE" value="added first enemy" />
+    <MESSAGE value="added collision with Entities" />
+    <MESSAGE value="- added bigOrc handler, to check if enemy is present on map&#10;- healthbar for the player&#10;- for now the player health can only be decreased by pressing the key &quot;I&quot;&#10;- added jump slash and fall slash&#10;- added dynamic hitbox and attack hitbox is sticked to player hitbox" />
+    <option name="LAST_COMMIT_MESSAGE" value="- added bigOrc handler, to check if enemy is present on map&#10;- healthbar for the player&#10;- for now the player health can only be decreased by pressing the key &quot;I&quot;&#10;- added jump slash and fall slash&#10;- added dynamic hitbox and attack hitbox is sticked to player hitbox" />
   </component>
 </project>
