@@ -28,8 +28,6 @@ public class EntityController {
         playerUI = new PlayerUI(player, showHitBox);
         finish = new Finish(FinishPoint.x, FinishPoint.y);
         finishUI = new FinishUI(finish, showHitBox);
-        bigOrc = new BigOrc(BigOrcPoint.x, BigOrcPoint.y, BigOrcPoint.x, BigOrcRoutePoint.x, 1);
-        bigOrcUI = new BigOrcUI(bigOrc, showHitBox);
     }
 
     public void update(MapController mapController, LoadingScreen loadingScreen) {
@@ -38,12 +36,22 @@ public class EntityController {
             mapController.loadNextMap();
             player.updateSpawnPoint(mapController.getCurrentPlayerSpawn().x, mapController.getCurrentPlayerSpawn().y);
             finish.updateFinishPoint(mapController.getCurrentFinishSpawn().x, mapController.getCurrentFinishSpawn().y);
-            bigOrc.updateSpawnPoint(mapController.getCurrentBigOrcSpawn().x, mapController.getCurrentBigOrcSpawn().y);
         }
         player.update(mapController.getCurrentMap());
-        bigOrc.update(mapController.getCurrentMap());
+    }
 
-        player.collisionWithEntity(bigOrc);
+    public void handleBigOrc(MapController mapController, boolean showHitBox, Point BigOrcPoint, Point BigOrcRoutePoint) {
+        Point currentBigOrcSpawn = mapController.getCurrentBigOrcSpawn();
+        if (currentBigOrcSpawn != null) {
+            if (bigOrc == null) {
+                bigOrc = new BigOrc(BigOrcPoint.x, BigOrcPoint.y, BigOrcPoint.x, BigOrcRoutePoint.x, 1);
+                bigOrcUI = new BigOrcUI(bigOrc, showHitBox);
+            }
+            if (finish.checkIfPlayerIsInFinish(player))
+                bigOrc.updateSpawnPoint(currentBigOrcSpawn.x, currentBigOrcSpawn.y);
+            bigOrc.update(mapController.getCurrentMap());
+            player.collisionWithEntity(bigOrc);
+        }
     }
 
     public void handleUserInputKeyPressed(KeyEvent e) {

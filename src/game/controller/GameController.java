@@ -43,6 +43,7 @@ public class GameController {
 
     public void update() {
         entityController.update(mapController, loadingScreen);
+        entityController.handleBigOrc(mapController, true, mapController.getCurrentBigOrcSpawn(), mapController.getCurrentBigOrcRouteFinish());
     }
 
 }

@@ -5,6 +5,7 @@ import entities.controller.EntityController;
 import game.controller.GameController;
 import keyboardinputs.logic.KeyboardInputsIngame;
 import maps.controller.MapController;
+import screens.InterfaceGame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,6 +21,7 @@ public class GameView extends JPanel {
     private GameController gameController;
     private MapController mapController;
     private EntityController entityController;
+    private InterfaceGame interfaceGame;
     private JFrame frame = new JFrame("Kenshins Journey");
 
 
@@ -31,6 +33,7 @@ public class GameView extends JPanel {
         requestFocusInWindow();
         addKeyListener(new KeyboardInputsIngame(this));
         this.entityController = entityController;
+        this.interfaceGame = new InterfaceGame(entityController.getPlayer());
     }
 
     public void gameWindow() {
@@ -54,6 +57,7 @@ public class GameView extends JPanel {
         int mapOffset = mapController.getMapOffset();
         mapController.draw(g);
         entityController.drawEntities(g, mapOffset);
+        interfaceGame.draw(g);
     }
 
     public void calculateScreenCenter(JFrame frame) {
@@ -79,6 +83,10 @@ public class GameView extends JPanel {
 
     public void handleUserInputKeyPressed(KeyEvent e) {
         entityController.handleUserInputKeyPressed(e);
+        if (e.getKeyChar() == 'i') {
+            entityController.getPlayer().decreaseHealth();
+            interfaceGame.updatePlayerHealth(entityController.getPlayer().getPlayerHealth());
+        }
     }
 
     public void handleUserInputKeyReleased(KeyEvent e) {

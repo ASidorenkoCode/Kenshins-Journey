@@ -9,16 +9,16 @@ public class Player extends Entity {
 
     private boolean left, right, attack, inAir, attackHitBoxIsActive;
     private float airMovement = -5f;
-
     private Rectangle2D.Float rightAttackHitBox;
-
     private Rectangle2D.Float leftAttackHitBox;
+    private int playerHealth = 6;
+    private boolean hasDynamicAdjustedPlayerDirectionHitbox = false;
 
 
     public Player(float x, float y) {
-        super(x, y, new Rectangle2D.Float(x + 32 * Constants.TILE_SCALE, y + 16 * Constants.TILE_SCALE, (96 - 64) * Constants.TILE_SCALE, (96 - 48) * Constants.TILE_SCALE));
-        rightAttackHitBox = new Rectangle2D.Float((x + 32 * Constants.TILE_SCALE) + 32 * Constants.TILE_SCALE, y + 8 * Constants.TILE_SCALE, (96 - 64) * Constants.TILE_SCALE, (96 - 48) * Constants.TILE_SCALE);
-        leftAttackHitBox = new Rectangle2D.Float((x + 32 * Constants.TILE_SCALE) - 32 * Constants.TILE_SCALE, y + 8 * Constants.TILE_SCALE, (96 - 64) * Constants.TILE_SCALE, (96 - 48) * Constants.TILE_SCALE);
+        super(x, y, new Rectangle2D.Float(x + 25 * Constants.TILE_SCALE, y + 16 * Constants.TILE_SCALE, (96 - 69) * Constants.TILE_SCALE, (96 - 48) * Constants.TILE_SCALE));
+        rightAttackHitBox = new Rectangle2D.Float((x + 25 * Constants.TILE_SCALE) + 32 * Constants.TILE_SCALE, y + 8 * Constants.TILE_SCALE, (96 - 64) * Constants.TILE_SCALE, (96 - 48) * Constants.TILE_SCALE);
+        leftAttackHitBox = new Rectangle2D.Float((x + 25 * Constants.TILE_SCALE) - 32 * Constants.TILE_SCALE, y + 8 * Constants.TILE_SCALE, (96 - 64) * Constants.TILE_SCALE, (96 - 48) * Constants.TILE_SCALE);
         left = false;
         right = false;
         inAir = false;
@@ -81,8 +81,23 @@ public class Player extends Entity {
         if (!checkIfPlayerCanMoveToPosition(map, hitbox.x + by_value, hitbox.y, hitbox.width, hitbox.height)) return;
         x += by_value;
         hitbox.x += by_value;
-        rightAttackHitBox.x += by_value;
-        leftAttackHitBox.x += by_value;
+        adjustPlayerHitboxPosition(map);
+        rightAttackHitBox.x = hitbox.x + hitbox.width;
+        leftAttackHitBox.x = hitbox.x - leftAttackHitBox.width;
+    }
+
+    private void adjustPlayerHitboxPosition(Map map) {
+        if (getLeft() && !getRight() && !hasDynamicAdjustedPlayerDirectionHitbox) {
+            if (checkIfPlayerCanMoveToPosition(map, hitbox.x + 20, hitbox.y, hitbox.width, hitbox.height)) {
+                hitbox.x += 20;
+                hasDynamicAdjustedPlayerDirectionHitbox = true;
+            }
+        } else if (!getLeft() && getRight() && hasDynamicAdjustedPlayerDirectionHitbox) {
+            if (checkIfPlayerCanMoveToPosition(map, hitbox.x - 20, hitbox.y, hitbox.width, hitbox.height)) {
+                hitbox.x -= 20;
+                hasDynamicAdjustedPlayerDirectionHitbox = false;
+            }
+        }
     }
 
     private void updateYPos(Map map, float by_value) {
@@ -93,8 +108,6 @@ public class Player extends Entity {
 
         } else if (checkIfPlayerCollidesUnderHim(map, hitbox.x, hitbox.y + by_value, hitbox.width, hitbox.height)) {
             inAir = false;
-
-            //set player to position of ground
 
             float playerYPos = (hitbox.y + by_value + hitbox.height);
             int groundSpriteNumber = (int) (playerYPos / (32 * Constants.TILE_SCALE));
@@ -107,20 +120,19 @@ public class Player extends Entity {
         }
         y += by_value;
         hitbox.y += by_value;
-        rightAttackHitBox.y += by_value;
-        leftAttackHitBox.y += by_value;
+        rightAttackHitBox.y = hitbox.y - 16;
+        leftAttackHitBox.y = hitbox.y - 16;
     }
 
     public void jump() {
         if (!inAir) {
-            attack = false;
             inAir = true;
             airMovement = -5f;
         }
     }
 
     public void attack() {
-        if (!attack && !inAir) {
+        if (!attack) {
             setAttack(true);
         }
     }
@@ -222,9 +234,23 @@ public class Player extends Entity {
         if (collidesWith(entity)) {
             float newPosX = calculateNewPosition(entity);
             getHitbox().x = newPosX;
-            setX(newPosX - 64);
+            setX(newPosX - 57);
             getRightAttackHitBox().x = newPosX + 64;
             getLeftAttackHitBox().x = newPosX - 64;
+        }
+    }
+
+    public int getPlayerHealth() {
+        return playerHealth;
+    }
+
+    public void setPlayerHealth(int playerHealth) {
+        this.playerHealth = playerHealth;
+    }
+
+    public void decreaseHealth() {
+        if (playerHealth > 0) {
+            playerHealth--;
         }
     }
 }
