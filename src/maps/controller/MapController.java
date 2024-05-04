@@ -107,4 +107,8 @@ public class MapController {
     public void setEntityController(EntityController entityController) {
         this.entityController = entityController;
     }
+
+    public int getOrcSpawnCount() {
+        return maps.get(currentMapIndex).getAmountOfOrcSpawns();
+    }
 }

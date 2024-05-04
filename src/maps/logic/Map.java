@@ -19,6 +19,7 @@ public class Map {
     private Point finishSpawn;
     private Point bigOrcSpawn;
     private Point bigOrcRouteFinish;
+    private int orcSpawnCount;
 
     public Map(BufferedImage img) {
         this.mapImage = img;
@@ -59,7 +60,9 @@ public class Map {
         switch (greenValue) {
             case 100 -> playerSpawn = new Point(scaledX, scaledY);
             case 101 -> finishSpawn = new Point(originalX, originalY);
-            case 102 -> bigOrcSpawn = new Point(originalX, originalY);
+            case 102 -> {
+                bigOrcSpawn = new Point(originalX, originalY);
+                orcSpawnCount++;}
             case 103 -> bigOrcRouteFinish = new Point(originalX, originalY);
         }
     }
@@ -107,5 +110,9 @@ public class Map {
 
     public Point getBigOrcRouteFinish() {
         return bigOrcRouteFinish;
+    }
+
+    public int getAmountOfOrcSpawns() {
+        return orcSpawnCount;
     }
 }

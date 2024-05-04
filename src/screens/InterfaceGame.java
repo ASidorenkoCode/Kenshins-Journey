@@ -87,4 +87,8 @@ public class InterfaceGame {
     public void setTotalHearts(int totalHearts) {
         this.totalHearts = totalHearts;
     }
+
+    public void increaseScore(int increment) {
+        score += increment;
+    }
 }
