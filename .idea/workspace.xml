@@ -4,9 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b91aae81-7ada-4dc7-9d93-d4383ba70810" name="Changes" comment="added DEBUG ON and OFF">
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Start_the_game__DEBUG_ON_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Start_the_game__DEBUG_ON_.xml" afterDir="false" />
+    <list default="true" id="b91aae81-7ada-4dc7-9d93-d4383ba70810" name="Changes" comment="added first enemy">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/controller/EntityController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/controller/EntityController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/logic/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/logic/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/ui/PlayerUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/ui/PlayerUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/UI/GameView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/UI/GameView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,7 +25,32 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "ASidorenkoCode"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="recentNewPullRequestHead">
+      <RepoCoordinatesHolder>
+        <option name="owner" value="ASidorenkoCode" />
+        <option name="repository" value="Kenshins-Journey" />
+      </RepoCoordinatesHolder>
+    </option>
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="fcb2563f-1a4b-4036-9708-b6905752992e" />
+        <option name="url" value="https://github.com/ASidorenkoCode/Kenshins-Journey.git" />
+      </UrlAndAccount>
+    </option>
   </component>
   <component name="KubernetesApiProvider">{
   &quot;isMigrated&quot;: true
@@ -46,7 +74,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "4-entity-+-player-+-enemies-each-enemy-receives-a-separate-class-gamelogi…ui-ui",
+    "git-widget-placeholder": "first-enemy",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -58,11 +86,12 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Artur\Documents\Uni\JAVA\Kenshins-Journey\res\bigOrc" />
       <recent name="$PROJECT_DIR$/res/kenshin" />
       <recent name="$PROJECT_DIR$/res" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Start the game (DEBUG OFF)">
+  <component name="RunManager" selected="Application.Start the game (DEBUG ON)">
     <configuration name="Start the game (DEBUG OFF)" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="GameStart" />
       <module name="Kenshins-Journey" />
@@ -180,8 +209,15 @@
       <option name="project" value="LOCAL" />
       <updated>1714492526029</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
-      <workItem from="1714329270267" duration="1000" />
+    <task id="LOCAL-00011" summary="added first enemy">
+      <option name="closed" value="true" />
+      <created>1714734898526</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1714734898526</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -198,6 +234,7 @@
     <MESSAGE value="improved switch with switch expression" />
     <MESSAGE value="implement last and current animation" />
     <MESSAGE value="added DEBUG ON and OFF" />
-    <option name="LAST_COMMIT_MESSAGE" value="added DEBUG ON and OFF" />
+    <MESSAGE value="added first enemy" />
+    <option name="LAST_COMMIT_MESSAGE" value="added first enemy" />
   </component>
 </project>
