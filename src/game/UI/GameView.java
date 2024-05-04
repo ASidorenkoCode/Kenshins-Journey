@@ -21,7 +21,6 @@ public class GameView extends JPanel {
     private GameController gameController;
     private MapController mapController;
     private EntityController entityController;
-    private InterfaceGame interfaceGame;
     private JFrame frame = new JFrame("Kenshins Journey");
 
 
@@ -32,9 +31,7 @@ public class GameView extends JPanel {
         setFocusable(true);
         requestFocusInWindow();
         addKeyListener(new KeyboardInputsIngame(this));
-        this.entityController = entityController;
-        this.interfaceGame = new InterfaceGame(entityController.getPlayer());
-    }
+        this.entityController = entityController;}
 
     public void gameWindow() {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -49,9 +46,12 @@ public class GameView extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if (gameController != null) render(g);
-        interfaceGame.updatePlayerHealth(entityController.getPlayer().getPlayerHealth());
-        interfaceGame.draw(g);
+        if (gameController != null) {
+            render(g);
+            gameController.getInterfaceGame().updatePlayerHealth(entityController.getPlayer().getPlayerHealth());
+            gameController.getInterfaceGame().updateHighscore();
+            gameController.getInterfaceGame().draw(g);
+        }
     }
 
     public void render(Graphics g) {
@@ -59,7 +59,7 @@ public class GameView extends JPanel {
         int mapOffset = mapController.getMapOffset();
         mapController.draw(g);
         entityController.drawEntities(g, mapOffset);
-        interfaceGame.draw(g);
+        gameController.getInterfaceGame().draw(g);
     }
 
     public void calculateScreenCenter(JFrame frame) {

@@ -4,13 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b91aae81-7ada-4dc7-9d93-d4383ba70810" name="Changes" comment="- added bigOrc handler, to check if enemy is present on map&#10;- healthbar for the player&#10;- for now the player health can only be decreased by pressing the key &quot;I&quot;&#10;- added jump slash and fall slash&#10;- added dynamic hitbox and attack hitbox is sticked to player hitbox">
+    <list default="true" id="b91aae81-7ada-4dc7-9d93-d4383ba70810" name="Changes" comment="added death animation">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/entities/controller/EntityController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/controller/EntityController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/entities/logic/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/logic/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/entities/ui/PlayerUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/ui/PlayerUI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/UI/GameView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/UI/GameView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/controller/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/InterfaceGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/InterfaceGame.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -248,7 +249,15 @@
       <option name="project" value="LOCAL" />
       <updated>1714834705437</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="added death animation">
+      <option name="closed" value="true" />
+      <created>1714840135018</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1714840135018</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -268,6 +277,7 @@
     <MESSAGE value="added first enemy" />
     <MESSAGE value="added collision with Entities" />
     <MESSAGE value="- added bigOrc handler, to check if enemy is present on map&#10;- healthbar for the player&#10;- for now the player health can only be decreased by pressing the key &quot;I&quot;&#10;- added jump slash and fall slash&#10;- added dynamic hitbox and attack hitbox is sticked to player hitbox" />
-    <option name="LAST_COMMIT_MESSAGE" value="- added bigOrc handler, to check if enemy is present on map&#10;- healthbar for the player&#10;- for now the player health can only be decreased by pressing the key &quot;I&quot;&#10;- added jump slash and fall slash&#10;- added dynamic hitbox and attack hitbox is sticked to player hitbox" />
+    <MESSAGE value="added death animation" />
+    <option name="LAST_COMMIT_MESSAGE" value="added death animation" />
   </component>
 </project>

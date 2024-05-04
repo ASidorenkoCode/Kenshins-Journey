@@ -7,6 +7,7 @@ import entities.ui.BigOrcUI;
 import entities.ui.FinishUI;
 import entities.ui.PlayerUI;
 import maps.controller.MapController;
+import screens.InterfaceGame;
 import screens.LoadingScreen;
 
 import java.awt.*;
@@ -30,7 +31,7 @@ public class EntityController {
         finishUI = new FinishUI(finish, showHitBox);
     }
 
-    public void update(MapController mapController, LoadingScreen loadingScreen) {
+    public void update(MapController mapController, LoadingScreen loadingScreen, InterfaceGame interfaceGame) {
         if (finish.checkIfPlayerIsInFinish(player) && !player.isDead()) {
             loadingScreen.displayLoadingScreen();
             mapController.loadNextMap();
@@ -38,14 +39,18 @@ public class EntityController {
             finish.updateFinishPoint(mapController.getCurrentFinishSpawn().x, mapController.getCurrentFinishSpawn().y);
         }
 
-            if (player.isDead() && player.getDeathAnimationFinished()) {
-                loadingScreen.displayLoadingScreen();
-                player.updateSpawnPoint(mapController.getCurrentPlayerSpawn().x, mapController.getCurrentPlayerSpawn().y);
-                finish.updateFinishPoint(mapController.getCurrentFinishSpawn().x, mapController.getCurrentFinishSpawn().y);
-                player.setPlayerHealth(6);
-                player.setDeathAnimationFinished(false);
-            }
-            player.update(mapController.getCurrentMap());
+        if (interfaceGame.getScore() == 0) {
+            player.setPlayerHealth(0);
+        }
+        if (player.isDead() && player.getDeathAnimationFinished()) {
+            loadingScreen.displayLoadingScreen();
+            player.updateSpawnPoint(mapController.getCurrentPlayerSpawn().x, mapController.getCurrentPlayerSpawn().y);
+            finish.updateFinishPoint(mapController.getCurrentFinishSpawn().x, mapController.getCurrentFinishSpawn().y);
+            player.setPlayerHealth(6);
+            player.setDeathAnimationFinished(false);
+            interfaceGame.setScore(10);
+        }
+        player.update(mapController.getCurrentMap());
     }
 
     public void handleBigOrc(MapController mapController, boolean showHitBox, Point BigOrcPoint, Point BigOrcRoutePoint) {

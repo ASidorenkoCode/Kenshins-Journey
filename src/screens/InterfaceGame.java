@@ -1,6 +1,7 @@
 package screens;
 
 import entities.logic.Player;
+import game.UI.GameView;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -13,6 +14,8 @@ public class InterfaceGame {
     private BufferedImage halfHeart;
     private BufferedImage emptyHeart;
     private int playerHealth;
+    private int score;
+    private long lastTime;
 
     public InterfaceGame(Player player) {
         try {
@@ -24,6 +27,8 @@ public class InterfaceGame {
             e.printStackTrace();
         }
         playerHealth = player.getPlayerHealth();
+        score = 10;
+        lastTime = System.currentTimeMillis();
     }
 
     public void draw(Graphics g) {
@@ -38,9 +43,37 @@ public class InterfaceGame {
             }
             g.drawImage(heart, i * 32 - 32, -32, 150, 150, null);
         }
+        drawScore(g, score);
     }
 
     public void updatePlayerHealth(int playerHealth) {
         this.playerHealth = playerHealth;
+    }
+
+    public void updateHighscore() {
+        if(System.currentTimeMillis() - lastTime >= 1000 && score > 0) {
+            score--;
+            lastTime = System.currentTimeMillis();
+        }
+    }
+
+    private void drawScore(Graphics g, int score) {
+        String scoreText = "Score: " + score;
+        int x = GameView.GAME_WIDTH / 2;
+        int y = 50;
+
+        g.setColor(Color.WHITE); // Set the color to white
+        g.setFont(new Font("Calibri", Font.BOLD, 32)); // Set the font to Calibri and size to 32px
+        g.drawString(scoreText, x, y); // Draw the string in the center
+        g.setColor(Color.BLACK); // Reset the color to black
+        g.setFont(new Font("Calibri", Font.BOLD, 12)); // Reset the font size to default
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 }

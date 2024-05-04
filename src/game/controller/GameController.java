@@ -4,6 +4,7 @@ import entities.controller.EntityController;
 import game.UI.GameView;
 import game.logic.GameEngine;
 import maps.controller.MapController;
+import screens.InterfaceGame;
 import screens.LoadingScreen;
 import screens.OptionScreen;
 
@@ -15,6 +16,7 @@ public class GameController {
     private MapController mapController;
     private LoadingScreen loadingScreen;
     private OptionScreen optionScreen;
+    private InterfaceGame interfaceGame;
 
     public GameController(boolean showFPS_UPS, boolean showHitBox) {
         mapController = new MapController(null);
@@ -24,6 +26,7 @@ public class GameController {
                 mapController.getCurrentBigOrcSpawn(),
                 mapController.getCurrentBigOrcRouteFinish());
         mapController.setEntityController(entityController);
+        this.interfaceGame = new InterfaceGame(entityController.getPlayer());
         gameEngine = new GameEngine(showFPS_UPS, this);
         gameView = new GameView(this, entityController, mapController);
         this.loadingScreen = new LoadingScreen(gameView.getFrame());
@@ -42,8 +45,11 @@ public class GameController {
     }
 
     public void update() {
-        entityController.update(mapController, loadingScreen);
+        entityController.update(mapController, loadingScreen, interfaceGame);
         entityController.handleBigOrc(mapController, true, mapController.getCurrentBigOrcSpawn(), mapController.getCurrentBigOrcRouteFinish());
     }
 
+    public InterfaceGame getInterfaceGame() {
+        return interfaceGame;
+    }
 }
