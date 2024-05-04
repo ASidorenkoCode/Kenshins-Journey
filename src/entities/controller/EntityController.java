@@ -37,6 +37,7 @@ public class EntityController {
             mapController.loadNextMap();
             player.updateSpawnPoint(mapController.getCurrentPlayerSpawn().x, mapController.getCurrentPlayerSpawn().y);
             finish.updateFinishPoint(mapController.getCurrentFinishSpawn().x, mapController.getCurrentFinishSpawn().y);
+            bigOrc.resetHealth();
         }
 
         if (interfaceGame.getScore() == 0) {
@@ -48,7 +49,7 @@ public class EntityController {
             finish.updateFinishPoint(mapController.getCurrentFinishSpawn().x, mapController.getCurrentFinishSpawn().y);
             player.resetHealth();
             player.setDeathAnimationFinished(false);
-            interfaceGame.setScore(10);
+            interfaceGame.setScore(5000);
             interfaceGame.setTotalHearts(player.getPlayerHealth() / 2);
         }
         player.update(mapController.getCurrentMap());
@@ -60,11 +61,12 @@ public class EntityController {
             if (bigOrc == null) {
                 bigOrc = new BigOrc(BigOrcPoint.x, BigOrcPoint.y, BigOrcPoint.x, BigOrcRoutePoint.x, 1);
                 bigOrcUI = new BigOrcUI(bigOrc, showHitBox);
+                bigOrc.resetHealth();
             }
             if (finish.checkIfPlayerIsInFinish(player))
                 bigOrc.updateSpawnPoint(currentBigOrcSpawn.x, currentBigOrcSpawn.y);
             bigOrc.update(mapController.getCurrentMap());
-            player.collisionWithEntity(bigOrc);
+            player.collisionWithEntity(bigOrc, playerUI);
         }
     }
 
@@ -105,4 +107,13 @@ public class EntityController {
     public Player getPlayer() {
         return player;
     }
+
+    public BigOrc getBigOrc() {
+        return bigOrc;
+    }
+
+    public BigOrcUI getBigOrcUI() {
+        return bigOrcUI;
+    }
 }
+

@@ -1,6 +1,7 @@
 package entities.logic;
 
 import constants.Constants;
+import entities.ui.PlayerUI;
 import maps.logic.Map;
 
 import java.awt.geom.Rectangle2D;
@@ -14,7 +15,9 @@ public class Player extends Entity {
     private int playerHealth = 6;
     private boolean hasDynamicAdjustedPlayerDirectionHitbox = false;
     private boolean isDead = false;
-
+    private boolean hasAttacked = false;
+    private int maximumDamagePerAttack = 20;
+    private int damageDealtInCurrentAttack = 0;
     private int currentMaxHealth = 6;
 
 
@@ -63,7 +66,7 @@ public class Player extends Entity {
 
     @Override
     public void update(Map map) {
-        if(!isDead()) {
+        if (!isDead()) {
             if (right && !left) {
                 updateXPos(map, 1);
             } else if (left && !right) {
@@ -101,6 +104,25 @@ public class Player extends Entity {
             if (checkIfPlayerCanMoveToPosition(map, hitbox.x - 20, hitbox.y, hitbox.width, hitbox.height)) {
                 hitbox.x -= 20;
                 hasDynamicAdjustedPlayerDirectionHitbox = false;
+            }
+        }
+    }
+
+    public void collisionWithEntity(Entity entity, PlayerUI playerUI) {
+        if (collidesWith(entity)) {
+            float newPosX = calculateNewPosition(entity);
+            getHitbox().x = newPosX;
+            setX(newPosX - 57);
+            getRightAttackHitBox().x = newPosX + 64;
+            getLeftAttackHitBox().x = newPosX - 64;
+            // TODO: make a stable damage output method, because this one sometimes work and sometimes not
+            if (entity instanceof BigOrc && getAttackHitBoxIsActive() && !hasAttacked && damageDealtInCurrentAttack < maximumDamagePerAttack) {
+                ((BigOrc) entity).decreaseHealth(10);
+                damageDealtInCurrentAttack += 10;
+                hasAttacked = true;
+            } else if (hasAttacked && playerUI.getCurrentAniIndex() == 6) {
+                hasAttacked = false;
+                damageDealtInCurrentAttack = 0;
             }
         }
     }
@@ -235,16 +257,6 @@ public class Player extends Entity {
         }
     }
 
-    public void collisionWithEntity(Entity entity) {
-        if (collidesWith(entity)) {
-            float newPosX = calculateNewPosition(entity);
-            getHitbox().x = newPosX;
-            setX(newPosX - 57);
-            getRightAttackHitBox().x = newPosX + 64;
-            getLeftAttackHitBox().x = newPosX - 64;
-        }
-    }
-
     public int getPlayerHealth() {
         return playerHealth;
     }
@@ -263,12 +275,12 @@ public class Player extends Entity {
         return playerHealth == 0;
     }
 
-    public void setDeathAnimationFinished(boolean isDead) {
-        this.isDead = isDead;
-    }
-
     public boolean getDeathAnimationFinished() {
         return this.isDead;
+    }
+
+    public void setDeathAnimationFinished(boolean isDead) {
+        this.isDead = isDead;
     }
 
     public int resetHealth() {

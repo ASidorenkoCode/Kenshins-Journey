@@ -87,9 +87,7 @@ public class PlayerUI extends EntityUI {
                     currentAnimation = PlayerAnimations.RUN_SLASH;
                 else currentAnimation = PlayerAnimations.IDLE_SLASH;
 
-                if ((aniIndex == 0) || (aniIndex == 1) || (aniIndex == 4) || (aniIndex == 5))
-                    player.setAttackHitBoxIsActive(true);
-                else player.setAttackHitBoxIsActive(false);
+                player.setAttackHitBoxIsActive((aniIndex == 0) || (aniIndex == 1) || (aniIndex == 4) || (aniIndex == 5));
             } else if ((player.getLeft() && !player.getRight()) || (!player.getLeft() && player.getRight()))
                 currentAnimation = PlayerAnimations.RUN;
             else currentAnimation = PlayerAnimations.IDLE;
@@ -138,9 +136,7 @@ public class PlayerUI extends EntityUI {
         drawHitBox(g, offset);
     }
 
-
-    @Override
-    void drawHealthBar() {
-        //TODO: Implement
+    public int getCurrentAniIndex() {
+        return aniIndex;
     }
 }

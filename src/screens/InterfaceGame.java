@@ -29,7 +29,7 @@ public class InterfaceGame {
         }
         playerHealth = player.getPlayerHealth();
         totalHearts = (int) (playerHealth * 0.5);
-        score = 10;
+        score = 5000;
         lastTime = System.currentTimeMillis();
     }
 

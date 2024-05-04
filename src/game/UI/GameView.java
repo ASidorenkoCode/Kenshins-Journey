@@ -5,7 +5,6 @@ import entities.controller.EntityController;
 import game.controller.GameController;
 import keyboardinputs.logic.KeyboardInputsIngame;
 import maps.controller.MapController;
-import screens.InterfaceGame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -85,9 +84,6 @@ public class GameView extends JPanel {
 
     public void handleUserInputKeyPressed(KeyEvent e) {
         entityController.handleUserInputKeyPressed(e);
-        if (e.getKeyChar() == 'i') {
-            entityController.getPlayer().decreaseHealth();
-        }
     }
 
     public void handleUserInputKeyReleased(KeyEvent e) {

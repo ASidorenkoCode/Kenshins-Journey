@@ -71,10 +71,23 @@ public class BigOrcUI extends EntityUI {
                 (int) (SPRITE_PX_WIDTH * Constants.TILE_SCALE),
                 (int) (SPRITE_PX_HEIGHT * Constants.TILE_SCALE), null);
         drawHitBox(g, offset);
+        drawHealthBar(g, offset);
+    }
+    public void drawHealthBar(Graphics g, int offset) {
+        if (bigOrc.getHealth() < bigOrc.getMaxHealth()) {
+            int healthBarHeight = 10;
+            int healthBarWidth = (int) (bigOrc.getHitbox().width * 0.7);
+            int healthBarX = (int) bigOrc.getX() + (int) bigOrc.getHitbox().width / 2 - healthBarWidth / 2 - offset;
+            int healthBarY = (int) bigOrc.getY() - healthBarHeight - 5;
+
+            int currentHealthBarWidth = (int) ((bigOrc.getHealth() / (float) bigOrc.getMaxHealth()) * healthBarWidth);
+
+            g.setColor(Color.RED);
+            g.fillRect(healthBarX, healthBarY, currentHealthBarWidth, healthBarHeight);
+            g.setColor(Color.BLACK);
+            g.drawRect(healthBarX, healthBarY, healthBarWidth, healthBarHeight);
+        }
     }
 
-    @Override
-    void drawHealthBar() {
 
-    }
 }

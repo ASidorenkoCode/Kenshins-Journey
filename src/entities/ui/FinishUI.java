@@ -54,12 +54,6 @@ public class FinishUI extends EntityUI {
 
     }
 
-
-    @Override
-    void drawHealthBar() {
-        //TODO: Not needed, maybe delete for all entites
-    }
-
     @Override
     void updateAnimationTick() {
         aniTick++;

@@ -12,6 +12,8 @@ public class BigOrc extends Entity{
     private float speed;
     boolean right;
     private final static float HORIZONTAL_OFFSET = 20 * Constants.TILE_SCALE; //needed because
+    private int health = 100;
+    private int maxHealth = 100;
 
 
     public BigOrc(float x, float y, float leftBoundary, float rightBoundary, float speed) {
@@ -24,6 +26,21 @@ public class BigOrc extends Entity{
 
     @Override
     void updatePushback() {
+    }
+
+    public void decreaseHealth(int amount) {
+        health -= amount;
+        if (health < 0) {
+            health = 0;
+        }
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
     }
 
     @Override
@@ -95,5 +112,7 @@ public class BigOrc extends Entity{
         return y;
     }
 
-
+    public void resetHealth() {
+        this.health = this.maxHealth;
+    }
 }
