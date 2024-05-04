@@ -17,6 +17,8 @@ public class Map {
     private int maxMapOffsetX;
     private Point playerSpawn;
     private Point finishSpawn;
+    private Point bigOrcSpawn;
+    private Point bigOrcRouteFinish;
 
     public Map(BufferedImage img) {
         this.mapImage = img;
@@ -57,6 +59,8 @@ public class Map {
         switch (greenValue) {
             case 100 -> playerSpawn = new Point(scaledX, scaledY);
             case 101 -> finishSpawn = new Point(originalX, originalY);
+            case 102 -> bigOrcSpawn = new Point(originalX, originalY);
+            case 103 -> bigOrcRouteFinish = new Point(originalX, originalY);
         }
     }
 
@@ -95,5 +99,13 @@ public class Map {
 
     public Point getFinishSpawn() {
         return finishSpawn;
+    }
+
+    public Point getBigOrcSpawn() {
+        return bigOrcSpawn;
+    }
+
+    public Point getBigOrcRouteFinish() {
+        return bigOrcRouteFinish;
     }
 }

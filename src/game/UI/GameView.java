@@ -1,10 +1,9 @@
 package game.UI;
 
+import constants.Constants;
 import entities.controller.EntityController;
 import game.controller.GameController;
 import keyboardinputs.logic.KeyboardInputsIngame;
-import maps.UI.MapUI;
-import constants.Constants;
 import maps.controller.MapController;
 
 import javax.swing.*;
@@ -13,15 +12,14 @@ import java.awt.event.KeyEvent;
 
 public class GameView extends JPanel {
 
-    private GameController gameController;
-    private MapController mapController;
     public final static int TILES_DEFAULT_SIZE = 32;
     public final static int TILES_IN_WIDTH = 26;
     public final static int TILES_IN_HEIGHT = 14;
     public final static int GAME_WIDTH = (int) (TILES_DEFAULT_SIZE * Constants.TILE_SCALE) * TILES_IN_WIDTH;
     public final static int GAME_HEIGHT = (int) (TILES_DEFAULT_SIZE * Constants.TILE_SCALE) * TILES_IN_HEIGHT;
+    private GameController gameController;
+    private MapController mapController;
     private EntityController entityController;
-
     private JFrame frame = new JFrame("Kenshins Journey");
 
 
