@@ -46,9 +46,10 @@ public class EntityController {
             loadingScreen.displayLoadingScreen();
             player.updateSpawnPoint(mapController.getCurrentPlayerSpawn().x, mapController.getCurrentPlayerSpawn().y);
             finish.updateFinishPoint(mapController.getCurrentFinishSpawn().x, mapController.getCurrentFinishSpawn().y);
-            player.setPlayerHealth(6);
+            player.resetHealth();
             player.setDeathAnimationFinished(false);
             interfaceGame.setScore(10);
+            interfaceGame.setTotalHearts(player.getPlayerHealth() / 2);
         }
         player.update(mapController.getCurrentMap());
     }

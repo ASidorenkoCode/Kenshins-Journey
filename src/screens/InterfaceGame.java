@@ -16,6 +16,7 @@ public class InterfaceGame {
     private int playerHealth;
     private int score;
     private long lastTime;
+    private int totalHearts;
 
     public InterfaceGame(Player player) {
         try {
@@ -27,12 +28,14 @@ public class InterfaceGame {
             e.printStackTrace();
         }
         playerHealth = player.getPlayerHealth();
+        totalHearts = (int) (playerHealth * 0.5);
         score = 10;
         lastTime = System.currentTimeMillis();
     }
 
     public void draw(Graphics g) {
-        for (int i = 0; i < 3; i++) {
+        int maximumHeartsPerRow = 10;
+        for (int i = 0; i < totalHearts; i++) {
             Image heart;
             if (playerHealth > i * 2 + 1) {
                 heart = fullHeart;
@@ -41,7 +44,11 @@ public class InterfaceGame {
             } else {
                 heart = emptyHeart;
             }
-            g.drawImage(heart, i * 32 - 32, -32, 150, 150, null);
+
+            int x = (i % maximumHeartsPerRow) * 32 - 32;
+            int y = (i / maximumHeartsPerRow) * 32 - 32;
+
+            g.drawImage(heart, x, y, 150, 150, null);
         }
         drawScore(g, score);
     }
@@ -75,5 +82,9 @@ public class InterfaceGame {
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public void setTotalHearts(int totalHearts) {
+        this.totalHearts = totalHearts;
     }
 }
