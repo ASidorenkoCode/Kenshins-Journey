@@ -59,36 +59,32 @@ public class EntityController {
     }
 
     public void handleBigOrc(MapController mapController, InterfaceGame interfaceGame) {
+        for (BigOrc orc : bigOrcs) {
+            orc.update(mapController.getCurrentMap());
+            player.collisionWithEntity(orc, playerUI);
+        }
+
+        for (BigOrc bigOrc : bigOrcs) {
+            if (bigOrc.getHealth() == 0 && !bigOrc.isScoreIncreased()) {
+                interfaceGame.increaseScore(300);
+                bigOrc.setScoreIncreased(true);
+            }
+        }
+    }
+
+    public void initBigOrcs(MapController mapController, boolean showHitBox, Point BigOrcPoint, Point BigOrcRoutePoint) {
         Point currentBigOrcSpawn = mapController.getCurrentBigOrcSpawn();
         if (currentBigOrcSpawn != null) {
-
-            for (BigOrc orc : bigOrcs) {
-                orc.update(mapController.getCurrentMap());
-                player.collisionWithEntity(orc, playerUI);
+            int orcCount = mapController.getOrcSpawnCount();
+            if (bigOrcs.size() < orcCount) {
+                BigOrc bigOrc = new BigOrc(BigOrcPoint.x, BigOrcPoint.y, BigOrcPoint.x, BigOrcRoutePoint.x, 1);
+                BigOrcUI bigOrcUI = new BigOrcUI(bigOrc, showHitBox);
+                bigOrc.resetHealth();
+                bigOrcs.add(bigOrc);
+                bigOrcUIs.add(bigOrcUI);
             }
         }
-
-            for (BigOrc bigOrc : bigOrcs) {
-                if (bigOrc.getHealth() == 0 && !bigOrc.isScoreIncreased()) {
-                    interfaceGame.increaseScore(300);
-                    bigOrc.setScoreIncreased(true);
-                }
-            }
-        }
-
-        public void initBigOrcs(MapController mapController, boolean showHitBox, Point BigOrcPoint, Point BigOrcRoutePoint) {
-            Point currentBigOrcSpawn = mapController.getCurrentBigOrcSpawn();
-            if (currentBigOrcSpawn != null) {
-                int orcCount = mapController.getOrcSpawnCount();
-                if (bigOrcs.size() < orcCount) {
-                    BigOrc bigOrc = new BigOrc(BigOrcPoint.x, BigOrcPoint.y, BigOrcPoint.x, BigOrcRoutePoint.x, 1);
-                    BigOrcUI bigOrcUI = new BigOrcUI(bigOrc, showHitBox);
-                    bigOrc.resetHealth();
-                    bigOrcs.add(bigOrc);
-                    bigOrcUIs.add(bigOrcUI);
-                }
-        }
-            }
+    }
 
     public void handleUserInputKeyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
@@ -128,6 +124,10 @@ public class EntityController {
 
     public Player getPlayer() {
         return player;
+    }
+
+    public int getBigOrcsAmount() {
+        return bigOrcs.size();
     }
 }
 
