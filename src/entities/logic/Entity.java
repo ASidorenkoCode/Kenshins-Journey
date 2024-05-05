@@ -25,6 +25,4 @@ public abstract class Entity {
         return hitbox;
     }
 
-
-
 }

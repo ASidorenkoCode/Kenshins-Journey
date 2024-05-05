@@ -3,6 +3,7 @@ package game.UI;
 import constants.Constants;
 import entities.controller.EntityController;
 import game.controller.GameController;
+import items.controller.ItemController;
 import keyboardinputs.logic.KeyboardInputsIngame;
 import maps.controller.MapController;
 
@@ -20,17 +21,20 @@ public class GameView extends JPanel {
     private GameController gameController;
     private MapController mapController;
     private EntityController entityController;
+    private ItemController itemController;
     private JFrame frame = new JFrame("Kenshins Journey");
 
 
-    public GameView(GameController gameController, EntityController entityController, MapController mapController) {
+    public GameView(GameController gameController, EntityController entityController, MapController mapController, ItemController itemController) {
         this.gameController = gameController;
         this.mapController = mapController;
         setPreferredSize(new Dimension(GAME_WIDTH, GAME_HEIGHT));
         setFocusable(true);
         requestFocusInWindow();
         addKeyListener(new KeyboardInputsIngame(this));
-        this.entityController = entityController;}
+        this.entityController = entityController;
+        this.itemController = itemController;
+    }
 
     public void gameWindow() {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -54,11 +58,13 @@ public class GameView extends JPanel {
     }
 
     public void render(Graphics g) {
+        //TODO: Class calling inside of gameController
         //TODO: Implement rendering for more stuff
         int mapOffset = mapController.getMapOffset();
         mapController.draw(g);
         entityController.drawEntities(g, mapOffset);
         gameController.getInterfaceGame().draw(g);
+        itemController.drawEntities(g, mapOffset);
     }
 
     public void calculateScreenCenter(JFrame frame) {
