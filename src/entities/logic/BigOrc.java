@@ -21,7 +21,7 @@ public class BigOrc extends Entity{
 
 
     public BigOrc(float x, float y, float leftBoundary, float rightBoundary, float speed) {
-        super(x, y - HORIZONTAL_OFFSET, new Rectangle2D.Float(x, y - HORIZONTAL_OFFSET,(96 - 32) * Constants.TILE_SCALE,(96 - 45) * Constants.TILE_SCALE));
+        super(x, y - 15 * Constants.ENEMY_SCALE, new Rectangle2D.Float(x + 10, y - 13 * Constants.ENEMY_SCALE,(96 - 60) * Constants.TILE_SCALE,(96 - 55) * Constants.TILE_SCALE));
         this.leftBoundary = leftBoundary;
         this.rightBoundary = rightBoundary;
         this.speed = speed;

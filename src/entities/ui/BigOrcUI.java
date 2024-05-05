@@ -17,11 +17,11 @@ public class BigOrcUI extends EntityUI {
         this.bigOrc = bigOrc;
         this.showHitBox = showHitBox;
         SPRITE_PX_WIDTH = 64;
-        SPRITE_PX_HEIGHT = 55;
-        ENTITY_SPRITE_PATH = "bigOrc/enemy1Right.png";
-        ENTITY_SPRITE_PATH_LEFT = "bigOrc/enemy1Left.png";
-        SPRITE_Y_DIMENSION = 2;
-        SPRITE_X_DIMENSION = 4;
+        SPRITE_PX_HEIGHT = 64;
+        ENTITY_SPRITE_PATH = "enemies/kappa/kappaRight.png";
+        ENTITY_SPRITE_PATH_LEFT = "enemies/kappa/kappaLeft.png";
+        SPRITE_Y_DIMENSION = 3;
+        SPRITE_X_DIMENSION = 8;
         loadAnimations();
         currentAnimation = EnemyAnimations.RUN;
 
@@ -49,7 +49,7 @@ public class BigOrcUI extends EntityUI {
             aniTick = 0;
             aniIndex++;
         }
-        if (aniIndex >= SPRITE_X_DIMENSION) {
+        if (aniIndex >= currentAnimation.getAniSize()) {
             aniIndex = 0;
         }
     }
@@ -68,8 +68,8 @@ public class BigOrcUI extends EntityUI {
         g.drawImage(animations[currentAnimation.getAniIndex() + (showLeftAnimations ? SPRITE_Y_DIMENSION : 0)][aniIndex],
                 (int) bigOrc.getX() - offset,
                 (int) bigOrc.getY(),
-                (int) (SPRITE_PX_WIDTH * Constants.TILE_SCALE),
-                (int) (SPRITE_PX_HEIGHT * Constants.TILE_SCALE), null);
+                (int) (SPRITE_PX_WIDTH * Constants.ENEMY_SCALE),
+                (int) (SPRITE_PX_HEIGHT * Constants.ENEMY_SCALE), null);
         drawHitBox(g, offset);
         drawHealthBar(g, offset);
     }
