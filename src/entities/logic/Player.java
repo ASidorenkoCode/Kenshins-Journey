@@ -12,13 +12,14 @@ public class Player extends Entity {
     private float airMovement = -5f;
     private Rectangle2D.Float rightAttackHitBox;
     private Rectangle2D.Float leftAttackHitBox;
-    private int playerHealth = 6;
     private boolean hasDynamicAdjustedPlayerDirectionHitbox = false;
     private boolean isDead = false;
     private boolean hasAttacked = false;
     private int maximumDamagePerAttack = 20;
     private int damageDealtInCurrentAttack = 0;
-    private int currentMaxHealth = 6;
+    private int playerHealth = 6;
+    private int currentMaxHearts = 3;
+    private int totalMaxHearts = 3;
 
 
     public Player(float x, float y) {
@@ -284,6 +285,14 @@ public class Player extends Entity {
     }
 
     public int resetHealth() {
-        return playerHealth = currentMaxHealth;
+        return playerHealth = totalMaxHearts * 2;
+    }
+
+    public int getTotalHearts() {
+        return totalMaxHearts;
+    }
+
+    public void setTotalHearts(int totalHearts) {
+        this.totalMaxHearts = totalHearts;
     }
 }
