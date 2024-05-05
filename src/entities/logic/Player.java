@@ -22,6 +22,8 @@ public class Player extends Entity {
     private int totalMaxHearts = 3;
 
 
+
+
     public Player(float x, float y) {
         super(x, y, new Rectangle2D.Float(x + 25 * Constants.TILE_SCALE, y + 16 * Constants.TILE_SCALE, (96 - 69) * Constants.TILE_SCALE, (96 - 48) * Constants.TILE_SCALE));
         rightAttackHitBox = new Rectangle2D.Float((x + 25 * Constants.TILE_SCALE) + 32 * Constants.TILE_SCALE, y + 8 * Constants.TILE_SCALE, (96 - 64) * Constants.TILE_SCALE, (96 - 48) * Constants.TILE_SCALE);
@@ -108,6 +110,7 @@ public class Player extends Entity {
         }
     }
 
+
     public void collisionWithEntity(Entity entity, PlayerUI playerUI) {
         if (this.isDead()) {
             return;
@@ -119,15 +122,15 @@ public class Player extends Entity {
             setX(newPosX - 57);
             getRightAttackHitBox().x = newPosX + 64;
             getLeftAttackHitBox().x = newPosX - 64;
-            // TODO: make a stable damage output method, because this one sometimes work and sometimes not
-            if (entity instanceof kappa && getAttackHitBoxIsActive() && !hasAttacked && damageDealtInCurrentAttack < maximumDamagePerAttack) {
-                ((kappa) entity).decreaseHealth(10);
-                damageDealtInCurrentAttack += 10;
-                hasAttacked = true;
-            } else if (hasAttacked && playerUI.getCurrentAniIndex() == 6) {
-                hasAttacked = false;
-                damageDealtInCurrentAttack = 0;
-            }
+        }
+
+        if (entity instanceof kappa && getAttackHitBoxIsActive() && !hasAttacked && damageDealtInCurrentAttack < maximumDamagePerAttack) {
+            ((kappa) entity).decreaseHealth(10);
+            damageDealtInCurrentAttack += 10;
+            hasAttacked = true;
+        } else if (hasAttacked && playerUI.getCurrentAniIndex() == 6) {
+            hasAttacked = false;
+            damageDealtInCurrentAttack = 0;
         }
     }
 
