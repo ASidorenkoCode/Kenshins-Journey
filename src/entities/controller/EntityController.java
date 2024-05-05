@@ -77,7 +77,7 @@ public class EntityController {
         if (currentBigOrcSpawn != null) {
             int orcCount = mapController.getOrcSpawnCount();
             if (bigOrcs.size() < orcCount) {
-                BigOrc bigOrc = new BigOrc(BigOrcPoint.x, BigOrcPoint.y, BigOrcPoint.x, BigOrcRoutePoint.x, 1);
+                BigOrc bigOrc = new BigOrc(BigOrcPoint.x, BigOrcPoint.y, BigOrcPoint.x, BigOrcRoutePoint.x, 0.6f);
                 BigOrcUI bigOrcUI = new BigOrcUI(bigOrc, showHitBox);
                 bigOrc.resetHealth();
                 bigOrcs.add(bigOrc);

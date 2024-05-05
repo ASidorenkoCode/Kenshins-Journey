@@ -55,7 +55,6 @@ public class PlayerUI extends EntityUI {
         setAnimation();
         aniTick++;
 
-
         if (aniTick >= aniSpeed) {
             aniTick = 0;
             aniIndex++;
@@ -66,8 +65,6 @@ public class PlayerUI extends EntityUI {
 
             if (aniIndex >= currentAnimation.getAniSize()) {
                 player.setAttack(false);
-                aniIndex = 0;
-            } else if (aniIndex > animations[currentAnimation.getAniIndex() + (showLeftAnimations ? SPRITE_Y_DIMENSION : 0)].length) {
                 aniIndex = 0;
             }
         }
@@ -99,7 +96,8 @@ public class PlayerUI extends EntityUI {
 
         //reset index
         if (currentAnimation != lastAnimation) {
-            if (!(lastAnimation == PlayerAnimations.JUMP_SLASH || lastAnimation == PlayerAnimations.FALL_SLASH)) {
+            if (!(lastAnimation == PlayerAnimations.JUMP_SLASH || lastAnimation == PlayerAnimations.FALL_SLASH ||
+                    lastAnimation == PlayerAnimations.IDLE_SLASH || lastAnimation == PlayerAnimations.RUN_SLASH)) {
                 aniIndex = 0;
             }
 
