@@ -4,14 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b91aae81-7ada-4dc7-9d93-d4383ba70810" name="Changes" comment="added death animation">
+    <list default="true" id="b91aae81-7ada-4dc7-9d93-d4383ba70810" name="Changes" comment="added kappa and enemy_Scale TODO: change bigOrc to Kappa">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/entities/controller/EntityController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/controller/EntityController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/logic/BigOrc.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/logic/kappa.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/entities/logic/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/logic/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/ui/PlayerUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/ui/PlayerUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/UI/GameView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/UI/GameView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/ui/BigOrcUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/ui/kappaUI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/controller/GameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/InterfaceGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/InterfaceGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/maps/controller/MapController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/maps/controller/MapController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,13 +93,14 @@
       <recent name="C:\Users\Artur\Documents\Uni\JAVA\Kenshins-Journey\res\kenshin" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Artur\Documents\Uni\JAVA\Kenshins-Journey\res\enemies\kappa" />
+      <recent name="C:\Users\Artur\Documents\Uni\JAVA\Kenshins-Journey\res\enemies" />
       <recent name="C:\Users\Artur\Documents\Uni\JAVA\Kenshins-Journey\res\healthPlayer" />
       <recent name="C:\Users\Artur\Documents\Uni\JAVA\Kenshins-Journey\res\bigOrc" />
       <recent name="$PROJECT_DIR$/res/kenshin" />
-      <recent name="$PROJECT_DIR$/res" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Start the game (DEBUG OFF)">
+  <component name="RunManager" selected="Application.Start the game (DEBUG ON)">
     <configuration name="Start the game (DEBUG OFF)" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="GameStart" />
       <module name="Kenshins-Journey" />
@@ -257,7 +258,87 @@
       <option name="project" value="LOCAL" />
       <updated>1714840135018</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="added score and death if score = 0 and updated health png">
+      <option name="closed" value="true" />
+      <created>1714842609627</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1714842609627</updated>
+    </task>
+    <task id="LOCAL-00017" summary="optimized health, health is now displayed in 2 rows if hearts &gt; 10, added currentMaxHealth">
+      <option name="closed" value="true" />
+      <created>1714843617663</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1714843617663</updated>
+    </task>
+    <task id="LOCAL-00018" summary="added player damage, enemy healthbar and reset healthbar on reload map">
+      <option name="closed" value="true" />
+      <created>1714850770650</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1714850770650</updated>
+    </task>
+    <task id="LOCAL-00019" summary="added highscore increase if enemy killed, added dynamic amount of bigOrcs on map">
+      <option name="closed" value="true" />
+      <created>1714852589076</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1714852589076</updated>
+    </task>
+    <task id="LOCAL-00020" summary="initBigOrcs">
+      <option name="closed" value="true" />
+      <created>1714897619641</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1714897619641</updated>
+    </task>
+    <task id="LOCAL-00021" summary="initBigOrcs">
+      <option name="closed" value="true" />
+      <created>1714897846295</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1714897846295</updated>
+    </task>
+    <task id="LOCAL-00022" summary="optimized attack + attack bug fix">
+      <option name="closed" value="true" />
+      <created>1714898575472</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1714898575472</updated>
+    </task>
+    <task id="LOCAL-00023" summary="hearts system approach">
+      <option name="closed" value="true" />
+      <created>1714900017436</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1714900017436</updated>
+    </task>
+    <task id="LOCAL-00024" summary="hearts system approach">
+      <option name="closed" value="true" />
+      <created>1714900214051</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1714900214051</updated>
+    </task>
+    <task id="LOCAL-00025" summary="added kappa and enemy_Scale TODO: change bigOrc to Kappa">
+      <option name="closed" value="true" />
+      <created>1714909559212</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1714909559212</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -278,6 +359,14 @@
     <MESSAGE value="added collision with Entities" />
     <MESSAGE value="- added bigOrc handler, to check if enemy is present on map&#10;- healthbar for the player&#10;- for now the player health can only be decreased by pressing the key &quot;I&quot;&#10;- added jump slash and fall slash&#10;- added dynamic hitbox and attack hitbox is sticked to player hitbox" />
     <MESSAGE value="added death animation" />
-    <option name="LAST_COMMIT_MESSAGE" value="added death animation" />
+    <MESSAGE value="added score and death if score = 0 and updated health png" />
+    <MESSAGE value="optimized health, health is now displayed in 2 rows if hearts &gt; 10, added currentMaxHealth" />
+    <MESSAGE value="added player damage, enemy healthbar and reset healthbar on reload map" />
+    <MESSAGE value="added highscore increase if enemy killed, added dynamic amount of bigOrcs on map" />
+    <MESSAGE value="initBigOrcs" />
+    <MESSAGE value="optimized attack + attack bug fix" />
+    <MESSAGE value="hearts system approach" />
+    <MESSAGE value="added kappa and enemy_Scale TODO: change bigOrc to Kappa" />
+    <option name="LAST_COMMIT_MESSAGE" value="added kappa and enemy_Scale TODO: change bigOrc to Kappa" />
   </component>
 </project>

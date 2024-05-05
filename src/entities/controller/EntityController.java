@@ -61,15 +61,15 @@ public class EntityController {
     }
 
     public void handleKappa(MapController mapController, InterfaceGame interfaceGame) {
-        for (kappa orc : kappas) {
-            orc.update(mapController.getCurrentMap());
-            player.collisionWithEntity(orc, playerUI);
+        for (kappa kap : kappas) {
+            kap.update(mapController.getCurrentMap());
+            player.collisionWithEntity(kap, playerUI);
         }
 
-        for (kappa kappa : kappas) {
-            if (kappa.getHealth() == 0 && !kappa.isScoreIncreased()) {
+        for (kappa kap : kappas) {
+            if (kap.getHealth() == 0 && !kap.isScoreIncreased()) {
                 interfaceGame.increaseScore(300);
-                kappa.setScoreIncreased(true);
+                kap.setScoreIncreased(true);
             }
         }
     }
@@ -77,8 +77,8 @@ public class EntityController {
     public void initKappas(MapController mapController, boolean showHitBox, Point kappaSpawnPoint, Point kappaRoutePoint) {
         Point currentKappaSpawn = mapController.getCurrentKappaSpawn();
         if (currentKappaSpawn != null) {
-            int orcCount = mapController.getKappaSpawnCount();
-            if (kappas.size() < orcCount) {
+            int kappaCount = mapController.getKappaSpawnCount();
+            if (kappas.size() < kappaCount) {
                 kappa kappa = new kappa(kappaSpawnPoint.x, kappaSpawnPoint.y, kappaSpawnPoint.x, kappaRoutePoint.x, 0.6f);
                 kappaUI kappaUI = new kappaUI(kappa, showHitBox);
                 kappa.resetHealth();
