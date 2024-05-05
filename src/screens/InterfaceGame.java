@@ -27,8 +27,9 @@ public class InterfaceGame {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        //TODO: sinnvolle änderung?
         playerHealth = player.getPlayerHealth();
-        totalHearts = (int) (playerHealth * 0.5);
+        totalHearts = player.getTotalHearts();
         score = 5000;
         lastTime = System.currentTimeMillis();
     }

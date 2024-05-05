@@ -50,6 +50,7 @@ public class GameController {
     public void update() {
         entityController.update(mapController, loadingScreen, interfaceGame);
         if (entityController.getBigOrcsAmount() > 0) entityController.handleBigOrc(mapController, interfaceGame);
+        itemController.update(entityController.getPlayer());
     }
 
     public InterfaceGame getInterfaceGame() {

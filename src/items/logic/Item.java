@@ -1,8 +1,6 @@
 package items.logic;
 
-import maps.controller.MapController;
-import maps.logic.Map;
-
+import entities.logic.Player;
 import java.awt.geom.Rectangle2D;
 
 
@@ -20,13 +18,11 @@ public abstract class Item {
     public Rectangle2D.Float getHitbox() {
         return hitbox;
     }
-    abstract void handleItem();
-
     public float getX() {
         return x;
     }
-
     public float getY() {
         return y;
     }
+    abstract void handleItem(Player player);
 }
