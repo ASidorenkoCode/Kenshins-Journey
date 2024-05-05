@@ -30,13 +30,15 @@ public class HeartUI extends ItemUI {
     }
     @Override
     public void drawAnimations(Graphics g, int offset) {
-        updateAnimationTick();
-        g.drawImage(animations[aniIndex],
-                (int) heart.getX() - offset,
-                (int) heart.getY(),
-                (int) (SPRITE_PX_WIDTH * Constants.TILE_SCALE),
-                (int) (SPRITE_PX_HEIGHT * Constants.TILE_SCALE), null);
-        drawHitBox(g, offset);
+        if(heart.getIsActive()) {
+            updateAnimationTick();
+            g.drawImage(animations[aniIndex],
+                    (int) heart.getX() - offset,
+                    (int) heart.getY(),
+                    (int) (SPRITE_PX_WIDTH * Constants.TILE_SCALE),
+                    (int) (SPRITE_PX_HEIGHT * Constants.TILE_SCALE), null);
+            drawHitBox(g, offset);
+        }
 
     }
 
