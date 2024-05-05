@@ -39,6 +39,7 @@ public class EntityController {
             player.setTotalHearts(player.getTotalHearts() + 1);  // AMOUNT OF hearts collected
             interfaceGame.setTotalHearts(player.getTotalHearts());
             loadingScreen.displayLoadingScreen();
+            loadingScreen.updateScore(interfaceGame.getScore());
             mapController.loadNextMap();
             player.updateSpawnPoint(mapController.getCurrentPlayerSpawn().x, mapController.getCurrentPlayerSpawn().y);
             finish.updateFinishPoint(mapController.getCurrentFinishSpawn().x, mapController.getCurrentFinishSpawn().y);
