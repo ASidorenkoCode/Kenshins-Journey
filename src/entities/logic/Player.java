@@ -65,7 +65,6 @@ public class Player extends Entity {
         this.rightAttackHitBox.y = y + 8 * Constants.TILE_SCALE;
     }
 
-    @Override
     public void update(Map map) {
         if (!isDead()) {
             if (right && !left) {
@@ -110,6 +109,10 @@ public class Player extends Entity {
     }
 
     public void collisionWithEntity(Entity entity, PlayerUI playerUI) {
+        if (this.isDead()) {
+            return;
+        }
+
         if (collidesWith(entity)) {
             float newPosX = calculateNewPosition(entity);
             getHitbox().x = newPosX;
@@ -266,9 +269,10 @@ public class Player extends Entity {
         this.playerHealth = playerHealth;
     }
 
-    public void decreaseHealth() {
-        if (playerHealth > 0) {
-            playerHealth--;
+    public void decreaseHealth(int amount) {
+        playerHealth -= amount;
+        if (playerHealth < 0) {
+            playerHealth = 0;
         }
     }
 
@@ -294,5 +298,9 @@ public class Player extends Entity {
 
     public void setTotalHearts(int totalHearts) {
         this.totalMaxHearts = totalHearts;
+    }
+
+    public boolean isJumping() {
+        return inAir;
     }
 }

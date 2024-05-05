@@ -4,6 +4,8 @@ import constants.Constants;
 import maps.logic.Map;
 
 import java.awt.geom.Rectangle2D;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class kappa extends Entity{
 
@@ -18,6 +20,13 @@ public class kappa extends Entity{
 
     private static int nextId = 0;
     private int id;
+    private boolean isPlayerNear = false;
+    private boolean isAttacking = false;
+    private Rectangle2D.Float attackHitbox;
+    private boolean hasAttacked = false;
+    private Timer attackTimer;
+
+
 
 
     public kappa(float x, float y, float leftBoundary, float rightBoundary, float speed) {
@@ -27,6 +36,8 @@ public class kappa extends Entity{
         this.speed = speed;
         this.right = true;
         this.id = nextId++;
+        attackTimer = new Timer();
+        attackHitbox = new Rectangle2D.Float();
     }
 
     @Override
@@ -40,6 +51,14 @@ public class kappa extends Entity{
         }
     }
 
+    public boolean isPlayerNearChecker(Player player) {
+        float distanceX = Math.abs(x - player.getX());
+        float distanceY = Math.abs(y - player.getY());
+        boolean isPlayerUnderneath = player.getY() > y;
+        isPlayerNear = !isPlayerUnderneath && Math.sqrt(distanceX * distanceX + distanceY * distanceY) < 150;
+        return isPlayerNear;
+    }
+
     public int getHealth() {
         return health;
     }
@@ -48,16 +67,35 @@ public class kappa extends Entity{
         return maxHealth;
     }
 
-    @Override
-    public void update(Map map) {
-        if(right && x < rightBoundary) {
-            updateXPos(map, speed);
+    public void update(Map map, Player player) {
+        if (isPlayerHitboxNextToKappaHitbox(player)) {
+            return;
         }
-        else if(!right && x > leftBoundary) {
-            updateXPos(map, -speed);
+
+        if(isPlayerNearChecker(player) && !player.isDead()) {
+            right = player.getX() > x;
+
+            if(right && x < rightBoundary) {
+                updateXPos(map, speed);
+            }
+            else if(!right && x > leftBoundary) {
+                updateXPos(map, -speed);
+            }
         }
         else {
-            right = !right;
+            if(right && x < rightBoundary) {
+                updateXPos(map, speed);
+            }
+            else if(!right && x > leftBoundary) {
+                updateXPos(map, -speed);
+            }
+            else {
+                right = !right;
+            }
+        }
+
+        if (isAttacking) {
+            updateAttackHitbox();
         }
     }
 
@@ -65,6 +103,14 @@ public class kappa extends Entity{
         if(!checkIfPlayerCanMoveToPosition(map, hitbox.x + by_value, hitbox.y, hitbox.width, hitbox.height)) return;
         x += by_value;
         hitbox.x += by_value;
+    }
+
+    public void updateAttackHitbox() {
+        float attackHitboxWidth = 50;
+        float attackHitboxHeight = 64;
+        float attackHitboxX = right ? x + hitbox.width : x - attackHitboxWidth;
+        float attackHitboxY = y;
+        attackHitbox = new Rectangle2D.Float(attackHitboxX, attackHitboxY, attackHitboxWidth, attackHitboxHeight);
     }
 
     public void updateSpawnPoint (int x, int y) {
@@ -131,5 +177,87 @@ public class kappa extends Entity{
 
     public int getId() {
         return id;
+    }
+
+    public boolean isPlayerNear() {
+        return isPlayerNear;
+    }
+
+    public boolean isAttacking() {
+        return isAttacking;
+    }
+
+    public void startAttacking(Player player) {
+
+        if (player.isJumping()) {
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    if (isPlayerNear()) {
+                        isAttacking = true;
+                        attackPlayer(player);
+
+                        attackTimer.cancel();
+                        attackTimer = new Timer();
+
+                        attackTimer.schedule(new TimerTask() {
+                            @Override
+                            public void run() {
+                                stopAttacking();
+                            }
+                        }, 3000);
+                    }
+                }
+            }, 1000);
+        } else {
+            isAttacking = true;
+            attackPlayer(player);
+
+            attackTimer.cancel();
+            attackTimer = new Timer();
+
+            attackTimer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    stopAttacking();
+                }
+            }, 3000);
+        }
+    }
+
+        public void stopAttacking() {
+            hasAttacked = false;
+        new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    isAttacking = false;
+                }
+            }, 1000);
+
+    }
+
+    public void attackPlayer(Player player) {
+        if (!hasAttacked) {
+            player.decreaseHealth(1);
+            hasAttacked = true;
+        }
+    }
+
+    public Rectangle2D.Float getAttackHitbox() {
+        return attackHitbox;
+    }
+
+    public boolean hasAttacked() {
+        return hasAttacked;
+    }
+
+    public boolean isPlayerHitboxNextToKappaHitbox(Player player) {
+        Rectangle2D.Float playerHitbox = player.getHitbox();
+        Rectangle2D.Float kappaHitbox = this.getHitbox();
+
+        Rectangle2D.Float playerHitboxBuffered = new Rectangle2D.Float(playerHitbox.x - 1, playerHitbox.y - 1, playerHitbox.width + 2, playerHitbox.height + 2);
+        Rectangle2D.Float kappaHitboxBuffered = new Rectangle2D.Float(kappaHitbox.x - 1, kappaHitbox.y - 1, kappaHitbox.width + 2, kappaHitbox.height + 2);
+
+        return playerHitboxBuffered.intersects(kappaHitboxBuffered);
     }
 }

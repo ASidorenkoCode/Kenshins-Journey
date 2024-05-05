@@ -38,6 +38,14 @@ public class kappaUI extends EntityUI {
             Rectangle2D.Float hitbox = kappa.getHitbox();
             g.drawRect((int) hitbox.x - offset, (int) hitbox.y, (int) hitbox.width, (int) hitbox.height);
         }
+
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setColor(Color.BLUE);
+        int radius = 150;
+        int diameter = radius * 2;
+        int startAngle = 0;
+        g2d.drawArc((int) kappa.getX() - offset - radius + 50, (int) kappa.getY() - 50, diameter, diameter, startAngle, 180);
+
     }
 
     @Override
@@ -55,10 +63,25 @@ public class kappaUI extends EntityUI {
     }
 
     private void setAnimation() {
-        currentAnimation = EnemyAnimations.RUN;
+        if (kappa.isPlayerNear()) {
+            if (kappa.isAttacking() && !kappa.hasAttacked()) {
+                currentAnimation = EnemyAnimations.ATTACK;
+            } else {
+                currentAnimation = EnemyAnimations.IDLE;
+            }
+        } else {
+            currentAnimation = EnemyAnimations.RUN;
+        }
     }
 
-    @Override
+    void drawAttackHitbox(Graphics g, int offset) {
+        if (kappa.isAttacking()) {
+            Rectangle2D.Float attackHitbox = kappa.getAttackHitbox();
+            g.setColor(Color.RED);
+            g.drawRect((int) attackHitbox.x - offset, (int) attackHitbox.y, (int) attackHitbox.width, (int) attackHitbox.height);
+        }
+    }
+
     public void drawAnimations(Graphics g, int offset) {
 
         updateAnimationTick();
@@ -71,8 +94,10 @@ public class kappaUI extends EntityUI {
                 (int) (SPRITE_PX_WIDTH * Constants.ENEMY_SCALE),
                 (int) (SPRITE_PX_HEIGHT * Constants.ENEMY_SCALE), null);
         drawHitBox(g, offset);
+        drawAttackHitbox(g, offset);
         drawHealthBar(g, offset);
     }
+
     public void drawHealthBar(Graphics g, int offset) {
         if (kappa.getHealth() < kappa.getMaxHealth()) {
             int healthBarHeight = 10;
@@ -88,6 +113,4 @@ public class kappaUI extends EntityUI {
             g.drawRect(healthBarX, healthBarY, healthBarWidth, healthBarHeight);
         }
     }
-
-
 }

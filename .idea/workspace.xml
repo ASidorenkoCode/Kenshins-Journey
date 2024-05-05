@@ -7,11 +7,11 @@
     <list default="true" id="b91aae81-7ada-4dc7-9d93-d4383ba70810" name="Changes" comment="added kappa and enemy_Scale TODO: change bigOrc to Kappa">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/entities/controller/EntityController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/controller/EntityController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/logic/BigOrc.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/logic/kappa.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/logic/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/logic/Entity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/logic/Finish.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/logic/Finish.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/entities/logic/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/logic/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/ui/BigOrcUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/ui/kappaUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/controller/GameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/maps/controller/MapController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/maps/controller/MapController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/logic/kappa.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/logic/kappa.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/ui/kappaUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/ui/kappaUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,17 +29,17 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="item-implementation" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "ASidorenkoCode"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;ASidorenkoCode&quot;
   }
-}]]></component>
+}</component>
   <component name="GithubPullRequestsUISettings">
     <option name="recentNewPullRequestHead">
       <RepoCoordinatesHolder>

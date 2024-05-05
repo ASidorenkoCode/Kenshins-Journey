@@ -18,11 +18,6 @@ public class Finish extends Entity {
         //Not needed for finish
     }
 
-    @Override
-    void update(Map map) {
-
-    }
-
     public void updateFinishPoint(int x, int y) {
         this.x = x;
         this.y = y - HORIZONTAL_OFFSET;
