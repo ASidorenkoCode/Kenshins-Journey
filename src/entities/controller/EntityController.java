@@ -37,6 +37,7 @@ public class EntityController {
     public void update(MapController mapController, LoadingScreen loadingScreen, InterfaceGame interfaceGame) {
         if (finish.checkIfPlayerIsInFinish(player) && !player.isDead()) {
             player.setTotalHearts(player.getTotalHearts() + 1);  // AMOUNT OF hearts collected
+            interfaceGame.setTotalHearts(player.getTotalHearts());
             loadingScreen.displayLoadingScreen();
             mapController.loadNextMap();
             player.updateSpawnPoint(mapController.getCurrentPlayerSpawn().x, mapController.getCurrentPlayerSpawn().y);
