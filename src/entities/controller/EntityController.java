@@ -26,11 +26,12 @@ public class EntityController {
     private List<BigOrc> bigOrcs = new ArrayList<>();
     private List<BigOrcUI> bigOrcUIs = new ArrayList<>();
 
-    public EntityController(boolean showHitBox, Point PlayerPoint, Point FinishPoint, Point BigOrcPoint, Point BigOrcRoutePoint) {
+    public EntityController(MapController mapController, boolean showHitBox, Point PlayerPoint, Point FinishPoint, Point BigOrcPoint, Point BigOrcRoutePoint) {
         player = new Player(PlayerPoint.x, PlayerPoint.y);
         playerUI = new PlayerUI(player, showHitBox);
         finish = new Finish(FinishPoint.x, FinishPoint.y);
         finishUI = new FinishUI(finish, showHitBox);
+        initBigOrcs(mapController, showHitBox, BigOrcPoint, BigOrcRoutePoint);
     }
 
     public void update(MapController mapController, LoadingScreen loadingScreen, InterfaceGame interfaceGame) {
@@ -57,18 +58,9 @@ public class EntityController {
         player.update(mapController.getCurrentMap());
     }
 
-    public void handleBigOrc(MapController mapController, boolean showHitBox, Point BigOrcPoint, Point BigOrcRoutePoint, InterfaceGame interfaceGame) {
+    public void handleBigOrc(MapController mapController, InterfaceGame interfaceGame) {
         Point currentBigOrcSpawn = mapController.getCurrentBigOrcSpawn();
         if (currentBigOrcSpawn != null) {
-            int orcCount = mapController.getOrcSpawnCount();
-            if (bigOrcs.size() < orcCount) {
-                BigOrc bigOrc = new BigOrc(BigOrcPoint.x, BigOrcPoint.y, BigOrcPoint.x, BigOrcRoutePoint.x, 1);
-                BigOrcUI bigOrcUI = new BigOrcUI(bigOrc, showHitBox);
-                bigOrc.resetHealth();
-                bigOrcs.add(bigOrc);
-                bigOrcUIs.add(bigOrcUI);
-                System.out.println(bigOrcs.size());
-            }
 
             for (BigOrc orc : bigOrcs) {
                 orc.update(mapController.getCurrentMap());
@@ -83,6 +75,20 @@ public class EntityController {
                 }
             }
         }
+
+        public void initBigOrcs(MapController mapController, boolean showHitBox, Point BigOrcPoint, Point BigOrcRoutePoint) {
+            Point currentBigOrcSpawn = mapController.getCurrentBigOrcSpawn();
+            if (currentBigOrcSpawn != null) {
+                int orcCount = mapController.getOrcSpawnCount();
+                if (bigOrcs.size() < orcCount) {
+                    BigOrc bigOrc = new BigOrc(BigOrcPoint.x, BigOrcPoint.y, BigOrcPoint.x, BigOrcRoutePoint.x, 1);
+                    BigOrcUI bigOrcUI = new BigOrcUI(bigOrc, showHitBox);
+                    bigOrc.resetHealth();
+                    bigOrcs.add(bigOrc);
+                    bigOrcUIs.add(bigOrcUI);
+                }
+        }
+            }
 
     public void handleUserInputKeyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {

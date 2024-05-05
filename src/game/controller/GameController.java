@@ -20,7 +20,7 @@ public class GameController {
 
     public GameController(boolean showFPS_UPS, boolean showHitBox) {
         mapController = new MapController(null);
-        entityController = new EntityController(showHitBox,
+        entityController = new EntityController(mapController, showHitBox,
                 mapController.getCurrentPlayerSpawn(),
                 mapController.getCurrentFinishSpawn(),
                 mapController.getCurrentBigOrcSpawn(),
@@ -46,7 +46,7 @@ public class GameController {
 
     public void update() {
         entityController.update(mapController, loadingScreen, interfaceGame);
-        entityController.handleBigOrc(mapController, true, mapController.getCurrentBigOrcSpawn(), mapController.getCurrentBigOrcRouteFinish(), interfaceGame);
+        entityController.handleBigOrc(mapController, interfaceGame);
     }
 
     public InterfaceGame getInterfaceGame() {
