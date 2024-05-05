@@ -1,7 +1,10 @@
 package items.logic;
 
 import entities.logic.Player;
+
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 
 
 //TODO: Maybe another parent class for entity and item

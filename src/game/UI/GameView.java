@@ -64,7 +64,7 @@ public class GameView extends JPanel {
         mapController.draw(g);
         entityController.drawEntities(g, mapOffset);
         gameController.getInterfaceGame().draw(g);
-        itemController.drawEntities(g, mapOffset);
+        itemController.drawItems(g, mapOffset);
     }
 
     public void calculateScreenCenter(JFrame frame) {
