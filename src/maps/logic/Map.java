@@ -17,9 +17,9 @@ public class Map {
     private int maxMapOffsetX;
     private Point playerSpawn;
     private Point finishSpawn;
-    private Point bigOrcSpawn;
-    private Point bigOrcRouteFinish;
-    private int orcSpawnCount;
+    private Point kappaSpawn;
+    private Point kappaRouteFinish;
+    private int kappaSpawnCount;
 
     public Map(BufferedImage img) {
         this.mapImage = img;
@@ -61,9 +61,9 @@ public class Map {
             case 100 -> playerSpawn = new Point(scaledX, scaledY);
             case 101 -> finishSpawn = new Point(originalX, originalY);
             case 102 -> {
-                bigOrcSpawn = new Point(originalX, originalY);
-                orcSpawnCount++;}
-            case 103 -> bigOrcRouteFinish = new Point(originalX, originalY);
+                kappaSpawn = new Point(originalX, originalY);
+                kappaSpawnCount++;}
+            case 103 -> kappaRouteFinish = new Point(originalX, originalY);
         }
     }
 
@@ -104,15 +104,15 @@ public class Map {
         return finishSpawn;
     }
 
-    public Point getBigOrcSpawn() {
-        return bigOrcSpawn;
+    public Point getKappaSpawn() {
+        return kappaSpawn;
     }
 
-    public Point getBigOrcRouteFinish() {
-        return bigOrcRouteFinish;
+    public Point getKappaRouteFinish() {
+        return kappaRouteFinish;
     }
 
-    public int getAmountOfOrcSpawns() {
-        return orcSpawnCount;
+    public int getAmountOfKappaSpawns() {
+        return kappaSpawnCount;
     }
 }

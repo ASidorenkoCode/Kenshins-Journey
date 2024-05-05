@@ -96,19 +96,19 @@ public class MapController {
         return maps.get(currentMapIndex).getFinishSpawn();
     }
 
-    public Point getCurrentBigOrcSpawn() {
-        return maps.get(currentMapIndex).getBigOrcSpawn();
+    public Point getCurrentKappaSpawn() {
+        return maps.get(currentMapIndex).getKappaSpawn();
     }
 
-    public Point getCurrentBigOrcRouteFinish() {
-        return maps.get(currentMapIndex).getBigOrcRouteFinish();
+    public Point getCurrentKappaRouteFinish() {
+        return maps.get(currentMapIndex).getKappaRouteFinish();
     }
 
     public void setEntityController(EntityController entityController) {
         this.entityController = entityController;
     }
 
-    public int getOrcSpawnCount() {
-        return maps.get(currentMapIndex).getAmountOfOrcSpawns();
+    public int getKappaSpawnCount() {
+        return maps.get(currentMapIndex).getAmountOfKappaSpawns();
     }
 }

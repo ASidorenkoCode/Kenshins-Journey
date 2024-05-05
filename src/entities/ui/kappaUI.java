@@ -2,19 +2,19 @@ package entities.ui;
 
 import constants.Constants;
 import entities.animations.EnemyAnimations;
-import entities.logic.BigOrc;
+import entities.logic.kappa;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
-public class BigOrcUI extends EntityUI {
+public class kappaUI extends EntityUI {
 
-    BigOrc bigOrc;
+    kappa kappa;
     boolean showHitBox;
     private EnemyAnimations currentAnimation;
 
-    public BigOrcUI(BigOrc bigOrc, boolean showHitBox) {
-        this.bigOrc = bigOrc;
+    public kappaUI(kappa kappa, boolean showHitBox) {
+        this.kappa = kappa;
         this.showHitBox = showHitBox;
         SPRITE_PX_WIDTH = 64;
         SPRITE_PX_HEIGHT = 64;
@@ -35,7 +35,7 @@ public class BigOrcUI extends EntityUI {
     @Override
     void drawHitBox(Graphics g, int offset) {
         if (showHitBox) {
-            Rectangle2D.Float hitbox = bigOrc.getHitbox();
+            Rectangle2D.Float hitbox = kappa.getHitbox();
             g.drawRect((int) hitbox.x - offset, (int) hitbox.y, (int) hitbox.width, (int) hitbox.height);
         }
     }
@@ -63,24 +63,24 @@ public class BigOrcUI extends EntityUI {
 
         updateAnimationTick();
 
-        showLeftAnimations = !bigOrc.isRight();
+        showLeftAnimations = !kappa.isRight();
 
         g.drawImage(animations[currentAnimation.getAniIndex() + (showLeftAnimations ? SPRITE_Y_DIMENSION : 0)][aniIndex],
-                (int) bigOrc.getX() - offset,
-                (int) bigOrc.getY(),
+                (int) kappa.getX() - offset,
+                (int) kappa.getY(),
                 (int) (SPRITE_PX_WIDTH * Constants.ENEMY_SCALE),
                 (int) (SPRITE_PX_HEIGHT * Constants.ENEMY_SCALE), null);
         drawHitBox(g, offset);
         drawHealthBar(g, offset);
     }
     public void drawHealthBar(Graphics g, int offset) {
-        if (bigOrc.getHealth() < bigOrc.getMaxHealth()) {
+        if (kappa.getHealth() < kappa.getMaxHealth()) {
             int healthBarHeight = 10;
-            int healthBarWidth = (int) (bigOrc.getHitbox().width * 0.7);
-            int healthBarX = (int) bigOrc.getX() + (int) bigOrc.getHitbox().width / 2 - healthBarWidth / 2 - offset;
-            int healthBarY = (int) bigOrc.getY() - healthBarHeight - 5;
+            int healthBarWidth = (int) (kappa.getHitbox().width * 0.7);
+            int healthBarX = (int) kappa.getX() + (int) kappa.getHitbox().width / 2 - healthBarWidth / 2 - offset;
+            int healthBarY = (int) kappa.getY() - healthBarHeight - 5;
 
-            int currentHealthBarWidth = (int) ((bigOrc.getHealth() / (float) bigOrc.getMaxHealth()) * healthBarWidth);
+            int currentHealthBarWidth = (int) ((kappa.getHealth() / (float) kappa.getMaxHealth()) * healthBarWidth);
 
             g.setColor(Color.RED);
             g.fillRect(healthBarX, healthBarY, currentHealthBarWidth, healthBarHeight);

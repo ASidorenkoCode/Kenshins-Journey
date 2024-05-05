@@ -1,9 +1,9 @@
 package entities.controller;
 
-import entities.logic.BigOrc;
+import entities.logic.kappa;
 import entities.logic.Finish;
 import entities.logic.Player;
-import entities.ui.BigOrcUI;
+import entities.ui.kappaUI;
 import entities.ui.FinishUI;
 import entities.ui.PlayerUI;
 import maps.controller.MapController;
@@ -23,15 +23,15 @@ public class EntityController {
     private FinishUI finishUI;
     private Finish finish;
 
-    private List<BigOrc> bigOrcs = new ArrayList<>();
-    private List<BigOrcUI> bigOrcUIs = new ArrayList<>();
+    private List<kappa> kappas = new ArrayList<>();
+    private List<kappaUI> kappaUIs = new ArrayList<>();
 
-    public EntityController(MapController mapController, boolean showHitBox, Point PlayerPoint, Point FinishPoint, Point BigOrcPoint, Point BigOrcRoutePoint) {
-        player = new Player(PlayerPoint.x, PlayerPoint.y);
+    public EntityController(MapController mapController, boolean showHitBox, Point playerSpawnPoint, Point finishPoint, Point kappaSpawnPoint, Point kappaRoutePoint) {
+        player = new Player(playerSpawnPoint.x, playerSpawnPoint.y);
         playerUI = new PlayerUI(player, showHitBox);
-        finish = new Finish(FinishPoint.x, FinishPoint.y);
+        finish = new Finish(finishPoint.x, finishPoint.y);
         finishUI = new FinishUI(finish, showHitBox);
-        initBigOrcs(mapController, showHitBox, BigOrcPoint, BigOrcRoutePoint);
+        initKappas(mapController, showHitBox, kappaSpawnPoint, kappaRoutePoint);
     }
 
     public void update(MapController mapController, LoadingScreen loadingScreen, InterfaceGame interfaceGame) {
@@ -60,30 +60,30 @@ public class EntityController {
         player.update(mapController.getCurrentMap());
     }
 
-    public void handleBigOrc(MapController mapController, InterfaceGame interfaceGame) {
-        for (BigOrc orc : bigOrcs) {
+    public void handleKappa(MapController mapController, InterfaceGame interfaceGame) {
+        for (kappa orc : kappas) {
             orc.update(mapController.getCurrentMap());
             player.collisionWithEntity(orc, playerUI);
         }
 
-        for (BigOrc bigOrc : bigOrcs) {
-            if (bigOrc.getHealth() == 0 && !bigOrc.isScoreIncreased()) {
+        for (kappa kappa : kappas) {
+            if (kappa.getHealth() == 0 && !kappa.isScoreIncreased()) {
                 interfaceGame.increaseScore(300);
-                bigOrc.setScoreIncreased(true);
+                kappa.setScoreIncreased(true);
             }
         }
     }
 
-    public void initBigOrcs(MapController mapController, boolean showHitBox, Point BigOrcPoint, Point BigOrcRoutePoint) {
-        Point currentBigOrcSpawn = mapController.getCurrentBigOrcSpawn();
-        if (currentBigOrcSpawn != null) {
-            int orcCount = mapController.getOrcSpawnCount();
-            if (bigOrcs.size() < orcCount) {
-                BigOrc bigOrc = new BigOrc(BigOrcPoint.x, BigOrcPoint.y, BigOrcPoint.x, BigOrcRoutePoint.x, 0.6f);
-                BigOrcUI bigOrcUI = new BigOrcUI(bigOrc, showHitBox);
-                bigOrc.resetHealth();
-                bigOrcs.add(bigOrc);
-                bigOrcUIs.add(bigOrcUI);
+    public void initKappas(MapController mapController, boolean showHitBox, Point kappaSpawnPoint, Point kappaRoutePoint) {
+        Point currentKappaSpawn = mapController.getCurrentKappaSpawn();
+        if (currentKappaSpawn != null) {
+            int orcCount = mapController.getKappaSpawnCount();
+            if (kappas.size() < orcCount) {
+                kappa kappa = new kappa(kappaSpawnPoint.x, kappaSpawnPoint.y, kappaSpawnPoint.x, kappaRoutePoint.x, 0.6f);
+                kappaUI kappaUI = new kappaUI(kappa, showHitBox);
+                kappa.resetHealth();
+                kappas.add(kappa);
+                kappaUIs.add(kappaUI);
             }
         }
     }
@@ -119,8 +119,8 @@ public class EntityController {
         playerUI.drawAnimations(g, offset);
         finishUI.drawAnimations(g, offset);
         finishUI.drawHitBox(g, offset);
-        for (BigOrcUI bigOrcUI : bigOrcUIs) {
-            bigOrcUI.drawAnimations(g, offset);
+        for (kappaUI kappaUI : kappaUIs) {
+            kappaUI.drawAnimations(g, offset);
         }
     }
 
@@ -128,8 +128,8 @@ public class EntityController {
         return player;
     }
 
-    public int getBigOrcsAmount() {
-        return bigOrcs.size();
+    public int getKappaAmount() {
+        return kappas.size();
     }
 }
 

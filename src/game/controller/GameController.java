@@ -23,8 +23,8 @@ public class GameController {
         entityController = new EntityController(mapController, showHitBox,
                 mapController.getCurrentPlayerSpawn(),
                 mapController.getCurrentFinishSpawn(),
-                mapController.getCurrentBigOrcSpawn(),
-                mapController.getCurrentBigOrcRouteFinish());
+                mapController.getCurrentKappaSpawn(),
+                mapController.getCurrentKappaRouteFinish());
         mapController.setEntityController(entityController);
         this.interfaceGame = new InterfaceGame(entityController.getPlayer());
         gameEngine = new GameEngine(showFPS_UPS, this);
@@ -46,7 +46,7 @@ public class GameController {
 
     public void update() {
         entityController.update(mapController, loadingScreen, interfaceGame);
-        if (entityController.getBigOrcsAmount() > 0) entityController.handleBigOrc(mapController, interfaceGame);
+        if (entityController.getKappaAmount() > 0) entityController.handleKappa(mapController, interfaceGame);
     }
 
     public InterfaceGame getInterfaceGame() {

@@ -117,8 +117,8 @@ public class Player extends Entity {
             getRightAttackHitBox().x = newPosX + 64;
             getLeftAttackHitBox().x = newPosX - 64;
             // TODO: make a stable damage output method, because this one sometimes work and sometimes not
-            if (entity instanceof BigOrc && getAttackHitBoxIsActive() && !hasAttacked && damageDealtInCurrentAttack < maximumDamagePerAttack) {
-                ((BigOrc) entity).decreaseHealth(10);
+            if (entity instanceof kappa && getAttackHitBoxIsActive() && !hasAttacked && damageDealtInCurrentAttack < maximumDamagePerAttack) {
+                ((kappa) entity).decreaseHealth(10);
                 damageDealtInCurrentAttack += 10;
                 hasAttacked = true;
             } else if (hasAttacked && playerUI.getCurrentAniIndex() == 6) {
