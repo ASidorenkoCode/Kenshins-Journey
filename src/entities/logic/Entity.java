@@ -18,13 +18,10 @@ public abstract class Entity {
 
     abstract void updatePushback();
 
-    abstract void update(Map map);
-
 
     public Rectangle2D.Float getHitbox() {
         return hitbox;
     }
 
-
-
+    abstract boolean isDead();
 }

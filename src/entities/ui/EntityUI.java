@@ -43,5 +43,4 @@ abstract public class EntityUI {
 
     abstract void updateAnimationTick();
     abstract void drawAnimations(Graphics g, int offset);
-    abstract void drawHealthBar();
 }

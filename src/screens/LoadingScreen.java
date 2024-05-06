@@ -13,6 +13,7 @@ import java.util.*;
 public class LoadingScreen {
     private JFrame frame;
     private JLabel loadingLabel;
+    private JLabel scoreLabel;
     private Dimension originalSize;
 
     List<String> facts = Arrays.asList(
@@ -33,12 +34,31 @@ public class LoadingScreen {
         JPanel progressBarPanel = setupProgressBarPanel(progressBar);
         JPanel centerPanel = setupCenterPanel(progressBarPanel);
 
+        scoreLabel = createScoreLabel();
+
+        centerPanel.add(scoreLabel, 0);
+
         JLayeredPane layeredPane = frame.getLayeredPane();
         layeredPane.add(centerPanel, JLayeredPane.POPUP_LAYER);
 
         frame.setVisible(true);
 
         startProgressUpdateTimer(progressBar, centerPanel, layeredPane);
+    }
+
+    private JLabel createScoreLabel() {
+        JLabel scoreLabel = new JLabel("<html>CURRENT SCORE:<br><center>0</center></html>");
+        scoreLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 30));
+        scoreLabel.setForeground(Color.WHITE);
+        scoreLabel.setHorizontalAlignment(JLabel.CENTER);
+        scoreLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        Border border = BorderFactory.createEmptyBorder(20, 0, 0, 0);
+        scoreLabel.setBorder(border);
+        return scoreLabel;
+    }
+
+    public void updateScore(int score) {
+        if (scoreLabel != null) scoreLabel.setText("<html>CURRENT SCORE:<br><center>" + score + "</center></html>");
     }
 
     private JProgressBar setupProgressBar() {

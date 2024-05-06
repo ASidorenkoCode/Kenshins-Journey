@@ -1,6 +1,7 @@
 package entities.logic;
 
 import constants.Constants;
+import entities.ui.PlayerUI;
 import maps.logic.Map;
 
 import java.awt.geom.Rectangle2D;
@@ -9,16 +10,24 @@ public class Player extends Entity {
 
     private boolean left, right, attack, inAir, attackHitBoxIsActive;
     private float airMovement = -5f;
-
     private Rectangle2D.Float rightAttackHitBox;
-
     private Rectangle2D.Float leftAttackHitBox;
+    private boolean hasDynamicAdjustedPlayerDirectionHitbox = false;
+    private boolean isDead = false;
+    private boolean hasAttacked = false;
+    private int maximumDamagePerAttack = 20;
+    private int damageDealtInCurrentAttack = 0;
+    private int playerHealth = 2;
+    private int currentMaxHearts = 3;
+    private int totalMaxHearts = 3;
+    private boolean isHitByEnemy = false;
+    private int movementSpeed = 1;
 
 
     public Player(float x, float y) {
-        super(x, y, new Rectangle2D.Float(x + 32 * Constants.TILE_SCALE, y + 16 * Constants.TILE_SCALE, (96 - 64) * Constants.TILE_SCALE, (96 - 48) * Constants.TILE_SCALE));
-        rightAttackHitBox = new Rectangle2D.Float((x + 32 * Constants.TILE_SCALE) + 32 * Constants.TILE_SCALE, y + 8 * Constants.TILE_SCALE, (96 - 64) * Constants.TILE_SCALE, (96 - 48) * Constants.TILE_SCALE);
-        leftAttackHitBox = new Rectangle2D.Float((x + 32 * Constants.TILE_SCALE) - 32 * Constants.TILE_SCALE, y + 8 * Constants.TILE_SCALE, (96 - 64) * Constants.TILE_SCALE, (96 - 48) * Constants.TILE_SCALE);
+        super(x, y, new Rectangle2D.Float(x + 25 * Constants.TILE_SCALE, y + 16 * Constants.TILE_SCALE, (96 - 69) * Constants.TILE_SCALE, (96 - 48) * Constants.TILE_SCALE));
+        rightAttackHitBox = new Rectangle2D.Float((x + 25 * Constants.TILE_SCALE) + 32 * Constants.TILE_SCALE, y + 8 * Constants.TILE_SCALE, (96 - 64) * Constants.TILE_SCALE, (96 - 48) * Constants.TILE_SCALE);
+        leftAttackHitBox = new Rectangle2D.Float((x + 25 * Constants.TILE_SCALE) - 32 * Constants.TILE_SCALE, y + 8 * Constants.TILE_SCALE, (96 - 64) * Constants.TILE_SCALE, (96 - 48) * Constants.TILE_SCALE);
         left = false;
         right = false;
         inAir = false;
@@ -47,6 +56,8 @@ public class Player extends Entity {
 
     }
 
+
+
     public void updateSpawnPoint(int x, int y) {
         this.x = x;
         this.y = y;
@@ -58,32 +69,82 @@ public class Player extends Entity {
         this.rightAttackHitBox.y = y + 8 * Constants.TILE_SCALE;
     }
 
-    @Override
     public void update(Map map) {
-        if (right && !left) {
-            updateXPos(map, 1);
-        } else if (left && !right) {
-            updateXPos(map, -1);
-        }
-        if (inAir) {
-            updateYPos(map, airMovement);
+        if (!isDead()) {
+            if (right && !left) {
+                updateXPos(map, movementSpeed);
+            } else if (left && !right) {
+                updateXPos(map, -movementSpeed);
+            }
             if (inAir) {
-                airMovement += 0.1f;
+                updateYPos(map, airMovement);
+                if (inAir) {
+                    airMovement += 0.1f;
+                }
+
+            } else if (!checkIfPlayerCollidesUnderHim(map, hitbox.x, hitbox.y + 1, hitbox.width, hitbox.height)) {
+                airMovement = 0;
+                inAir = true;
             }
 
-        } else if (!checkIfPlayerCollidesUnderHim(map, hitbox.x, hitbox.y + 1, hitbox.width, hitbox.height)) {
-            airMovement = 0;
-            inAir = true;
+
         }
     }
+
+
 
     private void updateXPos(Map map, float by_value) {
         if (!checkIfPlayerCanMoveToPosition(map, hitbox.x + by_value, hitbox.y, hitbox.width, hitbox.height)) return;
         x += by_value;
         hitbox.x += by_value;
-        rightAttackHitBox.x += by_value;
-        leftAttackHitBox.x += by_value;
+        adjustPlayerHitboxPosition(map);
+        rightAttackHitBox.x = hitbox.x + hitbox.width;
+        leftAttackHitBox.x = hitbox.x - leftAttackHitBox.width;
     }
+
+    private void adjustPlayerHitboxPosition(Map map) {
+        if (getLeft() && !getRight() && !hasDynamicAdjustedPlayerDirectionHitbox) {
+            if (checkIfPlayerCanMoveToPosition(map, hitbox.x + 20, hitbox.y, hitbox.width, hitbox.height)) {
+                hitbox.x += 20;
+                hasDynamicAdjustedPlayerDirectionHitbox = true;
+            }
+        } else if (!getLeft() && getRight() && hasDynamicAdjustedPlayerDirectionHitbox) {
+            if (checkIfPlayerCanMoveToPosition(map, hitbox.x - 20, hitbox.y, hitbox.width, hitbox.height)) {
+                hitbox.x -= 20;
+                hasDynamicAdjustedPlayerDirectionHitbox = false;
+            }
+        }
+    }
+
+
+    public void collisionWithEntity(Entity entity, PlayerUI playerUI) {
+        if (this.isDead()) {
+            return;
+        }
+
+        if (collidesWith(entity) && !entity.isDead()) {
+            float newPosX = calculateNewPosition(entity);
+            getHitbox().x = newPosX;
+            setX(newPosX - 57);
+            getRightAttackHitBox().x = newPosX + 64;
+            getLeftAttackHitBox().x = newPosX - 64;
+        }
+
+        if (entity instanceof Kappa && getAttackHitBoxIsActive() && !hasAttacked && damageDealtInCurrentAttack < maximumDamagePerAttack && isEntityHitboxNextToPlayerHitbox(entity)) {
+            ((Kappa) entity).decreaseHealth(maximumDamagePerAttack / 2);
+            damageDealtInCurrentAttack += maximumDamagePerAttack / 2;
+            hasAttacked = true;
+        } else if (hasAttacked && playerUI.getCurrentAniIndex() == 6) {
+            hasAttacked = false;
+            damageDealtInCurrentAttack = 0;
+        }
+    }
+
+    public int getMaximumDamagePerAttack() {
+        return maximumDamagePerAttack;
+    }
+
+
 
     private void updateYPos(Map map, float by_value) {
         if (checkIfPlayerCollidesOverHim(map, hitbox.x, hitbox.y + by_value, hitbox.width)) {
@@ -93,8 +154,6 @@ public class Player extends Entity {
 
         } else if (checkIfPlayerCollidesUnderHim(map, hitbox.x, hitbox.y + by_value, hitbox.width, hitbox.height)) {
             inAir = false;
-
-            //set player to position of ground
 
             float playerYPos = (hitbox.y + by_value + hitbox.height);
             int groundSpriteNumber = (int) (playerYPos / (32 * Constants.TILE_SCALE));
@@ -107,20 +166,19 @@ public class Player extends Entity {
         }
         y += by_value;
         hitbox.y += by_value;
-        rightAttackHitBox.y += by_value;
-        leftAttackHitBox.y += by_value;
+        rightAttackHitBox.y = hitbox.y - 16;
+        leftAttackHitBox.y = hitbox.y - 16;
     }
 
     public void jump() {
         if (!inAir) {
-            attack = false;
             inAir = true;
             airMovement = -5f;
         }
     }
 
     public void attack() {
-        if (!attack && !inAir) {
+        if (!attack) {
             setAttack(true);
         }
     }
@@ -145,6 +203,10 @@ public class Player extends Entity {
         return attackHitBoxIsActive;
     }
 
+    public int getMovementSpeed() {
+        return Math.abs(movementSpeed);
+    }
+
     public void setAttackHitBoxIsActive(boolean attackHitBoxIsActive) {
         this.attackHitBoxIsActive = attackHitBoxIsActive;
     }
@@ -152,6 +214,23 @@ public class Player extends Entity {
     public boolean collidesWith(Entity entity) {
         return this.hitbox.intersects(entity.getHitbox().getBounds2D());
     }
+
+    public boolean isEntityHitboxNextToPlayerHitbox(Entity entity) {
+
+        Rectangle2D.Float playerHitbox = this.getRightAttackHitBox();
+        if (getX() < entity.x) {
+            playerHitbox = this.getRightAttackHitBox();
+        } else if (getX() > entity.x) {
+            playerHitbox = this.getLeftAttackHitBox();
+        }
+        Rectangle2D.Float entityHitbox = entity.getHitbox();
+
+        Rectangle2D.Float playerHitboxBuffered = new Rectangle2D.Float(playerHitbox.x - 1, playerHitbox.y - 1, playerHitbox.width + 2, playerHitbox.height + 2);
+        Rectangle2D.Float kappaHitboxBuffered = new Rectangle2D.Float(entityHitbox.x - 1, entityHitbox.y - 1, entityHitbox.width + 2, entityHitbox.height + 2);
+
+        return playerHitboxBuffered.intersects(kappaHitboxBuffered);
+    }
+
 
     public boolean checkForCollisonOnPosition(Map map, float x, float y) {
         if (x < 0) return true;
@@ -201,13 +280,11 @@ public class Player extends Entity {
     }
 
     public void setAttack(boolean attack) {
-
         this.attack = attack;
-
     }
 
     public float getAirMovement() {
-        return airMovement;
+        return Math.abs(airMovement);
     }
 
     private float calculateNewPosition(Entity entity) {
@@ -218,13 +295,56 @@ public class Player extends Entity {
         }
     }
 
-    public void collisionWithEntity(Entity entity) {
-        if (collidesWith(entity)) {
-            float newPosX = calculateNewPosition(entity);
-            getHitbox().x = newPosX;
-            setX(newPosX - 64);
-            getRightAttackHitBox().x = newPosX + 64;
-            getLeftAttackHitBox().x = newPosX - 64;
+    public int getPlayerHealth() {
+        return playerHealth;
+    }
+
+    public void setPlayerHealth(int playerHealth) {
+        this.playerHealth = playerHealth;
+    }
+
+    public void decreaseHealth(int amount) {
+        playerHealth -= amount;
+        if (playerHealth < 0) {
+            playerHealth = 0;
         }
+        setHitByEnemy(true);
+    }
+
+    @Override
+    public boolean isDead() {
+        return playerHealth == 0;
+    }
+
+    public boolean getDeathAnimationFinished() {
+        return this.isDead;
+    }
+
+    public void setDeathAnimationFinished(boolean isDead) {
+        this.isDead = isDead;
+    }
+
+    public int resetHealth() {
+        return playerHealth = totalMaxHearts * 2;
+    }
+
+    public int getTotalHearts() {
+        return totalMaxHearts;
+    }
+
+    public void setTotalHearts(int totalHearts) {
+        this.totalMaxHearts = totalHearts;
+    }
+
+    public boolean isJumping() {
+        return inAir;
+    }
+
+    public boolean isHitByEnemy() {
+        return isHitByEnemy;
+    }
+
+    public void setHitByEnemy(boolean hitByEnemy) {
+        isHitByEnemy = hitByEnemy;
     }
 }

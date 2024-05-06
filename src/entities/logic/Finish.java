@@ -19,8 +19,8 @@ public class Finish extends Entity {
     }
 
     @Override
-    void update(Map map) {
-
+    boolean isDead() {
+        return false;
     }
 
     public void updateFinishPoint(int x, int y) {

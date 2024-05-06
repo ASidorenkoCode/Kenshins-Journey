@@ -3,7 +3,10 @@ package game.controller;
 import entities.controller.EntityController;
 import game.UI.GameView;
 import game.logic.GameEngine;
+import items.controller.ItemController;
 import maps.controller.MapController;
+import screens.DeathScreen;
+import screens.InterfaceGame;
 import screens.LoadingScreen;
 import screens.OptionScreen;
 
@@ -15,17 +18,23 @@ public class GameController {
     private MapController mapController;
     private LoadingScreen loadingScreen;
     private OptionScreen optionScreen;
+    private InterfaceGame interfaceGame;
+    private ItemController itemController;
+    private DeathScreen deathScreen;
 
     public GameController(boolean showFPS_UPS, boolean showHitBox) {
         mapController = new MapController(null);
-        entityController = new EntityController(showHitBox,
+        entityController = new EntityController(mapController, showHitBox,
                 mapController.getCurrentPlayerSpawn(),
                 mapController.getCurrentFinishSpawn(),
-                mapController.getCurrentBigOrcSpawn(),
-                mapController.getCurrentBigOrcRouteFinish());
+                mapController.getCurrentKappaSpawn(),
+                mapController.getCurrentKappaRouteFinish());
         mapController.setEntityController(entityController);
+        itemController = new ItemController(showHitBox);
         gameEngine = new GameEngine(showFPS_UPS, this);
-        gameView = new GameView(this, entityController, mapController);
+        gameView = new GameView(this, entityController, mapController, itemController);
+        this.interfaceGame = new InterfaceGame(entityController.getPlayer());
+        this.deathScreen = new DeathScreen(gameView.getFrame());
         this.loadingScreen = new LoadingScreen(gameView.getFrame());
         this.optionScreen = new OptionScreen(gameView, gameEngine);
         gameView.gameWindow();
@@ -42,7 +51,16 @@ public class GameController {
     }
 
     public void update() {
-        entityController.update(mapController, loadingScreen);
+        entityController.update(mapController, loadingScreen, interfaceGame, deathScreen);
+        if (entityController.getKappaAmount() > 0) entityController.handleKappa(mapController, interfaceGame);
+        itemController.update(entityController.getPlayer());
     }
 
+    public InterfaceGame getInterfaceGame() {
+        return interfaceGame;
+    }
+
+    public DeathScreen getDeathScreen() {
+        return deathScreen;
+    }
 }

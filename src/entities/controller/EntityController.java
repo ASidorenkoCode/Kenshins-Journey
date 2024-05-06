@@ -1,16 +1,20 @@
 package entities.controller;
 
-import entities.logic.BigOrc;
 import entities.logic.Finish;
+import entities.logic.Kappa;
 import entities.logic.Player;
-import entities.ui.BigOrcUI;
 import entities.ui.FinishUI;
+import entities.ui.KappaUI;
 import entities.ui.PlayerUI;
 import maps.controller.MapController;
+import screens.DeathScreen;
+import screens.InterfaceGame;
 import screens.LoadingScreen;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EntityController {
 
@@ -20,33 +24,84 @@ public class EntityController {
     private FinishUI finishUI;
     private Finish finish;
 
-    private BigOrc bigOrc;
-    private BigOrcUI bigOrcUI;
+    private List<Kappa> Kappas = new ArrayList<>();
+    private List<KappaUI> KappaUIS = new ArrayList<>();
 
-    public EntityController(boolean showHitBox, Point PlayerPoint, Point FinishPoint, Point BigOrcPoint, Point BigOrcRoutePoint) {
-        player = new Player(PlayerPoint.x, PlayerPoint.y);
+    public EntityController(MapController mapController, boolean showHitBox, Point playerSpawnPoint, Point finishPoint, Point kappaSpawnPoint, Point kappaRoutePoint) {
+        player = new Player(playerSpawnPoint.x, playerSpawnPoint.y);
         playerUI = new PlayerUI(player, showHitBox);
-        finish = new Finish(FinishPoint.x, FinishPoint.y);
+        finish = new Finish(finishPoint.x, finishPoint.y);
         finishUI = new FinishUI(finish, showHitBox);
-        bigOrc = new BigOrc(BigOrcPoint.x, BigOrcPoint.y, BigOrcPoint.x, BigOrcRoutePoint.x, 1);
-        bigOrcUI = new BigOrcUI(bigOrc, showHitBox);
+        initKappas(mapController, showHitBox, kappaSpawnPoint, kappaRoutePoint);
     }
 
-    public void update(MapController mapController, LoadingScreen loadingScreen) {
-        if (finish.checkIfPlayerIsInFinish(player)) {
+    public void update(MapController mapController, LoadingScreen loadingScreen, InterfaceGame interfaceGame, DeathScreen deathScreen) {
+        if (finish.checkIfPlayerIsInFinish(player) && !player.isDead()) {
+            player.setTotalHearts(player.getTotalHearts() + 1);  // AMOUNT OF hearts collected
+            interfaceGame.setTotalHearts(player.getTotalHearts());
             loadingScreen.displayLoadingScreen();
+            loadingScreen.updateScore(interfaceGame.getScore());
+            deathScreen.updateScore(interfaceGame.getScore());
             mapController.loadNextMap();
             player.updateSpawnPoint(mapController.getCurrentPlayerSpawn().x, mapController.getCurrentPlayerSpawn().y);
             finish.updateFinishPoint(mapController.getCurrentFinishSpawn().x, mapController.getCurrentFinishSpawn().y);
-            bigOrc.updateSpawnPoint(mapController.getCurrentBigOrcSpawn().x, mapController.getCurrentBigOrcSpawn().y);
         }
-        player.update(mapController.getCurrentMap());
-        bigOrc.update(mapController.getCurrentMap());
 
-        player.collisionWithEntity(bigOrc);
+        if (interfaceGame.getScore() == 0) {
+            player.setPlayerHealth(0);
+        }
+
+        if (player.isDead() && player.getDeathAnimationFinished()) {
+            if(deathScreen.getTotalScore() > interfaceGame.getScore()) deathScreen.updateScore(interfaceGame.getScore());
+            if (!deathScreen.isPlayerContinuesGame() && !deathScreen.isDisplayDeathScreenOnlyOnce()) {
+                deathScreen.displayDeathScreen();
+            }
+            if (deathScreen.isPlayerContinuesGame() && deathScreen.isDisplayDeathScreenOnlyOnce()) {
+                loadingScreen.displayLoadingScreen();
+                player.updateSpawnPoint(mapController.getCurrentPlayerSpawn().x, mapController.getCurrentPlayerSpawn().y);
+                finish.updateFinishPoint(mapController.getCurrentFinishSpawn().x, mapController.getCurrentFinishSpawn().y);
+                player.resetHealth();
+                player.setDeathAnimationFinished(false);
+                interfaceGame.setScore(5000);
+                interfaceGame.setTotalHearts(player.getTotalHearts());
+                deathScreen.setDisplayDeathScreenOnlyOnce(false);
+            }
+        }
+
+        player.update(mapController.getCurrentMap());
     }
 
-    public void handleUserInputKeyPressed(KeyEvent e) {
+    public void handleKappa(MapController mapController, InterfaceGame interfaceGame) {
+        for (Kappa kap : Kappas) {
+            kap.update(mapController.getCurrentMap(), player);
+            player.collisionWithEntity(kap, playerUI);
+
+            if (kap.getHealth() == 0 && !kap.isScoreIncreased()) {
+                interfaceGame.increaseScore(300);
+                kap.setScoreIncreased(true);
+            }
+
+            if (kap.isPlayerNearChecker(player) && !kap.isAttacking() && !kap.hasAttacked() && !player.isDead() && !kap.isDead()) {
+                kap.startAttacking(player);
+            }
+        }
+    }
+
+    public void initKappas(MapController mapController, boolean showHitBox, Point kappaSpawnPoint, Point kappaRoutePoint) {
+        Point currentKappaSpawn = mapController.getCurrentKappaSpawn();
+        if (currentKappaSpawn != null) {
+            int kappaCount = mapController.getKappaSpawnCount();
+            if (Kappas.size() < kappaCount) {
+                Kappa kappa = new Kappa(kappaSpawnPoint.x, kappaSpawnPoint.y, kappaSpawnPoint.x, kappaRoutePoint.x, 0.6f);
+                KappaUI kappaUI = new KappaUI(kappa, showHitBox);
+                kappa.resetHealth();
+                Kappas.add(kappa);
+                KappaUIS.add(kappaUI);
+            }
+        }
+    }
+
+    public void handleUserInputKeyPressed(KeyEvent e, DeathScreen deathScreen) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_A:
                 player.setLeft(true);
@@ -59,6 +114,13 @@ public class EntityController {
                 break;
             case KeyEvent.VK_SHIFT:
                 player.attack();
+                break;
+            case KeyEvent.VK_I:
+                player.decreaseHealth(1);
+                break;
+            case KeyEvent.VK_ENTER:
+                if (player.isDead()) deathScreen.removeDeathScreen();
+                break;
         }
     }
 
@@ -77,10 +139,17 @@ public class EntityController {
         playerUI.drawAnimations(g, offset);
         finishUI.drawAnimations(g, offset);
         finishUI.drawHitBox(g, offset);
-        bigOrcUI.drawAnimations(g, offset);
+        for (KappaUI kappaUI : KappaUIS) {
+            kappaUI.drawAnimations(g, offset);
+        }
     }
 
     public Player getPlayer() {
         return player;
     }
+
+    public int getKappaAmount() {
+        return Kappas.size();
+    }
 }
+

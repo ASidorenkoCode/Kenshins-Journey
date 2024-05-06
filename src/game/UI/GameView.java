@@ -3,6 +3,7 @@ package game.UI;
 import constants.Constants;
 import entities.controller.EntityController;
 import game.controller.GameController;
+import items.controller.ItemController;
 import keyboardinputs.logic.KeyboardInputsIngame;
 import maps.controller.MapController;
 
@@ -20,10 +21,11 @@ public class GameView extends JPanel {
     private GameController gameController;
     private MapController mapController;
     private EntityController entityController;
+    private ItemController itemController;
     private JFrame frame = new JFrame("Kenshins Journey");
 
 
-    public GameView(GameController gameController, EntityController entityController, MapController mapController) {
+    public GameView(GameController gameController, EntityController entityController, MapController mapController, ItemController itemController) {
         this.gameController = gameController;
         this.mapController = mapController;
         setPreferredSize(new Dimension(GAME_WIDTH, GAME_HEIGHT));
@@ -31,6 +33,7 @@ public class GameView extends JPanel {
         requestFocusInWindow();
         addKeyListener(new KeyboardInputsIngame(this));
         this.entityController = entityController;
+        this.itemController = itemController;
     }
 
     public void gameWindow() {
@@ -46,15 +49,22 @@ public class GameView extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if (gameController != null) render(g);
+        if (gameController != null) {
+            render(g);
+            gameController.getInterfaceGame().updatePlayerHealth(entityController.getPlayer().getPlayerHealth());
+            gameController.getInterfaceGame().updateHighscore();
+            gameController.getInterfaceGame().draw(g, entityController.getPlayer());
+        }
     }
 
     public void render(Graphics g) {
+        //TODO: Class calling inside of gameController
         //TODO: Implement rendering for more stuff
         int mapOffset = mapController.getMapOffset();
         mapController.draw(g);
         entityController.drawEntities(g, mapOffset);
-    }
+        gameController.getInterfaceGame().draw(g, entityController.getPlayer());
+        itemController.drawMapItems(g, mapOffset);    }
 
     public void calculateScreenCenter(JFrame frame) {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -78,7 +88,40 @@ public class GameView extends JPanel {
     }
 
     public void handleUserInputKeyPressed(KeyEvent e) {
-        entityController.handleUserInputKeyPressed(e);
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_0:
+                itemController.selectItem(entityController.getPlayer(), 0);
+                break;
+            case KeyEvent.VK_1:
+                itemController.selectItem(entityController.getPlayer(), 1);
+                break;
+            case KeyEvent.VK_2:
+                itemController.selectItem(entityController.getPlayer(), 2);
+                break;
+            case KeyEvent.VK_3:
+                itemController.selectItem(entityController.getPlayer(), 3);
+                break;
+            case KeyEvent.VK_4:
+                itemController.selectItem(entityController.getPlayer(), 4);
+                break;
+            case KeyEvent.VK_5:
+                itemController.selectItem(entityController.getPlayer(), 5);
+                break;
+            case KeyEvent.VK_6:
+                itemController.selectItem(entityController.getPlayer(), 6);
+                break;
+            case KeyEvent.VK_7:
+                itemController.selectItem(entityController.getPlayer(), 7);
+                break;
+            case KeyEvent.VK_8:
+                itemController.selectItem(entityController.getPlayer(), 8);
+                break;
+            case KeyEvent.VK_9:
+                itemController.selectItem(entityController.getPlayer(), 9);
+                break;
+
+            default: entityController.handleUserInputKeyPressed(e, gameController.getDeathScreen());
+        }
     }
 
     public void handleUserInputKeyReleased(KeyEvent e) {
