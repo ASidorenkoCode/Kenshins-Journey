@@ -90,9 +90,37 @@ public class GameView extends JPanel {
 
     public void handleUserInputKeyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
-            case KeyEvent.VK_1:
-                itemController.selectItem(entityController.getPlayer(),1);
+            case KeyEvent.VK_0:
+                itemController.selectItem(entityController.getPlayer(), 0);
                 break;
+            case KeyEvent.VK_1:
+                itemController.selectItem(entityController.getPlayer(), 1);
+                break;
+            case KeyEvent.VK_2:
+                itemController.selectItem(entityController.getPlayer(), 2);
+                break;
+            case KeyEvent.VK_3:
+                itemController.selectItem(entityController.getPlayer(), 3);
+                break;
+            case KeyEvent.VK_4:
+                itemController.selectItem(entityController.getPlayer(), 4);
+                break;
+            case KeyEvent.VK_5:
+                itemController.selectItem(entityController.getPlayer(), 5);
+                break;
+            case KeyEvent.VK_6:
+                itemController.selectItem(entityController.getPlayer(), 6);
+                break;
+            case KeyEvent.VK_7:
+                itemController.selectItem(entityController.getPlayer(), 7);
+                break;
+            case KeyEvent.VK_8:
+                itemController.selectItem(entityController.getPlayer(), 8);
+                break;
+            case KeyEvent.VK_9:
+                itemController.selectItem(entityController.getPlayer(), 9);
+                break;
+
             default: entityController.handleUserInputKeyPressed(e);
         }
 

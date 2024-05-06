@@ -13,7 +13,6 @@ public class PowerRing extends Item {
 
     @Override
     public void handleItem(Player player) {
-        if(hitbox.intersects(player.getHitbox()) && isActive) {
-        }
+        //TODO: increase player attack
     }
 }

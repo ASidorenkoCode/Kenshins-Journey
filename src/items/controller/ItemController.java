@@ -102,9 +102,15 @@ public class ItemController {
 
     private void collectItem(Item item) {
         //TODO: dynamic menu
-        menu[1] = item;
+        for(int i=0; i< menu.length; i++) {
+            if(menu[i] == null) {
+                menu[i] = item;
+                itemsOnMap.remove(item);
+                return;
+            }
+        }
 
-        itemsOnMap.remove(item);
+
 
     }
 
@@ -112,9 +118,13 @@ public class ItemController {
         Item selectedItem = menu[index];
         menu[index] = null;
 
-        if(selectedItem instanceof Heart) {
-            Heart heart = (Heart) selectedItem;
+        if(selectedItem instanceof Heart heart) {
             heart.handleItem(player);
+            return;
+        }
+
+        if(selectedItem instanceof PowerRing powerRing) {
+            powerRing.handleItem(player);
         }
     }
 

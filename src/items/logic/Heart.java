@@ -13,10 +13,6 @@ public class Heart extends Item {
 
     @Override
     public void handleItem(Player player) {
-        if(hitbox.intersects(player.getHitbox()) && isActive) {
-            //TODO: Do something with the player
-            if(player.getPlayerHealth() < player.getTotalHearts() * 2) player.setPlayerHealth(player.getPlayerHealth()+2);
-            setActive(false);
-        }
+        if(player.getPlayerHealth() < player.getTotalHearts() * 2) player.setPlayerHealth(player.getPlayerHealth()+2);
     }
 }
