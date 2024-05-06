@@ -30,10 +30,10 @@ public class GameController {
                 mapController.getCurrentKappaSpawn(),
                 mapController.getCurrentKappaRouteFinish());
         mapController.setEntityController(entityController);
-        this.interfaceGame = new InterfaceGame(entityController.getPlayer());
         itemController = new ItemController(showHitBox);
         gameEngine = new GameEngine(showFPS_UPS, this);
         gameView = new GameView(this, entityController, mapController, itemController);
+        this.interfaceGame = new InterfaceGame(entityController.getPlayer());
         this.deathScreen = new DeathScreen(gameView.getFrame());
         this.loadingScreen = new LoadingScreen(gameView.getFrame());
         this.optionScreen = new OptionScreen(gameView, gameEngine);
