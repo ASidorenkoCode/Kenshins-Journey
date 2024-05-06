@@ -8,20 +8,17 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class InterfaceGame {
     private BufferedImage fullHeart;
     private BufferedImage halfHeart;
     private BufferedImage emptyHeart;
-    private BufferedImage swordAttackIcon;
+    private BufferedImage playerPortrait;
     private int playerHealth;
     private int score;
     private long lastTime;
     private int totalHearts;
-    private int attackCooldown;
-    private boolean attackCooldownActive;
+    private int heightJump;
 
 
     public InterfaceGame(Player player) {
@@ -30,7 +27,7 @@ public class InterfaceGame {
             fullHeart = healthbarPlayer.getSubimage(0, 0, 64, 64);
             halfHeart = healthbarPlayer.getSubimage(64, 0, 64, 64);
             emptyHeart = healthbarPlayer.getSubimage(128, 0, 64, 64);
-            swordAttackIcon = ImageIO.read(new File("res/interfacePlayer/swordAttack.png"));
+            playerPortrait = ImageIO.read(new File("res/kenshin/kenshin_portrait.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -41,7 +38,7 @@ public class InterfaceGame {
         lastTime = System.currentTimeMillis();
     }
 
-    public void draw(Graphics g) {
+    public void draw(Graphics g, Player player) {
         int maximumHeartsPerRow = 10;
         for (int i = 0; i < totalHearts; i++) {
             Image heart;
@@ -58,53 +55,42 @@ public class InterfaceGame {
 
             g.drawImage(heart, x, y, 150, 150, null);
         }
-        drawSwordAttackIcon(g);
-        drawScore(g, score);
-    }
 
-    private void drawSwordAttackIcon(Graphics g) {
-        int x = 10; // adjust as needed
-        int y = GameView.GAME_HEIGHT - swordAttackIcon.getHeight() - 10; // adjust as needed
-        int diameter = Math.max(swordAttackIcon.getWidth() + 30, swordAttackIcon.getHeight() + 30);
+        int borderSize = 20;
+        int x = 10;
+        int y = GameView.GAME_HEIGHT - playerPortrait.getHeight() * 2 - borderSize;
+        int width = playerPortrait.getWidth() * 2;
+        int height = playerPortrait.getHeight() * 2;
 
-        int imageX = x + diameter / 2 - swordAttackIcon.getWidth() / 2;
-        int imageY = y + diameter / 2 - swordAttackIcon.getHeight() / 2;
+        g.drawImage(playerPortrait, x, y, width, height, null);
 
         Graphics2D g2d = (Graphics2D) g;
-        Composite originalComposite = g2d.getComposite(); // save original composite
+        g2d.setColor(Color.BLACK);
+        g2d.setStroke(new BasicStroke(borderSize));
+        g2d.drawRect(0, y - borderSize / 2, width + borderSize, height + borderSize);
 
-        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f)); // 50% transparency
-        g2d.setColor(Color.WHITE);
-        g2d.fillOval(x, y - 30, diameter, diameter);
+        g.drawImage(playerPortrait, x, y, width, height, null);
 
-        g2d.setComposite(originalComposite); // reset to original composite
-        if (attackCooldown == 0) {
-            g2d.drawImage(swordAttackIcon, imageX, imageY - 30, null);
-            attackCooldownActive = false;
-        }
+        int statsX = x + width + 20;
+        int statsY = y + 20;
+        int statsWidth = 200;
+        int statsHeight = height + borderSize*2;
+        g.setColor(Color.BLACK);
+        g.fillRect(statsX, statsY - 40, statsWidth, statsHeight);
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Calibri", Font.BOLD, 20));
 
-        if (!attackCooldownActive && attackCooldown > 0) startCooldownTimer();
-        if (attackCooldownActive) {
-            g2d.setFont(new Font("Calibri", Font.BOLD, 32));
 
-            g2d.setColor(Color.DARK_GRAY);
-            g2d.fillOval(x, y - 30, diameter, diameter);
-            g2d.setColor(Color.WHITE);
+        heightJump = (int) player.getAirMovement();
+        String damage = "Damage: " + player.getMaximumDamagePerAttack();
+        String movementSpeed = "Movement Speed: " + heightJump;
+        String jumpHeight = "Jump Height: " + player.getAirMovement();
 
-            String cooldownText = String.valueOf(attackCooldown);
-            FontMetrics fm = g2d.getFontMetrics();
-            int textWidth = fm.stringWidth(cooldownText);
-            int textHeight = fm.getHeight();
+        g.drawString(damage, statsX, statsY);
+        g.drawString(movementSpeed, statsX, statsY + 30);
+        g.drawString(jumpHeight, statsX, statsY + 60);
 
-            int textX = x + (diameter - textWidth) / 2;
-            int textY = y + (diameter - textHeight) / 2 + fm.getAscent();
-
-            g2d.drawString(cooldownText, textX, textY);
-            g2d.setFont(new Font("Calibri", Font.BOLD, 12)); // reset font size
-        }
-
-        g2d.setColor(Color.BLACK); // reset color
-        g2d.drawOval(x, y - 30, diameter, diameter);
+        drawScore(g, score);
     }
 
     public void updatePlayerHealth(int playerHealth) {
@@ -146,26 +132,6 @@ public class InterfaceGame {
         score += increment;
     }
 
-    public int getAttackCooldown() {
-        return attackCooldown;
-    }
 
-    public void setAttackCooldown(int attackCooldown) {
-        this.attackCooldown = attackCooldown;
-    }
 
-    private void startCooldownTimer() {
-        Timer attackCooldownTimer = new Timer();
-        attackCooldownActive = true;
-        attackCooldownTimer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                if (attackCooldown > 0) {
-                    attackCooldown--;
-                } else {
-                    attackCooldownTimer.cancel();
-                }
-            }
-        }, 0, 1000); // schedule to run every second
-    }
 }

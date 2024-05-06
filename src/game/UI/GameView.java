@@ -53,7 +53,7 @@ public class GameView extends JPanel {
             render(g);
             gameController.getInterfaceGame().updatePlayerHealth(entityController.getPlayer().getPlayerHealth());
             gameController.getInterfaceGame().updateHighscore();
-            gameController.getInterfaceGame().draw(g);
+            gameController.getInterfaceGame().draw(g, entityController.getPlayer());
         }
     }
 
@@ -63,7 +63,7 @@ public class GameView extends JPanel {
         int mapOffset = mapController.getMapOffset();
         mapController.draw(g);
         entityController.drawEntities(g, mapOffset);
-        gameController.getInterfaceGame().draw(g);
+        gameController.getInterfaceGame().draw(g, entityController.getPlayer());
         itemController.drawItems(g, mapOffset);
     }
 

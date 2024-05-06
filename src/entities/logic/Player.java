@@ -5,8 +5,6 @@ import entities.ui.PlayerUI;
 import maps.logic.Map;
 
 import java.awt.geom.Rectangle2D;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class Player extends Entity {
 
@@ -23,8 +21,7 @@ public class Player extends Entity {
     private int currentMaxHearts = 3;
     private int totalMaxHearts = 3;
     private boolean isHitByEnemy = false;
-    private int attackCooldown = 0;
-    private boolean attackCooldownActive = false;
+    private int movementSpeed = 1;
 
 
     public Player(float x, float y) {
@@ -59,6 +56,8 @@ public class Player extends Entity {
 
     }
 
+
+
     public void updateSpawnPoint(int x, int y) {
         this.x = x;
         this.y = y;
@@ -73,9 +72,9 @@ public class Player extends Entity {
     public void update(Map map) {
         if (!isDead()) {
             if (right && !left) {
-                updateXPos(map, 1);
+                updateXPos(map, movementSpeed);
             } else if (left && !right) {
-                updateXPos(map, -1);
+                updateXPos(map, -movementSpeed);
             }
             if (inAir) {
                 updateYPos(map, airMovement);
@@ -91,6 +90,8 @@ public class Player extends Entity {
 
         }
     }
+
+
 
     private void updateXPos(Map map, float by_value) {
         if (!checkIfPlayerCanMoveToPosition(map, hitbox.x + by_value, hitbox.y, hitbox.width, hitbox.height)) return;
@@ -130,14 +131,20 @@ public class Player extends Entity {
         }
 
         if (entity instanceof Kappa && getAttackHitBoxIsActive() && !hasAttacked && damageDealtInCurrentAttack < maximumDamagePerAttack && isEntityHitboxNextToPlayerHitbox(entity)) {
-            ((Kappa) entity).decreaseHealth(10);
-            damageDealtInCurrentAttack += 10;
+            ((Kappa) entity).decreaseHealth(maximumDamagePerAttack / 2);
+            damageDealtInCurrentAttack += maximumDamagePerAttack / 2;
             hasAttacked = true;
         } else if (hasAttacked && playerUI.getCurrentAniIndex() == 6) {
             hasAttacked = false;
             damageDealtInCurrentAttack = 0;
         }
     }
+
+    public int getMaximumDamagePerAttack() {
+        return maximumDamagePerAttack;
+    }
+
+
 
     private void updateYPos(Map map, float by_value) {
         if (checkIfPlayerCollidesOverHim(map, hitbox.x, hitbox.y + by_value, hitbox.width)) {
@@ -173,25 +180,7 @@ public class Player extends Entity {
     public void attack() {
         if (!attack) {
             setAttack(true);
-            attackCooldown = 3;
-            startCooldownTimer();
         }
-    }
-
-    private void startCooldownTimer() {
-        Timer attackCooldownTimer = new Timer();
-        attackCooldownActive = true;
-        attackCooldownTimer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                if (attackCooldown > 0) {
-                    attackCooldown--;
-                } else {
-                    attackCooldownTimer.cancel();
-                    attackCooldownActive = false;
-                }
-            }
-        }, 0, 1000); // schedule to run every second
     }
 
     public boolean getLeft() {
@@ -214,16 +203,12 @@ public class Player extends Entity {
         return attackHitBoxIsActive;
     }
 
+    public int getMovementSpeed() {
+        return Math.abs(movementSpeed);
+    }
+
     public void setAttackHitBoxIsActive(boolean attackHitBoxIsActive) {
         this.attackHitBoxIsActive = attackHitBoxIsActive;
-    }
-
-    public int getAttackCooldown() {
-        return attackCooldown;
-    }
-
-    public void setAttackCooldown(int attackCooldown) {
-        this.attackCooldown = attackCooldown;
     }
 
     public boolean collidesWith(Entity entity) {
@@ -299,7 +284,7 @@ public class Player extends Entity {
     }
 
     public float getAirMovement() {
-        return airMovement;
+        return Math.abs(airMovement);
     }
 
     private float calculateNewPosition(Entity entity) {

@@ -68,10 +68,6 @@ public class EntityController {
             }
         }
 
-        if (player.getAttackCooldown() > interfaceGame.getAttackCooldown())
-            interfaceGame.setAttackCooldown(player.getAttackCooldown());
-        if (interfaceGame.getAttackCooldown() == 0) player.setAttackCooldown(0);
-
         player.update(mapController.getCurrentMap());
     }
 
