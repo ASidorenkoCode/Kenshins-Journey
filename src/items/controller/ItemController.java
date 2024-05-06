@@ -102,10 +102,20 @@ public class ItemController {
 
     private void collectItem(Item item) {
         //TODO: dynamic menu
-        menu[0] = item;
+        menu[1] = item;
 
         itemsOnMap.remove(item);
 
+    }
+
+    public void selectItem(Player player, int index) {
+        Item selectedItem = menu[index];
+        menu[index] = null;
+
+        if(selectedItem instanceof Heart) {
+            Heart heart = (Heart) selectedItem;
+            heart.handleItem(player);
+        }
     }
 
 

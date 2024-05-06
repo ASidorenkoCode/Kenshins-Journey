@@ -89,7 +89,13 @@ public class GameView extends JPanel {
     }
 
     public void handleUserInputKeyPressed(KeyEvent e) {
-        entityController.handleUserInputKeyPressed(e);
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_1:
+                itemController.selectItem(entityController.getPlayer(),1);
+                break;
+            default: entityController.handleUserInputKeyPressed(e);
+        }
+
     }
 
     public void handleUserInputKeyReleased(KeyEvent e) {
