@@ -120,10 +120,8 @@ public class GameView extends JPanel {
                 itemController.selectItem(entityController.getPlayer(), 9);
                 break;
 
-            default: entityController.handleUserInputKeyPressed(e);
+            default: entityController.handleUserInputKeyPressed(e, gameController.getDeathScreen());
         }
-
-        entityController.handleUserInputKeyPressed(e, gameController.getDeathScreen());
     }
 
     public void handleUserInputKeyReleased(KeyEvent e) {
