@@ -3,6 +3,7 @@ package game.controller;
 import entities.controller.EntityController;
 import game.UI.GameView;
 import game.logic.GameEngine;
+import items.controller.ItemController;
 import maps.controller.MapController;
 import screens.DeathScreen;
 import screens.InterfaceGame;
@@ -18,6 +19,7 @@ public class GameController {
     private LoadingScreen loadingScreen;
     private OptionScreen optionScreen;
     private InterfaceGame interfaceGame;
+    private ItemController itemController;
     private DeathScreen deathScreen;
 
     public GameController(boolean showFPS_UPS, boolean showHitBox) {
@@ -29,8 +31,9 @@ public class GameController {
                 mapController.getCurrentKappaRouteFinish());
         mapController.setEntityController(entityController);
         this.interfaceGame = new InterfaceGame(entityController.getPlayer());
+        itemController = new ItemController(showHitBox);
         gameEngine = new GameEngine(showFPS_UPS, this);
-        gameView = new GameView(this, entityController, mapController);
+        gameView = new GameView(this, entityController, mapController, itemController);
         this.deathScreen = new DeathScreen(gameView.getFrame());
         this.loadingScreen = new LoadingScreen(gameView.getFrame());
         this.optionScreen = new OptionScreen(gameView, gameEngine);
@@ -50,6 +53,7 @@ public class GameController {
     public void update() {
         entityController.update(mapController, loadingScreen, interfaceGame, deathScreen);
         if (entityController.getKappaAmount() > 0) entityController.handleKappa(mapController, interfaceGame);
+        itemController.update(entityController.getPlayer());
     }
 
     public InterfaceGame getInterfaceGame() {

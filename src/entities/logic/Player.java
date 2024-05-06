@@ -19,7 +19,7 @@ public class Player extends Entity {
     private boolean hasAttacked = false;
     private int maximumDamagePerAttack = 20;
     private int damageDealtInCurrentAttack = 0;
-    private int playerHealth = 6;
+    private int playerHealth = 2;
     private int currentMaxHearts = 3;
     private int totalMaxHearts = 3;
     private boolean isHitByEnemy = false;
