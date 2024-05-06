@@ -83,7 +83,7 @@ public class GameView extends JPanel {
     }
 
     public void handleUserInputKeyPressed(KeyEvent e) {
-        entityController.handleUserInputKeyPressed(e);
+        entityController.handleUserInputKeyPressed(e, gameController.getDeathScreen());
     }
 
     public void handleUserInputKeyReleased(KeyEvent e) {

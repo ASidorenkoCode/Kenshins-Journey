@@ -1,12 +1,13 @@
 package entities.controller;
 
-import entities.logic.Kappa;
 import entities.logic.Finish;
+import entities.logic.Kappa;
 import entities.logic.Player;
-import entities.ui.KappaUI;
 import entities.ui.FinishUI;
+import entities.ui.KappaUI;
 import entities.ui.PlayerUI;
 import maps.controller.MapController;
+import screens.DeathScreen;
 import screens.InterfaceGame;
 import screens.LoadingScreen;
 
@@ -34,7 +35,7 @@ public class EntityController {
         initKappas(mapController, showHitBox, kappaSpawnPoint, kappaRoutePoint);
     }
 
-    public void update(MapController mapController, LoadingScreen loadingScreen, InterfaceGame interfaceGame) {
+    public void update(MapController mapController, LoadingScreen loadingScreen, InterfaceGame interfaceGame, DeathScreen deathScreen) {
         if (finish.checkIfPlayerIsInFinish(player) && !player.isDead()) {
             player.setTotalHearts(player.getTotalHearts() + 1);  // AMOUNT OF hearts collected
             interfaceGame.setTotalHearts(player.getTotalHearts());
@@ -50,17 +51,21 @@ public class EntityController {
         }
 
         if (player.isDead() && player.getDeathAnimationFinished()) {
-            loadingScreen.displayLoadingScreen();
-            player.updateSpawnPoint(mapController.getCurrentPlayerSpawn().x, mapController.getCurrentPlayerSpawn().y);
-            finish.updateFinishPoint(mapController.getCurrentFinishSpawn().x, mapController.getCurrentFinishSpawn().y);
-            player.resetHealth();
-            player.setDeathAnimationFinished(false);
-            interfaceGame.setScore(5000);
-            interfaceGame.setTotalHearts(player.getTotalHearts());
+            if (!deathScreen.isPlayerContinuesGame() && !deathScreen.isDisplayDeathScreenOnlyOnce()) deathScreen.displayDeathScreen();
+            if (deathScreen.isPlayerContinuesGame() && deathScreen.isDisplayDeathScreenOnlyOnce()) {
+                loadingScreen.displayLoadingScreen();
+                player.updateSpawnPoint(mapController.getCurrentPlayerSpawn().x, mapController.getCurrentPlayerSpawn().y);
+                finish.updateFinishPoint(mapController.getCurrentFinishSpawn().x, mapController.getCurrentFinishSpawn().y);
+                player.resetHealth();
+                player.setDeathAnimationFinished(false);
+                interfaceGame.setScore(5000);
+                interfaceGame.setTotalHearts(player.getTotalHearts());
+            }
         }
 
-        if(player.getAttackCooldown() > interfaceGame.getAttackCooldown()) interfaceGame.setAttackCooldown(player.getAttackCooldown());
-        if(interfaceGame.getAttackCooldown() == 0) player.setAttackCooldown(0);
+        if (player.getAttackCooldown() > interfaceGame.getAttackCooldown())
+            interfaceGame.setAttackCooldown(player.getAttackCooldown());
+        if (interfaceGame.getAttackCooldown() == 0) player.setAttackCooldown(0);
 
         player.update(mapController.getCurrentMap());
     }
@@ -95,7 +100,7 @@ public class EntityController {
         }
     }
 
-    public void handleUserInputKeyPressed(KeyEvent e) {
+    public void handleUserInputKeyPressed(KeyEvent e, DeathScreen deathScreen) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_A:
                 player.setLeft(true);
@@ -108,6 +113,13 @@ public class EntityController {
                 break;
             case KeyEvent.VK_SHIFT:
                 player.attack();
+                break;
+            case KeyEvent.VK_I:
+                player.decreaseHealth(1);
+                break;
+            case KeyEvent.VK_ENTER:
+                if (player.isDead()) deathScreen.removeDeathScreen();
+                break;
         }
     }
 

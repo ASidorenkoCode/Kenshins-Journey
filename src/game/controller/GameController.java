@@ -4,6 +4,7 @@ import entities.controller.EntityController;
 import game.UI.GameView;
 import game.logic.GameEngine;
 import maps.controller.MapController;
+import screens.DeathScreen;
 import screens.InterfaceGame;
 import screens.LoadingScreen;
 import screens.OptionScreen;
@@ -17,6 +18,7 @@ public class GameController {
     private LoadingScreen loadingScreen;
     private OptionScreen optionScreen;
     private InterfaceGame interfaceGame;
+    private DeathScreen deathScreen;
 
     public GameController(boolean showFPS_UPS, boolean showHitBox) {
         mapController = new MapController(null);
@@ -29,6 +31,7 @@ public class GameController {
         this.interfaceGame = new InterfaceGame(entityController.getPlayer());
         gameEngine = new GameEngine(showFPS_UPS, this);
         gameView = new GameView(this, entityController, mapController);
+        this.deathScreen = new DeathScreen(gameView.getFrame());
         this.loadingScreen = new LoadingScreen(gameView.getFrame());
         this.optionScreen = new OptionScreen(gameView, gameEngine);
         gameView.gameWindow();
@@ -45,11 +48,15 @@ public class GameController {
     }
 
     public void update() {
-        entityController.update(mapController, loadingScreen, interfaceGame);
+        entityController.update(mapController, loadingScreen, interfaceGame, deathScreen);
         if (entityController.getKappaAmount() > 0) entityController.handleKappa(mapController, interfaceGame);
     }
 
     public InterfaceGame getInterfaceGame() {
         return interfaceGame;
+    }
+
+    public DeathScreen getDeathScreen() {
+        return deathScreen;
     }
 }
