@@ -23,6 +23,5 @@ public abstract class Entity {
         return hitbox;
     }
 
-
-
+    abstract boolean isDead();
 }

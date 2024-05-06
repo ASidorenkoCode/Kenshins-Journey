@@ -18,6 +18,11 @@ public class Finish extends Entity {
         //Not needed for finish
     }
 
+    @Override
+    boolean isDead() {
+        return false;
+    }
+
     public void updateFinishPoint(int x, int y) {
         this.x = x;
         this.y = y - HORIZONTAL_OFFSET;

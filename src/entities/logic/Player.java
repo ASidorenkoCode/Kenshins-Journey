@@ -5,6 +5,8 @@ import entities.ui.PlayerUI;
 import maps.logic.Map;
 
 import java.awt.geom.Rectangle2D;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Player extends Entity {
 
@@ -20,7 +22,9 @@ public class Player extends Entity {
     private int playerHealth = 6;
     private int currentMaxHearts = 3;
     private int totalMaxHearts = 3;
-
+    private boolean isHitByEnemy = false;
+    private int attackCooldown = 0;
+    private boolean attackCooldownActive = false;
 
 
 
@@ -84,6 +88,8 @@ public class Player extends Entity {
                 airMovement = 0;
                 inAir = true;
             }
+
+
         }
     }
 
@@ -116,7 +122,7 @@ public class Player extends Entity {
             return;
         }
 
-        if (collidesWith(entity)) {
+        if (collidesWith(entity) && !entity.isDead()) {
             float newPosX = calculateNewPosition(entity);
             getHitbox().x = newPosX;
             setX(newPosX - 57);
@@ -168,7 +174,25 @@ public class Player extends Entity {
     public void attack() {
         if (!attack) {
             setAttack(true);
+            attackCooldown = 3;
+            startCooldownTimer();
         }
+    }
+
+    private void startCooldownTimer() {
+        Timer attackCooldownTimer = new Timer();
+        attackCooldownActive = true;
+        attackCooldownTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                if (attackCooldown > 0) {
+                    attackCooldown--;
+                } else {
+                    attackCooldownTimer.cancel();
+                    attackCooldownActive = false;
+                }
+            }
+        }, 0, 1000); // schedule to run every second
     }
 
     public boolean getLeft() {
@@ -189,6 +213,10 @@ public class Player extends Entity {
 
     public boolean getAttackHitBoxIsActive() {
         return attackHitBoxIsActive;
+    }
+
+    public int getAttackCooldown() {
+        return attackCooldown;
     }
 
     public void setAttackHitBoxIsActive(boolean attackHitBoxIsActive) {
@@ -247,9 +275,7 @@ public class Player extends Entity {
     }
 
     public void setAttack(boolean attack) {
-
         this.attack = attack;
-
     }
 
     public float getAirMovement() {
@@ -277,8 +303,10 @@ public class Player extends Entity {
         if (playerHealth < 0) {
             playerHealth = 0;
         }
+        setHitByEnemy(true);
     }
 
+    @Override
     public boolean isDead() {
         return playerHealth == 0;
     }
@@ -305,5 +333,17 @@ public class Player extends Entity {
 
     public boolean isJumping() {
         return inAir;
+    }
+
+    public boolean isHitByEnemy() {
+        return isHitByEnemy;
+    }
+
+    public void setHitByEnemy(boolean hitByEnemy) {
+        isHitByEnemy = hitByEnemy;
+    }
+
+    public void setAttackCooldown(int attackCooldown) {
+        this.attackCooldown = attackCooldown;
     }
 }

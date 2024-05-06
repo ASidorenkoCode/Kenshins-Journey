@@ -58,6 +58,10 @@ public class EntityController {
             interfaceGame.setScore(5000);
             interfaceGame.setTotalHearts(player.getTotalHearts());
         }
+
+        if(player.getAttackCooldown() > interfaceGame.getAttackCooldown()) interfaceGame.setAttackCooldown(player.getAttackCooldown());
+        if(interfaceGame.getAttackCooldown() == 0) player.setAttackCooldown(0);
+
         player.update(mapController.getCurrentMap());
     }
 
@@ -71,7 +75,7 @@ public class EntityController {
                 kap.setScoreIncreased(true);
             }
 
-            if (kap.isPlayerNearChecker(player) && !kap.isAttacking() && !kap.hasAttacked() && !player.isDead()) {
+            if (kap.isPlayerNearChecker(player) && !kap.isAttacking() && !kap.hasAttacked() && !player.isDead() && !kap.isDead()) {
                 kap.startAttacking(player);
             }
         }

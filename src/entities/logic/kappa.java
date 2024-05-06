@@ -24,6 +24,7 @@ public class kappa extends Entity{
     private boolean isAttacking = false;
     private Rectangle2D.Float attackHitbox;
     private boolean hasAttacked = false;
+    private boolean isDead = false;
     private Timer attackTimer;
 
 
@@ -46,8 +47,9 @@ public class kappa extends Entity{
 
     public void decreaseHealth(int amount) {
         health -= amount;
-        if (health < 0) {
+        if (health <= 0) {
             health = 0;
+            isDead = true;
         }
     }
 
@@ -68,7 +70,7 @@ public class kappa extends Entity{
     }
 
     public void update(Map map, Player player) {
-        if (isPlayerHitboxNextToKappaHitbox(player)) {
+        if (isPlayerHitboxNextToKappaHitbox(player) || isDead) {
             return;
         }
 
@@ -252,6 +254,7 @@ public class kappa extends Entity{
     }
 
     public boolean isPlayerHitboxNextToKappaHitbox(Player player) {
+
         Rectangle2D.Float playerHitbox = player.getHitbox();
         Rectangle2D.Float kappaHitbox = this.getHitbox();
 
@@ -259,5 +262,10 @@ public class kappa extends Entity{
         Rectangle2D.Float kappaHitboxBuffered = new Rectangle2D.Float(kappaHitbox.x - 1, kappaHitbox.y - 1, kappaHitbox.width + 2, kappaHitbox.height + 2);
 
         return playerHitboxBuffered.intersects(kappaHitboxBuffered);
+    }
+
+    @Override
+    public boolean isDead() {
+        return isDead;
     }
 }
