@@ -27,7 +27,6 @@ public class Player extends Entity {
     private boolean attackCooldownActive = false;
 
 
-
     public Player(float x, float y) {
         super(x, y, new Rectangle2D.Float(x + 25 * Constants.TILE_SCALE, y + 16 * Constants.TILE_SCALE, (96 - 69) * Constants.TILE_SCALE, (96 - 48) * Constants.TILE_SCALE));
         rightAttackHitBox = new Rectangle2D.Float((x + 25 * Constants.TILE_SCALE) + 32 * Constants.TILE_SCALE, y + 8 * Constants.TILE_SCALE, (96 - 64) * Constants.TILE_SCALE, (96 - 48) * Constants.TILE_SCALE);
@@ -130,7 +129,7 @@ public class Player extends Entity {
             getLeftAttackHitBox().x = newPosX - 64;
         }
 
-        if (entity instanceof kappa && getAttackHitBoxIsActive() && !hasAttacked && damageDealtInCurrentAttack < maximumDamagePerAttack) {
+        if (entity instanceof kappa && getAttackHitBoxIsActive() && !hasAttacked && damageDealtInCurrentAttack < maximumDamagePerAttack && isEntityHitboxNextToPlayerHitbox(entity)) {
             ((kappa) entity).decreaseHealth(10);
             damageDealtInCurrentAttack += 10;
             hasAttacked = true;
@@ -215,17 +214,38 @@ public class Player extends Entity {
         return attackHitBoxIsActive;
     }
 
+    public void setAttackHitBoxIsActive(boolean attackHitBoxIsActive) {
+        this.attackHitBoxIsActive = attackHitBoxIsActive;
+    }
+
     public int getAttackCooldown() {
         return attackCooldown;
     }
 
-    public void setAttackHitBoxIsActive(boolean attackHitBoxIsActive) {
-        this.attackHitBoxIsActive = attackHitBoxIsActive;
+    public void setAttackCooldown(int attackCooldown) {
+        this.attackCooldown = attackCooldown;
     }
 
     public boolean collidesWith(Entity entity) {
         return this.hitbox.intersects(entity.getHitbox().getBounds2D());
     }
+
+    public boolean isEntityHitboxNextToPlayerHitbox(Entity entity) {
+
+        Rectangle2D.Float playerHitbox = this.getRightAttackHitBox();
+        if (getX() < entity.x) {
+            playerHitbox = this.getRightAttackHitBox();
+        } else if (getX() > entity.x) {
+            playerHitbox = this.getLeftAttackHitBox();
+        }
+        Rectangle2D.Float entityHitbox = entity.getHitbox();
+
+        Rectangle2D.Float playerHitboxBuffered = new Rectangle2D.Float(playerHitbox.x - 1, playerHitbox.y - 1, playerHitbox.width + 2, playerHitbox.height + 2);
+        Rectangle2D.Float kappaHitboxBuffered = new Rectangle2D.Float(entityHitbox.x - 1, entityHitbox.y - 1, entityHitbox.width + 2, entityHitbox.height + 2);
+
+        return playerHitboxBuffered.intersects(kappaHitboxBuffered);
+    }
+
 
     public boolean checkForCollisonOnPosition(Map map, float x, float y) {
         if (x < 0) return true;
@@ -341,9 +361,5 @@ public class Player extends Entity {
 
     public void setHitByEnemy(boolean hitByEnemy) {
         isHitByEnemy = hitByEnemy;
-    }
-
-    public void setAttackCooldown(int attackCooldown) {
-        this.attackCooldown = attackCooldown;
     }
 }
