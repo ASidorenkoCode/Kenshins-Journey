@@ -41,6 +41,7 @@ public class EntityController {
             interfaceGame.setTotalHearts(player.getTotalHearts());
             loadingScreen.displayLoadingScreen();
             loadingScreen.updateScore(interfaceGame.getScore());
+            deathScreen.updateScore(interfaceGame.getScore());
             mapController.loadNextMap();
             player.updateSpawnPoint(mapController.getCurrentPlayerSpawn().x, mapController.getCurrentPlayerSpawn().y);
             finish.updateFinishPoint(mapController.getCurrentFinishSpawn().x, mapController.getCurrentFinishSpawn().y);
@@ -51,7 +52,10 @@ public class EntityController {
         }
 
         if (player.isDead() && player.getDeathAnimationFinished()) {
-            if (!deathScreen.isPlayerContinuesGame() && !deathScreen.isDisplayDeathScreenOnlyOnce()) deathScreen.displayDeathScreen();
+            if(deathScreen.getTotalScore() > interfaceGame.getScore()) deathScreen.updateScore(interfaceGame.getScore());
+            if (!deathScreen.isPlayerContinuesGame() && !deathScreen.isDisplayDeathScreenOnlyOnce()) {
+                deathScreen.displayDeathScreen();
+            }
             if (deathScreen.isPlayerContinuesGame() && deathScreen.isDisplayDeathScreenOnlyOnce()) {
                 loadingScreen.displayLoadingScreen();
                 player.updateSpawnPoint(mapController.getCurrentPlayerSpawn().x, mapController.getCurrentPlayerSpawn().y);
@@ -60,6 +64,7 @@ public class EntityController {
                 player.setDeathAnimationFinished(false);
                 interfaceGame.setScore(5000);
                 interfaceGame.setTotalHearts(player.getTotalHearts());
+                deathScreen.setDisplayDeathScreenOnlyOnce(false);
             }
         }
 
