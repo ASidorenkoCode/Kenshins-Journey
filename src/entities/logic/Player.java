@@ -129,8 +129,8 @@ public class Player extends Entity {
             getLeftAttackHitBox().x = newPosX - 64;
         }
 
-        if (entity instanceof kappa && getAttackHitBoxIsActive() && !hasAttacked && damageDealtInCurrentAttack < maximumDamagePerAttack && isEntityHitboxNextToPlayerHitbox(entity)) {
-            ((kappa) entity).decreaseHealth(10);
+        if (entity instanceof Kappa && getAttackHitBoxIsActive() && !hasAttacked && damageDealtInCurrentAttack < maximumDamagePerAttack && isEntityHitboxNextToPlayerHitbox(entity)) {
+            ((Kappa) entity).decreaseHealth(10);
             damageDealtInCurrentAttack += 10;
             hasAttacked = true;
         } else if (hasAttacked && playerUI.getCurrentAniIndex() == 6) {

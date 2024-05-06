@@ -7,7 +7,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class kappa extends Entity{
+public class Kappa extends Entity{
 
     private float leftBoundary;
     private float rightBoundary;
@@ -30,7 +30,7 @@ public class kappa extends Entity{
 
 
 
-    public kappa(float x, float y, float leftBoundary, float rightBoundary, float speed) {
+    public Kappa(float x, float y, float leftBoundary, float rightBoundary, float speed) {
         super(x, y - 15 * Constants.ENEMY_SCALE, new Rectangle2D.Float(x + 10, y - 13 * Constants.ENEMY_SCALE,(96 - 60) * Constants.TILE_SCALE,(96 - 55) * Constants.TILE_SCALE));
         this.leftBoundary = leftBoundary;
         this.rightBoundary = rightBoundary;

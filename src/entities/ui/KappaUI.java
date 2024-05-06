@@ -2,18 +2,18 @@ package entities.ui;
 
 import constants.Constants;
 import entities.animations.EnemyAnimations;
-import entities.logic.kappa;
+import entities.logic.Kappa;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
-public class kappaUI extends EntityUI {
+public class KappaUI extends EntityUI {
 
-    kappa kappa;
+    Kappa kappa;
     boolean showHitBox;
     private EnemyAnimations currentAnimation;
 
-    public kappaUI(kappa kappa, boolean showHitBox) {
+    public KappaUI(Kappa kappa, boolean showHitBox) {
         this.kappa = kappa;
         this.showHitBox = showHitBox;
         SPRITE_PX_WIDTH = 64;

@@ -1,9 +1,9 @@
 package entities.controller;
 
-import entities.logic.kappa;
+import entities.logic.Kappa;
 import entities.logic.Finish;
 import entities.logic.Player;
-import entities.ui.kappaUI;
+import entities.ui.KappaUI;
 import entities.ui.FinishUI;
 import entities.ui.PlayerUI;
 import maps.controller.MapController;
@@ -23,8 +23,8 @@ public class EntityController {
     private FinishUI finishUI;
     private Finish finish;
 
-    private List<kappa> kappas = new ArrayList<>();
-    private List<kappaUI> kappaUIs = new ArrayList<>();
+    private List<Kappa> Kappas = new ArrayList<>();
+    private List<KappaUI> KappaUIS = new ArrayList<>();
 
     public EntityController(MapController mapController, boolean showHitBox, Point playerSpawnPoint, Point finishPoint, Point kappaSpawnPoint, Point kappaRoutePoint) {
         player = new Player(playerSpawnPoint.x, playerSpawnPoint.y);
@@ -66,7 +66,7 @@ public class EntityController {
     }
 
     public void handleKappa(MapController mapController, InterfaceGame interfaceGame) {
-        for (kappa kap : kappas) {
+        for (Kappa kap : Kappas) {
             kap.update(mapController.getCurrentMap(), player);
             player.collisionWithEntity(kap, playerUI);
 
@@ -85,12 +85,12 @@ public class EntityController {
         Point currentKappaSpawn = mapController.getCurrentKappaSpawn();
         if (currentKappaSpawn != null) {
             int kappaCount = mapController.getKappaSpawnCount();
-            if (kappas.size() < kappaCount) {
-                kappa kappa = new kappa(kappaSpawnPoint.x, kappaSpawnPoint.y, kappaSpawnPoint.x, kappaRoutePoint.x, 0.6f);
-                kappaUI kappaUI = new kappaUI(kappa, showHitBox);
+            if (Kappas.size() < kappaCount) {
+                Kappa kappa = new Kappa(kappaSpawnPoint.x, kappaSpawnPoint.y, kappaSpawnPoint.x, kappaRoutePoint.x, 0.6f);
+                KappaUI kappaUI = new KappaUI(kappa, showHitBox);
                 kappa.resetHealth();
-                kappas.add(kappa);
-                kappaUIs.add(kappaUI);
+                Kappas.add(kappa);
+                KappaUIS.add(kappaUI);
             }
         }
     }
@@ -126,7 +126,7 @@ public class EntityController {
         playerUI.drawAnimations(g, offset);
         finishUI.drawAnimations(g, offset);
         finishUI.drawHitBox(g, offset);
-        for (kappaUI kappaUI : kappaUIs) {
+        for (KappaUI kappaUI : KappaUIS) {
             kappaUI.drawAnimations(g, offset);
         }
     }
@@ -136,7 +136,7 @@ public class EntityController {
     }
 
     public int getKappaAmount() {
-        return kappas.size();
+        return Kappas.size();
     }
 }
 
