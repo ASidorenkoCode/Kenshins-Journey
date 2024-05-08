@@ -6,6 +6,9 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 
+import static game.UI.GameView.GAME_HEIGHT;
+import static game.UI.GameView.GAME_WIDTH;
+
 public class DeathScreen {
     private JFrame frame;
     private Dimension originalSize;
@@ -13,7 +16,6 @@ public class DeathScreen {
     private JPanel centerPanel;
     private JLabel scoreLabel;
     private int totalScore = 0;
-
     private boolean displayDeathScreenOnlyOnce = false;
 
     public DeathScreen(JFrame frame) {
@@ -24,6 +26,7 @@ public class DeathScreen {
 
     public void displayDeathScreen() {
         displayDeathScreenOnlyOnce = true;
+
         frame.setPreferredSize(new Dimension(GameView.GAME_WIDTH, GameView.GAME_HEIGHT));
 
         JLabel deathLabel = createDeathLabel();
@@ -69,11 +72,12 @@ public class DeathScreen {
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
         centerPanel.setOpaque(true);
         centerPanel.setBackground(Color.BLACK);
-        centerPanel.setSize(GameView.GAME_WIDTH, GameView.GAME_HEIGHT);
+        centerPanel.setSize(GAME_WIDTH, GAME_HEIGHT);
 
         centerPanel.add(Box.createVerticalGlue());
         centerPanel.add(deathLabel);
         centerPanel.add(Box.createVerticalGlue());
+        centerPanel.setBounds(0, 0, frame.getWidth(), frame.getHeight());
 
         return centerPanel;
     }
