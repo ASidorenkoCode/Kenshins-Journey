@@ -10,6 +10,7 @@ import maps.controller.MapController;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.geom.AffineTransform;
 
 public class GameView extends JPanel {
 
@@ -18,6 +19,9 @@ public class GameView extends JPanel {
     public final static int TILES_IN_HEIGHT = 14;
     public final static int GAME_WIDTH = (int) (TILES_DEFAULT_SIZE * Constants.TILE_SCALE) * TILES_IN_WIDTH;
     public final static int GAME_HEIGHT = (int) (TILES_DEFAULT_SIZE * Constants.TILE_SCALE) * TILES_IN_HEIGHT;
+    private double scaleX;
+    private double scaleY;
+    private double scaleFactor;
     private GameController gameController;
     private MapController mapController;
     private EntityController entityController;
@@ -39,21 +43,52 @@ public class GameView extends JPanel {
     public void gameWindow() {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
-        frame.setLocationRelativeTo(null);
-        frame.add(this);
+        frame.setUndecorated(true);
+
+        calculateScaleFactors();
+        int scaledWidth = (int) (GAME_WIDTH * scaleFactor);
+        int scaledHeight = (int) (GAME_HEIGHT * scaleFactor);
+        this.setPreferredSize(new Dimension(scaledWidth, scaledHeight));
+
+        JPanel container = new JPanel();
+        configureContainerForGameView(container);
+
+        frame.add(container);
         frame.pack();
+        setFrameToFullScreen();
         frame.setVisible(true);
-        calculateScreenCenter(frame);
+    }
+
+    public void calculateScaleFactors() {
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        this.scaleX = screenSize.getWidth() / GAME_WIDTH;
+        this.scaleY = screenSize.getHeight() / GAME_HEIGHT;
+        this.scaleFactor = Math.min(scaleX, scaleY);
+    }
+
+    public void configureContainerForGameView(JPanel container) {
+        container.setBackground(Color.BLACK);
+        container.setLayout(new GridBagLayout());
+        container.add(this);
+    }
+
+    public void setFrameToFullScreen() {
+        GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsDevice device = env.getDefaultScreenDevice();
+        device.setFullScreenWindow(frame);
     }
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (gameController != null) {
-            render(g);
+            Graphics2D g2d = (Graphics2D) g;
+            AffineTransform at = AffineTransform.getScaleInstance(scaleFactor, scaleFactor);
+            g2d.setTransform(at);
+            render(g2d);
             gameController.getInterfaceGame().updatePlayerHealth(entityController.getPlayer().getPlayerHealth());
             gameController.getInterfaceGame().updateHighscore();
-            gameController.getInterfaceGame().draw(g, entityController.getPlayer());
+            gameController.getInterfaceGame().draw(g2d, entityController.getPlayer());
         }
     }
 
@@ -64,17 +99,7 @@ public class GameView extends JPanel {
         mapController.draw(g);
         entityController.drawEntities(g, mapOffset);
         gameController.getInterfaceGame().draw(g, entityController.getPlayer());
-        itemController.drawMapItems(g, mapOffset);    }
-
-    public void calculateScreenCenter(JFrame frame) {
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        int screenWidth = (int) screenSize.getWidth();
-        int screenHeight = (int) screenSize.getHeight();
-        int frameWidth = frame.getWidth();
-        int frameHeight = frame.getHeight();
-        int x = (screenWidth - frameWidth) / 2;
-        int y = (screenHeight - frameHeight) / 2;
-        frame.setLocation(x, y);
+        itemController.drawMapItems(g, mapOffset);
     }
 
     public void showFPS_UPS(int frames, int updates) {
@@ -120,7 +145,8 @@ public class GameView extends JPanel {
                 itemController.selectItem(entityController.getPlayer(), 9);
                 break;
 
-            default: entityController.handleUserInputKeyPressed(e, gameController.getDeathScreen());
+            default:
+                entityController.handleUserInputKeyPressed(e, gameController.getDeathScreen());
         }
     }
 
