@@ -64,10 +64,6 @@ public class GameView extends JPanel {
         this.scaleX = screenSize.getWidth() / GAME_WIDTH;
         this.scaleY = screenSize.getHeight() / GAME_HEIGHT;
         this.scaleFactor = Math.min(scaleX, scaleY);
-        String osName = System.getProperty("os.name").toLowerCase();
-        if (osName.contains("mac")) {
-            this.scaleFactor *= 1.25;
-        }
     }
 
     public void configureContainerForGameView(JPanel container) {
