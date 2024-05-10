@@ -75,7 +75,13 @@ public class GameView extends JPanel {
     public void setFrameToFullScreen() {
         GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice device = env.getDefaultScreenDevice();
-        device.setFullScreenWindow(frame);
+        Rectangle screenBounds = device.getDefaultConfiguration().getBounds();
+
+        if (device.isFullScreenSupported()) {
+            device.setFullScreenWindow(frame);
+        } else {
+            frame.setBounds(screenBounds);
+        }
     }
 
     @Override
