@@ -1,6 +1,5 @@
 package entities.logic;
 
-import constants.Constants;
 import entities.ui.PlayerUI;
 import maps.logic.Map;
 
@@ -25,9 +24,9 @@ public class Player extends Entity {
 
 
     public Player(float x, float y) {
-        super(x, y, new Rectangle2D.Float(x + 25 * Constants.TILE_SCALE, y + 16 * Constants.TILE_SCALE, (96 - 69) * Constants.TILE_SCALE, (96 - 48) * Constants.TILE_SCALE));
-        rightAttackHitBox = new Rectangle2D.Float((x + 25 * Constants.TILE_SCALE) + 32 * Constants.TILE_SCALE, y + 8 * Constants.TILE_SCALE, (96 - 64) * Constants.TILE_SCALE, (96 - 48) * Constants.TILE_SCALE);
-        leftAttackHitBox = new Rectangle2D.Float((x + 25 * Constants.TILE_SCALE) - 32 * Constants.TILE_SCALE, y + 8 * Constants.TILE_SCALE, (96 - 64) * Constants.TILE_SCALE, (96 - 48) * Constants.TILE_SCALE);
+        super(x, y, new Rectangle2D.Float(x + 50, y + 32, (96 - 69) * 2, (96 - 48) * 2));
+        rightAttackHitBox = new Rectangle2D.Float((x + 50) + 64, y + 16, (96 - 64) * 2, (96 - 48) * 2);
+        leftAttackHitBox = new Rectangle2D.Float((x + 50) - 64, y + 16, (96 - 64) * 2, (96 - 48) * 2);
         left = false;
         right = false;
         inAir = false;
@@ -61,12 +60,12 @@ public class Player extends Entity {
     public void updateSpawnPoint(int x, int y) {
         this.x = x;
         this.y = y;
-        this.hitbox.x = x + 32 * Constants.TILE_SCALE;
-        this.hitbox.y = y + 16 * Constants.TILE_SCALE;
-        this.leftAttackHitBox.x = (x + 32 * Constants.TILE_SCALE) - 32 * Constants.TILE_SCALE;
-        this.leftAttackHitBox.y = y + 8 * Constants.TILE_SCALE;
-        this.rightAttackHitBox.x = (x + 32 * Constants.TILE_SCALE) + 32 * Constants.TILE_SCALE;
-        this.rightAttackHitBox.y = y + 8 * Constants.TILE_SCALE;
+        this.hitbox.x = x + 64;
+        this.hitbox.y = y + 32;
+        this.leftAttackHitBox.x = (x + 64) - 64;
+        this.leftAttackHitBox.y = y + 16;
+        this.rightAttackHitBox.x = (x + 64) + 64;
+        this.rightAttackHitBox.y = y + 16;
     }
 
     public void update(Map map) {
@@ -169,11 +168,11 @@ public class Player extends Entity {
             inAir = false;
 
             float playerYPos = (hitbox.y + by_value + hitbox.height);
-            int groundSpriteNumber = (int) (playerYPos / (32 * Constants.TILE_SCALE));
-            hitbox.y = groundSpriteNumber * (32 * Constants.TILE_SCALE);
+            int groundSpriteNumber = (int) (playerYPos / (64));
+            hitbox.y = groundSpriteNumber * (64);
             hitbox.y -= hitbox.height + 1;
             y = hitbox.y;
-            y -= 16 * Constants.TILE_SCALE;
+            y -= 32;
 
             return;
         }

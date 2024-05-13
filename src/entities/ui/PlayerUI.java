@@ -1,6 +1,5 @@
 package entities.ui;
 
-import constants.Constants;
 import entities.animations.PlayerAnimations;
 import entities.logic.Player;
 
@@ -133,8 +132,8 @@ public class PlayerUI extends EntityUI {
         g.drawImage(animations[currentAnimation.getAniIndex() + (showLeftAnimations ? SPRITE_Y_DIMENSION : 0)][aniIndex],
                 (int) player.getX() - offset,
                 (int) player.getY(),
-                (int) (SPRITE_PX_WIDTH * Constants.TILE_SCALE),
-                (int) (SPRITE_PX_HEIGHT * Constants.TILE_SCALE), null);
+                (int) (SPRITE_PX_WIDTH * 2),
+                (int) (SPRITE_PX_HEIGHT * 2), null);
         drawHitBox(g, offset);
     }
 

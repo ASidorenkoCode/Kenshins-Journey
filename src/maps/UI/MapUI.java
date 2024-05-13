@@ -1,6 +1,4 @@
 package maps.UI;
-
-import constants.Constants;
 import game.UI.GameView;
 import maps.controller.MapController;
 import maps.logic.Map;
@@ -22,9 +20,9 @@ public class MapUI {
             for (int i = 0; i < maps.get(mapIndex).getMapData()[0].length; i++) {
                 int index = maps.get(mapIndex).getSpriteIndex(i, j);
                 if (index >= 0 && index < mapController.getMapSprites().length) {
-                    int x = (int) (GameView.TILES_DEFAULT_SIZE * Constants.TILE_SCALE * i - mapOffset);
-                    int y = (int) (GameView.TILES_DEFAULT_SIZE * Constants.TILE_SCALE * j);
-                    g.drawImage(mapController.getMapSprites()[index], x, y, (int) (GameView.TILES_DEFAULT_SIZE * Constants.TILE_SCALE), (int) (GameView.TILES_DEFAULT_SIZE * Constants.TILE_SCALE), null);
+                    int x = GameView.TILES_DEFAULT_SIZE * 2 * i - mapOffset;
+                    int y = GameView.TILES_DEFAULT_SIZE * 2 * j;
+                    g.drawImage(mapController.getMapSprites()[index], x, y, GameView.TILES_DEFAULT_SIZE * 2, GameView.TILES_DEFAULT_SIZE * 2, null);
                 } else {
                     System.out.println("Index out of bounds: " + index);
                 }

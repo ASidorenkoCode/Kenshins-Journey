@@ -1,6 +1,5 @@
 package maps.logic;
 
-import constants.Constants;
 import game.UI.GameView;
 
 import java.awt.*;
@@ -52,9 +51,9 @@ public class Map {
     }
 
     private void loadEntities(int greenValue, int x, int y) {
-        int originalX = (int) (x * GameView.TILES_DEFAULT_SIZE * Constants.TILE_SCALE);
+        int originalX = (int) (x * GameView.TILES_DEFAULT_SIZE * 2);
         int scaledX = originalX - 96;
-        int originalY = (int) (y * GameView.TILES_DEFAULT_SIZE * Constants.TILE_SCALE);
+        int originalY = (int) (y * GameView.TILES_DEFAULT_SIZE * 2);
         int scaledY = originalY - 65;
 
         switch (greenValue) {
@@ -74,7 +73,7 @@ public class Map {
     private void calculateMapOffsets() {
         mapTilesWide = mapImage.getWidth();
         maxTilesOffset = mapTilesWide - GameView.TILES_IN_WIDTH;
-        maxMapOffsetX = (int) (GameView.TILES_DEFAULT_SIZE * Constants.TILE_SCALE * maxTilesOffset);
+        maxMapOffsetX = GameView.TILES_DEFAULT_SIZE * 2 * maxTilesOffset;
     }
 
     public int getmaxMapOffsetX() {
