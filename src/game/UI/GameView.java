@@ -92,7 +92,13 @@ public class GameView extends JPanel {
         super.paintComponent(g);
         if (gameController != null) {
             Graphics2D g2d = (Graphics2D) g.create(); // Create a new Graphics2D object
-            AffineTransform at = AffineTransform.getScaleInstance(scaleFactor, scaleFactor);
+            String osName = System.getProperty("os.name");
+            AffineTransform at;
+            if (osName.contains("Mac")) {
+                at = AffineTransform.getScaleInstance(scaleFactor * 2, scaleFactor * 2);
+            } else {
+                at = AffineTransform.getScaleInstance(scaleFactor, scaleFactor);
+            }
             g2d.setTransform(at);
             render(g2d);
             gameController.getInterfaceGame().updatePlayerHealth(entityController.getPlayer().getPlayerHealth());
