@@ -121,6 +121,9 @@ public class EntityController {
             case KeyEvent.VK_R:
                 player.setIsRestingIfNotInAir(true);
                 break;
+            case KeyEvent.VK_S:
+                player.setIsDashing(true);
+                break;
             case KeyEvent.VK_ENTER:
                 if (player.isDead()) deathScreen.removeDeathScreen();
                 break;

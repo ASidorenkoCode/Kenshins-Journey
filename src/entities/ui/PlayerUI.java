@@ -65,6 +65,7 @@ public class PlayerUI extends EntityUI {
 
             if (aniIndex >= currentAnimation.getAniSize()) {
                 player.setAttack(false);
+                player.setIsDashing(false);
                 aniIndex = 0;
             }
         }
@@ -74,7 +75,8 @@ public class PlayerUI extends EntityUI {
         PlayerAnimations lastAnimation = currentAnimation;
         //Set animation
 
-            if (player.getIsResting()) currentAnimation = PlayerAnimations.RESTING;
+            if(player.getIsDashing()) currentAnimation = PlayerAnimations.DASH;
+            else if (player.getIsResting()) currentAnimation = PlayerAnimations.RESTING;
             else if (player.getInAir() && player.getAttack()) {
                 if (player.getAirMovement() < 0) currentAnimation = PlayerAnimations.JUMP_SLASH;
                 else currentAnimation = PlayerAnimations.FALL_SLASH;

@@ -8,7 +8,7 @@ import java.awt.geom.Rectangle2D;
 
 public class Player extends Entity {
 
-    private boolean left, right, attack, inAir, attackHitBoxIsActive, isResting;
+    private boolean left, right, attack, inAir, attackHitBoxIsActive, isResting, isDashing;
     private float airMovement = -5f;
     private Rectangle2D.Float rightAttackHitBox;
     private Rectangle2D.Float leftAttackHitBox;
@@ -71,6 +71,7 @@ public class Player extends Entity {
 
     public void update(Map map) {
 
+
         if(isResting) {
         //TODO: better suiting resting
         if(playerHealth<totalMaxHearts*2) {
@@ -79,10 +80,14 @@ public class Player extends Entity {
         return;
     }
         if (!isDead()) {
+            int currentSpeed = movementSpeed;
+            if(isDashing) {
+                currentSpeed*=2;
+            }
             if (right && !left) {
-                updateXPos(map, movementSpeed);
+                updateXPos(map, currentSpeed);
             } else if (left && !right) {
-                updateXPos(map, -movementSpeed);
+                updateXPos(map, -currentSpeed);
             }
             if (inAir) {
                 updateYPos(map, airMovement);
@@ -363,5 +368,13 @@ public class Player extends Entity {
     public void setIsRestingIfNotInAir(boolean isResting) {
         if(inAir) return;
         this.isResting = isResting;
+    }
+
+    public boolean getIsDashing() {
+        return isDashing;
+    }
+
+    public void setIsDashing(boolean isDashing) {
+        this.isDashing = isDashing;
     }
 }
