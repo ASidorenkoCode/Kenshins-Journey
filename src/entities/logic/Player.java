@@ -22,6 +22,8 @@ public class Player extends Entity {
     private boolean isHitByEnemy = false;
     private int movementSpeed = 1;
 
+    private final static int STANDARD_DAMAGE = 20;
+
 
     public Player(float x, float y) {
         super(x, y, new Rectangle2D.Float(x + 50, y + 32, (96 - 69) * 2, (96 - 48) * 2));
@@ -31,6 +33,7 @@ public class Player extends Entity {
         right = false;
         inAir = false;
         attack = false;
+        resetMaximumDamagePerAttack();
     }
 
 
@@ -66,6 +69,7 @@ public class Player extends Entity {
         this.leftAttackHitBox.y = y + 16;
         this.rightAttackHitBox.x = (x + 64) + 64;
         this.rightAttackHitBox.y = y + 16;
+        resetMaximumDamagePerAttack();
     }
 
     public void update(Map map) {
@@ -375,5 +379,13 @@ public class Player extends Entity {
 
     public void setIsDashing(boolean isDashing) {
         this.isDashing = isDashing;
+    }
+
+    public void increaseMaximumDamagePerAttack(int byValue) {
+        this.maximumDamagePerAttack += byValue;
+    }
+
+    public void resetMaximumDamagePerAttack() {
+        this.maximumDamagePerAttack = STANDARD_DAMAGE;
     }
 }
