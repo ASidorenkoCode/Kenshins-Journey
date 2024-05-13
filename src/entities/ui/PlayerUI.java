@@ -73,7 +73,9 @@ public class PlayerUI extends EntityUI {
     private void setAnimation() {
         PlayerAnimations lastAnimation = currentAnimation;
         //Set animation
-            if (player.getInAir() && player.getAttack()) {
+
+            if (player.getIsResting()) currentAnimation = PlayerAnimations.RESTING;
+            else if (player.getInAir() && player.getAttack()) {
                 if (player.getAirMovement() < 0) currentAnimation = PlayerAnimations.JUMP_SLASH;
                 else currentAnimation = PlayerAnimations.FALL_SLASH;
             } else if (player.getInAir() && !player.getAttack()) {

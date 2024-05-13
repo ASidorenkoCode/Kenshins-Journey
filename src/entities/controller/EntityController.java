@@ -118,6 +118,9 @@ public class EntityController {
             case KeyEvent.VK_I:
                 player.decreaseHealth(1);
                 break;
+            case KeyEvent.VK_R:
+                player.setIsRestingIfNotInAir(true);
+                break;
             case KeyEvent.VK_ENTER:
                 if (player.isDead()) deathScreen.removeDeathScreen();
                 break;
@@ -128,6 +131,9 @@ public class EntityController {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_A:
                 player.setLeft(false);
+                break;
+            case KeyEvent.VK_R:
+                player.setIsRestingIfNotInAir(false);
                 break;
             case KeyEvent.VK_D:
                 player.setRight(false);
