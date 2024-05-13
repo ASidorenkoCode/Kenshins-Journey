@@ -80,8 +80,11 @@ public class GameView extends JPanel {
         if (device.isFullScreenSupported()) {
             device.setFullScreenWindow(frame);
         } else {
-            frame.setBounds(screenBounds);
+            frame.setSize(screenBounds.width, screenBounds.height);
+            frame.setLocationRelativeTo(null);
         }
+
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
     @Override
