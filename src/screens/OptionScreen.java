@@ -56,7 +56,7 @@ public class OptionScreen {
         JLabel backgroundLabel = new JLabel(backgroundImageIcon);
 
         JDialog dialog = new JDialog(gameView.getFrame(), false);
-        dialog.setUndecorated(true);
+        dialog.setUndecorated(false);
         dialog.setBackground(new Color(0, 0, 0, 0)); // Make the JDialog background transparent
 
         JPanel panel = new JPanel(new GridLayout(0, 1, 0, 0));

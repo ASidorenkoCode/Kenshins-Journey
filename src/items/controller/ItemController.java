@@ -1,6 +1,4 @@
 package items.controller;
-
-import constants.Constants;
 import entities.logic.Player;
 import items.logic.Heart;
 import items.logic.Item;
@@ -81,8 +79,8 @@ public class ItemController {
         g.drawImage(animations[item.getAnimationType().getAniIndex()][aniIndex],
         (int) item.getX() - offset,
                 (int) item.getY(),
-                (int) (SPRITE_PX_WIDTH * Constants.TILE_SCALE),
-                (int) (SPRITE_PX_HEIGHT * Constants.TILE_SCALE), null);
+                SPRITE_PX_WIDTH * 2,
+                SPRITE_PX_HEIGHT * 2, null);
         if (showHitBox) {
             Rectangle2D.Float hitbox = item.getHitbox();
             g.drawRect((int) hitbox.x - offset, (int) hitbox.y, (int) hitbox.width, (int) hitbox.height);

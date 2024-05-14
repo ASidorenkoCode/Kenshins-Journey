@@ -1,6 +1,5 @@
 package entities.logic;
 
-import constants.Constants;
 import maps.logic.Map;
 
 import java.awt.geom.Rectangle2D;
@@ -13,7 +12,7 @@ public class Kappa extends Entity{
     private float rightBoundary;
     private float speed;
     boolean right;
-    private final static float HORIZONTAL_OFFSET = 20 * Constants.TILE_SCALE; //needed because
+    private final static float HORIZONTAL_OFFSET = 40;
     private int health = 100;
     private int maxHealth = 100;
     private boolean isScoreIncreased = false;
@@ -31,7 +30,7 @@ public class Kappa extends Entity{
 
 
     public Kappa(float x, float y, float leftBoundary, float rightBoundary, float speed) {
-        super(x, y - 15 * Constants.ENEMY_SCALE, new Rectangle2D.Float(x + 10, y - 13 * Constants.ENEMY_SCALE,(96 - 60) * Constants.TILE_SCALE,(96 - 55) * Constants.TILE_SCALE));
+        super(x, y - 20, new Rectangle2D.Float(x + 10, y - 20,(96 - 60) * 2,(96 - 55) * 2));
         this.leftBoundary = leftBoundary;
         this.rightBoundary = rightBoundary;
         this.speed = speed;

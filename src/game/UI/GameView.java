@@ -1,6 +1,4 @@
 package game.UI;
-
-import constants.Constants;
 import entities.controller.EntityController;
 import game.controller.GameController;
 import items.controller.ItemController;
@@ -17,8 +15,8 @@ public class GameView extends JPanel {
     public final static int TILES_DEFAULT_SIZE = 32;
     public final static int TILES_IN_WIDTH = 26;
     public final static int TILES_IN_HEIGHT = 14;
-    public final static int GAME_WIDTH = (int) (TILES_DEFAULT_SIZE * Constants.TILE_SCALE) * TILES_IN_WIDTH;
-    public final static int GAME_HEIGHT = (int) (TILES_DEFAULT_SIZE * Constants.TILE_SCALE) * TILES_IN_HEIGHT;
+    public final static int GAME_WIDTH = (int) (TILES_DEFAULT_SIZE * 2) * TILES_IN_WIDTH;
+    public final static int GAME_HEIGHT = (int) (TILES_DEFAULT_SIZE * 2) * TILES_IN_HEIGHT;
     private double scaleX;
     private double scaleY;
     private double scaleFactor;

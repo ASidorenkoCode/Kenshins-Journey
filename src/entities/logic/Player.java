@@ -1,6 +1,5 @@
 package entities.logic;
 
-import constants.Constants;
 import entities.ui.PlayerUI;
 import maps.logic.Map;
 
@@ -8,7 +7,7 @@ import java.awt.geom.Rectangle2D;
 
 public class Player extends Entity {
 
-    private boolean left, right, attack, inAir, attackHitBoxIsActive;
+    private boolean left, right, attack, inAir, attackHitBoxIsActive, isResting, isDashing;
     private float airMovement = -5f;
     private Rectangle2D.Float rightAttackHitBox;
     private Rectangle2D.Float leftAttackHitBox;
@@ -23,15 +22,18 @@ public class Player extends Entity {
     private boolean isHitByEnemy = false;
     private int movementSpeed = 1;
 
+    private final static int STANDARD_DAMAGE = 20;
+
 
     public Player(float x, float y) {
-        super(x, y, new Rectangle2D.Float(x + 25 * Constants.TILE_SCALE, y + 16 * Constants.TILE_SCALE, (96 - 69) * Constants.TILE_SCALE, (96 - 48) * Constants.TILE_SCALE));
-        rightAttackHitBox = new Rectangle2D.Float((x + 25 * Constants.TILE_SCALE) + 32 * Constants.TILE_SCALE, y + 8 * Constants.TILE_SCALE, (96 - 64) * Constants.TILE_SCALE, (96 - 48) * Constants.TILE_SCALE);
-        leftAttackHitBox = new Rectangle2D.Float((x + 25 * Constants.TILE_SCALE) - 32 * Constants.TILE_SCALE, y + 8 * Constants.TILE_SCALE, (96 - 64) * Constants.TILE_SCALE, (96 - 48) * Constants.TILE_SCALE);
+        super(x, y, new Rectangle2D.Float(x + 50, y + 32, (96 - 69) * 2, (96 - 48) * 2));
+        rightAttackHitBox = new Rectangle2D.Float((x + 50) + 64, y + 16, (96 - 64) * 2, (96 - 48) * 2);
+        leftAttackHitBox = new Rectangle2D.Float((x + 50) - 64, y + 16, (96 - 64) * 2, (96 - 48) * 2);
         left = false;
         right = false;
         inAir = false;
         attack = false;
+        resetMaximumDamagePerAttack();
     }
 
 
@@ -61,20 +63,34 @@ public class Player extends Entity {
     public void updateSpawnPoint(int x, int y) {
         this.x = x;
         this.y = y;
-        this.hitbox.x = x + 32 * Constants.TILE_SCALE;
-        this.hitbox.y = y + 16 * Constants.TILE_SCALE;
-        this.leftAttackHitBox.x = (x + 32 * Constants.TILE_SCALE) - 32 * Constants.TILE_SCALE;
-        this.leftAttackHitBox.y = y + 8 * Constants.TILE_SCALE;
-        this.rightAttackHitBox.x = (x + 32 * Constants.TILE_SCALE) + 32 * Constants.TILE_SCALE;
-        this.rightAttackHitBox.y = y + 8 * Constants.TILE_SCALE;
+        this.hitbox.x = x + 64;
+        this.hitbox.y = y + 32;
+        this.leftAttackHitBox.x = (x + 64) - 64;
+        this.leftAttackHitBox.y = y + 16;
+        this.rightAttackHitBox.x = (x + 64) + 64;
+        this.rightAttackHitBox.y = y + 16;
+        resetMaximumDamagePerAttack();
     }
 
     public void update(Map map) {
+
+
+        if(isResting) {
+        //TODO: better suiting resting
+        if(playerHealth<totalMaxHearts*2) {
+            playerHealth++;
+        }
+        return;
+    }
         if (!isDead()) {
+            int currentSpeed = movementSpeed;
+            if(isDashing) {
+                currentSpeed*=2;
+            }
             if (right && !left) {
-                updateXPos(map, movementSpeed);
+                updateXPos(map, currentSpeed);
             } else if (left && !right) {
-                updateXPos(map, -movementSpeed);
+                updateXPos(map, -currentSpeed);
             }
             if (inAir) {
                 updateYPos(map, airMovement);
@@ -156,11 +172,11 @@ public class Player extends Entity {
             inAir = false;
 
             float playerYPos = (hitbox.y + by_value + hitbox.height);
-            int groundSpriteNumber = (int) (playerYPos / (32 * Constants.TILE_SCALE));
-            hitbox.y = groundSpriteNumber * (32 * Constants.TILE_SCALE);
+            int groundSpriteNumber = (int) (playerYPos / (64));
+            hitbox.y = groundSpriteNumber * (64);
             hitbox.y -= hitbox.height + 1;
             y = hitbox.y;
-            y -= 16 * Constants.TILE_SCALE;
+            y -= 32;
 
             return;
         }
@@ -346,5 +362,30 @@ public class Player extends Entity {
 
     public void setHitByEnemy(boolean hitByEnemy) {
         isHitByEnemy = hitByEnemy;
+    }
+
+    public boolean getIsResting() {
+        return isResting;
+    }
+
+    public void setIsRestingIfNotInAir(boolean isResting) {
+        if(inAir) return;
+        this.isResting = isResting;
+    }
+
+    public boolean getIsDashing() {
+        return isDashing;
+    }
+
+    public void setIsDashing(boolean isDashing) {
+        this.isDashing = isDashing;
+    }
+
+    public void increaseMaximumDamagePerAttack(int byValue) {
+        this.maximumDamagePerAttack += byValue;
+    }
+
+    public void resetMaximumDamagePerAttack() {
+        this.maximumDamagePerAttack = STANDARD_DAMAGE;
     }
 }

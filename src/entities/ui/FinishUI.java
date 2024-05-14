@@ -1,6 +1,5 @@
 package entities.ui;
 
-import constants.Constants;
 import entities.logic.Finish;
 import entities.logic.Player;
 
@@ -48,8 +47,8 @@ public class FinishUI extends EntityUI {
         g.drawImage(animations[0][aniIndex], //only one dimension and only one direction
                 (int) finish.getX() - offset,
                 (int) finish.getY(),
-                (int) (SPRITE_PX_WIDTH * Constants.TILE_SCALE),
-                (int) (SPRITE_PX_HEIGHT * Constants.TILE_SCALE), null);
+                SPRITE_PX_WIDTH * 2,
+                SPRITE_PX_HEIGHT * 2, null);
         drawHitBox(g, offset);
 
     }

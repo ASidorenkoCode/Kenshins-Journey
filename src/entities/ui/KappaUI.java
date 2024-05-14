@@ -1,6 +1,4 @@
 package entities.ui;
-
-import constants.Constants;
 import entities.animations.EnemyAnimations;
 import entities.logic.Kappa;
 
@@ -100,8 +98,8 @@ public class KappaUI extends EntityUI {
         g.drawImage(animations[currentAnimation.getAniIndex() + (showLeftAnimations ? SPRITE_Y_DIMENSION : 0)][aniIndex],
                 (int) kappa.getX() - offset,
                 yPos,
-                (int) (SPRITE_PX_WIDTH * Constants.ENEMY_SCALE),
-                (int) (SPRITE_PX_HEIGHT * Constants.ENEMY_SCALE), null);
+                (int) (SPRITE_PX_WIDTH * 1.5),
+                (int) (SPRITE_PX_HEIGHT * 1.5), null);
         drawHitBox(g, offset);
         drawAttackHitbox(g, offset);
         drawHealthBar(g, offset);

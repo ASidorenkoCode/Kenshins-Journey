@@ -1,6 +1,5 @@
 package entities.ui;
 
-import constants.Constants;
 import entities.animations.PlayerAnimations;
 import entities.logic.Player;
 
@@ -65,6 +64,7 @@ public class PlayerUI extends EntityUI {
 
             if (aniIndex >= currentAnimation.getAniSize()) {
                 player.setAttack(false);
+                player.setIsDashing(false);
                 aniIndex = 0;
             }
         }
@@ -73,7 +73,10 @@ public class PlayerUI extends EntityUI {
     private void setAnimation() {
         PlayerAnimations lastAnimation = currentAnimation;
         //Set animation
-            if (player.getInAir() && player.getAttack()) {
+
+            if(player.getIsDashing()) currentAnimation = PlayerAnimations.DASH;
+            else if (player.getIsResting()) currentAnimation = PlayerAnimations.RESTING;
+            else if (player.getInAir() && player.getAttack()) {
                 if (player.getAirMovement() < 0) currentAnimation = PlayerAnimations.JUMP_SLASH;
                 else currentAnimation = PlayerAnimations.FALL_SLASH;
             } else if (player.getInAir() && !player.getAttack()) {
@@ -129,8 +132,8 @@ public class PlayerUI extends EntityUI {
         g.drawImage(animations[currentAnimation.getAniIndex() + (showLeftAnimations ? SPRITE_Y_DIMENSION : 0)][aniIndex],
                 (int) player.getX() - offset,
                 (int) player.getY(),
-                (int) (SPRITE_PX_WIDTH * Constants.TILE_SCALE),
-                (int) (SPRITE_PX_HEIGHT * Constants.TILE_SCALE), null);
+                (int) (SPRITE_PX_WIDTH * 2),
+                (int) (SPRITE_PX_HEIGHT * 2), null);
         drawHitBox(g, offset);
     }
 
