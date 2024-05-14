@@ -12,7 +12,7 @@ public class Kappa extends Entity{
     private float rightBoundary;
     private float speed;
     boolean right;
-    private final static float HORIZONTAL_OFFSET = 40; //needed because
+    private final static float HORIZONTAL_OFFSET = 40;
     private int health = 100;
     private int maxHealth = 100;
     private boolean isScoreIncreased = false;
@@ -30,7 +30,7 @@ public class Kappa extends Entity{
 
 
     public Kappa(float x, float y, float leftBoundary, float rightBoundary, float speed) {
-        super(x, (int) ((y - 15) * 1.5), new Rectangle2D.Float(x + 10, (int) ((y - 13) * 1.5),(96 - 60) * 2,(96 - 55) * 2));
+        super(x, y - 20, new Rectangle2D.Float(x + 10, y - 20,(96 - 60) * 2,(96 - 55) * 2));
         this.leftBoundary = leftBoundary;
         this.rightBoundary = rightBoundary;
         this.speed = speed;
