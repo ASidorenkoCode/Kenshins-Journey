@@ -92,7 +92,7 @@ public class Player extends Entity {
             } else if (left && !right) {
                 updateXPos(map, -currentSpeed);
             }
-            if (inAir) {
+            if (inAir && !isDashing) {
                 updateYPos(map, airMovement);
                 if (inAir) {
                     airMovement += 0.1f;
