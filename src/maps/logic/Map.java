@@ -17,7 +17,6 @@ public class Map {
     private Point playerSpawn;
     private Point finishSpawn;
     private Point kappaSpawn;
-    private Point kappaRouteFinish;
     private int kappaSpawnCount;
 
     public Map(BufferedImage img) {
@@ -51,9 +50,9 @@ public class Map {
     }
 
     private void loadEntities(int greenValue, int x, int y) {
-        int originalX = (int) (x * GameView.TILES_DEFAULT_SIZE * 2);
+        int originalX = x * GameView.TILES_DEFAULT_SIZE * 2;
         int scaledX = originalX - 96;
-        int originalY = (int) (y * GameView.TILES_DEFAULT_SIZE * 2);
+        int originalY = y * GameView.TILES_DEFAULT_SIZE * 2;
         int scaledY = originalY - 65;
 
         switch (greenValue) {
@@ -62,7 +61,9 @@ public class Map {
             case 102 -> {
                 kappaSpawn = new Point(originalX, originalY);
                 kappaSpawnCount++;}
-            case 103 -> kappaRouteFinish = new Point(originalX, originalY);
+
+            //TODO: remove greenValue 103 from
+            //case 103 -> kappaRouteFinish = new Point(originalX, originalY);
         }
     }
 
@@ -105,10 +106,6 @@ public class Map {
 
     public Point getKappaSpawn() {
         return kappaSpawn;
-    }
-
-    public Point getKappaRouteFinish() {
-        return kappaRouteFinish;
     }
 
     public int getAmountOfKappaSpawns() {

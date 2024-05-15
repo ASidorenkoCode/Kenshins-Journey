@@ -100,10 +100,6 @@ public class MapController {
         return maps.get(currentMapIndex).getKappaSpawn();
     }
 
-    public Point getCurrentKappaRouteFinish() {
-        return maps.get(currentMapIndex).getKappaRouteFinish();
-    }
-
     public void setEntityController(EntityController entityController) {
         this.entityController = entityController;
     }

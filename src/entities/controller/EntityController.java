@@ -27,12 +27,12 @@ public class EntityController {
     private List<Kappa> Kappas = new ArrayList<>();
     private List<KappaUI> KappaUIS = new ArrayList<>();
 
-    public EntityController(MapController mapController, boolean showHitBox, Point playerSpawnPoint, Point finishPoint, Point kappaSpawnPoint, Point kappaRoutePoint) {
+    public EntityController(MapController mapController, boolean showHitBox, Point playerSpawnPoint, Point finishPoint, Point kappaSpawnPoint) {
         player = new Player(playerSpawnPoint.x, playerSpawnPoint.y);
         playerUI = new PlayerUI(player, showHitBox);
         finish = new Finish(finishPoint.x, finishPoint.y);
         finishUI = new FinishUI(finish, showHitBox);
-        initKappas(mapController, showHitBox, kappaSpawnPoint, kappaRoutePoint);
+        initKappas(mapController, showHitBox, kappaSpawnPoint);
     }
 
     public void update(MapController mapController, LoadingScreen loadingScreen, InterfaceGame interfaceGame, DeathScreen deathScreen) {
@@ -87,12 +87,12 @@ public class EntityController {
         }
     }
 
-    public void initKappas(MapController mapController, boolean showHitBox, Point kappaSpawnPoint, Point kappaRoutePoint) {
+    public void initKappas(MapController mapController, boolean showHitBox, Point kappaSpawnPoint) {
         Point currentKappaSpawn = mapController.getCurrentKappaSpawn();
         if (currentKappaSpawn != null) {
             int kappaCount = mapController.getKappaSpawnCount();
             if (Kappas.size() < kappaCount) {
-                Kappa kappa = new Kappa(kappaSpawnPoint.x, kappaSpawnPoint.y, kappaSpawnPoint.x, kappaRoutePoint.x, 0.6f);
+                Kappa kappa = new Kappa(kappaSpawnPoint.x, kappaSpawnPoint.y, 0.6f);
                 KappaUI kappaUI = new KappaUI(kappa, showHitBox);
                 kappa.resetHealth();
                 Kappas.add(kappa);
