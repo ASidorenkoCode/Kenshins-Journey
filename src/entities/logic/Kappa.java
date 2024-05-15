@@ -29,16 +29,12 @@ public class Kappa extends Entity{
 
 
     public Kappa(float x, float y, float speed) {
-        super(x, y - 20, new Rectangle2D.Float(x + 10, y - 20,(96 - 60) * 2,(96 - 55) * 2));
+        super(x, y - 20, new Rectangle2D.Float(x + 10, y - 20,64,86));
         this.speed = speed;
         this.moveRight = true;
         this.id = nextId++;
         attackTimer = new Timer();
         attackHitbox = new Rectangle2D.Float();
-    }
-
-    @Override
-    void updatePushback() {
     }
 
     public void decreaseHealth(int amount) {
@@ -57,13 +53,7 @@ public class Kappa extends Entity{
         return isPlayerNear;
     }
 
-    public int getHealth() {
-        return health;
-    }
 
-    public int getMaxHealth() {
-        return maxHealth;
-    }
 
     public void update(Map map, Player player) {
 
@@ -78,9 +68,14 @@ public class Kappa extends Entity{
             } else inAir = false;
 
 
+        if(isPlayerNearChecker(player)) {
+            if(player.getX() < x) moveRight = false;
+            else moveRight = true;
+        }
+
         if(moveRight) {
-            updateXPos(map, 1);
-        } else updateXPos(map, -1);
+            updateXPos(map, speed);
+        } else updateXPos(map, -speed);
 
         if (isAttacking) {
             updateAttackHitbox();
@@ -136,40 +131,8 @@ public class Kappa extends Entity{
         return !checkForCollisonOnPosition(map, x,y+height);
     }
 
-    public boolean isMoveRight() {
-        return moveRight;
-    }
-
-    public float getX() {
-        return x;
-    }
-
-    public float getY() {
-        return y;
-    }
-
     public void resetHealth() {
         this.health = this.maxHealth;
-    }
-
-    public void setScoreIncreased(boolean isScoreIncreased) {
-        this.isScoreIncreased = isScoreIncreased;
-    }
-
-    public boolean isScoreIncreased() {
-        return isScoreIncreased;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public boolean isPlayerNear() {
-        return isPlayerNear;
-    }
-
-    public boolean isAttacking() {
-        return isAttacking;
     }
 
     public void startAttacking(Player player) {
@@ -228,13 +191,7 @@ public class Kappa extends Entity{
         }
     }
 
-    public Rectangle2D.Float getAttackHitbox() {
-        return attackHitbox;
-    }
 
-    public boolean hasAttacked() {
-        return hasAttacked;
-    }
 
     public boolean isPlayerHitboxNextToKappaHitbox(Player player) {
 
@@ -246,9 +203,55 @@ public class Kappa extends Entity{
 
         return playerHitboxBuffered.intersects(kappaHitboxBuffered);
     }
+    public int getHealth() {
+        return health;
+    }
 
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+    public boolean isMoveRight() {
+        return moveRight;
+    }
+
+    public float getX() {
+        return x;
+    }
+
+    public float getY() {
+        return y;
+    }
+    public void setScoreIncreased(boolean isScoreIncreased) {
+        this.isScoreIncreased = isScoreIncreased;
+    }
+
+    public boolean isScoreIncreased() {
+        return isScoreIncreased;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public boolean isPlayerNear() {
+        return isPlayerNear;
+    }
+
+    public boolean isAttacking() {
+        return isAttacking;
+    }
+    public Rectangle2D.Float getAttackHitbox() {
+        return attackHitbox;
+    }
+
+    public boolean hasAttacked() {
+        return hasAttacked;
+    }
     @Override
     public boolean isDead() {
         return isDead;
+    }
+    @Override
+    void updatePushback() {
     }
 }
