@@ -9,6 +9,8 @@ public class Player extends Entity {
 
     private boolean left, right, attack, inAir, attackHitBoxIsActive, isResting, isDashing;
     private float airMovement = -5f;
+    private final static float MAX_GROUND_MOVEMENT = 1;
+    private float currentGroundMovement = 0;
     private Rectangle2D.Float rightAttackHitBox;
     private Rectangle2D.Float leftAttackHitBox;
     private boolean hasDynamicAdjustedPlayerDirectionHitbox = false;
@@ -58,6 +60,11 @@ public class Player extends Entity {
 
     }
 
+    private void updateGroundMovement() {
+        if(currentGroundMovement < MAX_GROUND_MOVEMENT) {
+            currentGroundMovement += 0.01;
+        }
+    }
 
 
     public void updateSpawnPoint(int x, int y) {
@@ -83,15 +90,20 @@ public class Player extends Entity {
         return;
     }
         if (!isDead()) {
-            int currentSpeed = movementSpeed;
+            float currentSpeed = currentGroundMovement;
             if(isDashing) {
                 currentSpeed*=2;
             }
             if (right && !left) {
                 updateXPos(map, currentSpeed);
+                updateGroundMovement();
+                System.out.println(currentSpeed);
             } else if (left && !right) {
                 updateXPos(map, -currentSpeed);
-            }
+                updateGroundMovement();
+                System.out.println(currentSpeed);
+            } else currentGroundMovement = 0;
+
             if (inAir && !isDashing) {
 
                 updateYPos(map, airMovement);
