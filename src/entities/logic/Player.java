@@ -62,8 +62,14 @@ public class Player extends Entity {
 
     private void updateGroundMovement() {
         if(currentGroundMovement < MAX_GROUND_MOVEMENT) {
+            //TODO: Improve speed difference
             currentGroundMovement += 0.01;
         }
+    }
+
+    private void movePlayerInXDirection(float byValue) {
+        x += byValue;
+        hitbox.x += byValue;
     }
 
 
@@ -82,6 +88,11 @@ public class Player extends Entity {
     public void update(Map map) {
 
 
+        if(!attack) {
+            attackHitBoxIsActive = false;
+        }
+
+
         if(isResting) {
         //TODO: better suiting resting
         if(playerHealth<totalMaxHearts*2) {
@@ -97,11 +108,9 @@ public class Player extends Entity {
             if (right && !left) {
                 updateXPos(map, currentSpeed);
                 updateGroundMovement();
-                System.out.println(currentSpeed);
             } else if (left && !right) {
                 updateXPos(map, -currentSpeed);
                 updateGroundMovement();
-                System.out.println(currentSpeed);
             } else currentGroundMovement = 0;
 
             if (inAir && !isDashing) {
@@ -133,6 +142,7 @@ public class Player extends Entity {
     }
 
     private void adjustPlayerHitboxPosition(Map map) {
+        //TODO: Change hitbox movement bug
         if (getLeft() && !getRight() && !hasDynamicAdjustedPlayerDirectionHitbox) {
             if (checkIfPlayerCanMoveToPosition(map, hitbox.x + 20, hitbox.y, hitbox.width, hitbox.height)) {
                 hitbox.x += 20;

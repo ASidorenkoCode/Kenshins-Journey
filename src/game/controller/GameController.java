@@ -26,8 +26,7 @@ public class GameController {
         mapController = new MapController(null);
         entityController = new EntityController(mapController, showHitBox,
                 mapController.getCurrentPlayerSpawn(),
-                mapController.getCurrentFinishSpawn(),
-                mapController.getCurrentKappaSpawn());
+                mapController.getCurrentFinishSpawn());
         mapController.setEntityController(entityController);
         itemController = new ItemController(showHitBox);
         gameEngine = new GameEngine(showFPS_UPS, this);

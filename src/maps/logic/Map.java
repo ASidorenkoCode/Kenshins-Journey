@@ -4,6 +4,7 @@ import game.UI.GameView;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class Map {
     private BufferedImage mapImage;
@@ -16,10 +17,10 @@ public class Map {
     private int maxMapOffsetX;
     private Point playerSpawn;
     private Point finishSpawn;
-    private Point kappaSpawn;
-    private int kappaSpawnCount;
+    private ArrayList<Point> kappaSpawns;
 
     public Map(BufferedImage img) {
+        this.kappaSpawns = new ArrayList<>();
         this.mapImage = img;
         mapData = new int[img.getHeight()][img.getWidth()];
         loadMap();
@@ -58,11 +59,9 @@ public class Map {
         switch (greenValue) {
             case 100 -> playerSpawn = new Point(scaledX, scaledY);
             case 101 -> finishSpawn = new Point(originalX, originalY);
-            case 102 -> {
-                kappaSpawn = new Point(originalX, originalY);
-                kappaSpawnCount++;}
+            case 102 -> kappaSpawns.add(new Point(originalX, originalY));
 
-            //TODO: remove greenValue 103 from
+            //TODO: remove greenValue 103 from here
             //case 103 -> kappaRouteFinish = new Point(originalX, originalY);
         }
     }
@@ -104,11 +103,7 @@ public class Map {
         return finishSpawn;
     }
 
-    public Point getKappaSpawn() {
-        return kappaSpawn;
-    }
-
-    public int getAmountOfKappaSpawns() {
-        return kappaSpawnCount;
+    public ArrayList<Point> getKappaSpawns() {
+        return kappaSpawns;
     }
 }
