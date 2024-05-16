@@ -35,7 +35,7 @@ public class GameController implements ReloadGame {
         itemController = new ItemController(mapController, showHitBox);
         gameEngine = new GameEngine(showFPS_UPS, this);
         gameView = new GameView(this, entityController, mapController, itemController);
-        this.interfaceGame = new InterfaceGame(entityController.getPlayer());
+        this.interfaceGame = new InterfaceGame(entityController.getPlayer(), itemController);
         this.deathScreen = new DeathScreen(gameView.getFrame());
         this.loadingScreen = new LoadingScreen(gameView.getFrame());
         this.optionScreen = new OptionScreen(gameView, gameEngine);

@@ -2,6 +2,8 @@ package screens;
 
 import entities.logic.Player;
 import game.UI.GameView;
+import items.controller.ItemController;
+import items.logic.Item;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -19,9 +21,10 @@ public class InterfaceGame {
     private long lastTime;
     private int totalHearts;
     private int heightJump;
+    private ItemController itemController;
 
 
-    public InterfaceGame(Player player) {
+    public InterfaceGame(Player player, ItemController itemController) {
         try {
             BufferedImage healthbarPlayer = ImageIO.read(new File("res/healthPlayer/healthbarPlayer.png"));
             fullHeart = healthbarPlayer.getSubimage(0, 0, 64, 64);
@@ -36,6 +39,7 @@ public class InterfaceGame {
         totalHearts = player.getTotalHearts();
         score = 5000;
         lastTime = System.currentTimeMillis();
+        this.itemController = itemController;
     }
 
     public void draw(Graphics g, Player player) {
@@ -91,6 +95,14 @@ public class InterfaceGame {
         g.drawString(jumpHeight, statsX, statsY + 60);
 
         drawScore(g, score);
+
+        int imageX = 500;
+        int imageY = GameView.GAME_HEIGHT - playerPortrait.getHeight() * 2 - borderSize;
+        for(Item i: itemController.getMenu()) {
+            //TODO: Improve Menu style
+            if(i!=null) itemController.drawStaticItemImage(g, i, imageX, imageY);
+            imageX+= 100;
+        }
     }
 
     public void updatePlayerHealth(int playerHealth) {

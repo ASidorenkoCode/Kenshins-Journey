@@ -128,4 +128,17 @@ public class ItemController {
     }
 
 
+    public Item[] getMenu() {
+        return menu;
+    }
+
+    public void drawStaticItemImage(Graphics g, Item item, int x, int y) {
+        g.drawImage(animations[item.getAnimationType().getAniIndex()][0],
+                x,
+                y,
+                SPRITE_PX_WIDTH * 2,
+                SPRITE_PX_HEIGHT * 2, null);
+    }
+
+
 }
