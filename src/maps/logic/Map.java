@@ -19,8 +19,11 @@ public class Map {
     private Point finishSpawn;
     private ArrayList<Point> kappaSpawns;
 
+    private ArrayList<Point> itemSpawns;
+
     public Map(BufferedImage img) {
         this.kappaSpawns = new ArrayList<>();
+        this.itemSpawns = new ArrayList<>();
         this.mapImage = img;
         mapData = new int[img.getHeight()][img.getWidth()];
         loadMap();
@@ -60,14 +63,16 @@ public class Map {
             case 100 -> playerSpawn = new Point(scaledX, scaledY);
             case 101 -> finishSpawn = new Point(originalX, originalY);
             case 102 -> kappaSpawns.add(new Point(originalX, originalY));
-
-            //TODO: remove greenValue 103 from here
-            //case 103 -> kappaRouteFinish = new Point(originalX, originalY);
         }
     }
 
     private void loadObjects(int blueValue, int x, int y) {
-        // TODO: implement objects
+        int originalX = x * GameView.TILES_DEFAULT_SIZE * 2;
+        int originalY = y * GameView.TILES_DEFAULT_SIZE * 2;
+
+        switch (blueValue) {
+            case 100 -> itemSpawns.add(new Point(originalX, originalY));
+        }
     }
 
     private void calculateMapOffsets() {
@@ -105,5 +110,9 @@ public class Map {
 
     public ArrayList<Point> getKappaSpawns() {
         return kappaSpawns;
+    }
+
+    public ArrayList<Point> getItemSpawns() {
+        return itemSpawns;
     }
 }

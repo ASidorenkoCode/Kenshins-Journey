@@ -100,6 +100,10 @@ public class MapController {
         return maps.get(currentMapIndex).getKappaSpawns();
     }
 
+    public ArrayList<Point> getCurrentItemSpawns() {
+        return maps.get(currentMapIndex).getItemSpawns();
+    }
+
     public void setEntityController(EntityController entityController) {
         this.entityController = entityController;
     }

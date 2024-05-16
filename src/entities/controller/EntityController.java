@@ -6,6 +6,7 @@ import entities.logic.Player;
 import entities.ui.FinishUI;
 import entities.ui.KappaUI;
 import entities.ui.PlayerUI;
+import items.controller.ItemController;
 import maps.controller.MapController;
 import screens.DeathScreen;
 import screens.InterfaceGame;
@@ -39,7 +40,7 @@ public class EntityController {
         this.showHitBox = showHitBox;
     }
 
-    public void update(MapController mapController, LoadingScreen loadingScreen, InterfaceGame interfaceGame, DeathScreen deathScreen) {
+    public void update(MapController mapController, ItemController itemController, LoadingScreen loadingScreen, InterfaceGame interfaceGame, DeathScreen deathScreen) {
         if (finish.checkIfPlayerIsInFinish(player) && !player.isDead()) {
             player.setTotalHearts(player.getTotalHearts() + 1);  // AMOUNT OF hearts collected
             interfaceGame.setTotalHearts(player.getTotalHearts());
@@ -50,7 +51,7 @@ public class EntityController {
             player.updateSpawnPoint(mapController.getCurrentPlayerSpawn().x, mapController.getCurrentPlayerSpawn().y);
             finish.updateFinishPoint(mapController.getCurrentFinishSpawn().x, mapController.getCurrentFinishSpawn().y);
             initKappas(mapController, this.showHitBox);
-
+            itemController.initItems(mapController);
         }
 
         if (interfaceGame.getScore() == 0) {

@@ -1,14 +1,17 @@
 package items.controller;
+import entities.controller.EntityController;
 import entities.logic.Player;
 import items.logic.Heart;
 import items.logic.Item;
 import items.logic.PowerRing;
+import maps.controller.MapController;
 import spriteControl.SpriteManager;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class ItemController {
     //Rebuild of class
@@ -25,33 +28,35 @@ public class ItemController {
     private ArrayList<Item> itemsOnMap;
     private int aniIndex;
 
-    public ItemController(boolean showHitBox) {
+    public ItemController(MapController mapController, boolean showHitBox) {
         this.showHitBox = showHitBox;
         menu = new Item[10];
         loadAnimations();
-        itemsOnMap = new ArrayList<>();
         aniIndex = 0;
-
-
-        addItemToMap(new Heart(300, 600));
-        addItemToMap(new PowerRing(800, 550));
+        initItems(mapController);
     }
 
-    public void update(Player player) {
-        for(int i=0;i<itemsOnMap.size();i++) {
-            if(player.getHitbox().intersects(itemsOnMap.get(i).getHitbox())) collectItem(itemsOnMap.get(i));
+    public void initItems(MapController mapController) {
+        itemsOnMap = new ArrayList<>();
+        if(mapController.getCurrentItemSpawns().isEmpty()) return;
+        int itemPlacementCount = 0;
+        while(itemPlacementCount == 0) {
+            for(Point p: mapController.getCurrentItemSpawns()) {
+                Random random = new Random();
+                double probability = random.nextDouble();
+                if (probability <= 0.25) {
+                    System.out.println(true);
+                    itemsOnMap.add(new Heart(p.x,p.y));
+                    itemPlacementCount++;
+                }
+            }
         }
     }
-
-
-    //Dummy menu data
-    public void initDummyMenu() {
-        menu[0] = itemsOnMap.get(0);
+    public void update(EntityController entityController) {
+        for(int i=0;i<itemsOnMap.size();i++) {
+            if(entityController.getPlayer().getHitbox().intersects(itemsOnMap.get(i).getHitbox())) collectItem(itemsOnMap.get(i));
+        }
     }
-
-
-
-    //Rebuild of class
 
     private void loadAnimations() {
         animations = new BufferedImage[SPRITE_Y_DIMENSION][SPRITE_X_DIMENSION];
@@ -92,10 +97,6 @@ public class ItemController {
         for(int i=0; i<itemsOnMap.size(); i++) {
             drawItem(itemsOnMap.get(i), g, offset);
         }
-    }
-
-    private void addItemToMap(Item item) {
-        itemsOnMap.add(item);
     }
 
     private void collectItem(Item item) {

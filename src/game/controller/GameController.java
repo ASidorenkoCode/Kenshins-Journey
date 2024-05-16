@@ -28,7 +28,7 @@ public class GameController {
                 mapController.getCurrentPlayerSpawn(),
                 mapController.getCurrentFinishSpawn());
         mapController.setEntityController(entityController);
-        itemController = new ItemController(showHitBox);
+        itemController = new ItemController(mapController, showHitBox);
         gameEngine = new GameEngine(showFPS_UPS, this);
         gameView = new GameView(this, entityController, mapController, itemController);
         this.interfaceGame = new InterfaceGame(entityController.getPlayer());
@@ -49,9 +49,9 @@ public class GameController {
     }
 
     public void update() {
-        entityController.update(mapController, loadingScreen, interfaceGame, deathScreen);
+        entityController.update(mapController, itemController, loadingScreen, interfaceGame, deathScreen);
         if (entityController.getKappaAmount() > 0) entityController.handleKappa(mapController, interfaceGame);
-        itemController.update(entityController.getPlayer());
+        itemController.update(entityController);
     }
 
     public InterfaceGame getInterfaceGame() {
