@@ -4,6 +4,7 @@ import game.UI.GameView;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class Map {
     private BufferedImage mapImage;
@@ -16,11 +17,13 @@ public class Map {
     private int maxMapOffsetX;
     private Point playerSpawn;
     private Point finishSpawn;
-    private Point kappaSpawn;
-    private Point kappaRouteFinish;
-    private int kappaSpawnCount;
+    private ArrayList<Point> kappaSpawns;
+
+    private ArrayList<Point> itemSpawns;
 
     public Map(BufferedImage img) {
+        this.kappaSpawns = new ArrayList<>();
+        this.itemSpawns = new ArrayList<>();
         this.mapImage = img;
         mapData = new int[img.getHeight()][img.getWidth()];
         loadMap();
@@ -51,23 +54,25 @@ public class Map {
     }
 
     private void loadEntities(int greenValue, int x, int y) {
-        int originalX = (int) (x * GameView.TILES_DEFAULT_SIZE * 2);
+        int originalX = x * GameView.TILES_DEFAULT_SIZE * 2;
         int scaledX = originalX - 96;
-        int originalY = (int) (y * GameView.TILES_DEFAULT_SIZE * 2);
+        int originalY = y * GameView.TILES_DEFAULT_SIZE * 2;
         int scaledY = originalY - 65;
 
         switch (greenValue) {
             case 100 -> playerSpawn = new Point(scaledX, scaledY);
             case 101 -> finishSpawn = new Point(originalX, originalY);
-            case 102 -> {
-                kappaSpawn = new Point(originalX, originalY);
-                kappaSpawnCount++;}
-            case 103 -> kappaRouteFinish = new Point(originalX, originalY);
+            case 102 -> kappaSpawns.add(new Point(originalX, originalY));
         }
     }
 
     private void loadObjects(int blueValue, int x, int y) {
-        // TODO: implement objects
+        int originalX = x * GameView.TILES_DEFAULT_SIZE * 2;
+        int originalY = y * GameView.TILES_DEFAULT_SIZE * 2;
+
+        switch (blueValue) {
+            case 100 -> itemSpawns.add(new Point(originalX, originalY));
+        }
     }
 
     private void calculateMapOffsets() {
@@ -103,15 +108,11 @@ public class Map {
         return finishSpawn;
     }
 
-    public Point getKappaSpawn() {
-        return kappaSpawn;
+    public ArrayList<Point> getKappaSpawns() {
+        return kappaSpawns;
     }
 
-    public Point getKappaRouteFinish() {
-        return kappaRouteFinish;
-    }
-
-    public int getAmountOfKappaSpawns() {
-        return kappaSpawnCount;
+    public ArrayList<Point> getItemSpawns() {
+        return itemSpawns;
     }
 }

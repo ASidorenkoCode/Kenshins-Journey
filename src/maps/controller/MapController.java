@@ -96,19 +96,16 @@ public class MapController {
         return maps.get(currentMapIndex).getFinishSpawn();
     }
 
-    public Point getCurrentKappaSpawn() {
-        return maps.get(currentMapIndex).getKappaSpawn();
+    public ArrayList<Point> getCurrentKappaSpawns() {
+        return maps.get(currentMapIndex).getKappaSpawns();
     }
 
-    public Point getCurrentKappaRouteFinish() {
-        return maps.get(currentMapIndex).getKappaRouteFinish();
+    public ArrayList<Point> getCurrentItemSpawns() {
+        return maps.get(currentMapIndex).getItemSpawns();
     }
 
     public void setEntityController(EntityController entityController) {
         this.entityController = entityController;
     }
 
-    public int getKappaSpawnCount() {
-        return maps.get(currentMapIndex).getAmountOfKappaSpawns();
-    }
 }

@@ -9,6 +9,8 @@ public class Player extends Entity {
 
     private boolean left, right, attack, inAir, attackHitBoxIsActive, isResting, isDashing;
     private float airMovement = -5f;
+    private final static float MAX_GROUND_MOVEMENT = 1;
+    private float currentGroundMovement = 0;
     private Rectangle2D.Float rightAttackHitBox;
     private Rectangle2D.Float leftAttackHitBox;
     private boolean hasDynamicAdjustedPlayerDirectionHitbox = false;
@@ -58,6 +60,17 @@ public class Player extends Entity {
 
     }
 
+    private void updateGroundMovement() {
+        if(currentGroundMovement < MAX_GROUND_MOVEMENT) {
+            //TODO: Improve speed difference
+            currentGroundMovement += 0.01;
+        }
+    }
+
+    private void movePlayerInXDirection(float byValue) {
+        x += byValue;
+        hitbox.x += byValue;
+    }
 
 
     public void updateSpawnPoint(int x, int y) {
@@ -75,6 +88,11 @@ public class Player extends Entity {
     public void update(Map map) {
 
 
+        if(!attack) {
+            attackHitBoxIsActive = false;
+        }
+
+
         if(isResting) {
         //TODO: better suiting resting
         if(playerHealth<totalMaxHearts*2) {
@@ -83,17 +101,22 @@ public class Player extends Entity {
         return;
     }
         if (!isDead()) {
-            int currentSpeed = movementSpeed;
+            float currentSpeed = currentGroundMovement;
             if(isDashing) {
                 currentSpeed*=2;
             }
             if (right && !left) {
                 updateXPos(map, currentSpeed);
+                updateGroundMovement();
             } else if (left && !right) {
                 updateXPos(map, -currentSpeed);
-            }
-            if (inAir) {
+                updateGroundMovement();
+            } else currentGroundMovement = 0;
+
+            if (inAir && !isDashing) {
+
                 updateYPos(map, airMovement);
+
                 if (inAir) {
                     airMovement += 0.1f;
                 }
@@ -119,6 +142,7 @@ public class Player extends Entity {
     }
 
     private void adjustPlayerHitboxPosition(Map map) {
+        //TODO: Change hitbox movement bug
         if (getLeft() && !getRight() && !hasDynamicAdjustedPlayerDirectionHitbox) {
             if (checkIfPlayerCanMoveToPosition(map, hitbox.x + 20, hitbox.y, hitbox.width, hitbox.height)) {
                 hitbox.x += 20;
@@ -187,7 +211,7 @@ public class Player extends Entity {
     }
 
     public void jump() {
-        if (!inAir) {
+        if (!inAir && !isResting ) {
             inAir = true;
             airMovement = -5f;
         }

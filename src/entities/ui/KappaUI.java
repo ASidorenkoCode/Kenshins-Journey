@@ -88,7 +88,7 @@ public class KappaUI extends EntityUI {
 
         updateAnimationTick();
 
-        showLeftAnimations = !kappa.isRight();
+        showLeftAnimations = !kappa.isMoveRight();
 
         int yPos = (int) kappa.getY();
         if (kappa.isDead()) {
