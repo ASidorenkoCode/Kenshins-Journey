@@ -37,15 +37,34 @@ public class ItemController {
     }
 
     public void initItems(MapController mapController) {
-        itemsOnMap = new ArrayList<>();
         if(mapController.getCurrentItemSpawns().isEmpty()) return;
+        //if Power Ring is placed set to true, because it is only allowed to use one power ring on one map
+        boolean powerRingIsPlaced = false;
+
+        //choose Items
+        itemsOnMap = new ArrayList<>();
         int itemPlacementCount = 0;
         while(itemPlacementCount == 0) {
             for(Point p: mapController.getCurrentItemSpawns()) {
                 Random random = new Random();
                 double probability = random.nextDouble();
                 if (probability <= 0.25) {
-                    System.out.println(true);
+                    if(powerRingIsPlaced) {
+                        itemsOnMap.add(new Heart(p.x,p.y));
+                        itemPlacementCount++;
+                        continue;
+                    }
+                    //decide between heart and power ring
+
+                    Random powerRingRandom = new Random();
+                    double powerRingProbability = powerRingRandom.nextDouble();
+                    if (powerRingProbability <= 0.25) {
+                        itemsOnMap.add(new PowerRing(p.x,p.y));
+                        itemPlacementCount++;
+                        powerRingIsPlaced = true;
+                        continue;
+                    }
+
                     itemsOnMap.add(new Heart(p.x,p.y));
                     itemPlacementCount++;
                 }
