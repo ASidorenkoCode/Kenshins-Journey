@@ -9,8 +9,6 @@ public class Player extends Entity {
 
     private boolean left, right, attack, inAir, attackHitBoxIsActive, isResting, isDashing;
     private float airMovement = -5f;
-    private final static float MAX_TIME = 1;
-    private float currentGroundMovement = 0;
     private Rectangle2D.Float rightAttackHitBox;
     private Rectangle2D.Float leftAttackHitBox;
     private boolean hasDynamicAdjustedPlayerDirectionHitbox = false;
@@ -22,16 +20,13 @@ public class Player extends Entity {
     private int currentMaxHearts = 3;
     private int totalMaxHearts = 3;
     private boolean isHitByEnemy = false;
-    private int movementSpeed = 1;
 
     private final static int STANDARD_DAMAGE = 20;
 
-
     //movement variables
-    private final static double acceleration = 0.01;
+    private final static float MAX_TIME = 1;
+    private float currentGroundMovement = 0;
     private float time = 0;
-    private final static double maxSpeed = 2;
-    private double speed = 0;
 
 
     public Player(float x, float y) {
@@ -254,10 +249,6 @@ public class Player extends Entity {
 
     public boolean getAttackHitBoxIsActive() {
         return attackHitBoxIsActive;
-    }
-
-    public int getMovementSpeed() {
-        return Math.abs(movementSpeed);
     }
 
     public void setAttackHitBoxIsActive(boolean attackHitBoxIsActive) {
