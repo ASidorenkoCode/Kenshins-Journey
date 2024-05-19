@@ -173,15 +173,14 @@ public class Kappa extends Entity{
         }
     }
 
-        public void stopAttacking() {
-            hasAttacked = false;
+    public void stopAttacking() {
+        hasAttacked = false;
         new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
                     isAttacking = false;
                 }
             }, 1000);
-
     }
 
     public void attackPlayer(Player player) {
