@@ -30,7 +30,7 @@ public class ItemController {
 
     public ItemController(MapController mapController, boolean showHitBox) {
         this.showHitBox = showHitBox;
-        menu = new Item[10];
+        menu = new Item[5];
         loadAnimations();
         aniIndex = 0;
         initItems(mapController);
