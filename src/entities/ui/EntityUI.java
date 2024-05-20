@@ -12,7 +12,7 @@ abstract public class EntityUI {
     protected boolean showLeftAnimations;
     protected int aniTick;
     protected int aniIndex;
-    protected int aniSpeed = 20;
+    protected int aniSpeed = 10;
     protected int SPRITE_PX_WIDTH;
     protected int SPRITE_PX_HEIGHT;
     protected String ENTITY_SPRITE_PATH;

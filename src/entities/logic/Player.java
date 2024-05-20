@@ -9,8 +9,6 @@ public class Player extends Entity {
 
     private boolean left, right, attack, inAir, attackHitBoxIsActive, isResting, isDashing;
     private float airMovement = -5f;
-    private final static float MAX_GROUND_MOVEMENT = 1;
-    private float currentGroundMovement = 0;
     private Rectangle2D.Float rightAttackHitBox;
     private Rectangle2D.Float leftAttackHitBox;
     private boolean hasDynamicAdjustedPlayerDirectionHitbox = false;
@@ -22,9 +20,13 @@ public class Player extends Entity {
     private int currentMaxHearts = 3;
     private int totalMaxHearts = 3;
     private boolean isHitByEnemy = false;
-    private int movementSpeed = 1;
 
     private final static int STANDARD_DAMAGE = 20;
+
+    //movement variables
+    private final static float MAX_TIME = 1;
+    private float currentGroundMovement = 0;
+    private float time = 0;
 
 
     public Player(float x, float y) {
@@ -38,6 +40,10 @@ public class Player extends Entity {
         resetMaximumDamagePerAttack();
     }
 
+
+    public static double easeInOutCubic(double t) {
+        return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    }
 
     public float getX() {
         return x;
@@ -61,9 +67,11 @@ public class Player extends Entity {
     }
 
     private void updateGroundMovement() {
-        if(currentGroundMovement < MAX_GROUND_MOVEMENT) {
+
+        if(time < MAX_TIME) {
             //TODO: Improve speed difference
-            currentGroundMovement += 0.01;
+            time += 0.05f;
+            currentGroundMovement = time * time / (time * time + (1 - time) * (1 - time));
         }
     }
 
@@ -111,7 +119,7 @@ public class Player extends Entity {
             } else if (left && !right) {
                 updateXPos(map, -currentSpeed);
                 updateGroundMovement();
-            } else currentGroundMovement = 0;
+            } else time = 0;
 
             if (inAir && !isDashing) {
 
@@ -132,10 +140,10 @@ public class Player extends Entity {
 
 
 
-    private void updateXPos(Map map, float by_value) {
-        if (!checkIfPlayerCanMoveToPosition(map, hitbox.x + by_value, hitbox.y, hitbox.width, hitbox.height)) return;
-        x += by_value;
-        hitbox.x += by_value;
+    private void updateXPos(Map map, float byValue) {
+        if (!checkIfPlayerCanMoveToPosition(map, hitbox.x + byValue, hitbox.y, hitbox.width, hitbox.height)) return;
+        x += byValue;
+        hitbox.x += byValue;
         adjustPlayerHitboxPosition(map);
         rightAttackHitBox.x = hitbox.x + hitbox.width;
         leftAttackHitBox.x = hitbox.x - leftAttackHitBox.width;
@@ -241,10 +249,6 @@ public class Player extends Entity {
 
     public boolean getAttackHitBoxIsActive() {
         return attackHitBoxIsActive;
-    }
-
-    public int getMovementSpeed() {
-        return Math.abs(movementSpeed);
     }
 
     public void setAttackHitBoxIsActive(boolean attackHitBoxIsActive) {
