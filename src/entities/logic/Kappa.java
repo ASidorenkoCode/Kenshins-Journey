@@ -6,7 +6,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Kappa extends Entity{
+public class Kappa extends Entity {
     private float speed;
     boolean moveRight;
     private final static float HORIZONTAL_OFFSET = 40;
