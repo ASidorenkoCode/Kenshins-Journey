@@ -1,4 +1,4 @@
-package maps.UI;
+package maps.ui;
 
 import game.UI.GameView;
 import maps.controller.MapController;

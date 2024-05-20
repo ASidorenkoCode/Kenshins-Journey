@@ -2,12 +2,10 @@ package maps.controller;
 
 import entities.controller.EntityController;
 import game.UI.GameView;
-import maps.UI.MapUI;
 import maps.logic.Map;
-import spriteControl.SpriteManager;
+import maps.ui.MapUI;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class MapController {

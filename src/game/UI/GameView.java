@@ -1,4 +1,5 @@
 package game.UI;
+
 import entities.controller.EntityController;
 import game.controller.GameController;
 import items.controller.ItemController;
@@ -113,7 +114,7 @@ public class GameView extends JPanel {
         mapController.draw(g);
         entityController.drawEntities(g, mapOffset);
         gameController.getInterfaceGame().draw(g, entityController.getPlayer());
-        itemController.drawMapItems(g, mapOffset);
+        itemController.getItemUI().drawMapItems(g, mapOffset, itemController.getItemsOnMap(), itemController.isShowHitBox(), itemController.getAnimations());
     }
 
     public void showFPS_UPS(int frames, int updates) {

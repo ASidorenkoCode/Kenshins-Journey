@@ -6,7 +6,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 
-
 abstract public class EntityUI {
     protected BufferedImage[][] animations;
     protected boolean showLeftAnimations;
@@ -22,19 +21,21 @@ abstract public class EntityUI {
 
 
     abstract void drawAttackBox();
+
     abstract void drawHitBox(Graphics g, int offset);
 
     protected void loadAnimations() {
         animations = new BufferedImage[SPRITE_Y_DIMENSION * 2][SPRITE_X_DIMENSION];
         loadAnimationSprites(ENTITY_SPRITE_PATH, animations, 0);
-        if(ENTITY_SPRITE_PATH_LEFT != null) loadAnimationSprites(ENTITY_SPRITE_PATH_LEFT, animations, SPRITE_Y_DIMENSION);
+        if (ENTITY_SPRITE_PATH_LEFT != null)
+            loadAnimationSprites(ENTITY_SPRITE_PATH_LEFT, animations, SPRITE_Y_DIMENSION);
     }
 
     private void loadAnimationSprites(String spritePath, BufferedImage[][] animations, int offset) {
         BufferedImage img = SpriteManager.GetSpriteAtlas(spritePath);
         for (int j = 0; j < animations.length / 2; j++)
             for (int i = 0; i < animations[j].length; i++)
-                animations[j+offset][i] = img.getSubimage(
+                animations[j + offset][i] = img.getSubimage(
                         i * SPRITE_PX_WIDTH,
                         j * SPRITE_PX_HEIGHT,
                         SPRITE_PX_WIDTH,
@@ -42,5 +43,6 @@ abstract public class EntityUI {
     }
 
     abstract void updateAnimationTick();
+
     abstract void drawAnimations(Graphics g, int offset);
 }

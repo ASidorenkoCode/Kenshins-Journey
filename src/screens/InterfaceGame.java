@@ -78,7 +78,7 @@ public class InterfaceGame {
         int statsX = x + width + 20;
         int statsY = y + 20;
         int statsWidth = 200;
-        int statsHeight = height + borderSize*2;
+        int statsHeight = height + borderSize * 2;
         g.setColor(Color.BLACK);
         g.fillRect(statsX, statsY - 40, statsWidth, statsHeight);
         g.setColor(Color.WHITE);
@@ -98,10 +98,11 @@ public class InterfaceGame {
 
         int imageX = 500;
         int imageY = GameView.GAME_HEIGHT - playerPortrait.getHeight() * 2 - borderSize;
-        for(Item i: itemController.getMenu()) {
+        for (Item i : itemController.getMenu()) {
             //TODO: Improve Menu style
-            if(i!=null) itemController.drawStaticItemImage(g, i, imageX, imageY);
-            imageX+= 100;
+            if (i != null)
+                itemController.getItemUI().drawStaticItemImage(g, i, imageX, imageY, itemController.getAnimations());
+            imageX += 100;
         }
     }
 
@@ -143,7 +144,6 @@ public class InterfaceGame {
     public void increaseScore(int increment) {
         score += increment;
     }
-
 
 
 }
