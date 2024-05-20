@@ -1,7 +1,8 @@
 package game.controller;
 
 import entities.controller.EntityController;
-import entities.logic.Finish;
+import gameObjects.controller.GameObjectController;
+import gameObjects.logic.Finish;
 import entities.logic.Player;
 import game.UI.GameView;
 import game.logic.GameEngine;
@@ -17,6 +18,7 @@ public class GameController implements ReloadGame {
     private GameEngine gameEngine;
     private GameView gameView;
     private EntityController entityController;
+    private GameObjectController gameObjectController;
     private MapController mapController;
     private LoadingScreen loadingScreen;
     private OptionScreen optionScreen;
@@ -29,12 +31,12 @@ public class GameController implements ReloadGame {
     public GameController(boolean showFPS_UPS, boolean showHitBox) {
         mapController = new MapController(null);
         entityController = new EntityController(mapController, showHitBox,
-                mapController.getCurrentPlayerSpawn(),
-                mapController.getCurrentFinishSpawn());
+                mapController.getCurrentPlayerSpawn());
         mapController.setEntityController(entityController);
         itemController = new ItemController(mapController, showHitBox);
         gameEngine = new GameEngine(showFPS_UPS, this);
-        gameView = new GameView(this, entityController, mapController, itemController);
+        gameObjectController = new GameObjectController(mapController.getCurrentFinishSpawn(), showHitBox);
+        gameView = new GameView(this, entityController, mapController, itemController, gameObjectController);
         this.interfaceGame = new InterfaceGame(entityController.getPlayer(), itemController);
         this.deathScreen = new DeathScreen(gameView.getFrame());
         this.loadingScreen = new LoadingScreen(gameView.getFrame());
@@ -54,8 +56,7 @@ public class GameController implements ReloadGame {
     }
 
     public void update() {
-        entityController.update(this, mapController, loadingScreen, interfaceGame, deathScreen);
-        if (entityController.getKappaAmount() > 0) entityController.handleKappa(mapController, interfaceGame);
+        entityController.update(this, mapController, gameObjectController, loadingScreen, interfaceGame, deathScreen);
         itemController.update(entityController);
     }
 
@@ -77,7 +78,7 @@ public class GameController implements ReloadGame {
         deathScreen.updateScore(interfaceGame.getScore());
         mapController.loadNextMap();
         player.updateSpawnPoint(mapController.getCurrentPlayerSpawn().x, mapController.getCurrentPlayerSpawn().y);
-        Finish finish = entityController.getFinish();
+        Finish finish = gameObjectController.getFinish();
         finish.updateFinishPoint(mapController.getCurrentFinishSpawn().x, mapController.getCurrentFinishSpawn().y);
         entityController.initKappas(mapController, showHitbox);
         itemController.initItems(mapController);

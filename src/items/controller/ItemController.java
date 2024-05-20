@@ -17,6 +17,10 @@ import java.util.Random;
 public class ItemController {
     //Rebuild of class
     private boolean showHitBox;
+
+
+
+    //TODO: animations should be part of item as seen with object
     private BufferedImage[][] animations;
     private Item[] menu;
     private ArrayList<Item> itemsOnMap;
@@ -73,6 +77,8 @@ public class ItemController {
         }
     }
 
+
+    //TODO: Move to ItemUI
     private void loadAnimations() {
         animations = new BufferedImage[itemUI.getSPRITE_Y_DIMENSION()][itemUI.getSPRITE_X_DIMENSION()];
         BufferedImage img = SpriteManager.GetSpriteAtlas(itemUI.getENTITY_SPRITE_PATH());

@@ -1,27 +1,17 @@
-package entities.logic;
+package gameObjects.logic;
 
-import maps.logic.Map;
+import entities.logic.Player;
+import gameObjects.animations.ObjectAnimations;
 
 import java.awt.geom.Rectangle2D;
 
-public class Finish extends Entity {
+public class Finish extends GameObject {
 
     private final static float HORIZONTAL_OFFSET = 50;
 
     public Finish(float x, float y) {
-        super(x, y - HORIZONTAL_OFFSET, new Rectangle2D.Float(x, y - HORIZONTAL_OFFSET, 64, 64 * 2));
+        super(x, y - HORIZONTAL_OFFSET, new Rectangle2D.Float(x, y - HORIZONTAL_OFFSET, 64, 64 * 2), ObjectAnimations.FINISH);
     }
-
-    @Override
-    void updatePushback() {
-        //Not needed for finish
-    }
-
-    @Override
-    boolean isDead() {
-        return false;
-    }
-
     public void updateFinishPoint(int x, int y) {
         this.x = x;
         this.y = y - HORIZONTAL_OFFSET;
@@ -31,13 +21,5 @@ public class Finish extends Entity {
 
     public boolean checkIfPlayerIsInFinish(Player player) {
         return hitbox.intersects(player.getHitbox());
-    }
-
-    public float getX() {
-        return x;
-    }
-
-    public float getY() {
-        return y;
     }
 }

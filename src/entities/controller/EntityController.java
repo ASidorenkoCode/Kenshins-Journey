@@ -1,9 +1,9 @@
 package entities.controller;
 
-import entities.logic.Finish;
+import gameObjects.controller.GameObjectController;
+import gameObjects.logic.Finish;
 import entities.logic.Kappa;
 import entities.logic.Player;
-import entities.ui.FinishUI;
 import entities.ui.KappaUI;
 import entities.ui.PlayerUI;
 import game.controller.ReloadGame;
@@ -21,27 +21,21 @@ public class EntityController {
 
     private PlayerUI playerUI;
     private Player player;
-
-    private FinishUI finishUI;
-    private Finish finish;
-
     private List<Kappa> kappas;
     private List<KappaUI> kappaUIS;
 
 
     private boolean showHitBox;
 
-    public EntityController(MapController mapController, boolean showHitBox, Point playerSpawnPoint, Point finishPoint) {
+    public EntityController(MapController mapController, boolean showHitBox, Point playerSpawnPoint) {
         player = new Player(playerSpawnPoint.x, playerSpawnPoint.y);
         playerUI = new PlayerUI(player, showHitBox);
-        finish = new Finish(finishPoint.x, finishPoint.y);
-        finishUI = new FinishUI(finish, showHitBox);
         initKappas(mapController, showHitBox);
         this.showHitBox = showHitBox;
     }
 
-    public void update(ReloadGame reloadGame, MapController mapController, LoadingScreen loadingScreen, InterfaceGame interfaceGame, DeathScreen deathScreen) {
-        if (finish.checkIfPlayerIsInFinish(player) && !player.isDead()) {
+    public void update(ReloadGame reloadGame, MapController mapController, GameObjectController gameObjectController, LoadingScreen loadingScreen, InterfaceGame interfaceGame, DeathScreen deathScreen) {
+        if (gameObjectController.checkIfPlayerIsInFinish(player) && !player.isDead()) {
             reloadGame.loadNewMap();
         }
 
@@ -57,7 +51,7 @@ public class EntityController {
             if (deathScreen.isPlayerContinuesGame() && deathScreen.isDisplayDeathScreenOnlyOnce()) {
                 loadingScreen.displayLoadingScreen();
                 player.updateSpawnPoint(mapController.getCurrentPlayerSpawn().x, mapController.getCurrentPlayerSpawn().y);
-                finish.updateFinishPoint(mapController.getCurrentFinishSpawn().x, mapController.getCurrentFinishSpawn().y);
+                gameObjectController.updatePoints(mapController.getCurrentFinishSpawn());
                 player.resetHealth();
                 player.setDeathAnimationFinished(false);
                 interfaceGame.setScore(5000);
@@ -142,8 +136,6 @@ public class EntityController {
 
     public void drawEntities(Graphics g, int offset) {
         playerUI.drawAnimations(g, offset);
-        finishUI.drawAnimations(g, offset);
-        finishUI.drawHitBox(g, offset);
         for (KappaUI kappaUI : kappaUIS) {
             kappaUI.drawAnimations(g, offset);
         }
@@ -151,14 +143,6 @@ public class EntityController {
 
     public Player getPlayer() {
         return player;
-    }
-
-    public Finish getFinish() {
-        return finish;
-    }
-
-    public int getKappaAmount() {
-        return kappas.size();
     }
 
 }

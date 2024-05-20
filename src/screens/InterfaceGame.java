@@ -101,6 +101,7 @@ public class InterfaceGame {
         for (Item i : itemController.getMenu()) {
             //TODO: Improve Menu style
             if (i != null)
+                //TODO: use draw function() in item controller instead of getting itemUI -> classes should be replaceable
                 itemController.getItemUI().drawStaticItemImage(g, i, imageX, imageY, itemController.getAnimations());
             imageX += 100;
         }

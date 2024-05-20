@@ -2,6 +2,7 @@ package game.UI;
 
 import entities.controller.EntityController;
 import game.controller.GameController;
+import gameObjects.controller.GameObjectController;
 import items.controller.ItemController;
 import keyboardinputs.logic.KeyboardInputsIngame;
 import maps.controller.MapController;
@@ -25,12 +26,14 @@ public class GameView extends JPanel {
     private MapController mapController;
     private EntityController entityController;
     private ItemController itemController;
+    private GameObjectController gameObjectController;
     private JFrame frame = new JFrame("Kenshins Journey");
 
 
-    public GameView(GameController gameController, EntityController entityController, MapController mapController, ItemController itemController) {
+    public GameView(GameController gameController, EntityController entityController, MapController mapController, ItemController itemController, GameObjectController gameObjectController) {
         this.gameController = gameController;
         this.mapController = mapController;
+        this.gameObjectController = gameObjectController;
         setPreferredSize(new Dimension(GAME_WIDTH, GAME_HEIGHT));
         setFocusable(true);
         requestFocusInWindow();
@@ -115,6 +118,7 @@ public class GameView extends JPanel {
         entityController.drawEntities(g, mapOffset);
         gameController.getInterfaceGame().draw(g, entityController.getPlayer());
         itemController.getItemUI().drawMapItems(g, mapOffset, itemController.getItemsOnMap(), itemController.isShowHitBox(), itemController.getAnimations());
+        gameObjectController.drawObjects(g, mapOffset);
     }
 
     public void showFPS_UPS(int frames, int updates) {

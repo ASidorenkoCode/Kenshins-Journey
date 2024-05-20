@@ -13,9 +13,6 @@ public class Kappa extends Entity {
     private int health = 100;
     private int maxHealth = 100;
     private boolean isScoreIncreased = false;
-
-    private static int nextId = 0;
-    private int id;
     private boolean isPlayerNear = false;
     private boolean isAttacking = false;
     private Rectangle2D.Float attackHitbox;
@@ -32,7 +29,6 @@ public class Kappa extends Entity {
         super(x, y - 20, new Rectangle2D.Float(x + 10, y - 20,64,86));
         this.speed = speed;
         this.moveRight = true;
-        this.id = nextId++;
         attackTimer = new Timer();
         attackHitbox = new Rectangle2D.Float();
     }
@@ -227,11 +223,6 @@ public class Kappa extends Entity {
     public boolean isScoreIncreased() {
         return isScoreIncreased;
     }
-
-    public int getId() {
-        return id;
-    }
-
     public boolean isPlayerNear() {
         return isPlayerNear;
     }
