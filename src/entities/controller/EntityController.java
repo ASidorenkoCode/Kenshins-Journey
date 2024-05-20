@@ -61,6 +61,7 @@ public class EntityController {
         }
 
         player.update(mapController.getCurrentMap());
+        if (kappas.size() > 0) handleKappa(mapController, interfaceGame);
     }
 
     public void handleKappa(MapController mapController, InterfaceGame interfaceGame) {
