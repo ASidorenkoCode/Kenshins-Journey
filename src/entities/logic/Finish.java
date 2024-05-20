@@ -6,7 +6,7 @@ import java.awt.geom.Rectangle2D;
 
 public class Finish extends Entity {
 
-    private final static float HORIZONTAL_OFFSET = 50; //needed because
+    private final static float HORIZONTAL_OFFSET = 50;
 
     public Finish(float x, float y) {
         super(x, y - HORIZONTAL_OFFSET, new Rectangle2D.Float(x, y - HORIZONTAL_OFFSET, 64, 64 * 2));
