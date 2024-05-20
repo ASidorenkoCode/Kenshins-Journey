@@ -97,13 +97,6 @@ public class Map {
         return playerSpawn;
     }
 
-    public Point setPlayerSpawn(Point playerSpawn) {
-        return this.playerSpawn = playerSpawn;
-    }
-
-    public BufferedImage getMapImage() { return mapImage;}
-
-
     public Point getFinishSpawn() {
         return finishSpawn;
     }
