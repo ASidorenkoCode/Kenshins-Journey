@@ -94,7 +94,7 @@ public class PlayerUI extends EntityUI {
 
         if (player.isDead()) {
             currentAnimation = PlayerAnimations.DEATH;
-            aniSpeed = 15;
+            aniSpeed = 5;
         }
 
         //reset index
@@ -105,8 +105,8 @@ public class PlayerUI extends EntityUI {
             }
 
             if (currentAnimation == PlayerAnimations.IDLE_SLASH || currentAnimation == PlayerAnimations.RUN_SLASH)
-                aniSpeed = 10;
-            else aniSpeed = 15;
+                aniSpeed = 3;
+            else aniSpeed = 3;
         }
     }
 
