@@ -12,25 +12,16 @@ import java.io.File;
 import java.io.IOException;
 
 public class InterfaceGame {
-    private BufferedImage fullHeart;
-    private BufferedImage halfHeart;
-    private BufferedImage emptyHeart;
-    private BufferedImage playerPortrait;
     private int playerHealth;
     private int score;
     private long lastTime;
     private int totalHearts;
-    private int heightJump;
     private ItemController itemController;
     private BufferedImage characterPortraitAndStats;
 
 
     public InterfaceGame(Player player, ItemController itemController) {
         try {
-            BufferedImage healthbarPlayer = ImageIO.read(new File("res/healthPlayer/healthbarPlayer.png"));
-            fullHeart = healthbarPlayer.getSubimage(0, 0, 64, 64);
-            halfHeart = healthbarPlayer.getSubimage(64, 0, 64, 64);
-            emptyHeart = healthbarPlayer.getSubimage(128, 0, 64, 64);
             characterPortraitAndStats = ImageIO.read(new File("res/interfacePlayer/character_portrait_and_stats.png"));
         } catch (IOException e) {
             e.printStackTrace();
@@ -44,22 +35,6 @@ public class InterfaceGame {
     }
 
     public void draw(Graphics g, Player player) {
-        int maximumHeartsPerRow = 10;
-        for (int i = 0; i < totalHearts; i++) {
-            Image heart;
-            if (playerHealth > i * 2 + 1) {
-                heart = fullHeart;
-            } else if (playerHealth > i * 2) {
-                heart = halfHeart;
-            } else {
-                heart = emptyHeart;
-            }
-
-            int x = (i % maximumHeartsPerRow) * 32 - 32;
-            int y = (i / maximumHeartsPerRow) * 32 - 32;
-
-            g.drawImage(heart, x, y, 150, 150, null);
-        }
         int squareX = -1;
         int squareY = -1;
 
