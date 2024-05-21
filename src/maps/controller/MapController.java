@@ -78,4 +78,7 @@ public class MapController {
         this.entityController = entityController;
     }
 
+    public Point getCurrentBossSpawn() {
+        return maps.get(currentMapIndex).getBossSpawn();
+    }
 }
