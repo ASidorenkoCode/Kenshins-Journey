@@ -20,6 +20,7 @@ public class Map {
     private ArrayList<Point> kappaSpawns;
 
     private ArrayList<Point> itemSpawns;
+    private Point bossSpawn;
 
     public Map(BufferedImage img) {
         this.kappaSpawns = new ArrayList<>();
@@ -63,6 +64,7 @@ public class Map {
             case 100 -> playerSpawn = new Point(scaledX, scaledY);
             case 101 -> finishSpawn = new Point(originalX, originalY);
             case 102 -> kappaSpawns.add(new Point(originalX, originalY));
+            case 104 -> bossSpawn = new Point(originalX, originalY);
         }
     }
 
@@ -107,5 +109,9 @@ public class Map {
 
     public ArrayList<Point> getItemSpawns() {
         return itemSpawns;
+    }
+
+    public Point getBossSpawn() {
+        return bossSpawn;
     }
 }

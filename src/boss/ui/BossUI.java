@@ -15,7 +15,7 @@ public class BossUI {
     }
 
     public void draw(Graphics g, int offset) {
-        if(showHitBox) {
+        if(showHitBox && currentBoss != null) {
             drawProjectileHitbox(g, offset);
             drawHitbox(g, offset);
             drawMiniProjectileHitboxes(g,offset);
