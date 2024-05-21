@@ -49,8 +49,8 @@ public class InterfaceGame {
             }
         }
 
-        int x = 10;
-        int y = GameView.GAME_HEIGHT - (int) (characterPortraitAndStats.getHeight() * 1.5) - 20;
+        int x = 0;
+        int y = 0;
         g.drawImage(characterPortraitAndStats, x, y, (int) (characterPortraitAndStats.getWidth() * 1.5), (int) (characterPortraitAndStats.getHeight() * 1.5), null);
 
         int totalX = x + (int) (squareX * 1.5);
@@ -67,6 +67,30 @@ public class InterfaceGame {
         int textX = totalX + 90 + (int) (characterPortraitAndStats.getWidth() * 1.5) / 2 - textWidth / 2;
         int textY = totalY - 45 + (int) (characterPortraitAndStats.getHeight() * 1.5) / 2 + textHeight / 2;
         g.drawString(health, textX, textY);
+
+
+        for (int i = 0; i < characterPortraitAndStats.getWidth(); i++) {
+            for (int j = 0; j < characterPortraitAndStats.getHeight(); j++) {
+                if (characterPortraitAndStats.getRGB(i, j) == Color.decode("#ac3232").getRGB()) {
+                    characterPortraitAndStats.setRGB(i, j, Color.decode("#544535").getRGB());
+
+                    squareX = i;
+                    squareY = j;
+                }
+            }
+        }
+
+        String maxDamage = String.valueOf(player.getMaximumDamagePerAttack());
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Arial", Font.BOLD, 20));
+
+        fm = g.getFontMetrics();
+        textWidth = fm.stringWidth(maxDamage);
+        textHeight = fm.getHeight();
+
+        textX = totalX + 90 + (int) (characterPortraitAndStats.getWidth() * 1.5) / 2 - textWidth / 2;
+        textY = totalY - 12 + (int) (characterPortraitAndStats.getHeight() * 1.5) / 2 + textHeight / 2;
+        g.drawString(maxDamage, textX, textY);
 
         drawScore(g, score);
 
