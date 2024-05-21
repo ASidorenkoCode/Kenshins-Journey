@@ -86,7 +86,7 @@ public class InterfaceGame {
 
 
         heightJump = (int) player.getAirMovement();
-        String damage = "Damage: " + player.getMaximumDamagePerAttack();
+        String damage = "Damage: " + player.getCurrentDamagePerAttack();
         String movementSpeed = "Movement Speed: " + heightJump;
         String jumpHeight = "Jump Height: " + player.getAirMovement();
 
