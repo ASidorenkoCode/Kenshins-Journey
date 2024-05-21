@@ -18,6 +18,7 @@ public class BossUI {
         if(showHitBox) {
             drawProjectileHitbox(g, offset);
             drawHitbox(g, offset);
+            drawMiniProjectileHitboxes(g,offset);
         }
     }
 
@@ -29,5 +30,10 @@ public class BossUI {
     public void drawProjectileHitbox(Graphics g, int offset) {
         Rectangle2D.Float hitbox = currentBoss.getProjectileHitbox();
         g.drawRect((int) hitbox.x - offset, (int) hitbox.y, (int) hitbox.width, (int) hitbox.height);
+    }
+    public void drawMiniProjectileHitboxes(Graphics g, int offset) {
+        for(Rectangle2D.Float hitbox: currentBoss.getMiniProjectileHitboxes()) {
+            g.drawRect((int) hitbox.x - offset, (int) hitbox.y, (int) hitbox.width, (int) hitbox.height);
+        }
     }
 }
