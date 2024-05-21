@@ -22,6 +22,7 @@ public class InterfaceGame {
     private int totalHearts;
     private int heightJump;
     private ItemController itemController;
+    private BufferedImage characterPortraitAndStats;
 
 
     public InterfaceGame(Player player, ItemController itemController) {
@@ -30,7 +31,7 @@ public class InterfaceGame {
             fullHeart = healthbarPlayer.getSubimage(0, 0, 64, 64);
             halfHeart = healthbarPlayer.getSubimage(64, 0, 64, 64);
             emptyHeart = healthbarPlayer.getSubimage(128, 0, 64, 64);
-            playerPortrait = ImageIO.read(new File("res/kenshin/kenshin_portrait.png"));
+            characterPortraitAndStats = ImageIO.read(new File("res/interfacePlayer/character_portrait_and_stats.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -59,45 +60,43 @@ public class InterfaceGame {
 
             g.drawImage(heart, x, y, 150, 150, null);
         }
+        int squareX = -1;
+        int squareY = -1;
 
-        int borderSize = 20;
+        for (int i = 0; i < characterPortraitAndStats.getWidth(); i++) {
+            for (int j = 0; j < characterPortraitAndStats.getHeight(); j++) {
+                if (characterPortraitAndStats.getRGB(i, j) == Color.decode("#37946e").getRGB()) {
+                    characterPortraitAndStats.setRGB(i, j, Color.decode("#544535").getRGB());
+
+                    squareX = i;
+                    squareY = j;
+                }
+            }
+        }
+
         int x = 10;
-        int y = GameView.GAME_HEIGHT - playerPortrait.getHeight() * 2 - borderSize;
-        int width = playerPortrait.getWidth() * 2;
-        int height = playerPortrait.getHeight() * 2;
+        int y = GameView.GAME_HEIGHT - (int) (characterPortraitAndStats.getHeight() * 1.5) - 20;
+        g.drawImage(characterPortraitAndStats, x, y, (int) (characterPortraitAndStats.getWidth() * 1.5), (int) (characterPortraitAndStats.getHeight() * 1.5), null);
 
-        g.drawImage(playerPortrait, x, y, width, height, null);
+        int totalX = x + (int) (squareX * 1.5);
+        int totalY = y + (int) (squareY * 1.5);
 
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.setColor(Color.BLACK);
-        g2d.setStroke(new BasicStroke(borderSize));
-        g2d.drawRect(0, y - borderSize / 2, width + borderSize, height + borderSize);
-
-        g.drawImage(playerPortrait, x, y, width, height, null);
-
-        int statsX = x + width + 20;
-        int statsY = y + 20;
-        int statsWidth = 200;
-        int statsHeight = height + borderSize * 2;
-        g.setColor(Color.BLACK);
-        g.fillRect(statsX, statsY - 40, statsWidth, statsHeight);
+        String health = String.format("%d", player.getPlayerHealth());
         g.setColor(Color.WHITE);
-        g.setFont(new Font("Calibri", Font.BOLD, 20));
+        g.setFont(new Font("Arial", Font.BOLD, 20));
 
+        FontMetrics fm = g.getFontMetrics();
+        int textWidth = fm.stringWidth(health);
+        int textHeight = fm.getHeight();
 
-        heightJump = (int) player.getAirMovement();
-        String damage = "Damage: " + player.getMaximumDamagePerAttack();
-        String movementSpeed = "Movement Speed: " + heightJump;
-        String jumpHeight = "Jump Height: " + player.getAirMovement();
-
-        g.drawString(damage, statsX, statsY);
-        g.drawString(movementSpeed, statsX, statsY + 30);
-        g.drawString(jumpHeight, statsX, statsY + 60);
+        int textX = totalX + 90 + (int) (characterPortraitAndStats.getWidth() * 1.5) / 2 - textWidth / 2;
+        int textY = totalY - 45 + (int) (characterPortraitAndStats.getHeight() * 1.5) / 2 + textHeight / 2;
+        g.drawString(health, textX, textY);
 
         drawScore(g, score);
 
         int imageX = 500;
-        int imageY = GameView.GAME_HEIGHT - playerPortrait.getHeight() * 2 - borderSize;
+        int imageY = GameView.GAME_HEIGHT - characterPortraitAndStats.getHeight() * 2 - 20;
         for (Item i : itemController.getMenu()) {
             //TODO: Improve Menu style
             if (i != null)

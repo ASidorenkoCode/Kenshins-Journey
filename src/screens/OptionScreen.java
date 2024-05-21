@@ -4,11 +4,9 @@ import game.UI.GameView;
 import game.logic.GameEngine;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.BufferedImageOp;
 import java.awt.image.ConvolveOp;
@@ -27,7 +25,6 @@ public class OptionScreen {
         this.gameView = gameView;
         this.gameEngine = gameEngine;
         setupPauseResumeKeyBinding();
-
     }
 
     private void setupPauseResumeKeyBinding() {
@@ -56,7 +53,7 @@ public class OptionScreen {
         JLabel backgroundLabel = new JLabel(backgroundImageIcon);
 
         JDialog dialog = new JDialog(gameView.getFrame(), false);
-        dialog.setUndecorated(false);
+        dialog.setUndecorated(true);
         dialog.setBackground(new Color(0, 0, 0, 0)); // Make the JDialog background transparent
 
         JPanel panel = new JPanel(new GridLayout(0, 1, 0, 0));
