@@ -45,11 +45,15 @@ public class MapUI {
 
     private void importTileSheets() {
         BufferedImage img = SpriteManager.GetSpriteAtlas(MAPSPRITE_PATH);
-        mapSprites = new BufferedImage[48];
-        for (int j = 0; j < 4; j++)
-            for (int i = 0; i < 12; i++) {
-                int index = j * 12 + i;
-                mapSprites[index] = img.getSubimage(i * 32, j * 32, 32, 32);
+        int subImageWidth = 32;
+        int subImageHeight = 32;
+        int rows = img.getHeight() / subImageHeight;
+        int cols = img.getWidth() / subImageWidth;
+        mapSprites = new BufferedImage[rows * cols];
+        for (int j = 0; j < rows; j++)
+            for (int i = 0; i < cols; i++) {
+                int index = j * cols + i;
+                mapSprites[index] = img.getSubimage(i * subImageWidth, j * subImageHeight, subImageWidth, subImageHeight);
             }
     }
 
