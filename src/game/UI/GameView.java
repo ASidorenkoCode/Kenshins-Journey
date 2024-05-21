@@ -1,5 +1,6 @@
 package game.UI;
 
+import boss.controller.BossController;
 import entities.controller.EntityController;
 import game.controller.GameController;
 import gameObjects.controller.GameObjectController;
@@ -27,13 +28,15 @@ public class GameView extends JPanel {
     private EntityController entityController;
     private ItemController itemController;
     private GameObjectController gameObjectController;
+    private BossController bossController;
     private JFrame frame = new JFrame("Kenshins Journey");
 
 
-    public GameView(GameController gameController, EntityController entityController, MapController mapController, ItemController itemController, GameObjectController gameObjectController) {
+    public GameView(GameController gameController, EntityController entityController, MapController mapController, ItemController itemController, GameObjectController gameObjectController, BossController bossController) {
         this.gameController = gameController;
         this.mapController = mapController;
         this.gameObjectController = gameObjectController;
+        this.bossController = bossController;
         setPreferredSize(new Dimension(GAME_WIDTH, GAME_HEIGHT));
         setFocusable(true);
         requestFocusInWindow();
@@ -119,6 +122,7 @@ public class GameView extends JPanel {
         gameController.getInterfaceGame().draw(g, entityController.getPlayer());
         itemController.getItemUI().drawMapItems(g, mapOffset, itemController.getItemsOnMap(), itemController.isShowHitBox(), itemController.getAnimations());
         gameObjectController.drawObjects(g, mapOffset);
+        bossController.draw(g, mapOffset);
     }
 
     public void showFPS_UPS(int frames, int updates) {
