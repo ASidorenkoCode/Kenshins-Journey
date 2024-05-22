@@ -3,6 +3,7 @@ package boss.controller;
 import boss.logic.Boss;
 import boss.ui.BossUI;
 import entities.logic.Player;
+import gameObjects.logic.Finish;
 import maps.controller.MapController;
 
 import java.awt.*;
@@ -25,10 +26,10 @@ public class BossController {
 
     }
 
-    public void update(Player player) {
+    public void update(Player player, Finish finish) {
         //TODO: check if boss should be handled by map
         if(currentBoss == null) return;;
-        currentBoss.update(player);
+        currentBoss.update(player, finish);
     }
 
     public void draw(Graphics g, int offset) {

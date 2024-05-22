@@ -37,7 +37,7 @@ public class GameController implements ReloadGame {
         mapController.setEntityController(entityController);
         itemController = new ItemController(mapController, showHitBox);
         gameEngine = new GameEngine(showFPS_UPS, this);
-        gameObjectController = new GameObjectController(mapController.getCurrentFinishSpawn(), showHitBox);
+        gameObjectController = new GameObjectController(mapController, showHitBox);
         bossController = new BossController(mapController, showHitBox);
         gameView = new GameView(this, entityController, mapController, itemController, gameObjectController, bossController);
         this.interfaceGame = new InterfaceGame(entityController.getPlayer(), itemController);
@@ -61,7 +61,7 @@ public class GameController implements ReloadGame {
     public void update() {
         entityController.update(this, mapController, gameObjectController, loadingScreen, interfaceGame, deathScreen);
         itemController.update(entityController);
-        bossController.update(entityController.getPlayer());
+        bossController.update(entityController.getPlayer(), gameObjectController.getFinish());
     }
 
     public InterfaceGame getInterfaceGame() {
@@ -83,9 +83,10 @@ public class GameController implements ReloadGame {
         mapController.loadNextMap();
         player.updateSpawnPoint(mapController.getCurrentPlayerSpawn().x, mapController.getCurrentPlayerSpawn().y);
         Finish finish = gameObjectController.getFinish();
-        finish.updateFinishPoint(mapController.getCurrentFinishSpawn().x, mapController.getCurrentFinishSpawn().y);
+        finish.updateFinishPoint(mapController.getCurrentFinishSpawn().x, mapController.getCurrentFinishSpawn().y, mapController.getCurrentBossSpawn() == null);
         entityController.initKappas(mapController, showHitbox);
         itemController.initItems(mapController);
         bossController.initBoss(mapController);
+
     }
 }

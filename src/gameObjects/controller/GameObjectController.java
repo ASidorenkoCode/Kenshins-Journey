@@ -3,6 +3,7 @@ package gameObjects.controller;
 import entities.logic.Player;
 import gameObjects.logic.Finish;
 import gameObjects.ui.GameObjectUI;
+import maps.controller.MapController;
 
 import java.awt.*;
 
@@ -15,8 +16,10 @@ public class GameObjectController {
     //objects
     private Finish finish;
 
-    public GameObjectController(Point finishPoint, boolean showHitBox) {
-        finish = new Finish(finishPoint.x, finishPoint.y);
+    public GameObjectController(MapController mapController, boolean showHitBox) {
+        Point finishPoint = mapController.getCurrentFinishSpawn();
+        boolean finishIsActive = mapController.getCurrentBossSpawn() == null;
+        finish = new Finish(finishPoint.x, finishPoint.y, finishIsActive);
         gameObjectUI = new GameObjectUI(finish, showHitBox);
     }
 
@@ -24,8 +27,10 @@ public class GameObjectController {
         return finish.checkIfPlayerIsInFinish(player);
     }
 
-    public void updatePoints(Point newFinishSpawn) {
-        finish.updateFinishPoint(newFinishSpawn.x, newFinishSpawn.y);
+    public void updatePoints(MapController mapController) {
+        Point finishPoint = mapController.getCurrentFinishSpawn();
+        boolean finishIsActive = mapController.getCurrentBossSpawn() == null;
+        finish.updateFinishPoint(finishPoint.x, finishPoint.y, finishIsActive);
     }
 
     public void drawObjects(Graphics g, int offset) {

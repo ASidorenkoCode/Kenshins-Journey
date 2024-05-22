@@ -4,6 +4,7 @@ import entities.logic.Entity;
 import entities.logic.Kappa;
 import entities.logic.Player;
 import entities.ui.PlayerUI;
+import gameObjects.logic.Finish;
 
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
@@ -38,10 +39,11 @@ public class Boss {
         }
     }
 
-    public void update(Player player) {
+    public void update(Player player, Finish finish) {
         if(!isDead) {
             if(playerHitsBoss(player)) decreaseHealth(player.getCurrentDamagePerAttack());
-            attack(player);
+            if(!isDead) attack(player);
+            else finish.setIsActive(true);
         }
     }
 

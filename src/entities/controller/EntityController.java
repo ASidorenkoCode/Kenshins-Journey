@@ -51,7 +51,7 @@ public class EntityController {
             if (deathScreen.isPlayerContinuesGame() && deathScreen.isDisplayDeathScreenOnlyOnce()) {
                 loadingScreen.displayLoadingScreen();
                 player.updateSpawnPoint(mapController.getCurrentPlayerSpawn().x, mapController.getCurrentPlayerSpawn().y);
-                gameObjectController.updatePoints(mapController.getCurrentFinishSpawn());
+                gameObjectController.updatePoints(mapController);
                 player.resetHealth();
                 player.setDeathAnimationFinished(false);
                 interfaceGame.setScore(5000);
