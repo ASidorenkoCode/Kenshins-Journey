@@ -1,9 +1,6 @@
 package boss.logic;
 
-import entities.logic.Entity;
-import entities.logic.Kappa;
 import entities.logic.Player;
-import entities.ui.PlayerUI;
 import gameObjects.logic.Finish;
 
 import java.awt.geom.Rectangle2D;
@@ -11,9 +8,13 @@ import java.util.ArrayList;
 
 public class Boss {
 
-    private static final int PROJECTILE_LENGTH = 33;
-    private static final int PROJECTILE_HEIGHT = 17;
+    private static final int BIG_PROJECTILE_WIDTH = 33;
+    private static final int BIG_PROJECTILE_HEIGHT = 17;
+    private static final int BIG_PROJECTILE_SCALE = 4;
     private static final int NUMBER_OF_MINI_PROJECTILES = 10;
+    private static final int MINI_PROJECTILE_WIDTH = 35;
+    private static final int MINI_PROJECTILE_HEIGHT = 35;
+
     private float x;
     private float y;
     private Rectangle2D.Float hitbox;
@@ -27,7 +28,11 @@ public class Boss {
         this.x = x;
         this.y = y;
         this.hitbox = new Rectangle2D.Float(x,y,60,60);
-        this.projectileHitbox = new Rectangle2D.Float(x-PROJECTILE_LENGTH,y,PROJECTILE_LENGTH,PROJECTILE_HEIGHT);
+        this.projectileHitbox = new Rectangle2D.Float(
+                x-(BIG_PROJECTILE_WIDTH * BIG_PROJECTILE_SCALE),
+                y,
+                BIG_PROJECTILE_WIDTH * BIG_PROJECTILE_SCALE,
+                BIG_PROJECTILE_HEIGHT * BIG_PROJECTILE_SCALE);
         this.health = 20;
         initNewMiniProjectiles();
         this.isUsingOneProjectile = true;
@@ -36,7 +41,7 @@ public class Boss {
     private void initNewMiniProjectiles() {
         miniProjectileHitboxes = new ArrayList<>();
         for(int i=0; i<NUMBER_OF_MINI_PROJECTILES; i++) {
-            miniProjectileHitboxes.add(new Rectangle2D.Float(x,y,5,5));
+            miniProjectileHitboxes.add(new Rectangle2D.Float(x,y,MINI_PROJECTILE_WIDTH,MINI_PROJECTILE_HEIGHT));
         }
     }
 
@@ -81,7 +86,7 @@ public class Boss {
         }
     }
     private void resetProjectile() {
-        projectileHitbox.x = x-PROJECTILE_LENGTH;
+        projectileHitbox.x = x- BIG_PROJECTILE_WIDTH;
         isUsingOneProjectile = false;
     }
     private void checkIfProjectileIsOutOfBounds(int offset) {
