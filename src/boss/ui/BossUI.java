@@ -44,14 +44,19 @@ public class BossUI {
     }
 
     public void draw(Graphics g, int offset) {
-        updateAnimationTick();
-        if(showHitBox && currentBoss != null) {
-            drawProjectileHitbox(g, offset);
-            drawHitbox(g, offset);
-            drawMiniProjectileHitboxes(g,offset);
+        if(currentBoss != null) {
+            if(currentBoss.getIsDead()) return;
+            updateAnimationTick();
+            if(currentBoss.getIsUsingBigProjectile()) {
+                drawBigProjectile(g, offset);
+                if(showHitBox) drawBigProjectileHitbox(g, offset);
+            }
+            else {
+                drawMiniProjectile(g, offset);
+                if(showHitBox) drawMiniProjectileHitboxes(g,offset);
+            }
+            if(showHitBox) drawHitbox(g, offset);
         }
-        drawBigProjectile(g, offset);
-        drawMiniProjectile(g, offset);
     }
 
     //load animations
@@ -107,7 +112,7 @@ public class BossUI {
         g.drawRect((int) hitbox.x - offset, (int) hitbox.y, (int) hitbox.width, (int) hitbox.height);
     }
 
-    public void drawProjectileHitbox(Graphics g, int offset) {
+    public void drawBigProjectileHitbox(Graphics g, int offset) {
         Rectangle2D.Float hitbox = currentBoss.getProjectileHitbox();
         g.drawRect((int) hitbox.x - offset, (int) hitbox.y, (int) hitbox.width, (int) hitbox.height);
     }

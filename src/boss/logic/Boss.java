@@ -20,7 +20,7 @@ public class Boss {
     private Rectangle2D.Float hitbox;
     private Rectangle2D.Float projectileHitbox;
     private ArrayList<Rectangle2D.Float> miniProjectileHitboxes;
-    private boolean isUsingOneProjectile;
+    private boolean isUsingBigProjectile;
     private int health;
     private boolean isDead;
 
@@ -35,7 +35,7 @@ public class Boss {
                 BIG_PROJECTILE_HEIGHT * BIG_PROJECTILE_SCALE);
         this.health = 20;
         initNewMiniProjectiles();
-        this.isUsingOneProjectile = true;
+        this.isUsingBigProjectile = true;
     }
 
     private void initNewMiniProjectiles() {
@@ -69,7 +69,7 @@ public class Boss {
 
 
     private void attack(Player player, int offset) {
-        if(isUsingOneProjectile) {
+        if(isUsingBigProjectile) {
             attackOne(player, offset);
         } else {
             attackTwo(player, offset);
@@ -87,7 +87,7 @@ public class Boss {
     }
     private void resetProjectile() {
         projectileHitbox.x = x- BIG_PROJECTILE_WIDTH;
-        isUsingOneProjectile = false;
+        isUsingBigProjectile = false;
     }
     private void checkIfProjectileIsOutOfBounds(int offset) {
         if(projectileHitbox.x <= 0 + offset) {
@@ -110,7 +110,7 @@ public class Boss {
 
     private void resetAllMiniProjectiles() {
         initNewMiniProjectiles();
-        isUsingOneProjectile = true;
+        isUsingBigProjectile = true;
     }
     private void checkIfAllMiniProjectilesAreOutOfBounds(int offset) {
         for(Rectangle2D.Float hitbox: miniProjectileHitboxes) {
@@ -136,7 +136,7 @@ public class Boss {
         return false;
     }
 
-    //Getter and setter
+    //Getter
     public Rectangle2D.Float getHitbox() {
         return hitbox;
     }
@@ -146,5 +146,13 @@ public class Boss {
     }
     public ArrayList<Rectangle2D.Float> getMiniProjectileHitboxes() {
         return miniProjectileHitboxes;
+    }
+
+    public boolean getIsUsingBigProjectile() {
+        return isUsingBigProjectile;
+    }
+
+    public boolean getIsDead() {
+        return isDead;
     }
 }
