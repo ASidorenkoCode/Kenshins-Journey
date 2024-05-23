@@ -98,7 +98,7 @@ public class InterfaceGame {
 
         int imageY = GameView.GAME_HEIGHT - itemHeight;
 
-        int totalWidth = itemController.getMenu().length * 50;
+        int totalWidth = itemController.getMenu().length * 55;
         int startX = (GameView.GAME_WIDTH - totalWidth) / 2;
 
         if (itemController.getMenu().length > 0) {
@@ -114,7 +114,7 @@ public class InterfaceGame {
                     g.drawString(String.valueOf(index), startX + 27, imageY + itemHeight - 10);
                 }
 
-                startX += 50;
+                startX += 55;
                 index++;
             }
         }
