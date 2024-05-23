@@ -64,7 +64,6 @@ public class Boss {
 
 
     private void attack(Player player, int offset) {
-        //TODO: Player needs to have a cool down for the next attack + no movement is allowed when loading screen is active
         if(isUsingOneProjectile) {
             attackOne(player, offset);
         } else {
@@ -76,12 +75,18 @@ public class Boss {
     private void attackOne(Player player, int offset) {
         moveProjectile();
         checkIfProjectileIsOutOfBounds(offset);
-        if(projectileHitsPlayer(player)) player.decreaseHealth(1);
+        if(projectileHitsPlayer(player)) {
+            player.decreaseHealth(1);
+            resetProjectile();
+        }
+    }
+    private void resetProjectile() {
+        projectileHitbox.x = x-PROJECTILE_LENGTH;
+        isUsingOneProjectile = false;
     }
     private void checkIfProjectileIsOutOfBounds(int offset) {
         if(projectileHitbox.x <= 0 + offset) {
-            projectileHitbox.x = x-PROJECTILE_LENGTH;
-            isUsingOneProjectile = false;
+            resetProjectile();
         }
     }
     private void moveProjectile() {
@@ -97,12 +102,16 @@ public class Boss {
         checkIfAllMiniProjectilesAreOutOfBounds(offset);
         if(miniProjectileHitsPlayer(player)) player.decreaseHealth(1);
     }
+
+    private void resetAllMiniProjectiles() {
+        initNewMiniProjectiles();
+        isUsingOneProjectile = true;
+    }
     private void checkIfAllMiniProjectilesAreOutOfBounds(int offset) {
         for(Rectangle2D.Float hitbox: miniProjectileHitboxes) {
             if(hitbox.x > 0 + offset) return;
         }
-        initNewMiniProjectiles();
-        isUsingOneProjectile = true;
+        resetAllMiniProjectiles();
     }
     private void moveMiniProjectiles() {
         float startingYMovement = 0.9f;
@@ -114,7 +123,10 @@ public class Boss {
     }
     private boolean miniProjectileHitsPlayer(Player player) {
         for(Rectangle2D.Float hitbox: miniProjectileHitboxes) {
-            if(player.getHitbox().intersects(hitbox)) return true;
+            if(player.getHitbox().intersects(hitbox)) {
+                resetAllMiniProjectiles();
+                return true;
+            };
         }
         return false;
     }
