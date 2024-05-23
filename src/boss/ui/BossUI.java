@@ -26,11 +26,11 @@ public class BossUI {
     private int miniProjectileAniIndex;
 
     //Boss vars
-    private final static int BOSSS_ANI_LENGTH = 5;
+    private final static int BOSSS_ANI_LENGTH = 1;
     private final static int BOSS_NUMBER_OF_ANI = 1;
-    private final static String BOSS_SPRITE_PATH = "boss/fireball.png";
-    private final static int BOSS_SPRITE_PX_WIDTH = 33;
-    private final static int BOSS_SPRITE_PX_HEIGHT = 17;
+    private final static String BOSS_SPRITE_PATH = "boss/boss.png";
+    private final static int BOSS_SPRITE_PX_WIDTH = 64;
+    private final static int BOSS_SPRITE_PX_HEIGHT = 64;
     private BufferedImage[][] boss;
     private int bossAniIndex;
 

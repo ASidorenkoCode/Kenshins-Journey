@@ -8,12 +8,17 @@ import java.util.ArrayList;
 
 public class Boss {
 
+
+    //TODO: Duplicate vars from boss and boss ui should be merged
     private static final int BIG_PROJECTILE_WIDTH = 33;
     private static final int BIG_PROJECTILE_HEIGHT = 17;
     private static final int BIG_PROJECTILE_SCALE = 4;
     private static final int NUMBER_OF_MINI_PROJECTILES = 10;
     private static final int MINI_PROJECTILE_WIDTH = 25;
     private static final int MINI_PROJECTILE_HEIGHT = 20;
+    private static final int BOSS_WIDTH = 64;
+    private static final int BOSS_HEIGHT = 64;
+    private static final int BOSS_SCALE = 4;
 
     private float x;
     private float y;
@@ -26,8 +31,8 @@ public class Boss {
 
     public Boss(float x, float y) {
         this.x = x;
-        this.y = y;
-        this.hitbox = new Rectangle2D.Float(x,y,60,60);
+        this.y = y - BOSS_HEIGHT * BOSS_SCALE + BOSS_HEIGHT;
+        this.hitbox = new Rectangle2D.Float(this.x,this.y,BOSS_WIDTH * BOSS_SCALE,BOSS_HEIGHT * BOSS_SCALE);
         this.projectileHitbox = new Rectangle2D.Float(
                 x-(BIG_PROJECTILE_WIDTH * BIG_PROJECTILE_SCALE),
                 y,
@@ -54,9 +59,10 @@ public class Boss {
     }
 
     private boolean playerHitsBoss(Player player) {
+        //TODO: Solve boss hitbox bug
         if (!player.getAttackHitBoxIsActive()) return false;
-        if(player.getLeftAttackHitBox().intersects(hitbox)) return true;
-        return player.getRightAttackHitBox().intersects(hitbox);
+        if(hitbox.intersects(player.getLeftAttackHitBox())) return true;
+        return hitbox.intersects(player.getRightAttackHitBox());
     }
 
     public void decreaseHealth(int amount) {
