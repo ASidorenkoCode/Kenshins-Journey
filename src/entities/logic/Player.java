@@ -130,7 +130,7 @@ public class Player extends Entity {
                 inAir = true;
             }
 
-            if (this.getHitbox().x < 0 || this.getHitbox().x > GameView.GAME_WIDTH ||
+            if (this.getHitbox().x < 0 ||
                     this.getHitbox().y < 0 || this.getHitbox().y > GameView.GAME_HEIGHT) {
                 this.setPlayerHealth(0);
             }
