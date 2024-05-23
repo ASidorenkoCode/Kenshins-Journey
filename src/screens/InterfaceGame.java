@@ -111,7 +111,7 @@ public class InterfaceGame {
 
                     g.setColor(Color.WHITE);
                     g.setFont(new Font("Arial", Font.BOLD, 20));
-                    g.drawString(String.valueOf(index), startX + 26, imageY + itemHeight - 10);
+                    g.drawString(String.valueOf(index), startX + 27, imageY + itemHeight - 10);
                 }
 
                 startX += 50;
