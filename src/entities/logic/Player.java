@@ -1,6 +1,7 @@
 package entities.logic;
 
 import entities.ui.PlayerUI;
+import game.UI.GameView;
 import maps.logic.Map;
 
 import java.awt.geom.Rectangle2D;
@@ -129,7 +130,10 @@ public class Player extends Entity {
                 inAir = true;
             }
 
-
+            if (this.getHitbox().x < 0 || this.getHitbox().x > GameView.GAME_WIDTH ||
+                    this.getHitbox().y < 0 || this.getHitbox().y > GameView.GAME_HEIGHT) {
+                this.setPlayerHealth(0);
+            }
         }
     }
 
@@ -272,13 +276,16 @@ public class Player extends Entity {
 
 
     public boolean checkForCollisonOnPosition(Map map, float x, float y) {
-        if (x < 0) return true;
-        if (y < 0) return true;
+        if (x < 0 || y < 0) return true;
 
-        //TODO: Constants for Tile width and height
         int[][] mapData = map.getMapData();
         int tile_x = (int) (x / 64);
         int tile_y = (int) (y / 64);
+
+        if (tile_y >= mapData.length || tile_x >= mapData[0].length) {
+            return false;
+        }
+
         return mapData[tile_y][tile_x] != 11;
     }
 
