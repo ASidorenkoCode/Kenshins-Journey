@@ -11,7 +11,8 @@ import java.util.ArrayList;
 
 public class Boss {
 
-    private static final int PROJECTILE_LENGTH = 70;
+    private static final int PROJECTILE_LENGTH = 33;
+    private static final int PROJECTILE_HEIGHT = 17;
     private static final int NUMBER_OF_MINI_PROJECTILES = 10;
     private float x;
     private float y;
@@ -26,7 +27,7 @@ public class Boss {
         this.x = x;
         this.y = y;
         this.hitbox = new Rectangle2D.Float(x,y,60,60);
-        this.projectileHitbox = new Rectangle2D.Float(x-PROJECTILE_LENGTH,y,PROJECTILE_LENGTH,30);
+        this.projectileHitbox = new Rectangle2D.Float(x-PROJECTILE_LENGTH,y,PROJECTILE_LENGTH,PROJECTILE_HEIGHT);
         this.health = 20;
         initNewMiniProjectiles();
         this.isUsingOneProjectile = true;
