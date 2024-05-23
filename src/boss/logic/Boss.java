@@ -39,10 +39,10 @@ public class Boss {
         }
     }
 
-    public void update(Player player, Finish finish) {
+    public void update(Player player, Finish finish, int offset) {
         if(!isDead) {
             if(playerHitsBoss(player)) decreaseHealth(player.getCurrentDamagePerAttack());
-            if(!isDead) attack(player);
+            if(!isDead) attack(player, offset);
             else finish.setIsActive(true);
         }
     }
@@ -62,23 +62,23 @@ public class Boss {
     }
 
 
-    private void attack(Player player) {
+    private void attack(Player player, int offset) {
         //TODO: Player needs to have a cool down for the next attack + no movement is allowed when loading screen is active
         if(isUsingOneProjectile) {
-            attackOne(player);
+            attackOne(player, offset);
         } else {
-            attackTwo(player);
+            attackTwo(player, offset);
         }
     }
 
     //attack one
-    private void attackOne(Player player) {
+    private void attackOne(Player player, int offset) {
         moveProjectile();
-        checkIfProjectileIsOutOfBounds();
+        checkIfProjectileIsOutOfBounds(offset);
         if(projectileHitsPlayer(player)) player.decreaseHealth(1);
     }
-    private void checkIfProjectileIsOutOfBounds() {
-        if(projectileHitbox.x <= 0) {
+    private void checkIfProjectileIsOutOfBounds(int offset) {
+        if(projectileHitbox.x <= 0 + offset) {
             projectileHitbox.x = x-PROJECTILE_LENGTH;
             isUsingOneProjectile = false;
         }
@@ -91,14 +91,14 @@ public class Boss {
     }
 
     //attack two
-    private void attackTwo(Player player) {
+    private void attackTwo(Player player, int offset) {
         moveMiniProjectiles();
-        checkIfAllMiniProjectilesAreOutOfBounds();
+        checkIfAllMiniProjectilesAreOutOfBounds(offset);
         if(miniProjectileHitsPlayer(player)) player.decreaseHealth(1);
     }
-    private void checkIfAllMiniProjectilesAreOutOfBounds() {
+    private void checkIfAllMiniProjectilesAreOutOfBounds(int offset) {
         for(Rectangle2D.Float hitbox: miniProjectileHitboxes) {
-            if(hitbox.x > 0) return;
+            if(hitbox.x > 0 + offset) return;
         }
         initNewMiniProjectiles();
         isUsingOneProjectile = true;

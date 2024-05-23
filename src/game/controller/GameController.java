@@ -61,7 +61,7 @@ public class GameController implements ReloadGame {
     public void update() {
         entityController.update(this, mapController, gameObjectController, loadingScreen, interfaceGame, deathScreen);
         itemController.update(entityController);
-        bossController.update(entityController.getPlayer(), gameObjectController.getFinish());
+        bossController.update(entityController.getPlayer(), gameObjectController.getFinish(), mapController.getMapOffset());
     }
 
     public InterfaceGame getInterfaceGame() {

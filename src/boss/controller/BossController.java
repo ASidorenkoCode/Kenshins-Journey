@@ -26,10 +26,10 @@ public class BossController {
 
     }
 
-    public void update(Player player, Finish finish) {
+    public void update(Player player, Finish finish, int offset) {
         //TODO: check if boss should be handled by map
         if(currentBoss == null) return;;
-        currentBoss.update(player, finish);
+        currentBoss.update(player, finish, offset);
     }
 
     public void draw(Graphics g, int offset) {
