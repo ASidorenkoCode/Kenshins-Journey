@@ -92,9 +92,12 @@ public class PlayerUI extends EntityUI {
                 currentAnimation = PlayerAnimations.RUN;
             else currentAnimation = PlayerAnimations.IDLE;
 
-        if (player.isDead()) {
+        if (player.isDead() && !player.getInAir()) {
             currentAnimation = PlayerAnimations.DEATH;
-            aniSpeed = 5;
+            aniSpeed = 3;
+        } else if (player.isDead() && player.getInAir()) {
+            currentAnimation = PlayerAnimations.DEATH;
+            aniSpeed = 1;
         }
 
         //reset index
