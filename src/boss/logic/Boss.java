@@ -12,8 +12,8 @@ public class Boss {
     private static final int BIG_PROJECTILE_HEIGHT = 17;
     private static final int BIG_PROJECTILE_SCALE = 4;
     private static final int NUMBER_OF_MINI_PROJECTILES = 10;
-    private static final int MINI_PROJECTILE_WIDTH = 35;
-    private static final int MINI_PROJECTILE_HEIGHT = 35;
+    private static final int MINI_PROJECTILE_WIDTH = 25;
+    private static final int MINI_PROJECTILE_HEIGHT = 20;
 
     private float x;
     private float y;

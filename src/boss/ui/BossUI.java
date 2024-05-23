@@ -17,14 +17,22 @@ public class BossUI {
     private BufferedImage[] bigProjectile;
     private int bigProjectileAniIndex;
 
-    //TODO: Use different sprites for mini projectiles
     //Mini projectile vars
-    private final static int MINI_PROJECTILE_ANI_LENGTH = 5;
-    private final static String MINI_PROJECTILE_SPRITE_PATH = "boss/fireball.png";
-    private final static int MINI_SPRITE_PX_WIDTH = 33;
-    private final static int MINI_SPRITE_PX_HEIGHT = 17;
+    private final static int MINI_PROJECTILE_ANI_LENGTH = 1;
+    private final static String MINI_PROJECTILE_SPRITE_PATH = "boss/mini_fireball.png";
+    private final static int MINI_SPRITE_PX_WIDTH = 24;
+    private final static int MINI_SPRITE_PX_HEIGHT = 20;
     private BufferedImage[] miniProjectile;
     private int miniProjectileAniIndex;
+
+    //Boss vars
+    private final static int BOSSS_ANI_LENGTH = 5;
+    private final static int BOSS_NUMBER_OF_ANI = 1;
+    private final static String BOSS_SPRITE_PATH = "boss/fireball.png";
+    private final static int BOSS_SPRITE_PX_WIDTH = 33;
+    private final static int BOSS_SPRITE_PX_HEIGHT = 17;
+    private BufferedImage[][] boss;
+    private int bossAniIndex;
 
     //overall used vars
     private final static int ANI_SPEED = 20;
@@ -37,33 +45,18 @@ public class BossUI {
         this.showHitBox = showHitBox;
         this.bigProjectile = new BufferedImage[BIG_PROJECTILE_ANI_LENGTH];
         this.miniProjectile = new BufferedImage[MINI_PROJECTILE_ANI_LENGTH];
+        this.boss = new BufferedImage[BOSS_NUMBER_OF_ANI][BOSSS_ANI_LENGTH];
         this.aniTick = 0;
         this.bigProjectileAniIndex = 0;
         this.miniProjectileAniIndex = 0;
         loadAnimations();
     }
-
-    public void draw(Graphics g, int offset) {
-        if(currentBoss != null) {
-            if(currentBoss.getIsDead()) return;
-            updateAnimationTick();
-            if(currentBoss.getIsUsingBigProjectile()) {
-                drawBigProjectile(g, offset);
-                if(showHitBox) drawBigProjectileHitbox(g, offset);
-            }
-            else {
-                drawMiniProjectile(g, offset);
-                if(showHitBox) drawMiniProjectileHitboxes(g,offset);
-            }
-            if(showHitBox) drawHitbox(g, offset);
-        }
-    }
-
     //load animations
 
     private void loadAnimations() {
         loadBigProjectileAnimationSprites();
         loadMiniProjectileAnimationSprites();
+        loadBossAnimationSprites();
     }
 
     private void loadBigProjectileAnimationSprites() {
@@ -86,6 +79,34 @@ public class BossUI {
                     MINI_SPRITE_PX_HEIGHT);
     }
 
+    private void loadBossAnimationSprites() {
+        BufferedImage img = SpriteManager.GetSpriteAtlas(BOSS_SPRITE_PATH);
+        for (int j = 0; j < boss.length; j++)
+            for (int i = 0; i < boss[j].length; i++)
+                boss[j][i] = img.getSubimage(
+                        i * BOSS_SPRITE_PX_WIDTH,
+                        j * BOSS_SPRITE_PX_HEIGHT,
+                        BOSS_SPRITE_PX_WIDTH,
+                        BOSS_SPRITE_PX_HEIGHT);
+    }
+
+
+    public void draw(Graphics g, int offset) {
+        if(currentBoss != null) {
+            drawBoss(g, offset);
+            if(currentBoss.getIsDead()) return;
+            updateAnimationTick();
+            if(currentBoss.getIsUsingBigProjectile()) {
+                drawBigProjectile(g, offset);
+                if(showHitBox) drawBigProjectileHitbox(g, offset);
+            }
+            else {
+                drawMiniProjectile(g, offset);
+                if(showHitBox) drawMiniProjectileHitboxes(g,offset);
+            }
+            if(showHitBox) drawBossHitbox(g, offset);
+        }
+    }
 
     //Update animations
     void updateAnimationTick() {
@@ -95,6 +116,7 @@ public class BossUI {
             aniTick = 0;
             bigProjectileAniIndex++;
             miniProjectileAniIndex++;
+            bossAniIndex++;
             if (bigProjectileAniIndex >= BIG_PROJECTILE_ANI_LENGTH) {
                 bigProjectileAniIndex = 0;
             }
@@ -102,12 +124,15 @@ public class BossUI {
             if (miniProjectileAniIndex >= MINI_PROJECTILE_ANI_LENGTH) {
                 miniProjectileAniIndex = 0;
             }
+            if (bossAniIndex >= BOSSS_ANI_LENGTH) {
+                bossAniIndex = 0;
+            }
         }
     }
 
 
     //Draw hitboxes
-    public void drawHitbox(Graphics g, int offset) {
+    public void drawBossHitbox(Graphics g, int offset) {
         Rectangle2D.Float hitbox = currentBoss.getHitbox();
         g.drawRect((int) hitbox.x - offset, (int) hitbox.y, (int) hitbox.width, (int) hitbox.height);
     }
@@ -123,6 +148,11 @@ public class BossUI {
     }
 
     //Draw Animations
+    public void drawBoss(Graphics g, int offset) {
+        Rectangle2D.Float hitbox = currentBoss.getHitbox();
+        //TODO: Make multiple boss animations -> remove static 0
+        g.drawImage(boss[0][bossAniIndex], (int) hitbox.x - offset, (int) hitbox.y, (int) hitbox.width, (int) hitbox.height, null);
+    }
     public void drawBigProjectile(Graphics g, int offset) {
         Rectangle2D.Float hitbox = currentBoss.getProjectileHitbox();
         g.drawRect((int) hitbox.x - offset, (int) hitbox.y, (int) hitbox.width, (int) hitbox.height);
