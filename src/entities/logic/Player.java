@@ -129,7 +129,7 @@ public class Player extends Entity {
                 airMovement = 0;
                 inAir = true;
             }
-
+            // TODO change to include offset
             if (this.getHitbox().x < 0 ||
                     this.getHitbox().y < 0 || this.getHitbox().y > GameView.GAME_HEIGHT) {
                 this.setPlayerHealth(0);
