@@ -1,5 +1,6 @@
 package game.controller;
 
+import boss.controller.BossController;
 import entities.controller.EntityController;
 import gameObjects.controller.GameObjectController;
 import gameObjects.logic.Finish;
@@ -19,6 +20,7 @@ public class GameController implements ReloadGame {
     private GameView gameView;
     private EntityController entityController;
     private GameObjectController gameObjectController;
+    private BossController bossController;
     private MapController mapController;
     private LoadingScreen loadingScreen;
     private OptionScreen optionScreen;
@@ -36,7 +38,8 @@ public class GameController implements ReloadGame {
         itemController = new ItemController(mapController, showHitBox);
         gameEngine = new GameEngine(showFPS_UPS, this);
         gameObjectController = new GameObjectController(mapController.getCurrentFinishSpawn(), showHitBox);
-        gameView = new GameView(this, entityController, mapController, itemController, gameObjectController);
+        bossController = new BossController(mapController, showHitBox);
+        gameView = new GameView(this, entityController, mapController, itemController, gameObjectController, bossController);
         this.interfaceGame = new InterfaceGame(entityController.getPlayer(), itemController);
         this.deathScreen = new DeathScreen(gameView.getFrame());
         this.loadingScreen = new LoadingScreen(gameView.getFrame());
@@ -58,6 +61,7 @@ public class GameController implements ReloadGame {
     public void update() {
         entityController.update(this, mapController, gameObjectController, loadingScreen, interfaceGame, deathScreen);
         itemController.update(entityController);
+        bossController.update(entityController.getPlayer());
     }
 
     public InterfaceGame getInterfaceGame() {
@@ -82,5 +86,6 @@ public class GameController implements ReloadGame {
         finish.updateFinishPoint(mapController.getCurrentFinishSpawn().x, mapController.getCurrentFinishSpawn().y);
         entityController.initKappas(mapController, showHitbox);
         itemController.initItems(mapController);
+        bossController.initBoss(mapController);
     }
 }

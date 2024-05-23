@@ -1,6 +1,7 @@
 package entities.logic;
 
 import entities.ui.PlayerUI;
+import game.UI.GameView;
 import maps.logic.Map;
 
 import java.awt.geom.Rectangle2D;
@@ -14,7 +15,7 @@ public class Player extends Entity {
     private boolean hasDynamicAdjustedPlayerDirectionHitbox = false;
     private boolean isDead = false;
     private boolean hasAttacked = false;
-    private int maximumDamagePerAttack = 20;
+    private int currentDamagePerAttack = 20;
     private int damageDealtInCurrentAttack = 0;
     private int playerHealth = 2;
     private int currentMaxHearts = 3;
@@ -75,11 +76,6 @@ public class Player extends Entity {
         }
     }
 
-    private void movePlayerInXDirection(float byValue) {
-        x += byValue;
-        hitbox.x += byValue;
-    }
-
 
     public void updateSpawnPoint(int x, int y) {
         this.x = x;
@@ -133,8 +129,11 @@ public class Player extends Entity {
                 airMovement = 0;
                 inAir = true;
             }
-
-
+            // TODO change to include offset
+            if (this.getHitbox().x < 0 ||
+                    this.getHitbox().y < 0 || this.getHitbox().y > GameView.GAME_HEIGHT) {
+                this.setPlayerHealth(0);
+            }
         }
     }
 
@@ -178,9 +177,9 @@ public class Player extends Entity {
             getLeftAttackHitBox().x = newPosX - 64;
         }
 
-        if (entity instanceof Kappa && getAttackHitBoxIsActive() && !hasAttacked && damageDealtInCurrentAttack < maximumDamagePerAttack && isEntityHitboxNextToPlayerHitbox(entity)) {
-            ((Kappa) entity).decreaseHealth(maximumDamagePerAttack / 2);
-            damageDealtInCurrentAttack += maximumDamagePerAttack / 2;
+        if (entity instanceof Kappa && getAttackHitBoxIsActive() && !hasAttacked && damageDealtInCurrentAttack < currentDamagePerAttack && isEntityHitboxNextToPlayerHitbox(entity)) {
+            ((Kappa) entity).decreaseHealth(currentDamagePerAttack / 2);
+            damageDealtInCurrentAttack += currentDamagePerAttack / 2;
             hasAttacked = true;
         } else if (hasAttacked && playerUI.getCurrentAniIndex() == 6) {
             hasAttacked = false;
@@ -188,8 +187,8 @@ public class Player extends Entity {
         }
     }
 
-    public int getMaximumDamagePerAttack() {
-        return maximumDamagePerAttack;
+    public int getCurrentDamagePerAttack() {
+        return currentDamagePerAttack;
     }
 
 
@@ -277,13 +276,16 @@ public class Player extends Entity {
 
 
     public boolean checkForCollisonOnPosition(Map map, float x, float y) {
-        if (x < 0) return true;
-        if (y < 0) return true;
+        if (x < 0 || y < 0) return true;
 
-        //TODO: Constants for Tile width and height
         int[][] mapData = map.getMapData();
         int tile_x = (int) (x / 64);
         int tile_y = (int) (y / 64);
+
+        if (tile_y >= mapData.length || tile_x >= mapData[0].length) {
+            return false;
+        }
+
         return mapData[tile_y][tile_x] != 11;
     }
 
@@ -410,10 +412,10 @@ public class Player extends Entity {
     }
 
     public void increaseMaximumDamagePerAttack(int byValue) {
-        this.maximumDamagePerAttack += byValue;
+        this.currentDamagePerAttack += byValue;
     }
 
     public void resetMaximumDamagePerAttack() {
-        this.maximumDamagePerAttack = STANDARD_DAMAGE;
+        this.currentDamagePerAttack = STANDARD_DAMAGE;
     }
 }

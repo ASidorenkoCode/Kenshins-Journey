@@ -36,7 +36,6 @@ public class GameObjectUI {
         BufferedImage img = SpriteManager.GetSpriteAtlas(GAME_OBJECT_SPRITE_PATH);
         for (int j = 0; j < animations.length; j++)
             for (int i = 0; i < animations[j].length; i++) {
-                System.out.println(j * SPRITE_PX_HEIGHT);
                 animations[j][i] = img.getSubimage(
                         i * SPRITE_PX_WIDTH,
                         0,

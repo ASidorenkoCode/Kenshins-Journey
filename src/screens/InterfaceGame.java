@@ -80,7 +80,7 @@ public class InterfaceGame {
             }
         }
 
-        String maxDamage = String.valueOf(player.getMaximumDamagePerAttack());
+        String maxDamage = String.valueOf(player.getCurrentDamagePerAttack());
         g.setColor(Color.WHITE);
         g.setFont(new Font("Arial", Font.BOLD, 20));
 
