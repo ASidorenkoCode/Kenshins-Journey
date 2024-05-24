@@ -280,10 +280,11 @@ public class Player extends Entity {
 
 
         //TODO: Implement collision with all enemies
-        Rectangle2D.Float bossHitbox = boss.getHitbox();
-        Rectangle2D.Float bufferedPlayerHitbox = new Rectangle2D.Float(x,y,hitbox.width,hitbox.height);
-        if(bossHitbox.intersects(bufferedPlayerHitbox)) return true;
-
+        if(boss != null) {
+            Rectangle2D.Float bossHitbox = boss.getHitbox();
+            Rectangle2D.Float bufferedPlayerHitbox = new Rectangle2D.Float(x,y,hitbox.width,hitbox.height);
+            if(bossHitbox.intersects(bufferedPlayerHitbox)) return true;
+        }
 
         if (x < 0 || y < 0) return true;
 

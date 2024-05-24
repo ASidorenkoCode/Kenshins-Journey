@@ -92,21 +92,25 @@ public class BossUI {
 
 
     public void draw(Graphics g, int offset) {
-        if(currentBoss != null && !currentBoss.getIsDead()) {
-            drawBoss(g, offset);
-            if(currentBoss.getIsDead()) return;
-            updateAnimationTick();
-            if(currentBoss.getIsUsingBigProjectile()) {
-                drawBigProjectile(g, offset);
-                if(showHitBox) drawBigProjectileHitbox(g, offset);
+        if(currentBoss != null) {
+            //TODO: fitting animations and death animation
+            if(!currentBoss.getIsDead()) {
+                drawBoss(g, offset);
+                if(currentBoss.getIsDead()) return;
+                updateAnimationTick();
+                if(currentBoss.getIsUsingBigProjectile()) {
+                    drawBigProjectile(g, offset);
+                    if(showHitBox) drawBigProjectileHitbox(g, offset);
+                }
+                else {
+                    drawMiniProjectile(g, offset);
+                    if(showHitBox) drawMiniProjectileHitboxes(g,offset);
+                }
+                if(showHitBox) drawBossHitbox(g, offset);
             }
-            else {
-                drawMiniProjectile(g, offset);
-                if(showHitBox) drawMiniProjectileHitboxes(g,offset);
-            }
-            if(showHitBox) drawBossHitbox(g, offset);
+
         }
-        //TODO: fitting animations and death animation
+
     }
 
     //Update animations
