@@ -92,7 +92,7 @@ public class BossUI {
 
 
     public void draw(Graphics g, int offset) {
-        if(currentBoss != null) {
+        if(currentBoss != null && !currentBoss.getIsDead()) {
             drawBoss(g, offset);
             if(currentBoss.getIsDead()) return;
             updateAnimationTick();
@@ -106,6 +106,7 @@ public class BossUI {
             }
             if(showHitBox) drawBossHitbox(g, offset);
         }
+        //TODO: fitting animations and death animation
     }
 
     //Update animations
