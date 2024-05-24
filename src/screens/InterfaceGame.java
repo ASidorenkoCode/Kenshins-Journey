@@ -94,14 +94,29 @@ public class InterfaceGame {
 
         drawScore(g, score);
 
-        int imageX = 500;
-        int imageY = GameView.GAME_HEIGHT - characterPortraitAndStats.getHeight() * 2 - 20;
-        for (Item i : itemController.getMenu()) {
-            //TODO: Improve Menu style
-            if (i != null)
-                //TODO: use draw function() in item controller instead of getting itemUI -> classes should be replaceable
-                itemController.getItemUI().drawStaticItemImage(g, i, imageX, imageY, itemController.getAnimations());
-            imageX += 100;
+        int itemHeight = itemController.getItemUI().getSPRITE_PX_HEIGHT() + 50;
+
+        int imageY = GameView.GAME_HEIGHT - itemHeight;
+
+        int totalWidth = itemController.getMenu().length * 55;
+        int startX = (GameView.GAME_WIDTH - totalWidth) / 2;
+
+        if (itemController.getMenu().length > 0) {
+            int index = 1;
+            for (Item i : itemController.getMenu()) {
+                if (i != null) {
+                    g.setColor(Color.BLACK);
+                    g.fillOval(startX, imageY + 10, itemHeight - 20, itemHeight + 20);
+                    itemController.getItemUI().drawStaticItemImage(g, i, startX, imageY - 20, itemController.getAnimations());
+
+                    g.setColor(Color.WHITE);
+                    g.setFont(new Font("Arial", Font.BOLD, 20));
+                    g.drawString(String.valueOf(index), startX + 27, imageY + itemHeight - 10);
+                }
+
+                startX += 55;
+                index++;
+            }
         }
     }
 
