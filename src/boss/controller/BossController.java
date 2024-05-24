@@ -21,7 +21,10 @@ public class BossController {
 
     public void initBoss(MapController mapController) {
         Point bossSpawn = mapController.getCurrentBossSpawn();
-        if(bossSpawn == null) return;
+        if(bossSpawn == null) {
+            currentBoss = null;
+            return;
+        }
         currentBoss = new Boss(bossSpawn.x,bossSpawn.y);
 
     }
