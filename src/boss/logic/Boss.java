@@ -52,7 +52,10 @@ public class Boss {
 
     public void update(Player player, Finish finish, int offset) {
         if(!isDead) {
-            if(playerHitsBoss(player)) decreaseHealth(player.getCurrentDamagePerAttack());
+            if(playerHitsBoss(player)) {
+                decreaseHealth(player.getCurrentDamagePerAttack());
+                System.out.println(health);
+            };
             if(!isDead) attack(player, offset);
             else finish.setIsActive(true);
         }
@@ -60,7 +63,7 @@ public class Boss {
 
     private boolean playerHitsBoss(Player player) {
         //TODO: Solve boss hitbox bug
-        if (!player.getAttackHitBoxIsActive()) return false;
+        if(!player.getAttackHitBoxIsActive()) return false;
         if(hitbox.intersects(player.getLeftAttackHitBox())) return true;
         return hitbox.intersects(player.getRightAttackHitBox());
     }

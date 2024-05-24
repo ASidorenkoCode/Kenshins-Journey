@@ -79,6 +79,7 @@ public class PlayerUI extends EntityUI {
             else if (player.getInAir() && player.getAttack()) {
                 if (player.getAirMovement() < 0) currentAnimation = PlayerAnimations.JUMP_SLASH;
                 else currentAnimation = PlayerAnimations.FALL_SLASH;
+                player.setAttackHitBoxIsActive(true);
             } else if (player.getInAir() && !player.getAttack()) {
                 if (player.getAirMovement() < 0) currentAnimation = PlayerAnimations.JUMP;
                 else currentAnimation = PlayerAnimations.FALL;
