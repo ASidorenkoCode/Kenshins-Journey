@@ -8,7 +8,7 @@ import java.awt.geom.Rectangle2D;
 
 public class Player extends Entity {
 
-    private boolean left, right, attack, inAir, attackHitBoxIsActive, isResting, isDashing;
+    private boolean left, right, attack, inAir, attackHitBoxIsActive, isResting, isDashing, isFacingRight;
     private float airMovement = -5f;
     private Rectangle2D.Float rightAttackHitBox;
     private Rectangle2D.Float leftAttackHitBox;
@@ -38,14 +38,9 @@ public class Player extends Entity {
         right = false;
         inAir = false;
         attack = false;
+        isFacingRight = true;
         resetMaximumDamagePerAttack();
     }
-
-
-    public static double easeInOutCubic(double t) {
-        return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-    }
-
     public float getX() {
         return x;
     }
@@ -110,14 +105,17 @@ public class Player extends Entity {
                 currentSpeed*=2;
             }
             if (right && !left) {
+                isFacingRight = true;
                 updateXPos(map, currentSpeed);
                 updateGroundMovement();
             } else if (left && !right) {
                 updateXPos(map, -currentSpeed);
                 updateGroundMovement();
+                isFacingRight = false;
             } else time = 0;
 
             if (inAir && !isDashing) {
+
 
                 updateYPos(map, airMovement);
 
@@ -417,5 +415,9 @@ public class Player extends Entity {
 
     public void resetMaximumDamagePerAttack() {
         this.currentDamagePerAttack = STANDARD_DAMAGE;
+    }
+
+    public boolean getIsFacingRight() {
+        return isFacingRight;
     }
 }

@@ -52,20 +52,20 @@ public class Boss {
 
     public void update(Player player, Finish finish, int offset) {
         if(!isDead) {
-            if(playerHitsBoss(player)) {
-                decreaseHealth(player.getCurrentDamagePerAttack());
-                System.out.println(health);
-            };
+            if(playerHitsBoss(player)) decreaseHealth(player.getCurrentDamagePerAttack());
+
             if(!isDead) attack(player, offset);
             else finish.setIsActive(true);
         }
     }
 
     private boolean playerHitsBoss(Player player) {
-        //TODO: Solve boss hitbox bug
+        //only attack if attack hitbox is active
         if(!player.getAttackHitBoxIsActive()) return false;
-        if(hitbox.intersects(player.getLeftAttackHitBox())) return true;
-        return hitbox.intersects(player.getRightAttackHitBox());
+
+        if(player.getIsFacingRight())
+            return hitbox.intersects(player.getRightAttackHitBox());
+        return hitbox.intersects(player.getLeftAttackHitBox());
     }
 
     public void decreaseHealth(int amount) {
@@ -79,14 +79,14 @@ public class Boss {
 
     private void attack(Player player, int offset) {
         if(isUsingBigProjectile) {
-            attackOne(player, offset);
+            bigProjectileAttack(player, offset);
         } else {
-            attackTwo(player, offset);
+            miniProjectileAttack(player, offset);
         }
     }
 
     //attack one
-    private void attackOne(Player player, int offset) {
+    private void bigProjectileAttack(Player player, int offset) {
         moveProjectile();
         checkIfProjectileIsOutOfBounds(offset);
         if(projectileHitsPlayer(player)) {
@@ -111,7 +111,7 @@ public class Boss {
     }
 
     //attack two
-    private void attackTwo(Player player, int offset) {
+    private void miniProjectileAttack(Player player, int offset) {
         moveMiniProjectiles();
         checkIfAllMiniProjectilesAreOutOfBounds(offset);
         if(miniProjectileHitsPlayer(player)) player.decreaseHealth(1);
