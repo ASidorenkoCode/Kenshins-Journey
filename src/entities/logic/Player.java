@@ -1,5 +1,6 @@
 package entities.logic;
 
+import boss.logic.Boss;
 import entities.ui.PlayerUI;
 import game.UI.GameView;
 import maps.logic.Map;
@@ -84,7 +85,7 @@ public class Player extends Entity {
         resetMaximumDamagePerAttack();
     }
 
-    public void update(Map map) {
+    public void update(Map map, Boss boss) {
 
 
         if(!attack) {
@@ -98,32 +99,33 @@ public class Player extends Entity {
             playerHealth++;
         }
         return;
-    }
+        }
+
         if (!isDead()) {
+
             float currentSpeed = currentGroundMovement;
             if(isDashing) {
                 currentSpeed*=2;
             }
             if (right && !left) {
                 isFacingRight = true;
-                updateXPos(map, currentSpeed);
+                updateXPos(map, boss, currentSpeed);
                 updateGroundMovement();
             } else if (left && !right) {
-                updateXPos(map, -currentSpeed);
+                updateXPos(map, boss, -currentSpeed);
                 updateGroundMovement();
                 isFacingRight = false;
             } else time = 0;
 
             if (inAir && !isDashing) {
 
-
-                updateYPos(map, airMovement);
+                updateYPos(map, boss, airMovement);
 
                 if (inAir) {
                     airMovement += 0.1f;
                 }
 
-            } else if (!checkIfPlayerCollidesUnderHim(map, hitbox.x, hitbox.y + 1, hitbox.width, hitbox.height)) {
+            } else if (!checkIfPlayerCollidesUnderHim(map, boss, hitbox.x, hitbox.y + 1, hitbox.width, hitbox.height)) {
                 airMovement = 0;
                 inAir = true;
             }
@@ -132,29 +134,30 @@ public class Player extends Entity {
                     this.getHitbox().y < 0 || this.getHitbox().y > GameView.GAME_HEIGHT) {
                 this.setPlayerHealth(0);
             }
+
         }
     }
 
 
 
-    private void updateXPos(Map map, float byValue) {
-        if (!checkIfPlayerCanMoveToPosition(map, hitbox.x + byValue, hitbox.y, hitbox.width, hitbox.height)) return;
+    private void updateXPos(Map map, Boss boss, float byValue) {
+        if (!checkIfPlayerCanMoveToPosition(map, boss, hitbox.x + byValue, hitbox.y, hitbox.width, hitbox.height)) return;
         x += byValue;
         hitbox.x += byValue;
-        adjustPlayerHitboxPosition(map);
+        adjustPlayerHitboxPosition(map, boss);
         rightAttackHitBox.x = hitbox.x + hitbox.width;
         leftAttackHitBox.x = hitbox.x - leftAttackHitBox.width;
     }
 
-    private void adjustPlayerHitboxPosition(Map map) {
+    private void adjustPlayerHitboxPosition(Map map, Boss boss) {
         //TODO: Change hitbox movement bug
         if (getLeft() && !getRight() && !hasDynamicAdjustedPlayerDirectionHitbox) {
-            if (checkIfPlayerCanMoveToPosition(map, hitbox.x + 20, hitbox.y, hitbox.width, hitbox.height)) {
+            if (checkIfPlayerCanMoveToPosition(map, boss,hitbox.x + 20, hitbox.y, hitbox.width, hitbox.height)) {
                 hitbox.x += 20;
                 hasDynamicAdjustedPlayerDirectionHitbox = true;
             }
         } else if (!getLeft() && getRight() && hasDynamicAdjustedPlayerDirectionHitbox) {
-            if (checkIfPlayerCanMoveToPosition(map, hitbox.x - 20, hitbox.y, hitbox.width, hitbox.height)) {
+            if (checkIfPlayerCanMoveToPosition(map, boss,hitbox.x - 20, hitbox.y, hitbox.width, hitbox.height)) {
                 hitbox.x -= 20;
                 hasDynamicAdjustedPlayerDirectionHitbox = false;
             }
@@ -191,13 +194,13 @@ public class Player extends Entity {
 
 
 
-    private void updateYPos(Map map, float by_value) {
-        if (checkIfPlayerCollidesOverHim(map, hitbox.x, hitbox.y + by_value, hitbox.width)) {
+    private void updateYPos(Map map, Boss boss, float by_value) {
+        if (checkIfPlayerCollidesOverHim(map, boss, hitbox.x, hitbox.y + by_value, hitbox.width)) {
 
             airMovement = 0;
             return;
 
-        } else if (checkIfPlayerCollidesUnderHim(map, hitbox.x, hitbox.y + by_value, hitbox.width, hitbox.height)) {
+        } else if (checkIfPlayerCollidesUnderHim(map, boss, hitbox.x, hitbox.y + by_value, hitbox.width, hitbox.height)) {
             inAir = false;
 
             float playerYPos = (hitbox.y + by_value + hitbox.height);
@@ -273,7 +276,15 @@ public class Player extends Entity {
     }
 
 
-    public boolean checkForCollisonOnPosition(Map map, float x, float y) {
+    public boolean collidesOnPosition(Map map, Boss boss, float x, float y) {
+
+
+        //TODO: Implement collision with all enemies
+        Rectangle2D.Float bossHitbox = boss.getHitbox();
+        Rectangle2D.Float bufferedPlayerHitbox = new Rectangle2D.Float(x,y,hitbox.width,hitbox.height);
+        if(bossHitbox.intersects(bufferedPlayerHitbox)) return true;
+
+
         if (x < 0 || y < 0) return true;
 
         int[][] mapData = map.getMapData();
@@ -287,25 +298,26 @@ public class Player extends Entity {
         return mapData[tile_y][tile_x] != 11;
     }
 
-    private boolean checkIfPlayerCanMoveToPosition(Map map, float x, float y, float width, float height) {
-        if (checkIfPlayerCollidesOverHim(map, x, y, width))
+    private boolean checkIfPlayerCanMoveToPosition(Map map, Boss boss, float x, float y, float width, float height) {
+        if (checkIfPlayerCollidesOverHim(map, boss, x, y, width))
             return false;
-        return !checkIfPlayerCollidesUnderHim(map, x, y, width, height);
+        return !checkIfPlayerCollidesUnderHim(map, boss, x, y, width, height);
     }
 
-    private boolean checkIfPlayerCollidesUnderHim(Map map, float x, float y, float width, float height) {
-        if (!checkForCollisonOnPosition(map, x, y + height))
-            if (!checkForCollisonOnPosition(map, x + width, y + height))
+    private boolean checkIfPlayerCollidesUnderHim(Map map, Boss boss, float x, float y, float width, float height) {
+        if (!collidesOnPosition(map, boss, x, y + height))
+            if (!collidesOnPosition(map, boss,  x + width, y + height))
                 return false;
         return true;
     }
 
-    private boolean checkIfPlayerCollidesOverHim(Map map, float x, float y, float width) {
-        if (!checkForCollisonOnPosition(map, x, y))
-            if (!checkForCollisonOnPosition(map, x + width, y))
+    private boolean checkIfPlayerCollidesOverHim(Map map, Boss boss, float x, float y, float width) {
+        if (!collidesOnPosition(map, boss, x, y))
+            if (!collidesOnPosition(map, boss, x + width, y))
                 return false;
         return true;
     }
+
 
     public Rectangle2D.Float getRightAttackHitBox() {
         return rightAttackHitBox;

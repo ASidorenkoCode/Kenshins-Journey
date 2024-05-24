@@ -1,5 +1,6 @@
 package entities.controller;
 
+import boss.controller.BossController;
 import gameObjects.controller.GameObjectController;
 import gameObjects.logic.Finish;
 import entities.logic.Kappa;
@@ -34,7 +35,7 @@ public class EntityController {
         this.showHitBox = showHitBox;
     }
 
-    public void update(ReloadGame reloadGame, MapController mapController, GameObjectController gameObjectController, LoadingScreen loadingScreen, InterfaceGame interfaceGame, DeathScreen deathScreen) {
+    public void update(ReloadGame reloadGame, MapController mapController, GameObjectController gameObjectController, BossController bossController, LoadingScreen loadingScreen, InterfaceGame interfaceGame, DeathScreen deathScreen) {
         if (gameObjectController.checkIfPlayerIsInFinish(player) && !player.isDead()) {
             reloadGame.loadNewMap();
         }
@@ -60,7 +61,7 @@ public class EntityController {
             }
         }
 
-        player.update(mapController.getCurrentMap());
+        player.update(mapController.getCurrentMap(), bossController.getBoss());
         if (kappas.size() > 0) handleKappa(mapController, interfaceGame);
     }
 

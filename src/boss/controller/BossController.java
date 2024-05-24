@@ -39,4 +39,8 @@ public class BossController {
         if(currentBoss == null) return;
         bossUI.draw(g, offset);
     }
+
+    public Boss getBoss() {
+        return currentBoss;
+    }
 }
