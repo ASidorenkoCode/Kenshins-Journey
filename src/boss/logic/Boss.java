@@ -28,7 +28,6 @@ public class Boss {
     private boolean isUsingBigProjectile;
     private int health;
     private boolean isDead;
-    private boolean isInAir;
 
     public Boss(float x, float y) {
         setBossPosition(x,y);
@@ -39,7 +38,7 @@ public class Boss {
                 BIG_PROJECTILE_WIDTH * BIG_PROJECTILE_SCALE,
                 BIG_PROJECTILE_HEIGHT * BIG_PROJECTILE_SCALE);
         initNewMiniProjectiles();
-        this.health = 20;
+        this.health = 500;
         this.isUsingBigProjectile = true;
     }
 
@@ -52,7 +51,10 @@ public class Boss {
 
     public void update(Player player, Finish finish, int offset) {
         if(!isDead) {
-            if(playerHitsBoss(player)) decreaseHealth(player.getCurrentDamagePerAttack());
+            if(playerHitsBoss(player)  && player.getAttackNumber() <= 2) {
+                decreaseHealth(player.getCurrentDamagePerAttack());
+                player.increaseAttackNumber();
+            }
 
             if(!isDead) attack(player, offset);
             else finish.setIsActive(true);

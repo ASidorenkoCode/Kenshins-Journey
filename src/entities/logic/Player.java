@@ -30,6 +30,9 @@ public class Player extends Entity {
     private float currentGroundMovement = 0;
     private float time = 0;
 
+    //attack variables
+    private int attackNumber = 0;
+
 
     public Player(float x, float y) {
         super(x, y, new Rectangle2D.Float(x + 50, y + 32, (96 - 69) * 2, (96 - 48) * 2));
@@ -434,5 +437,17 @@ public class Player extends Entity {
 
     public boolean getIsFacingRight() {
         return isFacingRight;
+    }
+
+    public void increaseAttackNumber() {
+        attackNumber++;
+    }
+
+    public int getAttackNumber() {
+        return attackNumber;
+    }
+
+    public void resetAttackNumber() {
+        attackNumber = 0;
     }
 }

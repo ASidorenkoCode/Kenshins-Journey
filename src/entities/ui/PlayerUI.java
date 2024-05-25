@@ -65,6 +65,7 @@ public class PlayerUI extends EntityUI {
             if (aniIndex >= currentAnimation.getAniSize()) {
                 player.setAttack(false);
                 player.setIsDashing(false);
+                player.resetAttackNumber();
                 aniIndex = 0;
             }
         }
