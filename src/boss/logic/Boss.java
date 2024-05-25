@@ -51,9 +51,9 @@ public class Boss {
 
     public void update(Player player, Finish finish, int offset) {
         if(!isDead) {
-            if(playerHitsBoss(player)  && player.getAttackNumber() <= 2) {
+            if(playerHitsBoss(player)  && !player.getHasAttacked()) {
                 decreaseHealth(player.getCurrentDamagePerAttack());
-                player.increaseAttackNumber();
+                player.setHasAttacked(true);
             }
 
             if(!isDead) attack(player, offset);

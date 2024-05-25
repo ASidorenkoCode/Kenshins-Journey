@@ -31,7 +31,6 @@ public class Player extends Entity {
     private float time = 0;
 
     //attack variables
-    private int attackNumber = 0;
 
 
     public Player(float x, float y) {
@@ -439,15 +438,10 @@ public class Player extends Entity {
         return isFacingRight;
     }
 
-    public void increaseAttackNumber() {
-        attackNumber++;
+    public void setHasAttacked(boolean hasAttacked) {
+        this.hasAttacked = hasAttacked;
     }
-
-    public int getAttackNumber() {
-        return attackNumber;
-    }
-
-    public void resetAttackNumber() {
-        attackNumber = 0;
+    public boolean getHasAttacked() {
+        return hasAttacked;
     }
 }

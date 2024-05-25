@@ -65,12 +65,15 @@ public class PlayerUI extends EntityUI {
             if (aniIndex >= currentAnimation.getAniSize()) {
                 player.setAttack(false);
                 player.setIsDashing(false);
-                player.resetAttackNumber();
+                player.setHasAttacked(false);
                 aniIndex = 0;
             }
         }
     }
 
+
+
+    //TODO: setAnimation() into Player, not sure if part of ui or not
     private void setAnimation() {
         PlayerAnimations lastAnimation = currentAnimation;
         //Set animation
