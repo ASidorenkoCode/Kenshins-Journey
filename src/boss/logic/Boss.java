@@ -18,7 +18,7 @@ public class Boss {
     private static final int MINI_PROJECTILE_HEIGHT = 20;
     private static final int BOSS_WIDTH = 64;
     private static final int BOSS_HEIGHT = 64;
-    private static final int BOSS_SCALE = 4;
+    private static final int BOSS_SCALE = 3;
 
     private float x;
     private float y;
@@ -28,18 +28,18 @@ public class Boss {
     private boolean isUsingBigProjectile;
     private int health;
     private boolean isDead;
+    private boolean isInAir;
 
     public Boss(float x, float y) {
-        this.x = x;
-        this.y = y - BOSS_HEIGHT * BOSS_SCALE + BOSS_HEIGHT;
+        setBossPosition(x,y);
         this.hitbox = new Rectangle2D.Float(this.x,this.y,BOSS_WIDTH * BOSS_SCALE,BOSS_HEIGHT * BOSS_SCALE);
         this.projectileHitbox = new Rectangle2D.Float(
                 x-(BIG_PROJECTILE_WIDTH * BIG_PROJECTILE_SCALE),
-                y,
+                this.y,
                 BIG_PROJECTILE_WIDTH * BIG_PROJECTILE_SCALE,
                 BIG_PROJECTILE_HEIGHT * BIG_PROJECTILE_SCALE);
-        this.health = 20;
         initNewMiniProjectiles();
+        this.health = 20;
         this.isUsingBigProjectile = true;
     }
 
@@ -57,6 +57,11 @@ public class Boss {
             if(!isDead) attack(player, offset);
             else finish.setIsActive(true);
         }
+    }
+
+    private void setBossPosition(float x, float y) {
+        this.y = y - BOSS_HEIGHT * BOSS_SCALE + BOSS_HEIGHT;
+        this.x = x;
     }
 
     private boolean playerHitsBoss(Player player) {
