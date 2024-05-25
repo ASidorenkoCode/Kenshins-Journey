@@ -5,6 +5,7 @@ import entities.ui.PlayerUI;
 import game.UI.GameView;
 import maps.logic.Map;
 
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
 public class Player extends Entity {
@@ -285,8 +286,7 @@ public class Player extends Entity {
         if(boss != null) {
             if(!boss.getIsDead()) {
                 Rectangle2D.Float bossHitbox = boss.getHitbox();
-                Rectangle2D.Float bufferedPlayerHitbox = new Rectangle2D.Float(x,y,hitbox.width,hitbox.height);
-                if(bossHitbox.intersects(bufferedPlayerHitbox)) return true;
+                if(bossHitbox.contains(new Point((int) x, (int) y))) return true;
             }
         }
 
@@ -304,8 +304,7 @@ public class Player extends Entity {
     }
 
     private boolean checkIfPlayerCanMoveToPosition(Map map, Boss boss, float x, float y, float width, float height) {
-        if (checkIfPlayerCollidesOverHim(map, boss, x, y, width))
-            return false;
+        if (checkIfPlayerCollidesOverHim(map, boss, x, y, width)) return false;
         return !checkIfPlayerCollidesUnderHim(map, boss, x, y, width, height);
     }
 

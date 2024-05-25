@@ -18,7 +18,7 @@ public class Boss {
     private static final int MINI_PROJECTILE_HEIGHT = 20;
     private static final int BOSS_WIDTH = 64;
     private static final int BOSS_HEIGHT = 64;
-    private static final int BOSS_SCALE = 3;
+    private static final int BOSS_SCALE = 4;
 
     private float x;
     private float y;
