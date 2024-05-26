@@ -29,6 +29,13 @@ public class Boss {
     private int health;
     private boolean isDead;
 
+    private final static int JUMP_SPEED = 20;
+    private int jumpCount;
+    private float airMovement;
+    private boolean inAir;
+    private float previosY;
+
+
     public Boss(float x, float y) {
         setBossPosition(x,y);
         this.hitbox = new Rectangle2D.Float(this.x,this.y,BOSS_WIDTH * BOSS_SCALE,BOSS_HEIGHT * BOSS_SCALE);
@@ -40,7 +47,10 @@ public class Boss {
         initNewMiniProjectiles();
         this.health = 500;
         this.isUsingBigProjectile = true;
+        this.airMovement = -5f;
+        this.inAir = false;
     }
+
 
     private void initNewMiniProjectiles() {
         miniProjectileHitboxes = new ArrayList<>();
@@ -58,7 +68,29 @@ public class Boss {
 
             if(!isDead) attack(player, offset);
             else finish.setIsActive(true);
+
+            if(inAir) {
+                //TODO: Static movement or based on hitbox?
+                if(previosY < y) {
+                    y = previosY;
+                    hitbox.y = previosY;
+                    inAir = false;
+                    airMovement = -5f;
+                } else {
+                    y += airMovement;
+                    hitbox.y += airMovement;
+                    airMovement += 0.1f;
+                }
+            } else {
+                inAir = true;
+                previosY = y;
+            }
+
+
+
+
         }
+
     }
 
     private void setBossPosition(float x, float y) {
