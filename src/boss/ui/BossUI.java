@@ -12,16 +12,16 @@ public class BossUI {
     //Big projectile vars
     private final static int BIG_PROJECTILE_ANI_LENGTH = 5;
     private final static String BIG_PROJECTILE_SPRITE_PATH = "boss/fireball.png";
-    private final static int BIG_SPRITE_PX_WIDTH = 33;
-    private final static int BIG_SPRITE_PX_HEIGHT = 17;
+    private final static int BIG_PROJECTILE_SPRITE_PX_WIDTH = 33;
+    private final static int BIG_PROJECTILE_SPRITE_PX_HEIGHT = 17;
     private BufferedImage[] bigProjectile;
     private int bigProjectileAniIndex;
 
     //Mini projectile vars
     private final static int MINI_PROJECTILE_ANI_LENGTH = 1;
     private final static String MINI_PROJECTILE_SPRITE_PATH = "boss/mini_fireball.png";
-    private final static int MINI_SPRITE_PX_WIDTH = 24;
-    private final static int MINI_SPRITE_PX_HEIGHT = 20;
+    private final static int MINI_PROJECTILE_SPRITE_PX_WIDTH = 24;
+    private final static int MINI_PROJECTILE_SPRITE_PX_HEIGHT = 20;
     private BufferedImage[] miniProjectile;
     private int miniProjectileAniIndex;
 
@@ -63,20 +63,20 @@ public class BossUI {
         BufferedImage img = SpriteManager.GetSpriteAtlas(BIG_PROJECTILE_SPRITE_PATH);
         for (int j = 0; j < bigProjectile.length; j++)
             bigProjectile[j] = img.getSubimage(
-                    j * BIG_SPRITE_PX_WIDTH,
+                    j * BIG_PROJECTILE_SPRITE_PX_WIDTH,
                     0,
-                    BIG_SPRITE_PX_WIDTH,
-                    BIG_SPRITE_PX_HEIGHT);
+                    BIG_PROJECTILE_SPRITE_PX_WIDTH,
+                    BIG_PROJECTILE_SPRITE_PX_HEIGHT);
     }
 
     private void loadMiniProjectileAnimationSprites() {
         BufferedImage img = SpriteManager.GetSpriteAtlas(MINI_PROJECTILE_SPRITE_PATH);
         for (int j = 0; j < miniProjectile.length; j++)
             miniProjectile[j] = img.getSubimage(
-                    j * MINI_SPRITE_PX_WIDTH,
+                    j * MINI_PROJECTILE_SPRITE_PX_WIDTH,
                     0,
-                    MINI_SPRITE_PX_WIDTH,
-                    MINI_SPRITE_PX_HEIGHT);
+                    MINI_PROJECTILE_SPRITE_PX_WIDTH,
+                    MINI_PROJECTILE_SPRITE_PX_HEIGHT);
     }
 
     private void loadBossAnimationSprites() {

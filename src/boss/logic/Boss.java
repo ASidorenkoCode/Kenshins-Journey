@@ -7,9 +7,6 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 public class Boss {
-
-
-    //TODO: Duplicate vars from boss and boss ui should be merged
     private static final int BIG_PROJECTILE_WIDTH = 33;
     private static final int BIG_PROJECTILE_HEIGHT = 17;
     private static final int BIG_PROJECTILE_SCALE = 4;
