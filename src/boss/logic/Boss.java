@@ -29,7 +29,7 @@ public class Boss {
     private int health;
     private boolean isDead;
 
-    private final static int JUMP_SPEED = 20;
+    private final static int JUMP_SPEED = 500;
     private int jumpCount;
     private float airMovement;
     private boolean inAir;
@@ -77,19 +77,35 @@ public class Boss {
                     inAir = false;
                     airMovement = -5f;
                 } else {
-                    y += airMovement;
-                    hitbox.y += airMovement;
+                    updateYPosByAirMovement();
                     airMovement += 0.1f;
                 }
             } else {
-                inAir = true;
-                previosY = y;
+                jumpCount++;
+                if(jumpCount >= JUMP_SPEED) {
+                    jumpCount = 0;
+                    inAir = true;
+                    previosY = y;
+                }
             }
 
 
 
 
         }
+
+    }
+
+    private void updateYPosByAirMovement() {
+        y += airMovement;
+        hitbox.y += airMovement;
+
+        //only update not used projectiles
+        if(isUsingBigProjectile) {
+            for (Rectangle2D.Float miniProjectileHitbox : miniProjectileHitboxes) {
+                miniProjectileHitbox.y += airMovement;
+            }
+        } else projectileHitbox.y += airMovement;
 
     }
 
