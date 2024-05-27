@@ -72,6 +72,7 @@ public class GameObjectUI {
     }
 
     public void drawAnimations(Graphics g, int offset) {
+        if(!finish.getIsActive()) return;
         updateAnimationTick();
         drawObject(finish, g, offset);
     }

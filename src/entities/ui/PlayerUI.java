@@ -65,11 +65,15 @@ public class PlayerUI extends EntityUI {
             if (aniIndex >= currentAnimation.getAniSize()) {
                 player.setAttack(false);
                 player.setIsDashing(false);
+                player.setHasAttacked(false);
                 aniIndex = 0;
             }
         }
     }
 
+
+
+    //TODO: setAnimation() into Player, not sure if part of ui or not
     private void setAnimation() {
         PlayerAnimations lastAnimation = currentAnimation;
         //Set animation
@@ -79,6 +83,7 @@ public class PlayerUI extends EntityUI {
             else if (player.getInAir() && player.getAttack()) {
                 if (player.getAirMovement() < 0) currentAnimation = PlayerAnimations.JUMP_SLASH;
                 else currentAnimation = PlayerAnimations.FALL_SLASH;
+                player.setAttackHitBoxIsActive(true);
             } else if (player.getInAir() && !player.getAttack()) {
                 if (player.getAirMovement() < 0) currentAnimation = PlayerAnimations.JUMP;
                 else currentAnimation = PlayerAnimations.FALL;

@@ -19,11 +19,7 @@ public class Kappa extends Entity {
     private boolean hasAttacked = false;
     private boolean isDead = false;
     private Timer attackTimer;
-
     private boolean inAir = true;
-
-
-
 
     public Kappa(float x, float y, float speed) {
         super(x, y - 20, new Rectangle2D.Float(x + 10, y - 20,64,86));

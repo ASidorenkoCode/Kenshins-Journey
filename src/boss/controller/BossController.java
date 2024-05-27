@@ -3,6 +3,7 @@ package boss.controller;
 import boss.logic.Boss;
 import boss.ui.BossUI;
 import entities.logic.Player;
+import gameObjects.logic.Finish;
 import maps.controller.MapController;
 
 import java.awt.*;
@@ -20,19 +21,26 @@ public class BossController {
 
     public void initBoss(MapController mapController) {
         Point bossSpawn = mapController.getCurrentBossSpawn();
-        if(bossSpawn == null) return;
+        if(bossSpawn == null) {
+            currentBoss = null;
+            return;
+        }
         currentBoss = new Boss(bossSpawn.x,bossSpawn.y);
 
     }
 
-    public void update(Player player) {
+    public void update(Player player, Finish finish, int offset) {
         //TODO: check if boss should be handled by map
         if(currentBoss == null) return;;
-        currentBoss.update(player);
+        currentBoss.update(player, finish, offset);
     }
 
     public void draw(Graphics g, int offset) {
         if(currentBoss == null) return;
         bossUI.draw(g, offset);
+    }
+
+    public Boss getBoss() {
+        return currentBoss;
     }
 }
