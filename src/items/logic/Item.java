@@ -3,9 +3,7 @@ package items.logic;
 import entities.logic.Player;
 import items.animations.ItemAnimations;
 
-import java.awt.*;
 import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
 
 
 //TODO: Maybe another parent class for entity and item
@@ -41,5 +39,6 @@ public abstract class Item {
     public ItemAnimations getAnimationType() {
         return animationType;
     }
-    abstract void handleItem(Player player);
+
+    abstract boolean handleItem(Player player);
 }

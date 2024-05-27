@@ -11,7 +11,8 @@ public class PowerRing extends Item {
     }
 
     @Override
-    public void handleItem(Player player) {
+    public boolean handleItem(Player player) {
         player.increaseMaximumDamagePerAttack(20);
+        return true;
     }
 }

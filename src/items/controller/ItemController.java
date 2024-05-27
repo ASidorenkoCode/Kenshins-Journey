@@ -104,16 +104,24 @@ public class ItemController {
     }
 
     public void selectItem(Player player, int index) {
-        Item selectedItem = menu[index];
-        menu[index] = null;
+        index = index - 1;
 
-        if (selectedItem instanceof Heart heart) {
-            heart.handleItem(player);
+        if (index < 0 || index >= menu.length) {
             return;
         }
 
-        if (selectedItem instanceof PowerRing powerRing) {
+        Item selectedItem = menu[index];
+
+        boolean itemUsed = false;
+        if (selectedItem instanceof Heart heart) {
+            itemUsed = heart.handleItem(player);
+        } else if (selectedItem instanceof PowerRing powerRing) {
             powerRing.handleItem(player);
+            itemUsed = true;
+        }
+
+        if (itemUsed) {
+            menu[index] = null;
         }
     }
 
