@@ -305,21 +305,37 @@ public class Player extends Entity {
 
     private boolean checkIfPlayerCanMoveToPosition(Map map, Boss boss, float x, float y, float width, float height) {
         if (checkIfPlayerCollidesOverHim(map, boss, x, y, width)) return false;
+        if (checkIfPlayerCollidesOnRight(map, boss, x, y, width, height)) return false;
+        if (checkIfPlayerCollidesOnLeft(map, boss, x, y, height)) return false;
         return !checkIfPlayerCollidesUnderHim(map, boss, x, y, width, height);
     }
 
     private boolean checkIfPlayerCollidesUnderHim(Map map, Boss boss, float x, float y, float width, float height) {
-        if (!collidesOnPosition(map, boss, x, y + height))
-            if (!collidesOnPosition(map, boss,  x + width, y + height))
-                return false;
-        return true;
+        for(int i=0; i<=width; i++) {
+            if(collidesOnPosition(map,boss,x+i, y+height)) return true;
+        }
+        return false;
     }
 
     private boolean checkIfPlayerCollidesOverHim(Map map, Boss boss, float x, float y, float width) {
-        if (!collidesOnPosition(map, boss, x, y))
-            if (!collidesOnPosition(map, boss, x + width, y))
-                return false;
-        return true;
+        for(int i=0; i<=width; i++) {
+            if(collidesOnPosition(map,boss,x+i, y)) return true;
+        }
+        return false;
+    }
+
+    private boolean checkIfPlayerCollidesOnRight(Map map, Boss boss, float x, float y, float width, float height) {
+        for(int i=0; i<=height; i++) {
+            if(collidesOnPosition(map,boss,x+width, y+i)) return true;
+        }
+        return false;
+    }
+
+    private boolean checkIfPlayerCollidesOnLeft(Map map, Boss boss, float x, float y, float height) {
+        for(int i=0; i<=height; i++) {
+            if(collidesOnPosition(map,boss,x, y+i)) return true;
+        }
+        return false;
     }
 
 
