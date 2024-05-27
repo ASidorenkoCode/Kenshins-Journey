@@ -48,7 +48,7 @@ public class GameView extends JPanel {
     public void gameWindow() {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
-        frame.setUndecorated(true);
+        frame.setUndecorated(false);
 
         calculateScaleFactors();
         int scaledWidth = (int) (GAME_WIDTH * scaleFactor);
@@ -82,13 +82,8 @@ public class GameView extends JPanel {
         GraphicsDevice device = env.getDefaultScreenDevice();
         Rectangle screenBounds = device.getDefaultConfiguration().getBounds();
 
-        if (device.isFullScreenSupported()) {
-            device.setFullScreenWindow(frame);
-        } else {
-            frame.setSize(screenBounds.width, screenBounds.height);
-            frame.setLocationRelativeTo(null);
-        }
-
+        frame.setSize(screenBounds.width, screenBounds.height);
+        frame.setLocationRelativeTo(null);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 

@@ -2,11 +2,11 @@ package game.controller;
 
 import boss.controller.BossController;
 import entities.controller.EntityController;
-import gameObjects.controller.GameObjectController;
-import gameObjects.logic.Finish;
 import entities.logic.Player;
 import game.UI.GameView;
 import game.logic.GameEngine;
+import gameObjects.controller.GameObjectController;
+import gameObjects.logic.Finish;
 import items.controller.ItemController;
 import maps.controller.MapController;
 import screens.DeathScreen;
@@ -43,7 +43,6 @@ public class GameController implements ReloadGame {
         this.interfaceGame = new InterfaceGame(entityController.getPlayer(), itemController);
         this.deathScreen = new DeathScreen(gameView.getFrame());
         this.loadingScreen = new LoadingScreen(gameView.getFrame());
-        this.optionScreen = new OptionScreen(gameView, gameEngine);
         gameView.gameWindow();
         gameEngine.startGameLoop();
         this.showHitbox = showHitBox;
