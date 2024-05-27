@@ -16,14 +16,13 @@ import screens.LoadingScreen;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.List;
 
 public class EntityController {
 
     private PlayerUI playerUI;
     private Player player;
-    private List<Kappa> kappas;
-    private List<KappaUI> kappaUIS;
+    private ArrayList<Kappa> kappas;
+    private ArrayList<KappaUI> kappaUIS;
 
 
     private boolean showHitBox;
@@ -61,9 +60,10 @@ public class EntityController {
             }
         }
 
-        player.update(mapController.getCurrentMap(), bossController.getBoss());
+        player.update(mapController.getCurrentMap(), bossController.getBoss(), kappas);
         if (kappas.size() > 0) handleKappa(mapController, interfaceGame);
     }
+
 
     public void handleKappa(MapController mapController, InterfaceGame interfaceGame) {
         for (Kappa kap : kappas) {

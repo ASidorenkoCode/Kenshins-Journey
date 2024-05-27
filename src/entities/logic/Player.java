@@ -7,6 +7,7 @@ import maps.logic.Map;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 
 public class Player extends Entity {
 
@@ -88,7 +89,7 @@ public class Player extends Entity {
         resetMaximumDamagePerAttack();
     }
 
-    public void update(Map map, Boss boss) {
+    public void update(Map map, Boss boss, ArrayList<Kappa> kappas) {
 
 
         if(!attack) {
@@ -112,23 +113,23 @@ public class Player extends Entity {
             }
             if (right && !left) {
                 isFacingRight = true;
-                updateXPos(map, boss, currentSpeed);
+                updateXPos(map, boss, kappas, currentSpeed);
                 updateGroundMovement();
             } else if (left && !right) {
-                updateXPos(map, boss, -currentSpeed);
+                updateXPos(map, boss, kappas, -currentSpeed);
                 updateGroundMovement();
                 isFacingRight = false;
             } else time = 0;
 
             if (inAir && !isDashing) {
 
-                updateYPos(map, boss, airMovement);
+                updateYPos(map, boss, kappas, airMovement);
 
                 if (inAir) {
                     airMovement += 0.1f;
                 }
 
-            } else if (!checkIfPlayerCollidesUnderHim(map, boss, hitbox.x, hitbox.y + 1, hitbox.width, hitbox.height)) {
+            } else if (!checkIfPlayerCollidesUnderHim(map, boss, kappas, hitbox.x, hitbox.y + 1, hitbox.width, hitbox.height)) {
                 airMovement = 0;
                 inAir = true;
             }
@@ -143,24 +144,24 @@ public class Player extends Entity {
 
 
 
-    private void updateXPos(Map map, Boss boss, float byValue) {
-        if (!checkIfPlayerCanMoveToPosition(map, boss, hitbox.x + byValue, hitbox.y, hitbox.width, hitbox.height)) return;
+    private void updateXPos(Map map, Boss boss, ArrayList<Kappa> kappas, float byValue) {
+        if (!checkIfPlayerCanMoveToPosition(map, boss, kappas, hitbox.x + byValue, hitbox.y, hitbox.width, hitbox.height)) return;
         x += byValue;
         hitbox.x += byValue;
-        adjustPlayerHitboxPosition(map, boss);
+        adjustPlayerHitboxPosition(map, boss, kappas);
         rightAttackHitBox.x = hitbox.x + hitbox.width;
         leftAttackHitBox.x = hitbox.x - leftAttackHitBox.width;
     }
 
-    private void adjustPlayerHitboxPosition(Map map, Boss boss) {
+    private void adjustPlayerHitboxPosition(Map map, Boss boss, ArrayList<Kappa> kappas) {
         //TODO: Change hitbox movement bug
         if (getLeft() && !getRight() && !hasDynamicAdjustedPlayerDirectionHitbox) {
-            if (checkIfPlayerCanMoveToPosition(map, boss,hitbox.x + 20, hitbox.y, hitbox.width, hitbox.height)) {
+            if (checkIfPlayerCanMoveToPosition(map, boss,kappas,hitbox.x + 20, hitbox.y, hitbox.width, hitbox.height)) {
                 hitbox.x += 20;
                 hasDynamicAdjustedPlayerDirectionHitbox = true;
             }
         } else if (!getLeft() && getRight() && hasDynamicAdjustedPlayerDirectionHitbox) {
-            if (checkIfPlayerCanMoveToPosition(map, boss,hitbox.x - 20, hitbox.y, hitbox.width, hitbox.height)) {
+            if (checkIfPlayerCanMoveToPosition(map, boss,kappas, hitbox.x - 20, hitbox.y, hitbox.width, hitbox.height)) {
                 hitbox.x -= 20;
                 hasDynamicAdjustedPlayerDirectionHitbox = false;
             }
@@ -171,14 +172,6 @@ public class Player extends Entity {
     public void collisionWithEntity(Entity entity, PlayerUI playerUI) {
         if (this.isDead()) {
             return;
-        }
-
-        if (collidesWith(entity) && !entity.isDead()) {
-            float newPosX = calculateNewPosition(entity);
-            getHitbox().x = newPosX;
-            setX(newPosX - 57);
-            getRightAttackHitBox().x = newPosX + 64;
-            getLeftAttackHitBox().x = newPosX - 64;
         }
 
         if (entity instanceof Kappa && getAttackHitBoxIsActive() && !hasAttacked && damageDealtInCurrentAttack < currentDamagePerAttack && isEntityHitboxNextToPlayerHitbox(entity)) {
@@ -197,13 +190,13 @@ public class Player extends Entity {
 
 
 
-    private void updateYPos(Map map, Boss boss, float by_value) {
-        if (checkIfPlayerCollidesOverHim(map, boss, hitbox.x, hitbox.y + by_value, hitbox.width)) {
+    private void updateYPos(Map map, Boss boss, ArrayList<Kappa> kappas, float by_value) {
+        if (checkIfPlayerCollidesOverHim(map, boss, kappas, hitbox.x, hitbox.y + by_value, hitbox.width)) {
 
             airMovement = 0;
             return;
 
-        } else if (checkIfPlayerCollidesUnderHim(map, boss, hitbox.x, hitbox.y + by_value, hitbox.width, hitbox.height)) {
+        } else if (checkIfPlayerCollidesUnderHim(map, boss, kappas, hitbox.x, hitbox.y + by_value, hitbox.width, hitbox.height)) {
             inAir = false;
 
             float playerYPos = (hitbox.y + by_value + hitbox.height);
@@ -279,10 +272,16 @@ public class Player extends Entity {
     }
 
 
-    public boolean collidesOnPosition(Map map, Boss boss, float x, float y) {
+    public boolean collidesOnPosition(Map map, Boss boss, ArrayList<Kappa> kappas, float x, float y) {
+
+        for(Kappa kappa: kappas) {
+            if(!kappa.isDead()) {
+                Rectangle2D.Float kappaHitbox = kappa.getHitbox();
+                if(kappaHitbox.contains(new Point((int) x, (int) y))) return true;
+            }
+        }
 
 
-        //TODO: Implement collision with all enemies
         if(boss != null) {
             if(!boss.getIsDead()) {
                 Rectangle2D.Float bossHitbox = boss.getHitbox();
@@ -303,37 +302,37 @@ public class Player extends Entity {
         return mapData[tile_y][tile_x] != 11;
     }
 
-    private boolean checkIfPlayerCanMoveToPosition(Map map, Boss boss, float x, float y, float width, float height) {
-        if (checkIfPlayerCollidesOverHim(map, boss, x, y, width)) return false;
-        if (checkIfPlayerCollidesOnRight(map, boss, x, y, width, height)) return false;
-        if (checkIfPlayerCollidesOnLeft(map, boss, x, y, height)) return false;
-        return !checkIfPlayerCollidesUnderHim(map, boss, x, y, width, height);
+    private boolean checkIfPlayerCanMoveToPosition(Map map, Boss boss, ArrayList<Kappa> kappas, float x, float y, float width, float height) {
+        if (checkIfPlayerCollidesOverHim(map, boss, kappas, x, y, width)) return false;
+        if (checkIfPlayerCollidesOnRight(map, boss, kappas, x, y, width, height)) return false;
+        if (checkIfPlayerCollidesOnLeft(map, boss, kappas, x, y, height)) return false;
+        return !checkIfPlayerCollidesUnderHim(map, boss, kappas, x, y, width, height);
     }
 
-    private boolean checkIfPlayerCollidesUnderHim(Map map, Boss boss, float x, float y, float width, float height) {
+    private boolean checkIfPlayerCollidesUnderHim(Map map, Boss boss, ArrayList<Kappa> kappas,  float x, float y, float width, float height) {
         for(int i=0; i<=width; i++) {
-            if(collidesOnPosition(map,boss,x+i, y+height)) return true;
+            if(collidesOnPosition(map,boss,kappas,x+i, y+height)) return true;
         }
         return false;
     }
 
-    private boolean checkIfPlayerCollidesOverHim(Map map, Boss boss, float x, float y, float width) {
+    private boolean checkIfPlayerCollidesOverHim(Map map, Boss boss, ArrayList<Kappa> kappas, float x, float y, float width) {
         for(int i=0; i<=width; i++) {
-            if(collidesOnPosition(map,boss,x+i, y)) return true;
+            if(collidesOnPosition(map,boss,kappas,x+i, y)) return true;
         }
         return false;
     }
 
-    private boolean checkIfPlayerCollidesOnRight(Map map, Boss boss, float x, float y, float width, float height) {
+    private boolean checkIfPlayerCollidesOnRight(Map map, Boss boss, ArrayList<Kappa> kappas, float x, float y, float width, float height) {
         for(int i=0; i<=height; i++) {
-            if(collidesOnPosition(map,boss,x+width, y+i)) return true;
+            if(collidesOnPosition(map,boss, kappas, x+width, y+i)) return true;
         }
         return false;
     }
 
-    private boolean checkIfPlayerCollidesOnLeft(Map map, Boss boss, float x, float y, float height) {
+    private boolean checkIfPlayerCollidesOnLeft(Map map, Boss boss, ArrayList<Kappa> kappas, float x, float y, float height) {
         for(int i=0; i<=height; i++) {
-            if(collidesOnPosition(map,boss,x, y+i)) return true;
+            if(collidesOnPosition(map,boss, kappas, x, y+i)) return true;
         }
         return false;
     }
