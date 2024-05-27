@@ -23,13 +23,16 @@ public class MapUI {
         buildAllMaps();
     }
 
-    public void draw(Graphics g, int mapOffset, int mapIndex) {
+    public void draw(Graphics g, int mapOffset, int mapIndex, boolean isForeGround) {
         for (int j = 0; j < GameView.TILES_IN_HEIGHT; j++)
             for (int i = 0; i < maps.get(mapIndex).getMapData()[0].length; i++) {
                 int index = maps.get(mapIndex).getSpriteIndex(i, j);
                 if (index >= 0 && index < getMapSprites().length) {
                     int x = GameView.TILES_DEFAULT_SIZE * 2 * i - mapOffset;
                     int y = GameView.TILES_DEFAULT_SIZE * 2 * j;
+                    if (index > 48 && index < 75 && isForeGround) {
+                        g.drawImage(getMapSprites()[index], x, y, GameView.TILES_DEFAULT_SIZE * 2, GameView.TILES_DEFAULT_SIZE * 2, null);
+                    } else if (!isForeGround)
                     g.drawImage(getMapSprites()[index], x, y, GameView.TILES_DEFAULT_SIZE * 2, GameView.TILES_DEFAULT_SIZE * 2, null);
                 } else {
                     System.out.println("Index out of bounds: " + index);

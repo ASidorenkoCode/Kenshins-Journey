@@ -22,7 +22,7 @@ public class Kappa extends Entity {
     private boolean inAir = true;
 
     public Kappa(float x, float y, float speed) {
-        super(x, y - 20, new Rectangle2D.Float(x + 10, y - 20,64,86));
+        super(x, y - 20, new Rectangle2D.Float(x + 10, y - 20, 64, 86));
         this.speed = speed;
         this.moveRight = true;
         attackTimer = new Timer();
@@ -46,26 +46,25 @@ public class Kappa extends Entity {
     }
 
 
-
     public void update(Map map, Player player) {
 
         if (isPlayerHitboxNextToKappaHitbox(player) || isDead) {
             return;
         }
 
-        if(inAir)
-            if(!checkIfEnemyCollidesUnderHim(map, hitbox.x, hitbox.y, hitbox.width, hitbox.height)) {
+        if (inAir)
+            if (!checkIfEnemyCollidesUnderHim(map, hitbox.x, hitbox.y, hitbox.width, hitbox.height)) {
                 hitbox.y++;
                 y++;
             } else inAir = false;
 
 
-        if(isPlayerNearChecker(player)) {
-            if(player.getX() < x) moveRight = false;
+        if (isPlayerNearChecker(player)) {
+            if (player.getX() < x) moveRight = false;
             else moveRight = true;
         }
 
-        if(moveRight) {
+        if (moveRight) {
             updateXPos(map, speed);
         } else updateXPos(map, -speed);
 
@@ -76,7 +75,7 @@ public class Kappa extends Entity {
 
     private void updateXPos(Map map, float by_value) {
 
-        if(checkIfEnemyIsOverEdge(map, hitbox.x + by_value, hitbox.y + 1, hitbox.width, hitbox.height, moveRight)) {
+        if (checkIfEnemyIsOverEdge(map, hitbox.x + by_value, hitbox.y + 1, hitbox.width, hitbox.height, moveRight)) {
 
             moveRight = !moveRight;
 
@@ -101,26 +100,29 @@ public class Kappa extends Entity {
     }
 
     public boolean checkForCollisonOnPosition(Map map, float x, float y) {
-        if(x < 0) return true;
-        if(y < 0) return true;
+        if (x < 0) return false;
+        if (y < 0) return false;
 
-        //TODO: Constants for Tile width and height
         int[][] mapData = map.getMapData();
         int tile_x = (int) (x / 64);
         int tile_y = (int) (y / 64);
-        return mapData[tile_y][tile_x] != 11;
+
+        if (tile_x >= 0 && tile_x < mapData[0].length && tile_y >= 0 && tile_y < mapData.length) {
+            return mapData[tile_y][tile_x] >= 11 && (mapData[tile_y][tile_x] <= 11 || mapData[tile_y][tile_x] > 48) && (mapData[tile_y][tile_x] > 81 || mapData[tile_y][tile_x] <= 75);
+        } else {
+            return false;
+        }
     }
 
     private boolean checkIfEnemyCollidesUnderHim(Map map, float x, float y, float width, float height) {
-        if (!checkForCollisonOnPosition(map, x,y + height))
-            if (!checkForCollisonOnPosition(map, x+width,y+height))
-                return false;
+        if (checkForCollisonOnPosition(map, x, y + height))
+            return !checkForCollisonOnPosition(map, x + width, y + height);
         return true;
     }
 
     private boolean checkIfEnemyIsOverEdge(Map map, float x, float y, float width, float height, boolean isRight) {
-        if(isRight) return !checkForCollisonOnPosition(map, x+width,y + height);
-        return !checkForCollisonOnPosition(map, x,y+height);
+        if (isRight) return checkForCollisonOnPosition(map, x + width, y + height);
+        return checkForCollisonOnPosition(map, x, y + height);
     }
 
     public void resetHealth() {
@@ -168,11 +170,11 @@ public class Kappa extends Entity {
     public void stopAttacking() {
         hasAttacked = false;
         new Timer().schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    isAttacking = false;
-                }
-            }, 1000);
+            @Override
+            public void run() {
+                isAttacking = false;
+            }
+        }, 1000);
     }
 
     public void attackPlayer(Player player) {
@@ -181,7 +183,6 @@ public class Kappa extends Entity {
             hasAttacked = true;
         }
     }
-
 
 
     public boolean isPlayerHitboxNextToKappaHitbox(Player player) {
@@ -194,6 +195,7 @@ public class Kappa extends Entity {
 
         return playerHitboxBuffered.intersects(kappaHitboxBuffered);
     }
+
     public int getHealth() {
         return health;
     }
@@ -201,6 +203,7 @@ public class Kappa extends Entity {
     public int getMaxHealth() {
         return maxHealth;
     }
+
     public boolean isMoveRight() {
         return moveRight;
     }
@@ -212,6 +215,7 @@ public class Kappa extends Entity {
     public float getY() {
         return y;
     }
+
     public void setScoreIncreased(boolean isScoreIncreased) {
         this.isScoreIncreased = isScoreIncreased;
     }
@@ -219,6 +223,7 @@ public class Kappa extends Entity {
     public boolean isScoreIncreased() {
         return isScoreIncreased;
     }
+
     public boolean isPlayerNear() {
         return isPlayerNear;
     }
@@ -226,6 +231,7 @@ public class Kappa extends Entity {
     public boolean isAttacking() {
         return isAttacking;
     }
+
     public Rectangle2D.Float getAttackHitbox() {
         return attackHitbox;
     }
@@ -233,10 +239,12 @@ public class Kappa extends Entity {
     public boolean hasAttacked() {
         return hasAttacked;
     }
+
     @Override
     public boolean isDead() {
         return isDead;
     }
+
     @Override
     void updatePushback() {
     }

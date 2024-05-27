@@ -39,9 +39,9 @@ public class MapController {
         return maps;
     }
 
-    public void draw(Graphics g) {
+    public void draw(Graphics g, boolean isForeGround) {
         checkCloseToBorder();
-        mapUI.draw(g, getMapOffset(), currentMapIndex);
+        mapUI.draw(g, getMapOffset(), currentMapIndex, isForeGround);
     }
 
     public void checkCloseToBorder() {

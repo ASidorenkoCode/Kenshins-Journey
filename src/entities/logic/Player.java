@@ -11,7 +11,7 @@ import java.awt.geom.Rectangle2D;
 public class Player extends Entity {
 
     private boolean left, right, attack, inAir, attackHitBoxIsActive, isResting, isDashing, isFacingRight;
-    private float airMovement = -5f;
+    private float airMovement = -8f;
     private Rectangle2D.Float rightAttackHitBox;
     private Rectangle2D.Float leftAttackHitBox;
     private boolean hasDynamicAdjustedPlayerDirectionHitbox = false;
@@ -300,7 +300,7 @@ public class Player extends Entity {
             return false;
         }
 
-        return mapData[tile_y][tile_x] != 11;
+        return mapData[tile_y][tile_x] < 11 || mapData[tile_y][tile_x] < 48 && mapData[tile_y][tile_x] > 11 || mapData[tile_y][tile_x] < 81 && mapData[tile_y][tile_x] > 75;
     }
 
     private boolean checkIfPlayerCanMoveToPosition(Map map, Boss boss, float x, float y, float width, float height) {

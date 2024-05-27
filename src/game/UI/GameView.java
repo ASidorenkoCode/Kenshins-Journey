@@ -112,12 +112,13 @@ public class GameView extends JPanel {
         //TODO: Class calling inside of gameController
         //TODO: Implement rendering for more stuff
         int mapOffset = mapController.getMapOffset();
-        mapController.draw(g);
+        mapController.draw(g, false);
         entityController.drawEntities(g, mapOffset);
         gameController.getInterfaceGame().draw(g, entityController.getPlayer());
         itemController.getItemUI().drawMapItems(g, mapOffset, itemController.getItemsOnMap(), itemController.isShowHitBox(), itemController.getAnimations());
         gameObjectController.drawObjects(g, mapOffset);
         bossController.draw(g, mapOffset);
+        mapController.draw(g, true);
     }
 
     public void showFPS_UPS(int frames, int updates) {

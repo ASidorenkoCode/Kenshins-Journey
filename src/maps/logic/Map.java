@@ -48,7 +48,7 @@ public class Map {
 
 
     private void loadMapData(int redValue, int x, int y) {
-        if (redValue >= 48)
+        if (redValue >= 80)
             mapData[y][x] = 0;
         else
             mapData[y][x] = redValue;
