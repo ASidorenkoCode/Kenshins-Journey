@@ -374,7 +374,7 @@ public class Player extends Entity {
 
     public void decreaseHealth(int amount) {
         health -= amount;
-        if (health < 0) {
+        if (health <= 0) {
             health = 0;
             isDead = true;
         }

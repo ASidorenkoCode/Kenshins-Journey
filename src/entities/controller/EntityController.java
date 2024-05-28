@@ -63,9 +63,13 @@ public class EntityController {
         player.update(mapController.getCurrentMap(), currentBoss, kappas);
         if (kappas.size() > 0) handleKappas(mapController, interfaceGame);
         if(currentBoss != null) {
-            if(currentBoss.getIsDead()) gameObjectController.getFinish().setIsActive(true);
+            if(currentBoss.getIsDead()) {
+                gameObjectController.getFinish().setIsActive(true);
+                return;
+            }
+            currentBoss.update(mapController.getMapOffset());
             handlePlayerAttacksBoss();
-            currentBoss.update(player, mapController.getMapOffset());
+            handleBossAttacksPlayer();
         }
     }
 
@@ -152,6 +156,26 @@ public class EntityController {
         }
     }
 
+    private void handleBossAttacksPlayer() {
+        if(currentBoss.getIsUsingBigProjectile()) {
+            Rectangle2D.Float bigProjectileHitbox = currentBoss.getProjectileHitbox();
+            if(player.getHitbox().intersects(bigProjectileHitbox)) {
+                player.decreaseHealth(1);
+                currentBoss.resetProjectile();
+            }
+        } else {
+            for(Rectangle2D.Float hitbox: currentBoss.getMiniProjectileHitboxes()) {
+                if(player.getHitbox().intersects(hitbox)) {
+                    currentBoss.resetAllMiniProjectiles();
+                    player.decreaseHealth(1);
+                    return;
+                }
+            }
+        }
+    }
+
+
+    //handle user input
     public void handleUserInputKeyPressed(KeyEvent e, DeathScreen deathScreen) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_A:
@@ -194,6 +218,9 @@ public class EntityController {
                 break;
         }
     }
+
+
+    //handle ui
 
     public void drawEntities(Graphics g, int offset) {
         playerUI.drawAnimations(g, offset);

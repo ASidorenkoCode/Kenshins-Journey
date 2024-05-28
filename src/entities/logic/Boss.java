@@ -50,10 +50,10 @@ public class Boss extends Entity {
         }
     }
 
-    public void update(Player player, int offset) {
+    public void update(int offset) {
         if(!isDead) {
 
-            attack(player, offset);
+            attack(offset);
 
             if(inAir) {
                 //TODO: Static movement or based on hitbox?
@@ -105,24 +105,21 @@ public class Boss extends Entity {
     }
 
 
-    private void attack(Player player, int offset) {
+    private void attack(int offset) {
         if(isUsingBigProjectile) {
-            bigProjectileAttack(player, offset);
+            bigProjectileAttack(offset);
         } else {
-            miniProjectileAttack(player, offset);
+            miniProjectileAttack(offset);
         }
     }
 
     //attack one
-    private void bigProjectileAttack(Player player, int offset) {
+    private void bigProjectileAttack(int offset) {
         moveProjectile();
         checkIfProjectileIsOutOfBounds(offset);
-        if(projectileHitsPlayer(player)) {
-            player.decreaseHealth(1);
-            resetProjectile();
-        }
+
     }
-    private void resetProjectile() {
+    public void resetProjectile() {
         projectileHitbox.x = x- BIG_PROJECTILE_WIDTH;
         isUsingBigProjectile = false;
     }
@@ -134,18 +131,14 @@ public class Boss extends Entity {
     private void moveProjectile() {
         projectileHitbox.x -= 1;
     }
-    private boolean projectileHitsPlayer(Player player) {
-        return player.getHitbox().intersects(projectileHitbox);
-    }
 
     //attack two
-    private void miniProjectileAttack(Player player, int offset) {
+    private void miniProjectileAttack(int offset) {
         moveMiniProjectiles();
         checkIfAllMiniProjectilesAreOutOfBounds(offset);
-        if(miniProjectileHitsPlayer(player)) player.decreaseHealth(1);
     }
 
-    private void resetAllMiniProjectiles() {
+    public void resetAllMiniProjectiles() {
         initNewMiniProjectiles();
         isUsingBigProjectile = true;
     }
@@ -162,15 +155,6 @@ public class Boss extends Entity {
             hitbox.y += startingYMovement;
             startingYMovement -= 0.3f;
         }
-    }
-    private boolean miniProjectileHitsPlayer(Player player) {
-        for(Rectangle2D.Float hitbox: miniProjectileHitboxes) {
-            if(player.getHitbox().intersects(hitbox)) {
-                resetAllMiniProjectiles();
-                return true;
-            };
-        }
-        return false;
     }
 
     //Getter
