@@ -3,6 +3,8 @@ package entities.logic;
 import maps.logic.Map;
 
 import java.awt.geom.Rectangle2D;
+
+//TODO: Dont use util Timer
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -37,7 +39,18 @@ public class Kappa extends Entity {
         }
     }
 
+
+    private boolean playerHitsKappa(Player player) {
+        //only attack if attack hitbox is active
+        if(!player.getAttackHitBoxIsActive()) return false;
+
+        if(player.getIsFacingRight())
+            return hitbox.intersects(player.getRightAttackHitBox());
+        return hitbox.intersects(player.getLeftAttackHitBox());
+    }
+
     public boolean isPlayerNearChecker(Player player) {
+        // checks if player is near to kappa so kappa can attack player
         float distanceX = Math.abs(x - player.getX());
         float distanceY = Math.abs(y - player.getY());
         boolean isPlayerUnderneath = player.getY() > y;
@@ -49,6 +62,13 @@ public class Kappa extends Entity {
 
     public void update(Map map, Player player) {
 
+        if(playerHitsKappa(player)  && !player.getHasAttacked()) {
+            decreaseHealth(player.getCurrentDamagePerAttack());
+            player.setHasAttacked(true);
+        }
+
+
+        //no movement if player is near to kappa
         if (isPlayerHitboxNextToKappaHitbox(player) || isDead) {
             return;
         }
@@ -91,13 +111,6 @@ public class Kappa extends Entity {
         float attackHitboxX = moveRight ? x + hitbox.width : x - attackHitboxWidth;
         float attackHitboxY = y;
         attackHitbox = new Rectangle2D.Float(attackHitboxX, attackHitboxY, attackHitboxWidth, attackHitboxHeight);
-    }
-
-    public void updateSpawnPoint(int x, int y) {
-        this.x = x;
-        this.y = y - HORIZONTAL_OFFSET;
-        this.hitbox.x = x;
-        this.hitbox.y = y - HORIZONTAL_OFFSET;
     }
 
     public boolean checkForCollisonOnPosition(Map map, float x, float y) {

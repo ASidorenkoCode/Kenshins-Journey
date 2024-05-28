@@ -61,14 +61,14 @@ public class EntityController {
         }
 
         player.update(mapController.getCurrentMap(), bossController.getBoss(), kappas);
-        if (kappas.size() > 0) handleKappa(mapController, interfaceGame);
+        if (kappas.size() > 0) handleKappas(mapController, interfaceGame);
     }
 
 
-    public void handleKappa(MapController mapController, InterfaceGame interfaceGame) {
+    public void handleKappas(MapController mapController, InterfaceGame interfaceGame) {
         for (Kappa kap : kappas) {
             kap.update(mapController.getCurrentMap(), player);
-            player.collisionWithEntity(kap, playerUI);
+            //player.collisionWithEntity(kap, playerUI);
 
             if (kap.getHealth() == 0 && !kap.isScoreIncreased()) {
                 interfaceGame.increaseScore(300);

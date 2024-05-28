@@ -139,6 +139,8 @@ public class Player extends Entity {
                 this.setPlayerHealth(0);
             }
 
+
+
         }
     }
 
@@ -169,6 +171,8 @@ public class Player extends Entity {
     }
 
 
+
+    //TODO: Check if this can be deleted
     public void collisionWithEntity(Entity entity, PlayerUI playerUI) {
         if (this.isDead()) {
             return;
