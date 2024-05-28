@@ -21,19 +21,19 @@ public class ItemUI {
         this.aniIndex = 0;
     }
 
-    private void drawItem(Item item, Graphics g, int offset, boolean showHitBox, BufferedImage[][] animations) {
+    private void drawItem(Item item, Graphics g, int offsetX, int offsetY, boolean showHitBox, BufferedImage[][] animations) {
         g.drawImage(animations[item.getAnimationType().getAniIndex()][aniIndex],
-                (int) item.getX() - offset,
-                (int) item.getY(),
+                (int) item.getX() - offsetX,
+                (int) item.getY() - offsetY,
                 SPRITE_PX_WIDTH * 2,
                 SPRITE_PX_HEIGHT * 2, null);
         if (showHitBox) {
             Rectangle2D.Float hitbox = item.getHitbox();
-            g.drawRect((int) hitbox.x - offset, (int) hitbox.y, (int) hitbox.width, (int) hitbox.height);
+            g.drawRect((int) hitbox.x - offsetX, (int) hitbox.y - offsetY, (int) hitbox.width, (int) hitbox.height);
         }
     }
 
-    public void drawMapItems(Graphics g, int offset, ArrayList<Item> itemsOnMap, boolean showHitBox, BufferedImage[][] animations) {
+    public void drawMapItems(Graphics g, int offsetX, int offsetY, ArrayList<Item> itemsOnMap, boolean showHitBox, BufferedImage[][] animations) {
         aniTick++;
         if (aniTick >= ANI_SPEED) {
             aniTick = 0;
@@ -42,7 +42,7 @@ public class ItemUI {
         }
 
         for (int i = 0; i < itemsOnMap.size(); i++) {
-            drawItem(itemsOnMap.get(i), g, offset, showHitBox, animations);
+            drawItem(itemsOnMap.get(i), g, offsetX, offsetY, showHitBox, animations);
         }
     }
 

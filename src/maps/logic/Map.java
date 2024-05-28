@@ -13,8 +13,11 @@ public class Map {
     private int[][] objects;
 
     private int mapTilesWide;
-    private int maxTilesOffset;
+    private int mapTilesHeight;
+    private int maxTilesOffsetX;
+    private int maxTilesOffsetY;
     private int maxMapOffsetX;
+    private int maxMapOffsetY;
     private Point playerSpawn;
     private Point finishSpawn;
     private ArrayList<Point> kappaSpawns;
@@ -79,8 +82,11 @@ public class Map {
 
     private void calculateMapOffsets() {
         mapTilesWide = mapImage.getWidth();
-        maxTilesOffset = mapTilesWide - GameView.TILES_IN_WIDTH;
-        maxMapOffsetX = GameView.TILES_DEFAULT_SIZE * 2 * maxTilesOffset;
+        mapTilesHeight = mapImage.getHeight();
+        maxTilesOffsetX = mapTilesWide - GameView.TILES_IN_WIDTH;
+        maxTilesOffsetY = mapTilesHeight - GameView.TILES_IN_HEIGHT;
+        maxMapOffsetX = GameView.TILES_DEFAULT_SIZE * 2 * maxTilesOffsetX;
+        maxMapOffsetY = GameView.TILES_DEFAULT_SIZE * 2 * maxTilesOffsetY;
     }
 
     public int getmaxMapOffsetX() {
@@ -113,5 +119,17 @@ public class Map {
 
     public Point getBossSpawn() {
         return bossSpawn;
+    }
+
+    public int getmaxMapOffsetY() {
+        return maxMapOffsetY;
+    }
+
+    public int getHeight() {
+        return mapImage.getHeight();
+    }
+
+    public int getWidth() {
+        return mapImage.getWidth();
     }
 }

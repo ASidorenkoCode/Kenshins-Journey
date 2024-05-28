@@ -32,18 +32,18 @@ public class PlayerUI extends EntityUI {
     }
 
     @Override
-    void drawHitBox(Graphics g, int offset) {
+    void drawHitBox(Graphics g, int offsetX, int offsetY) {
         if (showHitBox) {
             Rectangle2D.Float hitbox = player.getHitbox();
-            g.drawRect((int) hitbox.x - offset, (int) hitbox.y, (int) hitbox.width, (int) hitbox.height);
+            g.drawRect((int) hitbox.x - offsetX, (int) hitbox.y - offsetY, (int) hitbox.width, (int) hitbox.height);
 
             if (player.getAttackHitBoxIsActive()) {
                 if (showLeftAnimations) {
                     hitbox = player.getLeftAttackHitBox();
-                    g.drawRect((int) hitbox.x - offset, (int) hitbox.y, (int) hitbox.width, (int) hitbox.height);
+                    g.drawRect((int) hitbox.x - offsetX, (int) hitbox.y - offsetY, (int) hitbox.width, (int) hitbox.height);
                 } else {
                     hitbox = player.getRightAttackHitBox();
-                    g.drawRect((int) hitbox.x - offset, (int) hitbox.y, (int) hitbox.width, (int) hitbox.height);
+                    g.drawRect((int) hitbox.x - offsetX, (int) hitbox.y - offsetY, (int) hitbox.width, (int) hitbox.height);
                 }
             }
         }
@@ -129,7 +129,7 @@ public class PlayerUI extends EntityUI {
     }
 
     @Override
-    public void drawAnimations(Graphics g, int offset) {
+    public void drawAnimations(Graphics g, int offsetX, int offsetY) {
 
         updateAnimationTick();
 
@@ -138,11 +138,11 @@ public class PlayerUI extends EntityUI {
         else if (player.getLeft() && !player.getRight()) showLeftAnimations = true;
 
         g.drawImage(animations[currentAnimation.getAniIndex() + (showLeftAnimations ? SPRITE_Y_DIMENSION : 0)][aniIndex],
-                (int) player.getX() - offset,
-                (int) player.getY(),
+                (int) player.getX() - offsetX,
+                (int) player.getY() - offsetY,
                 (int) (SPRITE_PX_WIDTH * 2),
                 (int) (SPRITE_PX_HEIGHT * 2), null);
-        drawHitBox(g, offset);
+        drawHitBox(g, offsetX, offsetY);
     }
 
     public int getCurrentAniIndex() {

@@ -22,7 +22,7 @@ abstract public class EntityUI {
 
     abstract void drawAttackBox();
 
-    abstract void drawHitBox(Graphics g, int offset);
+    abstract void drawHitBox(Graphics g, int offsetX, int offsetY);
 
     protected void loadAnimations() {
         animations = new BufferedImage[SPRITE_Y_DIMENSION * 2][SPRITE_X_DIMENSION];
@@ -44,5 +44,5 @@ abstract public class EntityUI {
 
     abstract void updateAnimationTick();
 
-    abstract void drawAnimations(Graphics g, int offset);
+    abstract void drawAnimations(Graphics g, int offsetX, int offsetY);
 }

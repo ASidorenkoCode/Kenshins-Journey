@@ -35,9 +35,9 @@ public class BossController {
         currentBoss.update(player, finish, offset);
     }
 
-    public void draw(Graphics g, int offset) {
+    public void draw(Graphics g, int offsetX, int offsetY) {
         if(currentBoss == null) return;
-        bossUI.draw(g, offset);
+        bossUI.draw(g, offsetX, offsetY);
     }
 
     public Boss getBoss() {

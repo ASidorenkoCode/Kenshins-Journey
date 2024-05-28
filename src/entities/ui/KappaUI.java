@@ -1,4 +1,5 @@
 package entities.ui;
+
 import entities.animations.EnemyAnimations;
 import entities.logic.Kappa;
 
@@ -31,18 +32,18 @@ public class KappaUI extends EntityUI {
     }
 
     @Override
-    void drawHitBox(Graphics g, int offset) {
+    void drawHitBox(Graphics g, int offsetX, int offsetY) {
         if (kappa.isDead()) return;
         if (showHitBox) {
             Rectangle2D.Float hitbox = kappa.getHitbox();
-            g.drawRect((int) hitbox.x - offset, (int) hitbox.y, (int) hitbox.width, (int) hitbox.height);
+            g.drawRect((int) hitbox.x - offsetX, (int) hitbox.y - offsetY, (int) hitbox.width, (int) hitbox.height);
 
             Graphics2D g2d = (Graphics2D) g;
             g2d.setColor(Color.BLUE);
             int radius = 150;
             int diameter = radius * 2;
             int startAngle = 0;
-            g2d.drawArc((int) kappa.getX() - offset - radius + 50, (int) kappa.getY() - 50, diameter, diameter, startAngle, 180);
+            g2d.drawArc((int) kappa.getX() - offsetX - radius + 50, (int) kappa.getY() - offsetY - 50, diameter, diameter, startAngle, 180);
         }
     }
 
@@ -75,16 +76,17 @@ public class KappaUI extends EntityUI {
         }
     }
 
-    void drawAttackHitbox(Graphics g, int offset) {
+    void drawAttackHitbox(Graphics g, int offsetX, int offsetY) {
         if (kappa.isDead()) return;
         if (kappa.isAttacking() && showHitBox) {
             Rectangle2D.Float attackHitbox = kappa.getAttackHitbox();
             g.setColor(Color.RED);
-            g.drawRect((int) attackHitbox.x - offset, (int) attackHitbox.y, (int) attackHitbox.width, (int) attackHitbox.height);
+            g.drawRect((int) attackHitbox.x - offsetX, (int) attackHitbox.y - offsetY, (int) attackHitbox.width, (int) attackHitbox.height);
         }
     }
 
-    public void drawAnimations(Graphics g, int offset) {
+    @Override
+    public void drawAnimations(Graphics g, int offsetX, int offsetY) {
 
         updateAnimationTick();
 
@@ -96,23 +98,23 @@ public class KappaUI extends EntityUI {
         }
 
         g.drawImage(animations[currentAnimation.getAniIndex() + (showLeftAnimations ? SPRITE_Y_DIMENSION : 0)][aniIndex],
-                (int) kappa.getX() - offset,
-                yPos,
+                (int) kappa.getX() - offsetX,
+                yPos - offsetY,
                 (int) (SPRITE_PX_WIDTH * 1.5),
                 (int) (SPRITE_PX_HEIGHT * 1.5), null);
-        drawHitBox(g, offset);
-        drawAttackHitbox(g, offset);
-        drawHealthBar(g, offset);
+        drawHitBox(g, offsetX, offsetY);
+        drawAttackHitbox(g, offsetX, offsetY);
+        drawHealthBar(g, offsetX, offsetY);
     }
 
-    public void drawHealthBar(Graphics g, int offset) {
+    public void drawHealthBar(Graphics g, int offsetX, int offsetY) {
         if (kappa.isDead()) return;
 
         if (kappa.getHealth() < kappa.getMaxHealth()) {
             int healthBarHeight = 10;
             int healthBarWidth = (int) (kappa.getHitbox().width * 0.7);
-            int healthBarX = (int) (kappa.getX() + kappa.getHitbox().width / 2 - healthBarWidth / 2) - offset + 10;
-            int healthBarY = (int) kappa.getY() - healthBarHeight - 5;
+            int healthBarX = (int) (kappa.getX() + kappa.getHitbox().width / 2 - healthBarWidth / 2) - offsetX + 10;
+            int healthBarY = (int) kappa.getY() - healthBarHeight - 5 - offsetY;
 
             int currentHealthBarWidth = (int) ((kappa.getHealth() / (float) kappa.getMaxHealth()) * healthBarWidth);
 

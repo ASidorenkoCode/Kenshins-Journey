@@ -23,18 +23,19 @@ public class MapUI {
         buildAllMaps();
     }
 
-    public void draw(Graphics g, int mapOffset, int mapIndex, boolean isForeGround) {
+    public void draw(Graphics g, int mapOffsetX, int mapOffsetY, int mapIndex, boolean isForeGround) {
         if (!isForeGround) {
             BufferedImage background = getBackgroundImage();
             g.drawImage(background, 0, 0, null);
         }
 
-        for (int j = 0; j < GameView.TILES_IN_HEIGHT; j++)
+        int mapHeight = mapController.getCurrentMap().getHeight();
+        for (int j = 0; j < mapHeight; j++)
             for (int i = 0; i < maps.get(mapIndex).getMapData()[0].length; i++) {
                 int index = maps.get(mapIndex).getSpriteIndex(i, j);
                 if (index >= 0 && index < getMapSprites().length) {
-                    int x = GameView.TILES_DEFAULT_SIZE * 2 * i - mapOffset;
-                    int y = GameView.TILES_DEFAULT_SIZE * 2 * j;
+                    int x = GameView.TILES_DEFAULT_SIZE * 2 * i - mapOffsetX;
+                    int y = GameView.TILES_DEFAULT_SIZE * 2 * j - mapOffsetY;
                     if (index > 48 && index < 75 && isForeGround) {
                         g.drawImage(getMapSprites()[index], x, y, GameView.TILES_DEFAULT_SIZE * 2, GameView.TILES_DEFAULT_SIZE * 2, null);
                     } else if (!isForeGround)

@@ -11,7 +11,7 @@ import java.awt.geom.Rectangle2D;
 public class Player extends Entity {
 
     private boolean left, right, attack, inAir, attackHitBoxIsActive, isResting, isDashing, isFacingRight;
-    private float airMovement = -8f;
+    private float airMovement = -6f;
     private Rectangle2D.Float rightAttackHitBox;
     private Rectangle2D.Float leftAttackHitBox;
     private boolean hasDynamicAdjustedPlayerDirectionHitbox = false;
@@ -132,12 +132,10 @@ public class Player extends Entity {
                 airMovement = 0;
                 inAir = true;
             }
-            // TODO change to include offset
-            if (this.getHitbox().x < 0 ||
-                    this.getHitbox().y < 0 || this.getHitbox().y > GameView.GAME_HEIGHT) {
+            // TODO: implement new y position, for now It's just a workaround with times 3
+            if (this.getHitbox().x < 0 || this.getHitbox().y > GameView.GAME_HEIGHT*3) {
                 this.setPlayerHealth(0);
             }
-
         }
     }
 
@@ -224,7 +222,7 @@ public class Player extends Entity {
     public void jump() {
         if (!inAir && !isResting ) {
             inAir = true;
-            airMovement = -5f;
+            airMovement = -6f;
         }
     }
 
@@ -290,7 +288,8 @@ public class Player extends Entity {
             }
         }
 
-        if (x < 0 || y < 0) return true;
+        if (x < 0) return true;
+        if (y < 0) return false;
 
         int[][] mapData = map.getMapData();
         int tile_x = (int) (x / 64);

@@ -136,10 +136,10 @@ public class EntityController {
         }
     }
 
-    public void drawEntities(Graphics g, int offset) {
-        playerUI.drawAnimations(g, offset);
+    public void drawEntities(Graphics g, int offsetX, int offsetY) {
+        playerUI.drawAnimations(g, offsetX, offsetY);
         for (KappaUI kappaUI : kappaUIS) {
-            kappaUI.drawAnimations(g, offset);
+            kappaUI.drawAnimations(g, offsetX, offsetY);
         }
     }
 

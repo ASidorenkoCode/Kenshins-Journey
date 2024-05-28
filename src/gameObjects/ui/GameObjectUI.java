@@ -43,20 +43,20 @@ public class GameObjectUI {
                         SPRITE_PX_HEIGHT);
             }
     }
-    private void drawHitBoxOfObjects(GameObject object, Graphics g, int offset) {
+    private void drawHitBoxOfObjects(GameObject object, Graphics g, int offsetX, int offsetY) {
         if (showHitBox) {
             Rectangle2D.Float hitbox = object.getHitbox();
-            g.drawRect((int) hitbox.x - offset, (int) hitbox.y, (int) hitbox.width, (int) hitbox.height);
+            g.drawRect((int) hitbox.x - offsetX, (int) hitbox.y - offsetY, (int) hitbox.width, (int) hitbox.height);
         }
     }
 
-    private void drawObject(GameObject object, Graphics g, int offset) {
+    private void drawObject(GameObject object, Graphics g, int offsetX, int offsetY)  {
         g.drawImage(animations[object.getObjectAnimation().getAniIndex()][aniIndex], //only one dimension and only one direction
-                (int) object.getX() - offset,
-                (int) object.getY(),
+                (int) object.getX() - offsetX,
+                (int) object.getY() - offsetY,
                 SPRITE_PX_WIDTH * 2,
                 SPRITE_PX_HEIGHT * 2, null);
-        drawHitBoxOfObjects(object, g, offset);
+        drawHitBoxOfObjects(object, g, offsetX, offsetY);
     }
 
     private void updateAnimationTick() {
@@ -71,9 +71,9 @@ public class GameObjectUI {
         }
     }
 
-    public void drawAnimations(Graphics g, int offset) {
+    public void drawAnimations(Graphics g, int offsetX, int offsetY) {
         if(!finish.getIsActive()) return;
         updateAnimationTick();
-        drawObject(finish, g, offset);
+        drawObject(finish, g, offsetX, offsetY);
     }
 }
