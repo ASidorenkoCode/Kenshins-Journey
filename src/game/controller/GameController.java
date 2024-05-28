@@ -30,13 +30,13 @@ public class GameController implements ReloadGame {
 
     private boolean showHitbox;
 
-    public GameController(boolean showFPS_UPS, boolean showHitBox) {
+    public GameController(boolean showHitBox) {
         mapController = new MapController(null);
         entityController = new EntityController(mapController, showHitBox,
                 mapController.getCurrentPlayerSpawn());
         mapController.setEntityController(entityController);
         itemController = new ItemController(mapController, showHitBox);
-        gameEngine = new GameEngine(showFPS_UPS, this);
+        gameEngine = new GameEngine( this);
         gameObjectController = new GameObjectController(mapController, showHitBox);
         bossController = new BossController(mapController, showHitBox);
         gameView = new GameView(this, entityController, mapController, itemController, gameObjectController, bossController);
@@ -86,6 +86,5 @@ public class GameController implements ReloadGame {
         entityController.initKappas(mapController, showHitbox);
         itemController.initItems(mapController);
         bossController.initBoss(mapController);
-
     }
 }

@@ -24,8 +24,6 @@ public class EntityController {
     private Player player;
     private List<Kappa> kappas;
     private List<KappaUI> kappaUIS;
-
-
     private boolean showHitBox;
 
     public EntityController(MapController mapController, boolean showHitBox, Point playerSpawnPoint) {
@@ -146,6 +144,5 @@ public class EntityController {
     public Player getPlayer() {
         return player;
     }
-
 }
 

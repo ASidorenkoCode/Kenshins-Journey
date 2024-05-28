@@ -10,7 +10,6 @@ public class PlayerUI extends EntityUI {
     Player player;
     boolean showHitBox;
     private PlayerAnimations currentAnimation;
-    private long lastUpdate;
 
 
     public PlayerUI(Player player, boolean showHitBox) {
@@ -24,7 +23,6 @@ public class PlayerUI extends EntityUI {
         SPRITE_X_DIMENSION = 17;
         loadAnimations();
         currentAnimation = PlayerAnimations.IDLE;
-        lastUpdate = System.nanoTime();
     }
 
 
@@ -52,18 +50,13 @@ public class PlayerUI extends EntityUI {
     }
 
     @Override
-    void updateAnimationTick() {
-        long now = System.nanoTime();
-        float elapsedTime = (now - lastUpdate) / 1_000_000_000f; // convert to seconds
-        lastUpdate = now;
-
-        int tickProgress = (int) (elapsedTime / 0.01f);
-        aniTick += tickProgress;
-
+    public void updateAnimationTick() {
         setAnimation();
 
+        aniTick ++;
+
         if (aniTick >= aniSpeed) {
-            aniTick = 0;
+            aniTick -= aniSpeed;
             aniIndex++;
 
             if (aniIndex >= PlayerAnimations.DEATH.getAniSize() - 1) {
@@ -121,16 +114,6 @@ public class PlayerUI extends EntityUI {
 
             aniSpeed = currentAnimation.getAniSpeed();
         }
-    }
-
-    private boolean isAttackAnimation(PlayerAnimations animation) {
-        return animation == PlayerAnimations.IDLE_SLASH || animation == PlayerAnimations.RUN_SLASH ||
-                animation == PlayerAnimations.JUMP_SLASH || animation == PlayerAnimations.FALL_SLASH;
-    }
-
-    private void resetAnimationTick() {
-        aniIndex = 0;
-        aniTick = 0;
     }
 
     @Override

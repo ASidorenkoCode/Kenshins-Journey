@@ -14,6 +14,7 @@ public class MapUI {
     private ArrayList<Map> maps;
     private final static String MAPSPRITE_PATH = "mapsprites.png";
     private BufferedImage[] mapSprites;
+    private BufferedImage backgroundImage = null;
 
 
     public MapUI(MapController mapController) {
@@ -34,33 +35,35 @@ public class MapUI {
             for (int i = 0; i < maps.get(mapIndex).getMapData()[0].length; i++) {
                 int index = maps.get(mapIndex).getSpriteIndex(i, j);
                 if (index >= 0 && index < getMapSprites().length) {
-                    int x = GameView.TILES_DEFAULT_SIZE * 2 * i - mapOffsetX;
-                    int y = GameView.TILES_DEFAULT_SIZE * 2 * j - mapOffsetY;
+                    int x = mapController.getCurrentMap().getTileSize() * i - mapOffsetX;
+                    int y = mapController.getCurrentMap().getTileSize() * j - mapOffsetY;
                     if (index > 48 && index < 75 && isForeGround) {
-                        g.drawImage(getMapSprites()[index], x, y, GameView.TILES_DEFAULT_SIZE * 2, GameView.TILES_DEFAULT_SIZE * 2, null);
+                        g.drawImage(getMapSprites()[index], x, y, mapController.getCurrentMap().getTileSize(), mapController.getCurrentMap().getTileSize(), null);
                     } else if (!isForeGround)
-                        g.drawImage(getMapSprites()[index], x, y, GameView.TILES_DEFAULT_SIZE * 2, GameView.TILES_DEFAULT_SIZE * 2, null);
+                        g.drawImage(getMapSprites()[index], x, y, mapController.getCurrentMap().getTileSize(), mapController.getCurrentMap().getTileSize(), null);
                 } else {
-                    System.out.println("Index out of bounds: " + index);
+                    throw new IndexOutOfBoundsException("Index out of bounds: " + index);
                 }
             }
     }
 
     private void buildAllMaps() {
-        BufferedImage[] allLevels = SpriteManager.GetAllMaps();
-        for (BufferedImage img : allLevels)
+        for (BufferedImage img : SpriteManager.GetAllMaps()) {
             maps.add(new Map(img));
+        }
     }
 
     public BufferedImage getBackgroundImage() {
-        int width = GameView.TILES_DEFAULT_SIZE * 2 * maps.get(0).getMapData()[0].length;
-        int height = GameView.TILES_IN_HEIGHT * GameView.TILES_DEFAULT_SIZE * 2;
-        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-        Graphics2D g = image.createGraphics();
-        g.setColor(Color.decode("#639bff")); // TODO: change to a bakckground image later on
-        g.fillRect(0, 0, width, height);
-        g.dispose();
-        return image;
+        int width = mapController.getCurrentMap().getTileSize() * maps.get(0).getMapData()[0].length;
+        int height = GameView.TILES_IN_HEIGHT * mapController.getCurrentMap().getTileSize();
+        if (backgroundImage == null) {
+            backgroundImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+            Graphics2D g = backgroundImage.createGraphics();
+            g.setColor(Color.decode("#639bff")); // TODO: change to a bakckground image later on
+            g.fillRect(0, 0, width, height);
+            g.dispose();
+        }
+        return backgroundImage;
     }
 
     private void importTileSheets() {

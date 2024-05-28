@@ -11,8 +11,6 @@ public class KappaUI extends EntityUI {
     Kappa kappa;
     boolean showHitBox;
     private EnemyAnimations currentAnimation;
-    private long lastUpdate;
-
 
     public KappaUI(Kappa kappa, boolean showHitBox) {
         this.kappa = kappa;
@@ -25,9 +23,6 @@ public class KappaUI extends EntityUI {
         SPRITE_X_DIMENSION = 8;
         loadAnimations();
         currentAnimation = EnemyAnimations.RUN;
-        lastUpdate = System.nanoTime();
-
-
     }
 
     @Override
@@ -53,14 +48,9 @@ public class KappaUI extends EntityUI {
 
     @Override
     void updateAnimationTick() {
-        long now = System.nanoTime();
-        float elapsedTime = (now - lastUpdate) / 1_000_000_000f; // convert to seconds
-        lastUpdate = now;
-
-        int tickProgress = (int) (elapsedTime / 0.01f);
-        aniTick += tickProgress;
-
         setAnimation();
+
+        aniTick ++;
 
         if (aniTick >= aniSpeed) {
             aniTick = 0;
