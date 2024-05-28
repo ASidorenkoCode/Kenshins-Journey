@@ -20,6 +20,7 @@ public class MapController {
         this.entityController = entityController;
         maps = new ArrayList<>();
         mapUI = new MapUI(this);
+        mapOffsetY = getCurrentPlayerSpawn().y;
 
     }
 
