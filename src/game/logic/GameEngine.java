@@ -10,7 +10,6 @@ public class GameEngine implements Runnable {
     private long lastCheck;
     private int frames = 0;
     private int updates = 0;
-    private boolean isPaused = false;
 
     public GameEngine(GameController gameController) {
         this.gameController = gameController;
@@ -20,15 +19,6 @@ public class GameEngine implements Runnable {
         gameThread = new Thread(this);
         gameThread.start();
     }
-
-    public void resume() {
-        isPaused = false;
-    }
-
-    public void pause() {
-        isPaused = true;
-    }
-
     @Override
     public void run() {
         final double timePerUpdate = 1e9 / UPS_SET;
@@ -36,9 +26,6 @@ public class GameEngine implements Runnable {
         double updateAccumulator = 0;
 
         while (true) {
-            if (isPaused) {
-                continue;
-            }
 
             long currTime = System.nanoTime();
             double elapsed = currTime - prevTime;

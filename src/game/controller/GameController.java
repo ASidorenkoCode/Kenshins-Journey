@@ -12,7 +12,6 @@ import maps.controller.MapController;
 import screens.DeathScreen;
 import screens.InterfaceGame;
 import screens.LoadingScreen;
-import screens.OptionScreen;
 
 public class GameController implements ReloadGame {
 
@@ -23,7 +22,6 @@ public class GameController implements ReloadGame {
     private BossController bossController;
     private MapController mapController;
     private LoadingScreen loadingScreen;
-    private OptionScreen optionScreen;
     private InterfaceGame interfaceGame;
     private ItemController itemController;
     private DeathScreen deathScreen;
