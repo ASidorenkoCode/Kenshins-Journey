@@ -45,46 +45,63 @@ public class GameEngine implements Runnable {
 
     @Override
     public void run() {
-
-        final double timePerUpdate = 1e9 / UPS_SET;
-        final double timePerFrame = 1e9 / FPS_SET;
         long prevTime = System.nanoTime();
         double updateAccumulator = 0;
         double frameAccumulator = 0;
 
         while (true) {
-            synchronized (lock) {
-                while (isPaused) {
-                    try {
-                        lock.wait();
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt();
-                        System.out.println("Thread was interrupted, Failed to complete operation");
-                    }
-                }
-            }
+            handlePause();
+
             long currTime = System.nanoTime();
             double elapsed = currTime - prevTime;
             prevTime = currTime;
             updateAccumulator += elapsed;
             frameAccumulator += elapsed;
 
-            while (updateAccumulator >= timePerUpdate) {
-                update();
-                setUpdates(getUpdates() + 1);
-                updateAccumulator -= timePerUpdate;
-            }
+            updateAccumulator = performUpdates(updateAccumulator, elapsed);
+            frameAccumulator = performRendering(frameAccumulator, elapsed);
 
-            if (frameAccumulator >= timePerFrame) {
-                gameController.callRepaint();
-                setFrames(getFrames() + 1);
-                frameAccumulator -= timePerFrame;
-            }
+            calculateAndShowFPS_UPS();
+        }
+    }
 
-            if (getSHOW_FPS_UPS() && System.currentTimeMillis() - getLastCheck() >= 1000) {
-                gameController.showFPS_UPS();
-                resetFPSandUPS();
+    private void handlePause() {
+        synchronized (lock) {
+            while (isPaused) {
+                try {
+                    lock.wait();
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    System.out.println("Thread was interrupted, Failed to complete operation");
+                }
             }
+        }
+    }
+
+    private double performUpdates(double updateAccumulator, double elapsed) {
+        final double timePerUpdate = 1e9 / UPS_SET;
+        while (updateAccumulator >= timePerUpdate) {
+            update();
+            setUpdates(getUpdates() + 1);
+            updateAccumulator -= timePerUpdate;
+        }
+        return updateAccumulator;
+    }
+
+    private double performRendering(double frameAccumulator, double elapsed) {
+        final double timePerFrame = 1e9 / FPS_SET;
+        if (frameAccumulator >= timePerFrame) {
+            gameController.callRepaint();
+            setFrames(getFrames() + 1);
+            frameAccumulator -= timePerFrame;
+        }
+        return frameAccumulator;
+    }
+
+    private void calculateAndShowFPS_UPS() {
+        if (getSHOW_FPS_UPS() && System.currentTimeMillis() - getLastCheck() >= 1000) {
+            gameController.showFPS_UPS();
+            resetFPSandUPS();
         }
     }
 

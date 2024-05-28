@@ -10,6 +10,8 @@ public class PlayerUI extends EntityUI {
     Player player;
     boolean showHitBox;
     private PlayerAnimations currentAnimation;
+    private long lastUpdate;
+
 
     public PlayerUI(Player player, boolean showHitBox) {
         this.player = player;
@@ -22,7 +24,7 @@ public class PlayerUI extends EntityUI {
         SPRITE_X_DIMENSION = 17;
         loadAnimations();
         currentAnimation = PlayerAnimations.IDLE;
-
+        lastUpdate = System.nanoTime();
     }
 
 
@@ -51,8 +53,14 @@ public class PlayerUI extends EntityUI {
 
     @Override
     void updateAnimationTick() {
+        long now = System.nanoTime();
+        float elapsedTime = (now - lastUpdate) / 1_000_000_000f; // convert to seconds
+        lastUpdate = now;
+
+        int tickProgress = (int) (elapsedTime / 0.01f);
+        aniTick += tickProgress;
+
         setAnimation();
-        aniTick++;
 
         if (aniTick >= aniSpeed) {
             aniTick = 0;
@@ -72,30 +80,29 @@ public class PlayerUI extends EntityUI {
     }
 
 
-
     //TODO: setAnimation() into Player, not sure if part of ui or not
     private void setAnimation() {
         PlayerAnimations lastAnimation = currentAnimation;
         //Set animation
 
-            if(player.getIsDashing()) currentAnimation = PlayerAnimations.DASH;
-            else if (player.getIsResting()) currentAnimation = PlayerAnimations.RESTING;
-            else if (player.getInAir() && player.getAttack()) {
-                if (player.getAirMovement() < 0) currentAnimation = PlayerAnimations.JUMP_SLASH;
-                else currentAnimation = PlayerAnimations.FALL_SLASH;
-                player.setAttackHitBoxIsActive(true);
-            } else if (player.getInAir() && !player.getAttack()) {
-                if (player.getAirMovement() < 0) currentAnimation = PlayerAnimations.JUMP;
-                else currentAnimation = PlayerAnimations.FALL;
-            } else if (player.getAttack()) {
-                if ((player.getLeft() && !player.getRight()) || (!player.getLeft() && player.getRight()))
-                    currentAnimation = PlayerAnimations.RUN_SLASH;
-                else currentAnimation = PlayerAnimations.IDLE_SLASH;
+        if (player.getIsDashing()) currentAnimation = PlayerAnimations.DASH;
+        else if (player.getIsResting()) currentAnimation = PlayerAnimations.RESTING;
+        else if (player.getInAir() && player.getAttack()) {
+            if (player.getAirMovement() < 0) currentAnimation = PlayerAnimations.JUMP_SLASH;
+            else currentAnimation = PlayerAnimations.FALL_SLASH;
+            player.setAttackHitBoxIsActive(true);
+        } else if (player.getInAir() && !player.getAttack()) {
+            if (player.getAirMovement() < 0) currentAnimation = PlayerAnimations.JUMP;
+            else currentAnimation = PlayerAnimations.FALL;
+        } else if (player.getAttack()) {
+            if ((player.getLeft() && !player.getRight()) || (!player.getLeft() && player.getRight()))
+                currentAnimation = PlayerAnimations.RUN_SLASH;
+            else currentAnimation = PlayerAnimations.IDLE_SLASH;
 
-                player.setAttackHitBoxIsActive((aniIndex == 0) || (aniIndex == 1) || (aniIndex == 4) || (aniIndex == 5));
-            } else if ((player.getLeft() && !player.getRight()) || (!player.getLeft() && player.getRight()))
-                currentAnimation = PlayerAnimations.RUN;
-            else currentAnimation = PlayerAnimations.IDLE;
+            player.setAttackHitBoxIsActive((aniIndex == 0) || (aniIndex == 1) || (aniIndex == 4) || (aniIndex == 5));
+        } else if ((player.getLeft() && !player.getRight()) || (!player.getLeft() && player.getRight()))
+            currentAnimation = PlayerAnimations.RUN;
+        else currentAnimation = PlayerAnimations.IDLE;
 
         if (player.isDead() && !player.getInAir()) {
             currentAnimation = PlayerAnimations.DEATH;
@@ -112,9 +119,7 @@ public class PlayerUI extends EntityUI {
                 aniIndex = 0;
             }
 
-            if (currentAnimation == PlayerAnimations.IDLE_SLASH || currentAnimation == PlayerAnimations.RUN_SLASH)
-                aniSpeed = 3;
-            else aniSpeed = 3;
+            aniSpeed = currentAnimation.getAniSpeed();
         }
     }
 
