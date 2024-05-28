@@ -1,4 +1,4 @@
-package boss.logic;
+package entities.logic;
 
 import entities.logic.Player;
 import gameObjects.logic.Finish;
@@ -6,7 +6,7 @@ import gameObjects.logic.Finish;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
-public class Boss {
+public class Boss extends Entity {
     private static final int BIG_PROJECTILE_WIDTH = 33;
     private static final int BIG_PROJECTILE_HEIGHT = 17;
     private static final int BIG_PROJECTILE_SCALE = 4;
@@ -24,7 +24,6 @@ public class Boss {
     private ArrayList<Rectangle2D.Float> miniProjectileHitboxes;
     private boolean isUsingBigProjectile;
     private int health;
-    private boolean isDead;
 
     private final static int JUMP_SPEED = 500;
     private int jumpCount;
@@ -34,6 +33,7 @@ public class Boss {
 
 
     public Boss(float x, float y) {
+        super(x,y, new Rectangle2D.Float(0,0,0,0), false);
         setBossPosition(x,y);
         this.hitbox = new Rectangle2D.Float(this.x,this.y,BOSS_WIDTH * BOSS_SCALE,BOSS_HEIGHT * BOSS_SCALE);
         this.projectileHitbox = new Rectangle2D.Float(

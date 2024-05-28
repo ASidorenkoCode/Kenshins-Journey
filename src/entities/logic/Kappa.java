@@ -24,7 +24,7 @@ public class Kappa extends Entity {
     private boolean inAir = true;
 
     public Kappa(float x, float y, float speed) {
-        super(x, y - 20, new Rectangle2D.Float(x + 10, y - 20,64,86));
+        super(x, y - 20, new Rectangle2D.Float(x + 10, y - 20,64,86), false);
         this.speed = speed;
         this.moveRight = true;
         attackTimer = new Timer();
@@ -249,8 +249,5 @@ public class Kappa extends Entity {
     @Override
     public boolean isDead() {
         return isDead;
-    }
-    @Override
-    void updatePushback() {
     }
 }

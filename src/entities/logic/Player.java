@@ -1,6 +1,5 @@
 package entities.logic;
 
-import boss.logic.Boss;
 import entities.ui.PlayerUI;
 import game.UI.GameView;
 import maps.logic.Map;
@@ -36,7 +35,7 @@ public class Player extends Entity {
 
 
     public Player(float x, float y) {
-        super(x, y, new Rectangle2D.Float(x + 50, y + 32, (96 - 69) * 2, (96 - 48) * 2));
+        super(x, y, new Rectangle2D.Float(x + 50, y + 32, (96 - 69) * 2, (96 - 48) * 2), false);
         rightAttackHitBox = new Rectangle2D.Float((x + 50) + 64, y + 16, (96 - 64) * 2, (96 - 48) * 2);
         leftAttackHitBox = new Rectangle2D.Float((x + 50) - 64, y + 16, (96 - 64) * 2, (96 - 48) * 2);
         left = false;
@@ -62,10 +61,6 @@ public class Player extends Entity {
         this.y = y;
     }
 
-    @Override
-    void updatePushback() {
-
-    }
 
     private void updateGroundMovement() {
 

@@ -1,8 +1,7 @@
 package entities.controller;
-
-import boss.controller.BossController;
+import entities.logic.Boss;
+import entities.ui.BossUI;
 import gameObjects.controller.GameObjectController;
-import gameObjects.logic.Finish;
 import entities.logic.Kappa;
 import entities.logic.Player;
 import entities.ui.KappaUI;
@@ -24,6 +23,10 @@ public class EntityController {
     private ArrayList<Kappa> kappas;
     private ArrayList<KappaUI> kappaUIS;
 
+    private Boss currentBoss;
+
+    private BossUI bossUI;
+
 
     private boolean showHitBox;
 
@@ -31,10 +34,11 @@ public class EntityController {
         player = new Player(playerSpawnPoint.x, playerSpawnPoint.y);
         playerUI = new PlayerUI(player, showHitBox);
         initKappas(mapController, showHitBox);
+        initBoss(mapController, showHitBox);
         this.showHitBox = showHitBox;
     }
 
-    public void update(ReloadGame reloadGame, MapController mapController, GameObjectController gameObjectController, BossController bossController, LoadingScreen loadingScreen, InterfaceGame interfaceGame, DeathScreen deathScreen) {
+    public void update(ReloadGame reloadGame, MapController mapController, GameObjectController gameObjectController, LoadingScreen loadingScreen, InterfaceGame interfaceGame, DeathScreen deathScreen) {
         if (gameObjectController.checkIfPlayerIsInFinish(player) && !player.isDead()) {
             reloadGame.loadNewMap();
         }
@@ -60,8 +64,9 @@ public class EntityController {
             }
         }
 
-        player.update(mapController.getCurrentMap(), bossController.getBoss(), kappas);
+        player.update(mapController.getCurrentMap(), currentBoss, kappas);
         if (kappas.size() > 0) handleKappas(mapController, interfaceGame);
+        if(currentBoss != null) currentBoss.update(player, gameObjectController.getFinish(), mapController.getMapOffset());
     }
 
 
@@ -91,6 +96,17 @@ public class EntityController {
             kappas.add(kappa);
             kappaUIS.add(kappaUI);
         }
+    }
+
+    public void initBoss(MapController mapController, boolean showHitBox) {
+        Point bossSpawn = mapController.getCurrentBossSpawn();
+        if(bossSpawn == null) {
+            currentBoss = null;
+            return;
+        }
+        currentBoss = new Boss(bossSpawn.x,bossSpawn.y);
+        bossUI = new BossUI(currentBoss, showHitBox);
+
     }
 
     public void handleUserInputKeyPressed(KeyEvent e, DeathScreen deathScreen) {
@@ -141,6 +157,8 @@ public class EntityController {
         for (KappaUI kappaUI : kappaUIS) {
             kappaUI.drawAnimations(g, offset);
         }
+        if(currentBoss == null) return;
+        bossUI.drawAnimations(g, offset);
     }
 
     public Player getPlayer() {
