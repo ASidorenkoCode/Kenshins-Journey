@@ -15,7 +15,6 @@ public class Player extends Entity {
     private Rectangle2D.Float rightAttackHitBox;
     private Rectangle2D.Float leftAttackHitBox;
     private boolean hasDynamicAdjustedPlayerDirectionHitbox = false;
-    private boolean isDead = false;
     private boolean hasAttacked = false;
     private int currentDamagePerAttack = 20;
     private int damageDealtInCurrentAttack = 0;

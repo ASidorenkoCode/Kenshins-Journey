@@ -19,7 +19,6 @@ public class Kappa extends Entity {
     private boolean isAttacking = false;
     private Rectangle2D.Float attackHitbox;
     private boolean hasAttacked = false;
-    private boolean isDead = false;
     private Timer attackTimer;
     private boolean inAir = true;
 
@@ -39,16 +38,6 @@ public class Kappa extends Entity {
         }
     }
 
-
-    private boolean playerHitsKappa(Player player) {
-        //only attack if attack hitbox is active
-        if(!player.getAttackHitBoxIsActive()) return false;
-
-        if(player.getIsFacingRight())
-            return hitbox.intersects(player.getRightAttackHitBox());
-        return hitbox.intersects(player.getLeftAttackHitBox());
-    }
-
     public boolean isPlayerNearChecker(Player player) {
         // checks if player is near to kappa so kappa can attack player
         float distanceX = Math.abs(x - player.getX());
@@ -62,10 +51,7 @@ public class Kappa extends Entity {
 
     public void update(Map map, Player player) {
 
-        if(playerHitsKappa(player)  && !player.getHasAttacked()) {
-            decreaseHealth(player.getCurrentDamagePerAttack());
-            player.setHasAttacked(true);
-        }
+
 
 
         //no movement if player is near to kappa
@@ -245,9 +231,5 @@ public class Kappa extends Entity {
 
     public boolean hasAttacked() {
         return hasAttacked;
-    }
-    @Override
-    public boolean isDead() {
-        return isDead;
     }
 }

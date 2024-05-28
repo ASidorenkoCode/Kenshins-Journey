@@ -42,7 +42,7 @@ public class Boss extends Entity {
                 BIG_PROJECTILE_WIDTH * BIG_PROJECTILE_SCALE,
                 BIG_PROJECTILE_HEIGHT * BIG_PROJECTILE_SCALE);
         initNewMiniProjectiles();
-        this.health = 500;
+        this.health = 20;
         this.isUsingBigProjectile = true;
         this.airMovement = -5f;
         this.inAir = false;
@@ -56,15 +56,10 @@ public class Boss extends Entity {
         }
     }
 
-    public void update(Player player, Finish finish, int offset) {
+    public void update(Player player, int offset) {
         if(!isDead) {
-            if(playerHitsBoss(player)  && !player.getHasAttacked()) {
-                decreaseHealth(player.getCurrentDamagePerAttack());
-                player.setHasAttacked(true);
-            }
 
-            if(!isDead) attack(player, offset);
-            else finish.setIsActive(true);
+            attack(player, offset);
 
             if(inAir) {
                 //TODO: Static movement or based on hitbox?
@@ -85,10 +80,6 @@ public class Boss extends Entity {
                     previosY = y;
                 }
             }
-
-
-
-
         }
 
     }
@@ -109,15 +100,6 @@ public class Boss extends Entity {
     private void setBossPosition(float x, float y) {
         this.y = y - BOSS_HEIGHT * BOSS_SCALE + BOSS_HEIGHT;
         this.x = x;
-    }
-
-    private boolean playerHitsBoss(Player player) {
-        //only attack if attack hitbox is active
-        if(!player.getAttackHitBoxIsActive()) return false;
-
-        if(player.getIsFacingRight())
-            return hitbox.intersects(player.getRightAttackHitBox());
-        return hitbox.intersects(player.getLeftAttackHitBox());
     }
 
     public void decreaseHealth(int amount) {
