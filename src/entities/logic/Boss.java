@@ -16,15 +16,9 @@ public class Boss extends Entity {
     private static final int BOSS_WIDTH = 64;
     private static final int BOSS_HEIGHT = 64;
     private static final int BOSS_SCALE = 4;
-
-    private float x;
-    private float y;
-    private Rectangle2D.Float hitbox;
     private Rectangle2D.Float projectileHitbox;
     private ArrayList<Rectangle2D.Float> miniProjectileHitboxes;
     private boolean isUsingBigProjectile;
-    private int health;
-
     private final static int JUMP_SPEED = 500;
     private int jumpCount;
     private float airMovement;
@@ -33,7 +27,7 @@ public class Boss extends Entity {
 
 
     public Boss(float x, float y) {
-        super(x,y, new Rectangle2D.Float(0,0,0,0), false);
+        super(x,y, new Rectangle2D.Float(0,0,0,0), false, 20);
         setBossPosition(x,y);
         this.hitbox = new Rectangle2D.Float(this.x,this.y,BOSS_WIDTH * BOSS_SCALE,BOSS_HEIGHT * BOSS_SCALE);
         this.projectileHitbox = new Rectangle2D.Float(

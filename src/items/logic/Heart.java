@@ -12,9 +12,9 @@ public class Heart extends Item {
 
     @Override
     public boolean handleItem(Player player) {
-        if (player.getPlayerHealth() >= player.getTotalHearts() * 2) return false;
-        if (player.getPlayerHealth() < player.getTotalHearts() * 2) {
-            player.setPlayerHealth(player.getPlayerHealth() + 2);
+        if (player.getHealth() >= player.getTotalHearts() * 2) return false;
+        if (player.getHealth() < player.getTotalHearts() * 2) {
+            player.setPlayerHealth(player.getHealth() + 2);
             return true;
         }
         return false;

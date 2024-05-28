@@ -9,12 +9,14 @@ public abstract class Entity {
     protected float x, y;
     protected Rectangle2D.Float hitbox;
     protected boolean isDead;
+    protected int health;
 
-    public Entity(float x, float y, Rectangle2D.Float hitbox, boolean isDead) {
+    public Entity(float x, float y, Rectangle2D.Float hitbox, boolean isDead, int health) {
         this.x = x;
         this.y = y;
         this.hitbox = hitbox;
         this.isDead = isDead;
+        this.health = health;
     }
 
 
@@ -23,5 +25,8 @@ public abstract class Entity {
     }
     public boolean isDead() {
         return isDead;
+    }
+    public int getHealth() {
+        return health;
     }
 }

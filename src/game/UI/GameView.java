@@ -93,7 +93,7 @@ public class GameView extends JPanel {
             at = AffineTransform.getScaleInstance(scaleFactor, scaleFactor);
             g2d.setTransform(at);
             render(g2d);
-            gameController.getInterfaceGame().updatePlayerHealth(entityController.getPlayer().getPlayerHealth());
+            gameController.getInterfaceGame().updatePlayerHealth(entityController.getPlayer().getHealth());
             gameController.getInterfaceGame().updateHighscore();
             gameController.getInterfaceGame().draw(g2d, entityController.getPlayer());
             g2d.dispose(); // Dispose the Graphics2D object when done

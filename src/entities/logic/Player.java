@@ -18,7 +18,6 @@ public class Player extends Entity {
     private boolean hasAttacked = false;
     private int currentDamagePerAttack = 20;
     private int damageDealtInCurrentAttack = 0;
-    private int playerHealth = 2;
     private int currentMaxHearts = 3;
     private int totalMaxHearts = 3;
     private boolean isHitByEnemy = false;
@@ -34,7 +33,7 @@ public class Player extends Entity {
 
 
     public Player(float x, float y) {
-        super(x, y, new Rectangle2D.Float(x + 50, y + 32, (96 - 69) * 2, (96 - 48) * 2), false);
+        super(x, y, new Rectangle2D.Float(x + 50, y + 32, (96 - 69) * 2, (96 - 48) * 2), false, 2);
         rightAttackHitBox = new Rectangle2D.Float((x + 50) + 64, y + 16, (96 - 64) * 2, (96 - 48) * 2);
         leftAttackHitBox = new Rectangle2D.Float((x + 50) - 64, y + 16, (96 - 64) * 2, (96 - 48) * 2);
         left = false;
@@ -93,8 +92,8 @@ public class Player extends Entity {
 
         if(isResting) {
         //TODO: better suiting resting
-        if(playerHealth<totalMaxHearts*2) {
-            playerHealth++;
+        if(health<totalMaxHearts*2) {
+            health++;
         }
         return;
         }
@@ -368,25 +367,18 @@ public class Player extends Entity {
         }
     }
 
-    public int getPlayerHealth() {
-        return playerHealth;
-    }
 
     public void setPlayerHealth(int playerHealth) {
-        this.playerHealth = playerHealth;
+        this.health = playerHealth;
     }
 
     public void decreaseHealth(int amount) {
-        playerHealth -= amount;
-        if (playerHealth < 0) {
-            playerHealth = 0;
+        health -= amount;
+        if (health < 0) {
+            health = 0;
+            isDead = true;
         }
         setHitByEnemy(true);
-    }
-
-    @Override
-    public boolean isDead() {
-        return playerHealth == 0;
     }
 
     public boolean getDeathAnimationFinished() {
@@ -398,7 +390,7 @@ public class Player extends Entity {
     }
 
     public int resetHealth() {
-        return playerHealth = totalMaxHearts * 2;
+        return health = totalMaxHearts * 2;
     }
 
     public int getTotalHearts() {

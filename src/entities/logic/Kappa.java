@@ -12,7 +12,6 @@ public class Kappa extends Entity {
     private float speed;
     boolean moveRight;
     private final static float HORIZONTAL_OFFSET = 40;
-    private int health = 100;
     private int maxHealth = 100;
     private boolean isScoreIncreased = false;
     private boolean isPlayerNear = false;
@@ -23,7 +22,7 @@ public class Kappa extends Entity {
     private boolean inAir = true;
 
     public Kappa(float x, float y, float speed) {
-        super(x, y - 20, new Rectangle2D.Float(x + 10, y - 20,64,86), false);
+        super(x, y - 20, new Rectangle2D.Float(x + 10, y - 20,64,86), false, 20);
         this.speed = speed;
         this.moveRight = true;
         attackTimer = new Timer();
