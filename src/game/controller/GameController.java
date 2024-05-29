@@ -12,6 +12,7 @@ import maps.controller.MapController;
 import screens.DeathScreen;
 import screens.InterfaceGame;
 import screens.LoadingScreen;
+import screens.StartScreen;
 
 public class GameController implements ReloadGame {
 
@@ -45,6 +46,7 @@ public class GameController implements ReloadGame {
         gameEngine.startGameLoop();
         this.showHitbox = showHitBox;
     }
+
 
 
     public void showFPS_UPS() {

@@ -34,6 +34,8 @@ public class EntityController {
     }
 
     public void update(ReloadGame reloadGame, MapController mapController, GameObjectController gameObjectController, BossController bossController, LoadingScreen loadingScreen, InterfaceGame interfaceGame, DeathScreen deathScreen) {
+
+
         if (gameObjectController.checkIfPlayerIsInFinish(player) && !player.isDead()) {
             reloadGame.loadNewMap();
         }

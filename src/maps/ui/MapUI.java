@@ -5,8 +5,11 @@ import maps.controller.MapController;
 import maps.logic.Map;
 import spriteControl.SpriteManager;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class MapUI {
@@ -59,8 +62,12 @@ public class MapUI {
         if (backgroundImage == null) {
             backgroundImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
             Graphics2D g = backgroundImage.createGraphics();
-            g.setColor(Color.decode("#639bff")); // TODO: change to a bakckground image later on
-            g.fillRect(0, 0, width, height);
+            try {
+                BufferedImage loadedImage = ImageIO.read(new File("res/screens/startScreen/forest.png"));
+                g.drawImage(loadedImage, 0, 0, null);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             g.dispose();
         }
         return backgroundImage;

@@ -11,7 +11,7 @@ import java.awt.geom.Rectangle2D;
 public class Player extends Entity {
 
     private boolean left, right, attack, inAir, attackHitBoxIsActive, isResting, isDashing, isFacingRight;
-    private float airMovement = -6f;
+    private float airMovement = -10f;
     private Rectangle2D.Float rightAttackHitBox;
     private Rectangle2D.Float leftAttackHitBox;
     private boolean hasDynamicAdjustedPlayerDirectionHitbox = false;
@@ -222,7 +222,7 @@ public class Player extends Entity {
     public void jump() {
         if (!inAir && !isResting ) {
             inAir = true;
-            airMovement = -6f;
+            airMovement = -10f;
         }
     }
 

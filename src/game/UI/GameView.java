@@ -7,6 +7,7 @@ import gameObjects.controller.GameObjectController;
 import items.controller.ItemController;
 import keyboardinputs.logic.KeyboardInputsIngame;
 import maps.controller.MapController;
+import screens.StartScreen;
 
 import javax.swing.*;
 import java.awt.*;
@@ -45,6 +46,22 @@ public class GameView extends JPanel {
         this.itemController = itemController;
     }
 
+    public void drawStartScreen() {
+        StartScreen startScreen = new StartScreen();
+        startScreen.setPreferredSize(new Dimension(GAME_WIDTH, GAME_HEIGHT));
+        getFrame().setContentPane(startScreen);
+        getFrame().setVisible(true);
+
+        Timer timer = new Timer(5000, e -> {
+            getFrame().setContentPane(GameView.this);
+            getFrame().revalidate();
+            getFrame().requestFocus();
+            getFrame().addKeyListener(new KeyboardInputsIngame(this));
+        });
+        timer.setRepeats(false);
+        timer.start();
+    }
+
     public void gameWindow() {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
@@ -57,9 +74,10 @@ public class GameView extends JPanel {
 
         JPanel container = new JPanel();
         configureContainerForGameView(container);
-
         frame.add(container);
         frame.pack();
+
+//        drawStartScreen();
         setFrameToFullScreen();
         frame.setVisible(true);
     }
