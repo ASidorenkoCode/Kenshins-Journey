@@ -19,7 +19,21 @@ public abstract class Entity {
         this.health = health;
     }
 
+    public void decreaseHealth(int amount) {
+        health -= amount;
+        if (health <= 0) {
+            health = 0;
+            isDead = true;
+        }
+    }
 
+    public float getX() {
+        return x;
+    }
+
+    public float getY() {
+        return y;
+    }
     public Rectangle2D.Float getHitbox() {
         return hitbox;
     }

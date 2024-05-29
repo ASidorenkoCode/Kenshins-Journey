@@ -96,14 +96,6 @@ public class Boss extends Entity {
         this.x = x;
     }
 
-    public void decreaseHealth(int amount) {
-        health -= amount;
-        if (health <= 0) {
-            health = 0;
-            isDead = true;
-        }
-    }
-
 
     private void attack(int offset) {
         if(isUsingBigProjectile) {

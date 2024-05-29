@@ -43,16 +43,9 @@ public class Player extends Entity {
         isFacingRight = true;
         resetMaximumDamagePerAttack();
     }
-    public float getX() {
-        return x;
-    }
 
     public void setX(float x) {
         this.x = x;
-    }
-
-    public float getY() {
-        return y;
     }
 
     public void setY(float y) {
@@ -372,12 +365,9 @@ public class Player extends Entity {
         this.health = playerHealth;
     }
 
+    @Override
     public void decreaseHealth(int amount) {
-        health -= amount;
-        if (health <= 0) {
-            health = 0;
-            isDead = true;
-        }
+        super.decreaseHealth(amount);
         setHitByEnemy(true);
     }
 

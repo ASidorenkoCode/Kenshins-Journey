@@ -4,57 +4,43 @@ import maps.logic.Map;
 
 import java.awt.geom.Rectangle2D;
 
-//TODO: Dont use util Timer
-import java.util.Timer;
-import java.util.TimerTask;
-
 public class Kappa extends Entity {
     private float speed;
     boolean moveRight;
-    private final static float HORIZONTAL_OFFSET = 40;
+    private final static int ATTACK_SPEED = 600;
+    private int attackCount = 0;
     private int maxHealth = 100;
     private boolean isScoreIncreased = false;
     private boolean isPlayerNear = false;
     private boolean isAttacking = false;
     private Rectangle2D.Float attackHitbox;
     private boolean hasAttacked = false;
-    private Timer attackTimer;
     private boolean inAir = true;
 
     public Kappa(float x, float y, float speed) {
         super(x, y - 20, new Rectangle2D.Float(x + 10, y - 20,64,86), false, 20);
         this.speed = speed;
         this.moveRight = true;
-        attackTimer = new Timer();
-        attackHitbox = new Rectangle2D.Float();
+        this.attackHitbox = new Rectangle2D.Float();
     }
 
-    public void decreaseHealth(int amount) {
-        health -= amount;
-        if (health <= 0) {
-            health = 0;
-            isDead = true;
-        }
-    }
-
-    public boolean isPlayerNearChecker(Player player) {
-        // checks if player is near to kappa so kappa can attack player
-        float distanceX = Math.abs(x - player.getX());
-        float distanceY = Math.abs(y - player.getY());
-        boolean isPlayerUnderneath = player.getY() > y;
-        isPlayerNear = !isPlayerUnderneath && Math.sqrt(distanceX * distanceX + distanceY * distanceY) < 150;
-        return isPlayerNear;
+    public boolean isEntityInsideChecker(Entity entity) {
+        // checks if entity is near to kappa so kappa can attack player
+        float distanceX = Math.abs(x - entity.getX());
+        float distanceY = Math.abs(y - entity.getY());
+        boolean isEntityUnderneath = entity.getY() > y;
+        return !isEntityUnderneath && Math.sqrt(distanceX * distanceX + distanceY * distanceY) < 150;
     }
 
 
 
     public void update(Map map, Player player) {
+        if(isDead) return;
 
-
-
-
-        //no movement if player is near to kappa
-        if (isPlayerHitboxNextToKappaHitbox(player) || isDead) {
+        //no movement, but attack, if player is near to kappa
+        if (isPlayerHitboxNextToKappaHitbox(player)) {
+            isAttacking = true;
+            updateAttackHitbox();
             return;
         }
 
@@ -64,20 +50,20 @@ public class Kappa extends Entity {
                 y++;
             } else inAir = false;
 
-
-        if(isPlayerNearChecker(player)) {
-            if(player.getX() < x) moveRight = false;
-            else moveRight = true;
-        }
-
         if(moveRight) {
             updateXPos(map, speed);
         } else updateXPos(map, -speed);
 
-        if (isAttacking) {
-            updateAttackHitbox();
+        //reset attack Count, when kappa has attacked and break is over
+        if(hasAttacked) {
+            attackCount++;
+            if(attackCount >= ATTACK_SPEED) {
+                hasAttacked = false;
+                attackCount = 0;
+            }
         }
     }
+
 
     private void updateXPos(Map map, float by_value) {
 
@@ -125,61 +111,6 @@ public class Kappa extends Entity {
         this.health = this.maxHealth;
     }
 
-    public void startAttacking(Player player) {
-
-        if (player.isJumping()) {
-            new Timer().schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    if (isPlayerNear()) {
-                        isAttacking = true;
-                        attackPlayer(player);
-
-                        attackTimer.cancel();
-                        attackTimer = new Timer();
-
-                        attackTimer.schedule(new TimerTask() {
-                            @Override
-                            public void run() {
-                                stopAttacking();
-                            }
-                        }, 3000);
-                    }
-                }
-            }, 1000);
-        } else {
-            isAttacking = true;
-            attackPlayer(player);
-
-            attackTimer.cancel();
-            attackTimer = new Timer();
-
-            attackTimer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    stopAttacking();
-                }
-            }, 3000);
-        }
-    }
-
-    public void stopAttacking() {
-        hasAttacked = false;
-        new Timer().schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    isAttacking = false;
-                }
-            }, 1000);
-    }
-
-    public void attackPlayer(Player player) {
-        if (!hasAttacked) {
-            player.decreaseHealth(1);
-            hasAttacked = true;
-        }
-    }
-
 
 
     public boolean isPlayerHitboxNextToKappaHitbox(Player player) {
@@ -202,14 +133,6 @@ public class Kappa extends Entity {
     public boolean isMoveRight() {
         return moveRight;
     }
-
-    public float getX() {
-        return x;
-    }
-
-    public float getY() {
-        return y;
-    }
     public void setScoreIncreased(boolean isScoreIncreased) {
         this.isScoreIncreased = isScoreIncreased;
     }
@@ -226,6 +149,10 @@ public class Kappa extends Entity {
     }
     public Rectangle2D.Float getAttackHitbox() {
         return attackHitbox;
+    }
+
+    public void setHasAttacked(boolean hasAttacked) {
+        this.hasAttacked = hasAttacked;
     }
 
     public boolean hasAttacked() {

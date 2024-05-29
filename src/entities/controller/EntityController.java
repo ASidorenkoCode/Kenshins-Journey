@@ -61,7 +61,7 @@ public class EntityController {
         }
 
         player.update(mapController.getCurrentMap(), currentBoss, kappas);
-        if (kappas.size() > 0) handleKappas(mapController, interfaceGame);
+        if (!kappas.isEmpty()) handleKappas(mapController, interfaceGame);
         if(currentBoss != null) {
             if(currentBoss.getIsDead()) {
                 gameObjectController.getFinish().setIsActive(true);
@@ -128,16 +128,20 @@ public class EntityController {
         for (Kappa kap : kappas) {
             kap.update(mapController.getCurrentMap(), player);
 
-            if (kap.getHealth() == 0 && !kap.isScoreIncreased()) {
-                interfaceGame.increaseScore(300);
-                kap.setScoreIncreased(true);
+            if (kap.isDead() && !kap.isScoreIncreased()) {
+                if(!kap.isScoreIncreased()) {
+                    interfaceGame.increaseScore(300);
+                    kap.setScoreIncreased(true);
+                }
+                return;
             }
 
-            if (kap.isPlayerNearChecker(player) && !kap.isAttacking() && !kap.hasAttacked() && !player.isDead() && !kap.isDead()) {
-                kap.startAttacking(player);
+            if (kap.isEntityInsideChecker(player) && !kap.hasAttacked() && !kap.isDead()) {
+                handleKappaAttacksPlayer(kap);
             }
 
             handlePlayerAttacksKappa(kap);
+
         }
     }
 
@@ -153,6 +157,13 @@ public class EntityController {
 
             kappa.decreaseHealth(player.getCurrentDamagePerAttack());
             player.setHasAttacked(true);
+        }
+    }
+
+    private void handleKappaAttacksPlayer(Kappa kappa) {
+        if(kappa.getAttackHitbox().intersects(player.getHitbox())) {
+            player.decreaseHealth(1);
+            kappa.setHasAttacked(true);
         }
     }
 
