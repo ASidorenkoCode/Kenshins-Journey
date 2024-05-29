@@ -1,6 +1,5 @@
 package maps.ui;
 
-import game.UI.GameView;
 import maps.controller.MapController;
 import maps.logic.Map;
 import spriteControl.SpriteManager;
@@ -30,7 +29,7 @@ public class MapUI {
     public void draw(Graphics g, int mapOffsetX, int mapOffsetY, int mapIndex, boolean isForeGround) {
         if (!isForeGround) {
             BufferedImage background = getBackgroundImage();
-            g.drawImage(background, 0, 0, null);
+            g.drawImage(background, -mapOffsetX, -mapOffsetY, null);
         }
 
         int mapHeight = mapController.getCurrentMap().getHeight();
@@ -57,21 +56,39 @@ public class MapUI {
     }
 
     public BufferedImage getBackgroundImage() {
-        int width = mapController.getCurrentMap().getTileSize() * maps.get(0).getMapData()[0].length;
-        int height = GameView.TILES_IN_HEIGHT * mapController.getCurrentMap().getTileSize();
+        int mapWidth = mapController.getCurrentMap().getTileSize() * maps.get(0).getMapData()[0].length;
+        int mapHeight = mapController.getCurrentMap().getTileSize() * maps.get(0).getMapData().length;
+
         if (backgroundImage == null) {
-            backgroundImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+            backgroundImage = new BufferedImage(mapWidth, mapHeight, BufferedImage.TYPE_INT_RGB);
             Graphics2D g = backgroundImage.createGraphics();
+
+            Color startColor = Color.decode("#00e2c");
+            Color endColor = Color.decode("#0a95ff");
+
+            GradientPaint gradientPaint = new GradientPaint(0, 0, startColor, 0, mapHeight, endColor);
+            g.setPaint(gradientPaint);
+            g.fillRect(0, 0, mapWidth, mapHeight);
+
             try {
-                BufferedImage loadedImage = ImageIO.read(new File("res/screens/startScreen/forest.png"));
-                g.drawImage(loadedImage, 0, 0, null);
+                BufferedImage mountainImage = ImageIO.read(new File("res/screens/startScreen/cloud 2.png"));
+                // Scale the image
+                int scaledWidth = (int) (mountainImage.getWidth() * 0.2);
+                int scaledHeight = (int) (mountainImage.getHeight() * 0.2);
+                Image scaledMountainImage = mountainImage.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_DEFAULT);
+                int imageX = 0;
+                int imageY = mapHeight - scaledHeight - 400;
+                g.drawImage(scaledMountainImage, imageX, imageY, null);
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
             g.dispose();
         }
+
         return backgroundImage;
     }
+
 
     private void importTileSheets() {
         BufferedImage img = SpriteManager.GetSpriteAtlas(MAPSPRITE_PATH);
