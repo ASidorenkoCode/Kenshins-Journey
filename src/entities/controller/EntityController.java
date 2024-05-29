@@ -126,10 +126,7 @@ public class EntityController {
 
     public void handleKappas(MapController mapController, InterfaceGame interfaceGame) {
         for (Kappa kap : kappas) {
-            if(kap.isDead()) continue;
 
-
-            kap.update(mapController.getCurrentMap(), player);
 
             if (kap.isDead() && !kap.isScoreIncreased()) {
                 if(!kap.isScoreIncreased()) {
@@ -138,6 +135,19 @@ public class EntityController {
                 }
                 return;
             }
+
+            kap.update(mapController.getCurrentMap());
+
+            Rectangle2D.Float playerHitbox = player.getHitbox();
+            Rectangle2D.Float kappaHitbox = kap.getHitbox();
+
+            Rectangle2D.Float playerHitboxBuffered = new Rectangle2D.Float(playerHitbox.x - 1, playerHitbox.y - 1, playerHitbox.width + 2, playerHitbox.height + 2);
+            Rectangle2D.Float kappaHitboxBuffered = new Rectangle2D.Float(kappaHitbox.x - 1, kappaHitbox.y - 1, kappaHitbox.width + 2, kappaHitbox.height + 2);
+
+            if(playerHitboxBuffered.intersects(kappaHitboxBuffered)) {
+                kap.setIsAttacking(true);
+                kap.updateAttackHitbox();
+            } else kap.setIsAttacking(false);
 
             if (kap.isEntityInsideChecker(player) ) {
                 kap.setMoveRight(kap.getX() < player.getX());

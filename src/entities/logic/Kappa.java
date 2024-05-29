@@ -34,7 +34,7 @@ public class Kappa extends Entity {
 
 
 
-    public void update(Map map, Player player) {
+    public void update(Map map) {
         if(isDead) return;
 
         //reset attack Count, when kappa has attacked and break is over
@@ -46,14 +46,7 @@ public class Kappa extends Entity {
             }
         }
 
-        //no movement, but attack, if player is near to kappa
-        if (isPlayerHitboxNextToKappaHitbox(player)) {
-            isAttacking = true;
-            updateAttackHitbox();
-            return;
-        } else {
-            isAttacking = false;
-        }
+        if(isAttacking) return;
 
         if(inAir)
             if(!checkIfEnemyCollidesUnderHim(map, hitbox.x, hitbox.y, hitbox.width, hitbox.height)) {
@@ -111,24 +104,12 @@ public class Kappa extends Entity {
         return !checkForCollisonOnPosition(map, x,y+height);
     }
 
+
+
+    //getter and setter
+
     public void resetHealth() {
         this.health = this.maxHealth;
-    }
-
-
-
-    public boolean isPlayerHitboxNextToKappaHitbox(Player player) {
-
-        Rectangle2D.Float playerHitbox = player.getHitbox();
-        Rectangle2D.Float kappaHitbox = this.getHitbox();
-
-        Rectangle2D.Float playerHitboxBuffered = new Rectangle2D.Float(playerHitbox.x - 1, playerHitbox.y - 1, playerHitbox.width + 2, playerHitbox.height + 2);
-        Rectangle2D.Float kappaHitboxBuffered = new Rectangle2D.Float(kappaHitbox.x - 1, kappaHitbox.y - 1, kappaHitbox.width + 2, kappaHitbox.height + 2);
-
-        return playerHitboxBuffered.intersects(kappaHitboxBuffered);
-    }
-    public int getHealth() {
-        return health;
     }
 
     public int getMaxHealth() {
@@ -165,5 +146,9 @@ public class Kappa extends Entity {
 
     public void setMoveRight(boolean moveRight) {
         this.moveRight = moveRight;
+    }
+
+    public void setIsAttacking(boolean isAttacking) {
+        this.isAttacking = isAttacking;
     }
 }
