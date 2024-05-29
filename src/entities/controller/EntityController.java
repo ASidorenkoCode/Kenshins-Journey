@@ -126,6 +126,9 @@ public class EntityController {
 
     public void handleKappas(MapController mapController, InterfaceGame interfaceGame) {
         for (Kappa kap : kappas) {
+            if(kap.isDead()) continue;
+
+
             kap.update(mapController.getCurrentMap(), player);
 
             if (kap.isDead() && !kap.isScoreIncreased()) {
@@ -136,9 +139,12 @@ public class EntityController {
                 return;
             }
 
-            if (kap.isEntityInsideChecker(player) && !kap.hasAttacked() && !kap.isDead()) {
-                handleKappaAttacksPlayer(kap);
+            if (kap.isEntityInsideChecker(player) ) {
+                kap.setMoveRight(kap.getX() < player.getX());
+                if(!kap.hasAttacked()) handleKappaAttacksPlayer(kap);
             }
+
+
 
             handlePlayerAttacksKappa(kap);
 

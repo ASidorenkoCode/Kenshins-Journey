@@ -37,11 +37,22 @@ public class Kappa extends Entity {
     public void update(Map map, Player player) {
         if(isDead) return;
 
+        //reset attack Count, when kappa has attacked and break is over
+        if(hasAttacked) {
+            attackCount++;
+            if(attackCount >= ATTACK_SPEED) {
+                hasAttacked = false;
+                attackCount = 0;
+            }
+        }
+
         //no movement, but attack, if player is near to kappa
         if (isPlayerHitboxNextToKappaHitbox(player)) {
             isAttacking = true;
             updateAttackHitbox();
             return;
+        } else {
+            isAttacking = false;
         }
 
         if(inAir)
@@ -54,14 +65,7 @@ public class Kappa extends Entity {
             updateXPos(map, speed);
         } else updateXPos(map, -speed);
 
-        //reset attack Count, when kappa has attacked and break is over
-        if(hasAttacked) {
-            attackCount++;
-            if(attackCount >= ATTACK_SPEED) {
-                hasAttacked = false;
-                attackCount = 0;
-            }
-        }
+
     }
 
 
@@ -157,5 +161,9 @@ public class Kappa extends Entity {
 
     public boolean hasAttacked() {
         return hasAttacked;
+    }
+
+    public void setMoveRight(boolean moveRight) {
+        this.moveRight = moveRight;
     }
 }
