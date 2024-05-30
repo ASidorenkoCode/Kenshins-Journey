@@ -3,6 +3,7 @@ import entities.controller.EntityController;
 import entities.logic.Player;
 import game.UI.GameView;
 import game.logic.GameEngine;
+import game.logic.Highscore;
 import gameObjects.controller.GameObjectController;
 import gameObjects.logic.Finish;
 import items.controller.ItemController;
@@ -25,9 +26,12 @@ public class GameController implements ReloadGame {
     private ItemController itemController;
     private DeathScreen deathScreen;
 
+    private Highscore highscore;
+
     private boolean showHitbox;
 
     public GameController(boolean showFPS_UPS, boolean showHitBox) {
+        this.highscore = new Highscore();
         mapController = new MapController(null);
         entityController = new EntityController(mapController, showHitBox);
         mapController.setEntityController(entityController);
@@ -55,6 +59,8 @@ public class GameController implements ReloadGame {
     public void update() {
         entityController.update(this, mapController, gameObjectController, loadingScreen, interfaceGame, deathScreen);
         itemController.update(entityController);
+        highscore.decreaseHighScoreAfterOneSecond();
+        System.out.println(highscore.getCurrentHighscore());
     }
 
     public InterfaceGame getInterfaceGame() {
