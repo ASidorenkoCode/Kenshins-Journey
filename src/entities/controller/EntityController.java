@@ -46,6 +46,7 @@ public class EntityController {
         }
 
         if (player.isDead() && player.getDeathAnimationFinished()) {
+
             if(deathScreen.getTotalScore() > interfaceGame.getScore()) deathScreen.updateScore(interfaceGame.getScore());
             if (!deathScreen.isPlayerContinuesGame() && !deathScreen.isDisplayDeathScreenOnlyOnce()) {
                 deathScreen.displayDeathScreen();
@@ -58,6 +59,8 @@ public class EntityController {
                 player.setDeathAnimationFinished(false);
                 interfaceGame.setTotalHearts(player.getTotalHearts());
                 deathScreen.setDisplayDeathScreenOnlyOnce(false);
+                highscore.decreaseHighscoreForDeath();
+                highscore.increaseDeathCounter();
             }
         }
 
