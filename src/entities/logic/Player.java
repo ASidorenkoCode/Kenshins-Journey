@@ -66,11 +66,11 @@ public class Player extends Entity {
     public void updateSpawnPoint(int x, int y) {
         this.x = x;
         this.y = y;
-        this.hitbox.x = x + 64;
+        this.hitbox.x = x + 50;
         this.hitbox.y = y + 32;
-        this.leftAttackHitBox.x = (x + 64) - 64;
+        this.leftAttackHitBox.x = (x + 50) - 64;
         this.leftAttackHitBox.y = y + 16;
-        this.rightAttackHitBox.x = (x + 64) + 64;
+        this.rightAttackHitBox.x = (x + 50) + 64;
         this.rightAttackHitBox.y = y + 16;
         resetMaximumDamagePerAttack();
     }
@@ -144,7 +144,7 @@ public class Player extends Entity {
     private void adjustPlayerHitboxPosition(Map map, Boss boss, ArrayList<Kappa> kappas) {
         //TODO: Change hitbox movement bug
         if (getLeft() && !getRight() && !hasDynamicAdjustedPlayerDirectionHitbox) {
-            if (checkIfPlayerCanMoveToPosition(map, boss,kappas,hitbox.x + 20, hitbox.y, hitbox.width, hitbox.height)) {
+            if (checkIfPlayerCanMoveToPosition(map, boss, kappas,hitbox.x + 20, hitbox.y, hitbox.width, hitbox.height)) {
                 hitbox.x += 20;
                 hasDynamicAdjustedPlayerDirectionHitbox = true;
             }
