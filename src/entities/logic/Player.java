@@ -11,7 +11,7 @@ import java.awt.geom.Rectangle2D;
 public class Player extends Entity {
 
     private boolean left, right, attack, inAir, attackHitBoxIsActive, isResting, isDashing, isFacingRight;
-    private float airMovement = -10f;
+    private float airMovement = -6f;
     private Rectangle2D.Float rightAttackHitBox;
     private Rectangle2D.Float leftAttackHitBox;
     private boolean hasDynamicAdjustedPlayerDirectionHitbox = false;
@@ -30,6 +30,9 @@ public class Player extends Entity {
     private final static float MAX_TIME = 1;
     private float currentGroundMovement = 0;
     private float time = 0;
+
+    private boolean canDoubleJump = false;
+    private boolean hasDoubleJumped = false;
 
     //attack variables
 
@@ -202,7 +205,7 @@ public class Player extends Entity {
             return;
 
         } else if (checkIfPlayerCollidesUnderHim(map, boss, hitbox.x, hitbox.y + by_value, hitbox.width, hitbox.height)) {
-            inAir = false;
+            landed();
 
             float playerYPos = (hitbox.y + by_value + hitbox.height);
             int groundSpriteNumber = (int) (playerYPos / (64));
@@ -222,8 +225,18 @@ public class Player extends Entity {
     public void jump() {
         if (!inAir && !isResting ) {
             inAir = true;
-            airMovement = -10f;
+            airMovement = -6f;
+            canDoubleJump = true; // Player can double jump after first jump
+        } else if (inAir && !hasDoubleJumped && canDoubleJump) {
+            airMovement = -6f; // Double jump
+            hasDoubleJumped = true; // Player has double jumped
         }
+    }
+
+    public void landed() {
+        inAir = false;
+        canDoubleJump = false;
+        hasDoubleJumped = false;
     }
 
     public void attack() {
@@ -343,7 +356,7 @@ public class Player extends Entity {
     }
 
     public float getAirMovement() {
-        return Math.abs(airMovement);
+        return airMovement;
     }
 
     private float calculateNewPosition(Entity entity) {
