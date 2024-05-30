@@ -1,8 +1,4 @@
 package entities.logic;
-
-import entities.logic.Player;
-import gameObjects.logic.Finish;
-
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 

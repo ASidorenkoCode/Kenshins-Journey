@@ -157,23 +157,6 @@ public class Player extends Entity {
     }
 
 
-
-    //TODO: Check if this can be deleted
-    public void collisionWithEntity(Entity entity, PlayerUI playerUI) {
-        if (this.isDead()) {
-            return;
-        }
-
-        if (entity instanceof Kappa && getAttackHitBoxIsActive() && !hasAttacked && damageDealtInCurrentAttack < currentDamagePerAttack && isEntityHitboxNextToPlayerHitbox(entity)) {
-            ((Kappa) entity).decreaseHealth(currentDamagePerAttack / 2);
-            damageDealtInCurrentAttack += currentDamagePerAttack / 2;
-            hasAttacked = true;
-        } else if (hasAttacked && playerUI.getCurrentAniIndex() == 6) {
-            hasAttacked = false;
-            damageDealtInCurrentAttack = 0;
-        }
-    }
-
     public int getCurrentDamagePerAttack() {
         return currentDamagePerAttack;
     }
@@ -240,27 +223,6 @@ public class Player extends Entity {
     public void setAttackHitBoxIsActive(boolean attackHitBoxIsActive) {
         this.attackHitBoxIsActive = attackHitBoxIsActive;
     }
-
-    public boolean collidesWith(Entity entity) {
-        return this.hitbox.intersects(entity.getHitbox().getBounds2D());
-    }
-
-    public boolean isEntityHitboxNextToPlayerHitbox(Entity entity) {
-
-        Rectangle2D.Float playerHitbox = this.getRightAttackHitBox();
-        if (getX() < entity.x) {
-            playerHitbox = this.getRightAttackHitBox();
-        } else if (getX() > entity.x) {
-            playerHitbox = this.getLeftAttackHitBox();
-        }
-        Rectangle2D.Float entityHitbox = entity.getHitbox();
-
-        Rectangle2D.Float playerHitboxBuffered = new Rectangle2D.Float(playerHitbox.x - 1, playerHitbox.y - 1, playerHitbox.width + 2, playerHitbox.height + 2);
-        Rectangle2D.Float kappaHitboxBuffered = new Rectangle2D.Float(entityHitbox.x - 1, entityHitbox.y - 1, entityHitbox.width + 2, entityHitbox.height + 2);
-
-        return playerHitboxBuffered.intersects(kappaHitboxBuffered);
-    }
-
 
     public boolean collidesOnPosition(Map map, Boss boss, ArrayList<Kappa> kappas, float x, float y) {
 

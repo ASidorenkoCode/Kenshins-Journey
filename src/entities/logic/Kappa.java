@@ -1,7 +1,5 @@
 package entities.logic;
-
 import maps.logic.Map;
-
 import java.awt.geom.Rectangle2D;
 
 public class Kappa extends Entity {
@@ -11,7 +9,7 @@ public class Kappa extends Entity {
     private int attackCount = 0;
     private int maxHealth = 100;
     private boolean isScoreIncreased = false;
-    private boolean isPlayerNear = false;
+    private boolean isEntityNear = false;
     private boolean isAttacking = false;
     private Rectangle2D.Float attackHitbox;
     private boolean hasAttacked = false;
@@ -29,12 +27,13 @@ public class Kappa extends Entity {
         float distanceX = Math.abs(x - entity.getX());
         float distanceY = Math.abs(y - entity.getY());
         boolean isEntityUnderneath = entity.getY() > y;
-        return !isEntityUnderneath && Math.sqrt(distanceX * distanceX + distanceY * distanceY) < 150;
+        isEntityNear = !isEntityUnderneath && Math.sqrt(distanceX * distanceX + distanceY * distanceY) < 150;
+        return isEntityNear;
     }
 
 
 
-    public void update(Map map) {
+    public void update(Map map, boolean move) {
         if(isDead) return;
 
         //reset attack Count, when kappa has attacked and break is over
@@ -46,7 +45,8 @@ public class Kappa extends Entity {
             }
         }
 
-        if(isAttacking) return;
+        //dont move if is attacking or its specified
+        if(isAttacking || !move) return;
 
         if(inAir)
             if(!checkIfEnemyCollidesUnderHim(map, hitbox.x, hitbox.y, hitbox.width, hitbox.height)) {
@@ -125,8 +125,8 @@ public class Kappa extends Entity {
     public boolean isScoreIncreased() {
         return isScoreIncreased;
     }
-    public boolean isPlayerNear() {
-        return isPlayerNear;
+    public boolean isEntityNear() {
+        return isEntityNear;
     }
 
     public boolean isAttacking() {

@@ -56,6 +56,7 @@ public class KappaUI extends EntityUI {
             aniIndex++;
         }
         if (aniIndex >= currentAnimation.getAniSize()) {
+            kappa.setIsAttacking(false);
             aniIndex = 0;
         }
     }
@@ -63,8 +64,8 @@ public class KappaUI extends EntityUI {
     private void setAnimation() {
         if (kappa.isDead()) currentAnimation = EnemyAnimations.DEAD;
         else {
-            if (kappa.isPlayerNear()) {
-                if (kappa.isAttacking() && !kappa.hasAttacked()) {
+            if (kappa.isEntityNear()) {
+                if (kappa.isAttacking()) {
                     currentAnimation = EnemyAnimations.ATTACK;
                 } else {
                     currentAnimation = EnemyAnimations.IDLE;

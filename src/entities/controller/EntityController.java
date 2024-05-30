@@ -1,5 +1,6 @@
 package entities.controller;
 import entities.logic.Boss;
+import entities.logic.Entity;
 import entities.ui.BossUI;
 import gameObjects.controller.GameObjectController;
 import entities.logic.Kappa;
@@ -107,8 +108,20 @@ public class EntityController {
 
     }
 
+    public boolean isEntityHitboxNextToOtherEntity(Entity e1, Entity e2) {
+
+        Rectangle2D.Float e1Hitbox = e1.getHitbox();
+        Rectangle2D.Float e2Hitbox = e2.getHitbox();
+
+        Rectangle2D.Float e1HitboxBuffered = new Rectangle2D.Float(e1Hitbox.x - 1, e1Hitbox.y - 1, e1Hitbox.width + 2, e1Hitbox.height + 2);
+        Rectangle2D.Float e2HitboxBuffered = new Rectangle2D.Float(e2Hitbox.x - 1, e2Hitbox.y - 1, e2Hitbox.width + 2, e2Hitbox.height + 2);
+
+        return e2HitboxBuffered.intersects(e1HitboxBuffered);
+    }
+
 
     //functions for checking attacks between player and entities
+
     private void handlePlayerAttacksBoss() {
         if(!player.getHasAttacked()) {
             //only attack if attack hitbox is active
@@ -136,18 +149,9 @@ public class EntityController {
                 return;
             }
 
-            kap.update(mapController.getCurrentMap());
-
-            Rectangle2D.Float playerHitbox = player.getHitbox();
-            Rectangle2D.Float kappaHitbox = kap.getHitbox();
-
-            Rectangle2D.Float playerHitboxBuffered = new Rectangle2D.Float(playerHitbox.x - 1, playerHitbox.y - 1, playerHitbox.width + 2, playerHitbox.height + 2);
-            Rectangle2D.Float kappaHitboxBuffered = new Rectangle2D.Float(kappaHitbox.x - 1, kappaHitbox.y - 1, kappaHitbox.width + 2, kappaHitbox.height + 2);
-
-            if(playerHitboxBuffered.intersects(kappaHitboxBuffered)) {
-                kap.setIsAttacking(true);
+            if(isEntityHitboxNextToOtherEntity(kap, player)) {
                 kap.updateAttackHitbox();
-            } else kap.setIsAttacking(false);
+            }
 
             if (kap.isEntityInsideChecker(player) ) {
                 kap.setMoveRight(kap.getX() < player.getX());
@@ -155,8 +159,9 @@ public class EntityController {
             }
 
 
-
             handlePlayerAttacksKappa(kap);
+
+            kap.update(mapController.getCurrentMap(), !isEntityHitboxNextToOtherEntity(kap, player));
 
         }
     }
@@ -178,6 +183,7 @@ public class EntityController {
 
     private void handleKappaAttacksPlayer(Kappa kappa) {
         if(kappa.getAttackHitbox().intersects(player.getHitbox())) {
+            kappa.setIsAttacking(true);
             player.decreaseHealth(1);
             kappa.setHasAttacked(true);
         }
@@ -254,8 +260,7 @@ public class EntityController {
         for (KappaUI kappaUI : kappaUIS) {
             kappaUI.drawAnimations(g, offset);
         }
-        if(currentBoss == null) return;
-        bossUI.drawAnimations(g, offset);
+        if(currentBoss != null) bossUI.drawAnimations(g, offset);
     }
 
     public Player getPlayer() {
