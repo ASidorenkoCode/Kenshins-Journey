@@ -127,14 +127,17 @@ public class EntityController {
     private void handlePlayerAttacksBoss() {
         if(!player.getHasAttacked()) {
             //only attack if attack hitbox is active
-            //TODO Remove player attacks boss bug
             if(!player.getAttackHitBoxIsActive()) return;
             Rectangle2D.Float bossHitbox = currentBoss.getHitbox();
-            if(player.getIsFacingRight())
-                if(!bossHitbox.intersects(player.getRightAttackHitBox())) return;
-            else if(!bossHitbox.intersects(player.getLeftAttackHitBox())) return;
-            currentBoss.decreaseHealth(player.getCurrentDamagePerAttack());
-            player.setHasAttacked(true);
+
+            Rectangle2D.Float attackHitbox = player.getLeftAttackHitBox();
+            if(player.getIsFacingRight()) attackHitbox = player.getRightAttackHitBox();
+
+            if(attackHitbox.intersects(bossHitbox)) {
+                currentBoss.decreaseHealth(player.getCurrentDamagePerAttack());
+                player.setHasAttacked(true);
+            };
+
         }
     }
 
