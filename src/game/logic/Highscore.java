@@ -51,8 +51,15 @@ public class Highscore {
         deathCounter++;
     }
 
+    public void addCurrentHighscoreToList() {
+        highscores.add(currentHighscore);
+    }
+
     public int getCurrentHighscore() {
         return currentHighscore;
     }
 
+    public ArrayList<Integer> getAllHighscores() {
+        return highscores;
+    }
 }

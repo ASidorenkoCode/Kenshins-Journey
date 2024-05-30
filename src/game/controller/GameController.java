@@ -87,6 +87,7 @@ public class GameController implements ReloadGame {
         itemController.initItems(mapController);
         highscore.increaseHighscoreForItems(itemController.getMenu());
         itemController.deleteAllItemsFromMenu();
+        highscore.addCurrentHighscoreToList();
 
     }
 }
