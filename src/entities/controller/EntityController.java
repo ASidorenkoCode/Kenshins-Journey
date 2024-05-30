@@ -1,8 +1,8 @@
 package entities.controller;
-
-import boss.controller.BossController;
+import entities.logic.Boss;
+import entities.logic.Entity;
+import entities.ui.BossUI;
 import gameObjects.controller.GameObjectController;
-import gameObjects.logic.Finish;
 import entities.logic.Kappa;
 import entities.logic.Player;
 import entities.ui.KappaUI;
@@ -15,27 +15,27 @@ import screens.LoadingScreen;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
-import java.util.List;
 
 public class EntityController {
 
     private PlayerUI playerUI;
     private Player player;
-    private List<Kappa> kappas;
-    private List<KappaUI> kappaUIS;
+    private ArrayList<Kappa> kappas;
+    private ArrayList<KappaUI> kappaUIS;
 
+    private Boss currentBoss;
 
-    private boolean showHitBox;
+    private BossUI bossUI;
 
-    public EntityController(MapController mapController, boolean showHitBox, Point playerSpawnPoint) {
-        player = new Player(playerSpawnPoint.x, playerSpawnPoint.y);
-        playerUI = new PlayerUI(player, showHitBox);
+    public EntityController(MapController mapController, boolean showHitBox) {
+        initOrUpdatePlayer(mapController, showHitBox);
         initKappas(mapController, showHitBox);
-        this.showHitBox = showHitBox;
+        initBoss(mapController, showHitBox);
     }
 
-    public void update(ReloadGame reloadGame, MapController mapController, GameObjectController gameObjectController, BossController bossController, LoadingScreen loadingScreen, InterfaceGame interfaceGame, DeathScreen deathScreen) {
+    public void update(ReloadGame reloadGame, MapController mapController, GameObjectController gameObjectController, LoadingScreen loadingScreen, InterfaceGame interfaceGame, DeathScreen deathScreen) {
         if (gameObjectController.checkIfPlayerIsInFinish(player) && !player.isDead()) {
             reloadGame.loadNewMap();
         }
@@ -61,26 +61,30 @@ public class EntityController {
             }
         }
 
-        player.update(mapController.getCurrentMap(), bossController.getBoss());
-        if (kappas.size() > 0) handleKappa(mapController, interfaceGame);
-    }
-
-    public void handleKappa(MapController mapController, InterfaceGame interfaceGame) {
-        for (Kappa kap : kappas) {
-            kap.update(mapController.getCurrentMap(), player);
-            player.collisionWithEntity(kap, playerUI);
-
-            if (kap.getHealth() == 0 && !kap.isScoreIncreased()) {
-                interfaceGame.increaseScore(300);
-                kap.setScoreIncreased(true);
+        player.update(mapController.getCurrentMap(), currentBoss, kappas);
+        if (!kappas.isEmpty()) handleKappas(mapController, interfaceGame);
+        if(currentBoss != null) {
+            if(currentBoss.getIsDead()) {
+                gameObjectController.getFinish().setIsActive(true);
+                return;
             }
-
-            if (kap.isPlayerNearChecker(player) && !kap.isAttacking() && !kap.hasAttacked() && !player.isDead() && !kap.isDead()) {
-                kap.startAttacking(player);
-            }
+            currentBoss.update(mapController.getMapOffset());
+            handlePlayerAttacksBoss();
+            handleBossAttacksPlayer();
         }
     }
 
+
+
+    //init functions for init instances and updating instances
+    public void initOrUpdatePlayer(MapController mapController, boolean showHitBox) {
+        Point playerSpawnPoint = mapController.getCurrentPlayerSpawn();
+        if (player != null) {
+            player.updateSpawnPoint(playerSpawnPoint.x, playerSpawnPoint.y);
+        }
+        player = new Player(playerSpawnPoint.x, playerSpawnPoint.y);
+        playerUI = new PlayerUI(player, showHitBox);
+    }
     public void initKappas(MapController mapController, boolean showHitBox) {
         kappas = new ArrayList<>();
         kappaUIS = new ArrayList<>();
@@ -93,6 +97,118 @@ public class EntityController {
         }
     }
 
+    public void initBoss(MapController mapController, boolean showHitBox) {
+        Point bossSpawn = mapController.getCurrentBossSpawn();
+        if(bossSpawn == null) {
+            currentBoss = null;
+            return;
+        }
+        currentBoss = new Boss(bossSpawn.x,bossSpawn.y);
+        bossUI = new BossUI(currentBoss, showHitBox);
+
+    }
+
+    public boolean isEntityHitboxNextToOtherEntity(Entity e1, Entity e2) {
+
+        Rectangle2D.Float e1Hitbox = e1.getHitbox();
+        Rectangle2D.Float e2Hitbox = e2.getHitbox();
+
+        Rectangle2D.Float e1HitboxBuffered = new Rectangle2D.Float(e1Hitbox.x - 1, e1Hitbox.y - 1, e1Hitbox.width + 2, e1Hitbox.height + 2);
+        Rectangle2D.Float e2HitboxBuffered = new Rectangle2D.Float(e2Hitbox.x - 1, e2Hitbox.y - 1, e2Hitbox.width + 2, e2Hitbox.height + 2);
+
+        return e2HitboxBuffered.intersects(e1HitboxBuffered);
+    }
+
+
+    //functions for checking attacks between player and entities
+
+    private void handlePlayerAttacksBoss() {
+        if(!player.getHasAttacked()) {
+            //only attack if attack hitbox is active
+            if(!player.getAttackHitBoxIsActive()) return;
+
+            Rectangle2D.Float bossHitbox = currentBoss.getHitbox();
+            if(player.getIsFacingRight())
+                if(!bossHitbox.intersects(player.getRightAttackHitBox())) return;
+            else if(bossHitbox.intersects(player.getLeftAttackHitBox())) return;
+
+            currentBoss.decreaseHealth(player.getCurrentDamagePerAttack());
+            player.setHasAttacked(true);
+        }
+    }
+
+    public void handleKappas(MapController mapController, InterfaceGame interfaceGame) {
+        for (Kappa kap : kappas) {
+
+
+            if (kap.isDead() && !kap.isScoreIncreased()) {
+                if(!kap.isScoreIncreased()) {
+                    interfaceGame.increaseScore(300);
+                    kap.setScoreIncreased(true);
+                }
+                return;
+            }
+
+            if(isEntityHitboxNextToOtherEntity(kap, player)) {
+                kap.updateAttackHitbox();
+            }
+
+            if (kap.isEntityInsideChecker(player) ) {
+                kap.setMoveRight(kap.getX() < player.getX());
+                if(!kap.hasAttacked()) handleKappaAttacksPlayer(kap);
+            }
+
+
+            handlePlayerAttacksKappa(kap);
+
+            kap.update(mapController.getCurrentMap(), !isEntityHitboxNextToOtherEntity(kap, player));
+
+        }
+    }
+
+    private void handlePlayerAttacksKappa(Kappa kappa) {
+        if(!player.getHasAttacked()) {
+
+            if(!player.getAttackHitBoxIsActive()) return;
+
+            Rectangle2D.Float kappaHitbox = kappa.getHitbox();
+            if(player.getIsFacingRight())
+                if(!kappaHitbox.intersects(player.getRightAttackHitBox())) return;
+                else if(kappaHitbox.intersects(player.getLeftAttackHitBox())) return;
+
+            kappa.decreaseHealth(player.getCurrentDamagePerAttack());
+            player.setHasAttacked(true);
+        }
+    }
+
+    private void handleKappaAttacksPlayer(Kappa kappa) {
+        if(kappa.getAttackHitbox().intersects(player.getHitbox())) {
+            kappa.setIsAttacking(true);
+            player.decreaseHealth(1);
+            kappa.setHasAttacked(true);
+        }
+    }
+
+    private void handleBossAttacksPlayer() {
+        if(currentBoss.getIsUsingBigProjectile()) {
+            Rectangle2D.Float bigProjectileHitbox = currentBoss.getProjectileHitbox();
+            if(player.getHitbox().intersects(bigProjectileHitbox)) {
+                player.decreaseHealth(1);
+                currentBoss.resetProjectile();
+            }
+        } else {
+            for(Rectangle2D.Float hitbox: currentBoss.getMiniProjectileHitboxes()) {
+                if(player.getHitbox().intersects(hitbox)) {
+                    currentBoss.resetAllMiniProjectiles();
+                    player.decreaseHealth(1);
+                    return;
+                }
+            }
+        }
+    }
+
+
+    //handle user input
     public void handleUserInputKeyPressed(KeyEvent e, DeathScreen deathScreen) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_A:
@@ -136,11 +252,15 @@ public class EntityController {
         }
     }
 
+
+    //handle ui
+
     public void drawEntities(Graphics g, int offset) {
         playerUI.drawAnimations(g, offset);
         for (KappaUI kappaUI : kappaUIS) {
             kappaUI.drawAnimations(g, offset);
         }
+        if(currentBoss != null) bossUI.drawAnimations(g, offset);
     }
 
     public Player getPlayer() {
