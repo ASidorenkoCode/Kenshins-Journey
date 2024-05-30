@@ -2,6 +2,7 @@ package entities.controller;
 import entities.logic.Boss;
 import entities.logic.Entity;
 import entities.ui.BossUI;
+import game.logic.Highscore;
 import gameObjects.controller.GameObjectController;
 import entities.logic.Kappa;
 import entities.logic.Player;
@@ -35,7 +36,7 @@ public class EntityController {
         initBoss(mapController, showHitBox);
     }
 
-    public void update(ReloadGame reloadGame, MapController mapController, GameObjectController gameObjectController, LoadingScreen loadingScreen, InterfaceGame interfaceGame, DeathScreen deathScreen) {
+    public void update(ReloadGame reloadGame, MapController mapController, GameObjectController gameObjectController, Highscore highscore, LoadingScreen loadingScreen, InterfaceGame interfaceGame, DeathScreen deathScreen) {
         if (gameObjectController.checkIfPlayerIsInFinish(player) && !player.isDead()) {
             reloadGame.loadNewMap();
         }
@@ -55,21 +56,22 @@ public class EntityController {
                 gameObjectController.updatePoints(mapController);
                 player.resetHealth();
                 player.setDeathAnimationFinished(false);
-                interfaceGame.setScore(5000);
                 interfaceGame.setTotalHearts(player.getTotalHearts());
                 deathScreen.setDisplayDeathScreenOnlyOnce(false);
             }
         }
 
         player.update(mapController.getCurrentMap(), currentBoss, kappas);
-        if (!kappas.isEmpty()) handleKappas(mapController, interfaceGame);
+        if (!kappas.isEmpty()) handleKappas(mapController, highscore);
         if(currentBoss != null) {
+            handlePlayerAttacksBoss();
             if(currentBoss.getIsDead()) {
+                highscore.increaseHighscoreForBoss();
                 gameObjectController.getFinish().setIsActive(true);
                 return;
             }
             currentBoss.update(mapController.getMapOffset());
-            handlePlayerAttacksBoss();
+
             handleBossAttacksPlayer();
         }
     }
@@ -125,25 +127,24 @@ public class EntityController {
     private void handlePlayerAttacksBoss() {
         if(!player.getHasAttacked()) {
             //only attack if attack hitbox is active
+            //TODO Remove player attacks boss bug
             if(!player.getAttackHitBoxIsActive()) return;
-
             Rectangle2D.Float bossHitbox = currentBoss.getHitbox();
             if(player.getIsFacingRight())
                 if(!bossHitbox.intersects(player.getRightAttackHitBox())) return;
-            else if(bossHitbox.intersects(player.getLeftAttackHitBox())) return;
-
+            else if(!bossHitbox.intersects(player.getLeftAttackHitBox())) return;
             currentBoss.decreaseHealth(player.getCurrentDamagePerAttack());
             player.setHasAttacked(true);
         }
     }
 
-    public void handleKappas(MapController mapController, InterfaceGame interfaceGame) {
+    public void handleKappas(MapController mapController, Highscore highscore) {
         for (Kappa kap : kappas) {
 
 
             if (kap.isDead() && !kap.isScoreIncreased()) {
                 if(!kap.isScoreIncreased()) {
-                    interfaceGame.increaseScore(300);
+                    highscore.increaseHighscoreForKappa();
                     kap.setScoreIncreased(true);
                 }
                 return;

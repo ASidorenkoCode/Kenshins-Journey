@@ -57,9 +57,10 @@ public class GameController implements ReloadGame {
     }
 
     public void update() {
-        entityController.update(this, mapController, gameObjectController, loadingScreen, interfaceGame, deathScreen);
+        entityController.update(this, mapController, gameObjectController, highscore, loadingScreen, interfaceGame, deathScreen);
         itemController.update(entityController);
         highscore.decreaseHighScoreAfterOneSecond();
+        interfaceGame.updateHighscore(highscore);
     }
 
     public InterfaceGame getInterfaceGame() {

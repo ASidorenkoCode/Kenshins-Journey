@@ -2,6 +2,7 @@ package screens;
 
 import entities.logic.Player;
 import game.UI.GameView;
+import game.logic.Highscore;
 import items.controller.ItemController;
 import items.logic.Item;
 
@@ -124,11 +125,8 @@ public class InterfaceGame {
         this.playerHealth = playerHealth;
     }
 
-    public void updateHighscore() {
-        if (System.currentTimeMillis() - lastTime >= 1000 && score > 0) {
-            score--;
-            lastTime = System.currentTimeMillis();
-        }
+    public void updateHighscore(Highscore highscore) {
+        score = highscore.getCurrentHighscore();
     }
 
     private void drawScore(Graphics g, int score) {
@@ -147,17 +145,7 @@ public class InterfaceGame {
         return score;
     }
 
-    public void setScore(int score) {
-        this.score = score;
-    }
-
     public void setTotalHearts(int totalHearts) {
         this.totalHearts = totalHearts;
     }
-
-    public void increaseScore(int increment) {
-        score += increment;
-    }
-
-
 }
