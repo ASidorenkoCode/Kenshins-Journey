@@ -13,28 +13,21 @@ public class Highscore {
     private int currentHighscore;
     private ArrayList<Integer> highscores;
 
-    private Instant comparingTime;
+    private long comparingTime;
 
     public Highscore() {
         currentHighscore = START_SCORE;
         highscores = new ArrayList<>();
-        comparingTime = Instant.now();
+        comparingTime = System.currentTimeMillis();
     }
     public void decreaseHighScoreAfterOneSecond() {
-        Instant currentTime = Instant.now();
+        long currentTime = System.currentTimeMillis();
 
         //check if one second has passed
-        if (Duration.between(comparingTime, currentTime).getSeconds() >= 1) {
+        if (System.currentTimeMillis() - comparingTime >= 1000) {
             comparingTime = currentTime;
             currentHighscore--;
             System.out.println(currentHighscore);
-        }
-
-        //decrease cpu usage
-        try {
-            Thread.sleep(10);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
     }
     public void increaseHighscoreForKappa() {
