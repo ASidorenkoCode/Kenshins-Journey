@@ -27,7 +27,6 @@ public class Highscore {
         if (System.currentTimeMillis() - comparingTime >= 1000) {
             comparingTime = currentTime;
             currentHighscore--;
-            System.out.println(currentHighscore);
         }
     }
     public void increaseHighscoreForKappa() {

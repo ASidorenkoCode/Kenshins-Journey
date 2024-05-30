@@ -85,6 +85,8 @@ public class GameController implements ReloadGame {
         entityController.initKappas(mapController, showHitbox);
         entityController.initOrUpdatePlayer(mapController, showHitbox);
         itemController.initItems(mapController);
+        highscore.increaseHighscoreForItems(itemController.getMenu());
+        itemController.deleteAllItemsFromMenu();
 
     }
 }

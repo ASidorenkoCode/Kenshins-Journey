@@ -21,6 +21,8 @@ public class Boss extends Entity {
     private boolean inAir;
     private float previosY;
 
+    private boolean isScoreIncreased = false;
+
 
     public Boss(float x, float y) {
         super(x,y, new Rectangle2D.Float(0,0,0,0), false, 20);
@@ -163,5 +165,13 @@ public class Boss extends Entity {
 
     public boolean getIsDead() {
         return isDead;
+    }
+
+    public void setScoreIncreased(boolean isScoreIncreased) {
+        this.isScoreIncreased = isScoreIncreased;
+    }
+
+    public boolean isScoreIncreased() {
+        return isScoreIncreased;
     }
 }
