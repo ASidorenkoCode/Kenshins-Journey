@@ -7,6 +7,7 @@ import items.controller.ItemController;
 import keyboardinputs.logic.KeyboardInputsIngame;
 import maps.controller.MapController;
 import screens.StartScreen;
+import screens.controller.ScreenController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,13 +29,15 @@ public class GameView extends JPanel {
     private EntityController entityController;
     private ItemController itemController;
     private GameObjectController gameObjectController;
+    private ScreenController screenController;
     private JFrame frame = new JFrame("Kenshins Journey");
 
 
-    public GameView(GameController gameController, EntityController entityController, MapController mapController, ItemController itemController, GameObjectController gameObjectController) {
+    public GameView(GameController gameController, EntityController entityController, MapController mapController, ItemController itemController, GameObjectController gameObjectController, ScreenController screenController) {
         this.gameController = gameController;
         this.mapController = mapController;
         this.gameObjectController = gameObjectController;
+        this.screenController = screenController;
         setPreferredSize(new Dimension(GAME_WIDTH, GAME_HEIGHT));
         setFocusable(true);
         requestFocusInWindow();
@@ -96,9 +99,6 @@ public class GameView extends JPanel {
             at = AffineTransform.getScaleInstance(scaleFactor, scaleFactor);
             g2d.setTransform(at);
             render(g2d);
-            gameController.getInterfaceGame().updatePlayerHealth(entityController.getPlayer().getHealth());
-            gameController.getInterfaceGame().updateHighscore();
-            gameController.getInterfaceGame().draw(g2d, entityController.getPlayer());
             g2d.dispose(); // Dispose the Graphics2D object when done
         }
     }
@@ -110,7 +110,7 @@ public class GameView extends JPanel {
         int mapOffsetY = mapController.getMapOffsetY();
         mapController.draw(g, false);
         entityController.drawEntities(g, mapOffsetX, mapOffsetY);
-        gameController.getInterfaceGame().draw(g, entityController.getPlayer());
+        screenController.draw(g);
         itemController.getItemUI().drawMapItems(g, mapOffsetX, mapOffsetY, itemController.getItemsOnMap(), itemController.isShowHitBox(), itemController.getAnimations());
         gameObjectController.drawObjects(g, mapOffsetX, mapOffsetY);
         mapController.draw(g, true);
