@@ -55,7 +55,7 @@ public class EntityController {
                 player.updateSpawnPoint(mapController.getCurrentPlayerSpawn().x, mapController.getCurrentPlayerSpawn().y);
                 gameObjectController.updatePoints(mapController);
                 player.resetHealth();
-                player.setDeathAnimationFinished(false);
+                player.resetDeath();
                 deathScreen.setDisplayDeathScreenOnlyOnce(false);
                 highscore.decreaseHighscoreForDeath();
                 highscore.increaseDeathCounter();
@@ -155,17 +155,18 @@ public class EntityController {
     }
 
     private void handlePlayerAttacksKappa(Kappa kappa) {
-        if(!player.getHasAttacked()) {
+        if (!player.getHasAttacked()) {
 
-            if(!player.getAttackHitBoxIsActive()) return;
+            if (!player.getAttackHitBoxIsActive()) return;
 
             Rectangle2D.Float kappaHitbox = kappa.getHitbox();
-            if(player.getIsFacingRight())
-                if(!kappaHitbox.intersects(player.getRightAttackHitBox())) return;
-                else if(kappaHitbox.intersects(player.getLeftAttackHitBox())) return;
+            if (player.getIsFacingRight()) {
+                if (!kappaHitbox.intersects(player.getRightAttackHitBox())) return;
+                else if (kappaHitbox.intersects(player.getLeftAttackHitBox())) return;
 
-            kappa.decreaseHealth(player.getCurrentDamagePerAttack());
-            player.setHasAttacked(true);
+                kappa.decreaseHealth(player.getCurrentDamagePerAttack());
+                player.setHasAttacked(true);
+            }
         }
     }
 

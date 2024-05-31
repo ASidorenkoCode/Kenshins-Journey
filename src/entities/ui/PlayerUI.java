@@ -59,8 +59,6 @@ public class PlayerUI extends EntityUI {
             aniTick -= aniSpeed;
             aniIndex++;
 
-
-
             if (aniIndex >= currentAnimation.getAniSize()) {
                 player.setAttack(false);
                 player.setIsDashing(false);

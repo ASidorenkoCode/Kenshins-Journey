@@ -19,6 +19,7 @@ public class Player extends Entity {
     private int currentMaxHearts = 3;
     private int totalMaxHearts = 3;
     private boolean isHitByEnemy = false;
+    private boolean deathAnimationFinished = false;
 
     private final static int STANDARD_DAMAGE = 20;
 
@@ -132,7 +133,7 @@ public class Player extends Entity {
             // TODO: implement new y position, for now It's just a workaround with times 3
             if (this.getHitbox().x < 0 || this.getHitbox().y > GameView.GAME_HEIGHT*3) {
                 this.setPlayerHealth(0);
-                this.setDeathAnimationFinished(true);
+                this.setDead(true);
             }
         }
     }
@@ -356,6 +357,11 @@ public class Player extends Entity {
         }
     }
 
+    public void resetDeath() {
+        deathAnimationFinished = false;
+        isDead = false;
+    }
+
 
     public void setPlayerHealth(int playerHealth) {
         this.health = playerHealth;
@@ -368,11 +374,11 @@ public class Player extends Entity {
     }
 
     public boolean getDeathAnimationFinished() {
-        return this.isDead;
+        return deathAnimationFinished;
     }
 
-    public void setDeathAnimationFinished(boolean isDead) {
-        this.isDead = isDead;
+    public void setDeathAnimationFinished(boolean deathAnimationFinished) {
+        this.deathAnimationFinished = deathAnimationFinished;
     }
 
     public int resetHealth() {
