@@ -64,7 +64,6 @@ public class EntityController {
         player.update(mapController.getCurrentMap(), currentBoss, kappas);
         if (!kappas.isEmpty()) handleKappas(mapController, highscore);
         if(currentBoss != null) {
-            handlePlayerAttacksBoss();
             if(currentBoss.getIsDead()) {
                 if(!currentBoss.isScoreIncreased()) {
                     highscore.increaseHighscoreForBoss();
@@ -124,23 +123,6 @@ public class EntityController {
 
 
     //functions for checking attacks between player and entities
-
-    private void handlePlayerAttacksBoss() {
-        if(!player.getHasAttacked()) {
-            //only attack if attack hitbox is active
-            if(!player.getAttackHitBoxIsActive()) return;
-            Rectangle2D.Float bossHitbox = currentBoss.getHitbox();
-
-            Rectangle2D.Float attackHitbox = player.getLeftAttackHitBox();
-            if(player.getIsFacingRight()) attackHitbox = player.getRightAttackHitBox();
-
-            if(attackHitbox.intersects(bossHitbox)) {
-                currentBoss.decreaseHealth(player.getCurrentDamagePerAttack());
-                player.setHasAttacked(true);
-            };
-
-        }
-    }
 
     public void handleKappas(MapController mapController, Highscore highscore) {
         for (Kappa kap : kappas) {
