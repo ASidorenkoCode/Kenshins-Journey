@@ -1,4 +1,4 @@
-package screens;
+package screens.ui;
 
 import game.UI.GameView;
 

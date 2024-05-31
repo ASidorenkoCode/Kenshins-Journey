@@ -1,6 +1,4 @@
 package entities.logic;
-
-import entities.ui.PlayerUI;
 import game.UI.GameView;
 import maps.logic.Map;
 

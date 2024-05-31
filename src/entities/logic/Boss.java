@@ -48,10 +48,10 @@ public class Boss extends Entity {
         }
     }
 
-    public void update(int offset) {
+    public void update(int offset, Player player) {
         if(!isDead) {
 
-            attack(offset);
+            attack(offset, player);
 
             if(inAir) {
                 //TODO: Static movement or based on hitbox?
@@ -95,17 +95,23 @@ public class Boss extends Entity {
     }
 
 
-    private void attack(int offset) {
+    private void attack(int offset, Player player) {
         if(isUsingBigProjectile) {
-            bigProjectileAttack(offset);
+            bigProjectileAttack(offset, player);
+
         } else {
-            miniProjectileAttack(offset);
+            miniProjectileAttack(offset, player);
         }
     }
 
     //attack one
-    private void bigProjectileAttack(int offset) {
+    private void bigProjectileAttack(int offset, Player player) {
         moveProjectile();
+        if(player.getHitbox().intersects(projectileHitbox)) {
+            player.decreaseHealth(1);
+            resetProjectile();
+            return;
+        }
         checkIfProjectileIsOutOfBounds(offset);
 
     }
@@ -123,8 +129,15 @@ public class Boss extends Entity {
     }
 
     //attack two
-    private void miniProjectileAttack(int offset) {
+    private void miniProjectileAttack(int offset, Player player) {
         moveMiniProjectiles();
+        for(Rectangle2D.Float hitbox: miniProjectileHitboxes) {
+            if(player.getHitbox().intersects(hitbox)) {
+                resetAllMiniProjectiles();
+                player.decreaseHealth(1);
+                return;
+            }
+        }
         checkIfAllMiniProjectilesAreOutOfBounds(offset);
     }
 
@@ -148,9 +161,6 @@ public class Boss extends Entity {
     }
 
     //Getter
-    public Rectangle2D.Float getHitbox() {
-        return hitbox;
-    }
 
     public Rectangle2D.Float getProjectileHitbox() {
         return projectileHitbox;

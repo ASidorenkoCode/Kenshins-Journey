@@ -10,9 +10,9 @@ import entities.ui.KappaUI;
 import entities.ui.PlayerUI;
 import game.controller.ReloadGame;
 import maps.controller.MapController;
-import screens.DeathScreen;
-import screens.InterfaceGame;
-import screens.LoadingScreen;
+import screens.ui.DeathScreen;
+import screens.ui.InterfaceGame;
+import screens.ui.LoadingScreen;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -25,9 +25,7 @@ public class EntityController {
     private Player player;
     private ArrayList<Kappa> kappas;
     private ArrayList<KappaUI> kappaUIS;
-
     private Boss currentBoss;
-
     private BossUI bossUI;
 
     public EntityController(MapController mapController, boolean showHitBox) {
@@ -36,18 +34,18 @@ public class EntityController {
         initBoss(mapController, showHitBox);
     }
 
-    public void update(ReloadGame reloadGame, MapController mapController, GameObjectController gameObjectController, Highscore highscore, LoadingScreen loadingScreen, InterfaceGame interfaceGame, DeathScreen deathScreen) {
+    public void update(ReloadGame reloadGame, MapController mapController, GameObjectController gameObjectController, Highscore highscore, LoadingScreen loadingScreen, DeathScreen deathScreen) {
         if (gameObjectController.checkIfPlayerIsInFinish(player) && !player.isDead()) {
             reloadGame.loadNewMap();
         }
 
-        if (interfaceGame.getScore() == 0) {
+        if (highscore.getCurrentHighscore() == 0) {
             player.setPlayerHealth(0);
         }
 
         if (player.isDead() && player.getDeathAnimationFinished()) {
 
-            if(deathScreen.getTotalScore() > interfaceGame.getScore()) deathScreen.updateScore(interfaceGame.getScore());
+            if(deathScreen.getTotalScore() > highscore.getCurrentHighscore()) deathScreen.updateScore(highscore.getCurrentHighscore());
             if (!deathScreen.isPlayerContinuesGame() && !deathScreen.isDisplayDeathScreenOnlyOnce()) {
                 deathScreen.displayDeathScreen();
             }
@@ -57,7 +55,6 @@ public class EntityController {
                 gameObjectController.updatePoints(mapController);
                 player.resetHealth();
                 player.setDeathAnimationFinished(false);
-                interfaceGame.setTotalHearts(player.getTotalHearts());
                 deathScreen.setDisplayDeathScreenOnlyOnce(false);
                 highscore.decreaseHighscoreForDeath();
                 highscore.increaseDeathCounter();
@@ -76,9 +73,7 @@ public class EntityController {
                 }
                 return;
             }
-            currentBoss.update(mapController.getMapOffset());
-
-            handleBossAttacksPlayer();
+            currentBoss.update(mapController.getMapOffset(), player);
         }
     }
 
@@ -196,24 +191,6 @@ public class EntityController {
             kappa.setIsAttacking(true);
             player.decreaseHealth(1);
             kappa.setHasAttacked(true);
-        }
-    }
-
-    private void handleBossAttacksPlayer() {
-        if(currentBoss.getIsUsingBigProjectile()) {
-            Rectangle2D.Float bigProjectileHitbox = currentBoss.getProjectileHitbox();
-            if(player.getHitbox().intersects(bigProjectileHitbox)) {
-                player.decreaseHealth(1);
-                currentBoss.resetProjectile();
-            }
-        } else {
-            for(Rectangle2D.Float hitbox: currentBoss.getMiniProjectileHitboxes()) {
-                if(player.getHitbox().intersects(hitbox)) {
-                    currentBoss.resetAllMiniProjectiles();
-                    player.decreaseHealth(1);
-                    return;
-                }
-            }
         }
     }
 

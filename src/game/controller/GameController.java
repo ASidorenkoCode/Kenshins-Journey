@@ -8,10 +8,10 @@ import gameObjects.controller.GameObjectController;
 import gameObjects.logic.Finish;
 import items.controller.ItemController;
 import maps.controller.MapController;
-import screens.DeathScreen;
-import screens.InterfaceGame;
-import screens.LoadingScreen;
-import screens.OptionScreen;
+import screens.controller.ScreenController;
+import screens.ui.DeathScreen;
+import screens.ui.InterfaceGame;
+import screens.ui.LoadingScreen;
 
 public class GameController implements ReloadGame {
 
@@ -20,9 +20,8 @@ public class GameController implements ReloadGame {
     private EntityController entityController;
     private GameObjectController gameObjectController;
     private MapController mapController;
+    private ScreenController screenController;
     private LoadingScreen loadingScreen;
-    private OptionScreen optionScreen;
-    private InterfaceGame interfaceGame;
     private ItemController itemController;
     private DeathScreen deathScreen;
 
@@ -31,6 +30,7 @@ public class GameController implements ReloadGame {
     private boolean showHitbox;
 
     public GameController(boolean showFPS_UPS, boolean showHitBox) {
+
         this.highscore = new Highscore();
         mapController = new MapController(null);
         entityController = new EntityController(mapController, showHitBox);
@@ -38,8 +38,9 @@ public class GameController implements ReloadGame {
         itemController = new ItemController(mapController, showHitBox);
         gameEngine = new GameEngine(showFPS_UPS, this);
         gameObjectController = new GameObjectController(mapController, showHitBox);
-        gameView = new GameView(this, entityController, mapController, itemController, gameObjectController);
-        this.interfaceGame = new InterfaceGame(entityController.getPlayer(), itemController);
+        screenController = new ScreenController(itemController);
+
+        gameView = new GameView(this, entityController, mapController, itemController, gameObjectController, screenController);
         this.deathScreen = new DeathScreen(gameView.getFrame());
         this.loadingScreen = new LoadingScreen(gameView.getFrame());
         gameView.gameWindow();
@@ -57,14 +58,10 @@ public class GameController implements ReloadGame {
     }
 
     public void update() {
-        entityController.update(this, mapController, gameObjectController, highscore, loadingScreen, interfaceGame, deathScreen);
+        entityController.update(this, mapController, gameObjectController, highscore, loadingScreen, deathScreen);
         itemController.update(entityController);
         highscore.decreaseHighScoreAfterOneSecond();
-        interfaceGame.updateHighscore(highscore);
-    }
-
-    public InterfaceGame getInterfaceGame() {
-        return interfaceGame;
+        screenController.update(highscore, entityController.getPlayer(), itemController.getMenu());
     }
 
     public DeathScreen getDeathScreen() {
@@ -75,10 +72,9 @@ public class GameController implements ReloadGame {
     public void loadNewMap() {
         Player player = entityController.getPlayer();
         player.setTotalHearts(player.getTotalHearts() + 1);  // AMOUNT OF hearts collected
-        interfaceGame.setTotalHearts(player.getTotalHearts());
         loadingScreen.displayLoadingScreen();
-        loadingScreen.updateScore(interfaceGame.getScore());
-        deathScreen.updateScore(interfaceGame.getScore());
+        loadingScreen.updateScore(highscore.getCurrentHighscore());
+        deathScreen.updateScore(highscore.getCurrentHighscore());
         mapController.loadNextMap();
         Finish finish = gameObjectController.getFinish();
         finish.updateFinishPoint(mapController.getCurrentFinishSpawn().x, mapController.getCurrentFinishSpawn().y, mapController.getCurrentBossSpawn() == null);

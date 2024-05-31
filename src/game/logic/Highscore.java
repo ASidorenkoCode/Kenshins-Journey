@@ -9,7 +9,6 @@ public class Highscore {
     private int currentHighscore;
     private int deathCounter;
     private ArrayList<Integer> highscores;
-
     private long comparingTime;
 
     public Highscore() {

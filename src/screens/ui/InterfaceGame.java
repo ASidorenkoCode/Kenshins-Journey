@@ -1,4 +1,4 @@
-package screens;
+package screens.ui;
 
 import entities.logic.Player;
 import game.UI.GameView;
@@ -14,28 +14,25 @@ import java.io.IOException;
 
 public class InterfaceGame {
     private int playerHealth;
+    private int playerCurrentDamagePerAttack;
     private int score;
-    private long lastTime;
-    private int totalHearts;
+    private Item[] menu;
     private ItemController itemController;
     private BufferedImage characterPortraitAndStats;
 
 
-    public InterfaceGame(Player player, ItemController itemController) {
+    public InterfaceGame(ItemController itemController) {
         try {
             characterPortraitAndStats = ImageIO.read(new File("res/interfacePlayer/character_portrait_and_stats.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        playerHealth = player.getHealth();
-        totalHearts = player.getTotalHearts();
-        score = 5000;
-        lastTime = System.currentTimeMillis();
+        //TODO: remove itemController
         this.itemController = itemController;
     }
 
-    public void draw(Graphics g, Player player) {
+    public void draw(Graphics g) {
         int squareX = -1;
         int squareY = -1;
 
@@ -57,7 +54,7 @@ public class InterfaceGame {
         int totalX = x + (int) (squareX * 1.5);
         int totalY = y + (int) (squareY * 1.5);
 
-        String health = String.format("%d", player.getHealth());
+        String health = String.format("%d", playerHealth);
         g.setColor(Color.WHITE);
         g.setFont(new Font("Arial", Font.BOLD, 20));
 
@@ -81,7 +78,7 @@ public class InterfaceGame {
             }
         }
 
-        String maxDamage = String.valueOf(player.getCurrentDamagePerAttack());
+        String maxDamage = String.valueOf(playerCurrentDamagePerAttack);
         g.setColor(Color.WHITE);
         g.setFont(new Font("Arial", Font.BOLD, 20));
 
@@ -95,19 +92,21 @@ public class InterfaceGame {
 
         drawScore(g, score);
 
+        //TODO: remove itemController
         int itemHeight = itemController.getItemUI().getSPRITE_PX_HEIGHT() + 50;
 
         int imageY = GameView.GAME_HEIGHT - itemHeight;
 
-        int totalWidth = itemController.getMenu().length * 55;
+        int totalWidth = menu.length * 55;
         int startX = (GameView.GAME_WIDTH - totalWidth) / 2;
 
-        if (itemController.getMenu().length > 0) {
+        if (menu.length > 0) {
             int index = 1;
-            for (Item i : itemController.getMenu()) {
+            for (Item i : menu) {
                 if (i != null) {
                     g.setColor(Color.BLACK);
                     g.fillOval(startX, imageY + 10, itemHeight - 20, itemHeight + 20);
+                    //TODO: remove itemController
                     itemController.getItemUI().drawStaticItemImage(g, i, startX, imageY - 20, itemController.getAnimations());
 
                     g.setColor(Color.WHITE);
@@ -121,12 +120,11 @@ public class InterfaceGame {
         }
     }
 
-    public void updatePlayerHealth(int playerHealth) {
-        this.playerHealth = playerHealth;
-    }
-
-    public void updateHighscore(Highscore highscore) {
+    public void update(Highscore highscore, Player player, Item[] menu) {
         score = highscore.getCurrentHighscore();
+        playerCurrentDamagePerAttack = player.getCurrentDamagePerAttack();
+        playerHealth = player.getHealth();
+        this.menu = menu;
     }
 
     private void drawScore(Graphics g, int score) {
@@ -139,13 +137,5 @@ public class InterfaceGame {
         g.drawString(scoreText, x, y); // Draw the string in the center
         g.setColor(Color.BLACK); // Reset the color to black
         g.setFont(new Font("Calibri", Font.BOLD, 12)); // Reset the font size to default
-    }
-
-    public int getScore() {
-        return score;
-    }
-
-    public void setTotalHearts(int totalHearts) {
-        this.totalHearts = totalHearts;
     }
 }

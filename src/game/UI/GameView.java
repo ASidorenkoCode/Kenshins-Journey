@@ -5,6 +5,7 @@ import gameObjects.controller.GameObjectController;
 import items.controller.ItemController;
 import keyboardinputs.logic.KeyboardInputsIngame;
 import maps.controller.MapController;
+import screens.controller.ScreenController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,13 +27,15 @@ public class GameView extends JPanel {
     private EntityController entityController;
     private ItemController itemController;
     private GameObjectController gameObjectController;
+    private ScreenController screenController;
     private JFrame frame = new JFrame("Kenshins Journey");
 
 
-    public GameView(GameController gameController, EntityController entityController, MapController mapController, ItemController itemController, GameObjectController gameObjectController) {
+    public GameView(GameController gameController, EntityController entityController, MapController mapController, ItemController itemController, GameObjectController gameObjectController, ScreenController screenController) {
         this.gameController = gameController;
         this.mapController = mapController;
         this.gameObjectController = gameObjectController;
+        this.screenController = screenController;
         setPreferredSize(new Dimension(GAME_WIDTH, GAME_HEIGHT));
         setFocusable(true);
         requestFocusInWindow();
@@ -93,8 +96,6 @@ public class GameView extends JPanel {
             at = AffineTransform.getScaleInstance(scaleFactor, scaleFactor);
             g2d.setTransform(at);
             render(g2d);
-            gameController.getInterfaceGame().updatePlayerHealth(entityController.getPlayer().getHealth());
-            gameController.getInterfaceGame().draw(g2d, entityController.getPlayer());
             g2d.dispose(); // Dispose the Graphics2D object when done
         }
     }
@@ -105,9 +106,9 @@ public class GameView extends JPanel {
         int mapOffset = mapController.getMapOffset();
         mapController.draw(g);
         entityController.drawEntities(g, mapOffset);
-        gameController.getInterfaceGame().draw(g, entityController.getPlayer());
         itemController.getItemUI().drawMapItems(g, mapOffset, itemController.getItemsOnMap(), itemController.isShowHitBox(), itemController.getAnimations());
         gameObjectController.drawObjects(g, mapOffset);
+        screenController.draw(g);
     }
 
     public void showFPS_UPS(int frames, int updates) {
