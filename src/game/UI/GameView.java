@@ -29,37 +29,19 @@ public class GameView extends JPanel {
     private EntityController entityController;
     private ItemController itemController;
     private GameObjectController gameObjectController;
-    private BossController bossController;
     private JFrame frame = new JFrame("Kenshins Journey");
 
 
-    public GameView(GameController gameController, EntityController entityController, MapController mapController, ItemController itemController, GameObjectController gameObjectController, BossController bossController) {
+    public GameView(GameController gameController, EntityController entityController, MapController mapController, ItemController itemController, GameObjectController gameObjectController) {
         this.gameController = gameController;
         this.mapController = mapController;
         this.gameObjectController = gameObjectController;
-        this.bossController = bossController;
         setPreferredSize(new Dimension(GAME_WIDTH, GAME_HEIGHT));
         setFocusable(true);
         requestFocusInWindow();
         addKeyListener(new KeyboardInputsIngame(this));
         this.entityController = entityController;
         this.itemController = itemController;
-    }
-
-    public void drawStartScreen() {
-        StartScreen startScreen = new StartScreen();
-        startScreen.setPreferredSize(new Dimension(GAME_WIDTH, GAME_HEIGHT));
-        getFrame().setContentPane(startScreen);
-        getFrame().setVisible(true);
-
-        Timer timer = new Timer(5000, e -> {
-            getFrame().setContentPane(GameView.this);
-            getFrame().revalidate();
-            getFrame().requestFocus();
-            getFrame().addKeyListener(new KeyboardInputsIngame(this));
-        });
-        timer.setRepeats(false);
-        timer.start();
     }
 
     public void gameWindow() {
@@ -112,14 +94,10 @@ public class GameView extends JPanel {
             Graphics2D g2d = (Graphics2D) g.create(); // Create a new Graphics2D object
             String osName = System.getProperty("os.name");
             AffineTransform at;
-            if (osName.contains("Mac")) {
-                at = AffineTransform.getScaleInstance(scaleFactor * 2, scaleFactor * 2);
-            } else {
-                at = AffineTransform.getScaleInstance(scaleFactor, scaleFactor);
-            }
+            at = AffineTransform.getScaleInstance(scaleFactor, scaleFactor);
             g2d.setTransform(at);
             render(g2d);
-            gameController.getInterfaceGame().updatePlayerHealth(entityController.getPlayer().getPlayerHealth());
+            gameController.getInterfaceGame().updatePlayerHealth(entityController.getPlayer().getHealth());
             gameController.getInterfaceGame().updateHighscore();
             gameController.getInterfaceGame().draw(g2d, entityController.getPlayer());
             g2d.dispose(); // Dispose the Graphics2D object when done
@@ -136,7 +114,6 @@ public class GameView extends JPanel {
         gameController.getInterfaceGame().draw(g, entityController.getPlayer());
         itemController.getItemUI().drawMapItems(g, mapOffsetX, mapOffsetY, itemController.getItemsOnMap(), itemController.isShowHitBox(), itemController.getAnimations());
         gameObjectController.drawObjects(g, mapOffsetX, mapOffsetY);
-        bossController.draw(g, mapOffsetX, mapOffsetY);
         mapController.draw(g, true);
     }
 

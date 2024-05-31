@@ -27,7 +27,7 @@ public class InterfaceGame {
             e.printStackTrace();
         }
 
-        playerHealth = player.getPlayerHealth();
+        playerHealth = player.getHealth();
         totalHearts = player.getTotalHearts();
         score = 5000;
         lastTime = System.currentTimeMillis();
@@ -56,7 +56,7 @@ public class InterfaceGame {
         int totalX = x + (int) (squareX * 1.5);
         int totalY = y + (int) (squareY * 1.5);
 
-        String health = String.format("%d", player.getPlayerHealth());
+        String health = String.format("%d", player.getHealth());
         g.setColor(Color.WHITE);
         g.setFont(new Font("Arial", Font.BOLD, 20));
 

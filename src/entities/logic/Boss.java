@@ -1,12 +1,8 @@
-package boss.logic;
-
-import entities.logic.Player;
-import gameObjects.logic.Finish;
-
+package entities.logic;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
-public class Boss {
+public class Boss extends Entity {
     private static final int BIG_PROJECTILE_WIDTH = 33;
     private static final int BIG_PROJECTILE_HEIGHT = 17;
     private static final int BIG_PROJECTILE_SCALE = 4;
@@ -16,16 +12,9 @@ public class Boss {
     private static final int BOSS_WIDTH = 64;
     private static final int BOSS_HEIGHT = 64;
     private static final int BOSS_SCALE = 4;
-
-    private float x;
-    private float y;
-    private Rectangle2D.Float hitbox;
     private Rectangle2D.Float projectileHitbox;
     private ArrayList<Rectangle2D.Float> miniProjectileHitboxes;
     private boolean isUsingBigProjectile;
-    private int health;
-    private boolean isDead;
-
     private final static int JUMP_SPEED = 500;
     private int jumpCount;
     private float airMovement;
@@ -34,6 +23,7 @@ public class Boss {
 
 
     public Boss(float x, float y) {
+        super(x,y, new Rectangle2D.Float(0,0,0,0), false, 20);
         setBossPosition(x,y);
         this.hitbox = new Rectangle2D.Float(this.x,this.y,BOSS_WIDTH * BOSS_SCALE,BOSS_HEIGHT * BOSS_SCALE);
         this.projectileHitbox = new Rectangle2D.Float(
@@ -42,7 +32,7 @@ public class Boss {
                 BIG_PROJECTILE_WIDTH * BIG_PROJECTILE_SCALE,
                 BIG_PROJECTILE_HEIGHT * BIG_PROJECTILE_SCALE);
         initNewMiniProjectiles();
-        this.health = 500;
+        this.health = 20;
         this.isUsingBigProjectile = true;
         this.airMovement = -5f;
         this.inAir = false;
@@ -56,15 +46,10 @@ public class Boss {
         }
     }
 
-    public void update(Player player, Finish finish, int offset) {
+    public void update(int offset) {
         if(!isDead) {
-            if(playerHitsBoss(player)  && !player.getHasAttacked()) {
-                decreaseHealth(player.getCurrentDamagePerAttack());
-                player.setHasAttacked(true);
-            }
 
-            if(!isDead) attack(player, offset);
-            else finish.setIsActive(true);
+            attack(offset);
 
             if(inAir) {
                 //TODO: Static movement or based on hitbox?
@@ -85,10 +70,6 @@ public class Boss {
                     previosY = y;
                 }
             }
-
-
-
-
         }
 
     }
@@ -111,42 +92,22 @@ public class Boss {
         this.x = x;
     }
 
-    private boolean playerHitsBoss(Player player) {
-        //only attack if attack hitbox is active
-        if(!player.getAttackHitBoxIsActive()) return false;
 
-        if(player.getIsFacingRight())
-            return hitbox.intersects(player.getRightAttackHitBox());
-        return hitbox.intersects(player.getLeftAttackHitBox());
-    }
-
-    public void decreaseHealth(int amount) {
-        health -= amount;
-        if (health <= 0) {
-            health = 0;
-            isDead = true;
-        }
-    }
-
-
-    private void attack(Player player, int offset) {
+    private void attack(int offset) {
         if(isUsingBigProjectile) {
-            bigProjectileAttack(player, offset);
+            bigProjectileAttack(offset);
         } else {
-            miniProjectileAttack(player, offset);
+            miniProjectileAttack(offset);
         }
     }
 
     //attack one
-    private void bigProjectileAttack(Player player, int offset) {
+    private void bigProjectileAttack(int offset) {
         moveProjectile();
         checkIfProjectileIsOutOfBounds(offset);
-        if(projectileHitsPlayer(player)) {
-            player.decreaseHealth(1);
-            resetProjectile();
-        }
+
     }
-    private void resetProjectile() {
+    public void resetProjectile() {
         projectileHitbox.x = x- BIG_PROJECTILE_WIDTH;
         isUsingBigProjectile = false;
     }
@@ -158,18 +119,14 @@ public class Boss {
     private void moveProjectile() {
         projectileHitbox.x -= 1;
     }
-    private boolean projectileHitsPlayer(Player player) {
-        return player.getHitbox().intersects(projectileHitbox);
-    }
 
     //attack two
-    private void miniProjectileAttack(Player player, int offset) {
+    private void miniProjectileAttack(int offset) {
         moveMiniProjectiles();
         checkIfAllMiniProjectilesAreOutOfBounds(offset);
-        if(miniProjectileHitsPlayer(player)) player.decreaseHealth(1);
     }
 
-    private void resetAllMiniProjectiles() {
+    public void resetAllMiniProjectiles() {
         initNewMiniProjectiles();
         isUsingBigProjectile = true;
     }
@@ -186,15 +143,6 @@ public class Boss {
             hitbox.y += startingYMovement;
             startingYMovement -= 0.3f;
         }
-    }
-    private boolean miniProjectileHitsPlayer(Player player) {
-        for(Rectangle2D.Float hitbox: miniProjectileHitboxes) {
-            if(player.getHitbox().intersects(hitbox)) {
-                resetAllMiniProjectiles();
-                return true;
-            };
-        }
-        return false;
     }
 
     //Getter
