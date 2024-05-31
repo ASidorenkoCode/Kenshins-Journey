@@ -84,16 +84,7 @@ public class EntityController {
 
         if(currentBoss != null) {
 
-            currentBoss.update(mapController.getMapOffset(), player, highscore, gameObjectController.getFinish());
-            if(currentBoss.getIsDead()) {
-                if(!currentBoss.isScoreIncreased()) {
-                    highscore.increaseHighscoreForBoss();
-                    currentBoss.setScoreIncreased(true);
-                    gameObjectController.getFinish().setIsActive(true);
-                }
-                return;
-            }
-            currentBoss.update(mapController.getMapOffsetX(), player);
+            currentBoss.update(mapController.getMapOffsetX(), player, highscore, gameObjectController.getFinish());
         }
     }
 

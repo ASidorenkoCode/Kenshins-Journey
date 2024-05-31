@@ -1,4 +1,7 @@
 package entities.logic;
+import game.logic.Highscore;
+import gameObjects.logic.Finish;
+
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
@@ -48,8 +51,7 @@ public class Boss extends Entity {
         }
     }
 
-    public void update(int offsetX, Player player) {
-    public void update(int offset, Player player, Highscore highscore, Finish finish) {
+    public void update(int offsetX, Player player, Highscore highscore, Finish finish) {
         if(!isDead) {
 
             attack(offsetX, player);
