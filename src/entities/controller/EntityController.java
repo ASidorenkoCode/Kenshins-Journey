@@ -1,6 +1,5 @@
 package entities.controller;
 import entities.logic.Boss;
-import entities.logic.Entity;
 import entities.ui.BossUI;
 import game.logic.Highscore;
 import gameObjects.controller.GameObjectController;
@@ -8,15 +7,12 @@ import entities.logic.Kappa;
 import entities.logic.Player;
 import entities.ui.KappaUI;
 import entities.ui.PlayerUI;
-import game.controller.ReloadGame;
 import maps.controller.MapController;
 import screens.ui.DeathScreen;
-import screens.ui.InterfaceGame;
 import screens.ui.LoadingScreen;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 public class EntityController {
@@ -34,10 +30,8 @@ public class EntityController {
         initBoss(mapController, showHitBox);
     }
 
-    public void update(ReloadGame reloadGame, MapController mapController, GameObjectController gameObjectController, Highscore highscore, LoadingScreen loadingScreen, DeathScreen deathScreen) {
-        if (gameObjectController.checkIfPlayerIsInFinish(player) && !player.getDeathAnimationFinished()) {
-            reloadGame.loadNewMap();
-        }
+    public void update(MapController mapController, GameObjectController gameObjectController, Highscore highscore, LoadingScreen loadingScreen, DeathScreen deathScreen) {
+
 
         if (highscore.getCurrentHighscore() == 0) {
             player.setPlayerHealth(0);

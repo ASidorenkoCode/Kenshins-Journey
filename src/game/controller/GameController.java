@@ -15,7 +15,7 @@ import screens.ui.InterfaceGame;
 import screens.ui.LoadingScreen;
 import screens.StartScreen;
 
-public class GameController implements ReloadGame {
+public class GameController {
 
     private GameEngine gameEngine;
     private GameView gameView;
@@ -60,7 +60,11 @@ public class GameController implements ReloadGame {
     }
 
     public void update() {
-        entityController.update(this, mapController, gameObjectController, highscore, loadingScreen, deathScreen);
+        if (gameObjectController.checkIfPlayerIsInFinish(entityController.getPlayer()) && !entityController.getPlayer().getDeathAnimationFinished()) {
+            loadNewMap();
+            return;
+        }
+        entityController.update(mapController, gameObjectController, highscore, loadingScreen, deathScreen);
         itemController.update(entityController);
         highscore.decreaseHighScoreAfterOneSecond();
         screenController.update(highscore, entityController.getPlayer(), itemController.getMenu());
@@ -70,7 +74,6 @@ public class GameController implements ReloadGame {
         return deathScreen;
     }
 
-    @Override
     public void loadNewMap() {
         Player player = entityController.getPlayer();
         player.setTotalHearts(player.getTotalHearts() + 1);  // AMOUNT OF hearts collected
