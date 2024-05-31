@@ -14,27 +14,27 @@ public class BossUI extends EntityUI {
     }
 
     @Override
-    void drawHitBox(Graphics g, int offset) {
+    void drawHitBox(Graphics g, int offsetX, int offsetY) {
         //empty is not used
     }
 
     @Override
-    public void drawAnimations(Graphics g, int offset) {
+    public void drawAnimations(Graphics g, int offsetX, int offsetY) {
         if(currentBoss != null) {
             //TODO: fitting animations and death animation
             if(!currentBoss.getIsDead()) {
-                drawBoss(g, offset);
+                drawBoss(g, offsetX, offsetY);
                 if(currentBoss.getIsDead()) return;
                 updateAnimationTick();
                 if(currentBoss.getIsUsingBigProjectile()) {
-                    drawBigProjectile(g, offset);
-                    if(showHitBox) drawBigProjectileHitbox(g, offset);
+                    drawBigProjectile(g, offsetX, offsetY);
+                    if(showHitBox) drawBigProjectileHitbox(g, offsetX, offsetY);
                 }
                 else {
-                    drawMiniProjectile(g, offset);
-                    if(showHitBox) drawMiniProjectileHitboxes(g,offset);
+                    drawMiniProjectile(g, offsetX, offsetY);
+                    if(showHitBox) drawMiniProjectileHitboxes(g,offsetX, offsetY);
                 }
-                if(showHitBox) drawBossHitbox(g, offset);
+                if(showHitBox) drawBossHitbox(g, offsetX, offsetY);
             }
 
         }
@@ -150,42 +150,42 @@ public class BossUI extends EntityUI {
 
 
     //Draw hitboxes
-    public void drawBossHitbox(Graphics g, int offset) {
+    public void drawBossHitbox(Graphics g, int offsetX, int offsetY) {
         Rectangle2D.Float hitbox = currentBoss.getHitbox();
-        g.drawRect((int) hitbox.x - offset, (int) hitbox.y, (int) hitbox.width, (int) hitbox.height);
+        g.drawRect((int) hitbox.x - offsetX, (int) hitbox.y - offsetY, (int) hitbox.width, (int) hitbox.height);
     }
 
-    public void drawBigProjectileHitbox(Graphics g, int offset) {
+    public void drawBigProjectileHitbox(Graphics g, int offsetX, int offsetY) {
         Rectangle2D.Float hitbox = currentBoss.getProjectileHitbox();
-        g.drawRect((int) hitbox.x - offset, (int) hitbox.y, (int) hitbox.width, (int) hitbox.height);
+        g.drawRect((int) hitbox.x - offsetX, (int) hitbox.y - offsetY, (int) hitbox.width, (int) hitbox.height);
     }
-    public void drawMiniProjectileHitboxes(Graphics g, int offset) {
+    public void drawMiniProjectileHitboxes(Graphics g, int offsetX, int offsetY) {
         for(Rectangle2D.Float hitbox: currentBoss.getMiniProjectileHitboxes()) {
-            g.drawRect((int) hitbox.x - offset, (int) hitbox.y, (int) hitbox.width, (int) hitbox.height);
+            g.drawRect((int) hitbox.x - offsetX, (int) hitbox.y - offsetY, (int) hitbox.width, (int) hitbox.height);
         }
     }
 
     //Draw Animations
-    public void drawBoss(Graphics g, int offset) {
+    public void drawBoss(Graphics g, int offsetX, int offsetY) {
         Rectangle2D.Float hitbox = currentBoss.getHitbox();
         //TODO: Make multiple boss animations -> remove static 0
-        g.drawImage(boss[0][bossAniIndex], (int) hitbox.x - offset, (int) hitbox.y, (int) hitbox.width, (int) hitbox.height, null);
+        g.drawImage(boss[0][bossAniIndex], (int) hitbox.x - offsetX, (int) hitbox.y - offsetY, (int) hitbox.width, (int) hitbox.height, null);
     }
-    public void drawBigProjectile(Graphics g, int offset) {
+    public void drawBigProjectile(Graphics g, int offsetX, int offsetY) {
         Rectangle2D.Float hitbox = currentBoss.getProjectileHitbox();
-        g.drawRect((int) hitbox.x - offset, (int) hitbox.y, (int) hitbox.width, (int) hitbox.height);
+        g.drawRect((int) hitbox.x - offsetX, (int) hitbox.y - offsetY, (int) hitbox.width, (int) hitbox.height);
         g.drawImage(bigProjectile[bigProjectileAniIndex],
-                (int) hitbox.x - offset,
-                (int) hitbox.y,
+                (int) hitbox.x - offsetX,
+                (int) hitbox.y - offsetY,
                 (int) hitbox.width,
                 (int) hitbox.height, null);
     }
 
-    public void drawMiniProjectile(Graphics g, int offset) {
+    public void drawMiniProjectile(Graphics g, int offsetX, int offsetY) {
         for(Rectangle2D.Float hitbox: currentBoss.getMiniProjectileHitboxes()) {
             g.drawImage(miniProjectile[miniProjectileAniIndex],
-                    (int) hitbox.x - offset,
-                    (int) hitbox.y,
+                    (int) hitbox.x - offsetX,
+                    (int) hitbox.y - offsetY,
                     (int) hitbox.width,
                     (int) hitbox.height, null);
         }

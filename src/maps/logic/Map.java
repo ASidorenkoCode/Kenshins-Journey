@@ -13,14 +13,18 @@ public class Map {
     private int[][] objects;
 
     private int mapTilesWide;
-    private int maxTilesOffset;
+    private int mapTilesHeight;
+    private int maxTilesOffsetX;
+    private int maxTilesOffsetY;
     private int maxMapOffsetX;
+    private int maxMapOffsetY;
     private Point playerSpawn;
     private Point finishSpawn;
     private ArrayList<Point> kappaSpawns;
 
     private ArrayList<Point> itemSpawns;
     private Point bossSpawn;
+    int tileSize = GameView.TILES_DEFAULT_SIZE * 2;
 
     public Map(BufferedImage img) {
         this.kappaSpawns = new ArrayList<>();
@@ -48,16 +52,16 @@ public class Map {
 
 
     private void loadMapData(int redValue, int x, int y) {
-        if (redValue >= 48)
+        if (redValue >= 80)
             mapData[y][x] = 0;
         else
             mapData[y][x] = redValue;
     }
 
     private void loadEntities(int greenValue, int x, int y) {
-        int originalX = x * GameView.TILES_DEFAULT_SIZE * 2;
+        int originalX = x * tileSize;
         int scaledX = originalX - 96;
-        int originalY = y * GameView.TILES_DEFAULT_SIZE * 2;
+        int originalY = y * tileSize;
         int scaledY = originalY - 65;
 
         switch (greenValue) {
@@ -69,8 +73,8 @@ public class Map {
     }
 
     private void loadObjects(int blueValue, int x, int y) {
-        int originalX = x * GameView.TILES_DEFAULT_SIZE * 2;
-        int originalY = y * GameView.TILES_DEFAULT_SIZE * 2;
+        int originalX = x * tileSize;
+        int originalY = y * tileSize;
 
         switch (blueValue) {
             case 100 -> itemSpawns.add(new Point(originalX, originalY));
@@ -79,8 +83,11 @@ public class Map {
 
     private void calculateMapOffsets() {
         mapTilesWide = mapImage.getWidth();
-        maxTilesOffset = mapTilesWide - GameView.TILES_IN_WIDTH;
-        maxMapOffsetX = GameView.TILES_DEFAULT_SIZE * 2 * maxTilesOffset;
+        mapTilesHeight = mapImage.getHeight();
+        maxTilesOffsetX = mapTilesWide - GameView.TILES_IN_WIDTH;
+        maxTilesOffsetY = mapTilesHeight - GameView.TILES_IN_HEIGHT;
+        maxMapOffsetX = tileSize * maxTilesOffsetX;
+        maxMapOffsetY = tileSize * maxTilesOffsetY;
     }
 
     public int getmaxMapOffsetX() {
@@ -113,5 +120,21 @@ public class Map {
 
     public Point getBossSpawn() {
         return bossSpawn;
+    }
+
+    public int getmaxMapOffsetY() {
+        return maxMapOffsetY;
+    }
+
+    public int getHeight() {
+        return mapImage.getHeight();
+    }
+
+    public int getWidth() {
+        return mapImage.getWidth();
+    }
+
+    public int getTileSize() {
+        return tileSize;
     }
 }

@@ -9,9 +9,9 @@ import entities.logic.Player;
 import entities.ui.KappaUI;
 import entities.ui.PlayerUI;
 import game.controller.ReloadGame;
-import gameObjects.logic.Finish;
 import maps.controller.MapController;
 import screens.ui.DeathScreen;
+import screens.ui.InterfaceGame;
 import screens.ui.LoadingScreen;
 
 import java.awt.*;
@@ -35,7 +35,7 @@ public class EntityController {
     }
 
     public void update(ReloadGame reloadGame, MapController mapController, GameObjectController gameObjectController, Highscore highscore, LoadingScreen loadingScreen, DeathScreen deathScreen) {
-        if (gameObjectController.checkIfPlayerIsInFinish(player) && !player.isDead()) {
+        if (gameObjectController.checkIfPlayerIsInFinish(player) && !player.getDeathAnimationFinished()) {
             reloadGame.loadNewMap();
         }
 
@@ -54,7 +54,7 @@ public class EntityController {
                 player.updateSpawnPoint(mapController.getCurrentPlayerSpawn().x, mapController.getCurrentPlayerSpawn().y);
                 gameObjectController.updatePoints(mapController);
                 player.resetHealth();
-                player.setDeathAnimationFinished(false);
+                player.resetDeath();
                 deathScreen.setDisplayDeathScreenOnlyOnce(false);
                 highscore.decreaseHighscoreForDeath();
                 highscore.increaseDeathCounter();
@@ -85,6 +85,15 @@ public class EntityController {
         if(currentBoss != null) {
 
             currentBoss.update(mapController.getMapOffset(), player, highscore, gameObjectController.getFinish());
+            if(currentBoss.getIsDead()) {
+                if(!currentBoss.isScoreIncreased()) {
+                    highscore.increaseHighscoreForBoss();
+                    currentBoss.setScoreIncreased(true);
+                    gameObjectController.getFinish().setIsActive(true);
+                }
+                return;
+            }
+            currentBoss.update(mapController.getMapOffsetX(), player);
         }
     }
 
@@ -110,6 +119,7 @@ public class EntityController {
             kappaUIS.add(kappaUI);
         }
     }
+
     public void initBoss(MapController mapController, boolean showHitBox) {
         Point bossSpawn = mapController.getCurrentBossSpawn();
         if(bossSpawn == null) {
@@ -168,12 +178,12 @@ public class EntityController {
 
     //handle ui
 
-    public void drawEntities(Graphics g, int offset) {
-        playerUI.drawAnimations(g, offset);
+    public void drawEntities(Graphics g, int offsetX, int offsetY) {
+        playerUI.drawAnimations(g, offsetX, offsetY);
         for (KappaUI kappaUI : kappaUIS) {
-            kappaUI.drawAnimations(g, offset);
+            kappaUI.drawAnimations(g, offsetX, offsetY);
         }
-        if(currentBoss != null) bossUI.drawAnimations(g, offset);
+        if(currentBoss != null) bossUI.drawAnimations(g, offsetX, offsetY);
     }
 
     public Player getPlayer() {

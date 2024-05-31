@@ -1,4 +1,5 @@
 package game.controller;
+
 import entities.controller.EntityController;
 import entities.logic.Player;
 import game.UI.GameView;
@@ -12,6 +13,7 @@ import screens.controller.ScreenController;
 import screens.ui.DeathScreen;
 import screens.ui.InterfaceGame;
 import screens.ui.LoadingScreen;
+import screens.StartScreen;
 
 public class GameController implements ReloadGame {
 
@@ -29,14 +31,12 @@ public class GameController implements ReloadGame {
 
     private boolean showHitbox;
 
-    public GameController(boolean showFPS_UPS, boolean showHitBox) {
-
-        this.highscore = new Highscore();
+    public GameController(boolean showHitBox) {
         mapController = new MapController(null);
         entityController = new EntityController(mapController, showHitBox);
         mapController.setEntityController(entityController);
         itemController = new ItemController(mapController, showHitBox);
-        gameEngine = new GameEngine(showFPS_UPS, this);
+        gameEngine = new GameEngine( this);
         gameObjectController = new GameObjectController(mapController, showHitBox);
         screenController = new ScreenController(itemController);
 
@@ -46,7 +46,9 @@ public class GameController implements ReloadGame {
         gameView.gameWindow();
         gameEngine.startGameLoop();
         this.showHitbox = showHitBox;
+        this.highscore = new Highscore();
     }
+
 
 
     public void showFPS_UPS() {

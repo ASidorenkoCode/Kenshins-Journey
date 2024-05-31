@@ -40,6 +40,11 @@ public abstract class Entity {
     public boolean isDead() {
         return isDead;
     }
+
+    public void setDead(boolean dead) {
+        isDead = dead;
+    }
+
     public int getHealth() {
         return health;
     }

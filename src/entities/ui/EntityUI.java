@@ -4,6 +4,7 @@ import spriteControl.SpriteManager;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Optional;
 
 
 abstract public class EntityUI {
@@ -11,7 +12,7 @@ abstract public class EntityUI {
     protected boolean showLeftAnimations;
     protected int aniTick;
     protected int aniIndex;
-    protected int aniSpeed = 10;
+    protected int aniSpeed = 30;
     protected int SPRITE_PX_WIDTH;
     protected int SPRITE_PX_HEIGHT;
     protected String ENTITY_SPRITE_PATH;
@@ -22,13 +23,12 @@ abstract public class EntityUI {
 
     abstract void drawAttackBox();
 
-    abstract void drawHitBox(Graphics g, int offset);
+    abstract void drawHitBox(Graphics g, int offsetX, int offsetY);
 
     protected void loadAnimations() {
         animations = new BufferedImage[SPRITE_Y_DIMENSION * 2][SPRITE_X_DIMENSION];
         loadAnimationSprites(ENTITY_SPRITE_PATH, animations, 0);
-        if (ENTITY_SPRITE_PATH_LEFT != null)
-            loadAnimationSprites(ENTITY_SPRITE_PATH_LEFT, animations, SPRITE_Y_DIMENSION);
+        Optional.ofNullable(ENTITY_SPRITE_PATH_LEFT).ifPresent(path -> loadAnimationSprites(path, animations, SPRITE_Y_DIMENSION));
     }
 
     private void loadAnimationSprites(String spritePath, BufferedImage[][] animations, int offset) {
@@ -44,5 +44,5 @@ abstract public class EntityUI {
 
     abstract void updateAnimationTick();
 
-    abstract void drawAnimations(Graphics g, int offset);
+    abstract void drawAnimations(Graphics g, int offsetX, int offsetY);
 }

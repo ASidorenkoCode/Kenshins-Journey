@@ -55,8 +55,8 @@ public class Kappa extends Entity {
         //dont move if is attacking or its specified
         if(isAttacking || !move) return;
 
-        if(inAir)
-            if(!checkIfEnemyCollidesUnderHim(map, hitbox.x, hitbox.y, hitbox.width, hitbox.height)) {
+        if (inAir)
+            if (!checkIfEnemyCollidesUnderHim(map, hitbox.x, hitbox.y, hitbox.width, hitbox.height)) {
                 hitbox.y++;
                 y++;
             } else inAir = false;
@@ -71,7 +71,7 @@ public class Kappa extends Entity {
 
     private void updateXPos(Map map, float by_value) {
 
-        if(checkIfEnemyIsOverEdge(map, hitbox.x + by_value, hitbox.y + 1, hitbox.width, hitbox.height, moveRight)) {
+        if (checkIfEnemyIsOverEdge(map, hitbox.x + by_value, hitbox.y + 1, hitbox.width, hitbox.height, moveRight)) {
 
             moveRight = !moveRight;
 
@@ -100,26 +100,29 @@ public class Kappa extends Entity {
     }
 
     public boolean checkForCollisonOnPosition(Map map, float x, float y) {
-        if(x < 0) return true;
-        if(y < 0) return true;
+        if (x < 0) return false;
+        if (y < 0) return false;
 
-        //TODO: Constants for Tile width and height
         int[][] mapData = map.getMapData();
         int tile_x = (int) (x / 64);
         int tile_y = (int) (y / 64);
-        return mapData[tile_y][tile_x] != 11;
+
+        if (tile_x >= 0 && tile_x < mapData[0].length && tile_y >= 0 && tile_y < mapData.length) {
+            return mapData[tile_y][tile_x] >= 11 && (mapData[tile_y][tile_x] <= 11 || mapData[tile_y][tile_x] > 48) && (mapData[tile_y][tile_x] > 81 || mapData[tile_y][tile_x] <= 75);
+        } else {
+            return false;
+        }
     }
 
     private boolean checkIfEnemyCollidesUnderHim(Map map, float x, float y, float width, float height) {
-        if (!checkForCollisonOnPosition(map, x,y + height))
-            if (!checkForCollisonOnPosition(map, x+width,y+height))
-                return false;
+        if (checkForCollisonOnPosition(map, x, y + height))
+            return !checkForCollisonOnPosition(map, x + width, y + height);
         return true;
     }
 
     private boolean checkIfEnemyIsOverEdge(Map map, float x, float y, float width, float height, boolean isRight) {
-        if(isRight) return !checkForCollisonOnPosition(map, x+width,y + height);
-        return !checkForCollisonOnPosition(map, x,y+height);
+        if (isRight) return checkForCollisonOnPosition(map, x + width, y + height);
+        return checkForCollisonOnPosition(map, x, y + height);
     }
 
 
@@ -147,9 +150,19 @@ public class Kappa extends Entity {
     public int getMaxHealth() {
         return maxHealth;
     }
+
     public boolean isMoveRight() {
         return moveRight;
     }
+
+    public float getX() {
+        return x;
+    }
+
+    public float getY() {
+        return y;
+    }
+
     public void setScoreIncreased(boolean isScoreIncreased) {
         this.isScoreIncreased = isScoreIncreased;
     }
@@ -164,6 +177,7 @@ public class Kappa extends Entity {
     public boolean isAttacking() {
         return isAttacking;
     }
+
     public Rectangle2D.Float getAttackHitbox() {
         return attackHitbox;
     }

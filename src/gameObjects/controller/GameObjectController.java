@@ -33,8 +33,8 @@ public class GameObjectController {
         finish.updateFinishPoint(finishPoint.x, finishPoint.y, finishIsActive);
     }
 
-    public void drawObjects(Graphics g, int offset) {
-        gameObjectUI.drawAnimations(g, offset);
+    public void drawObjects(Graphics g, int offsetX, int offsetY) {
+        gameObjectUI.drawAnimations(g, offsetX, offsetY);
     }
 
     public Finish getFinish() {
