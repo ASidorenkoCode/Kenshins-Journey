@@ -78,9 +78,12 @@ public class Player extends Entity {
 
         if(!attack) {
             attackHitBoxIsActive = false;
+        } else {
+            handlePlayerAttacksEntity(boss);
+            for (Kappa kappa: kappas) {
+                handlePlayerAttacksEntity(kappa);
+            }
         }
-
-        handlePlayerAttacksEntity(boss);
 
 
         if(isResting) {

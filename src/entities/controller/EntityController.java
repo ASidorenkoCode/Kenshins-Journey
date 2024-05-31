@@ -146,25 +146,8 @@ public class EntityController {
             }
 
 
-            handlePlayerAttacksKappa(kap);
-
             kap.update(mapController.getCurrentMap(), !isEntityHitboxNextToOtherEntity(kap, player));
 
-        }
-    }
-
-    private void handlePlayerAttacksKappa(Kappa kappa) {
-        if(!player.getHasAttacked()) {
-
-            if(!player.getAttackHitBoxIsActive()) return;
-
-            Rectangle2D.Float kappaHitbox = kappa.getHitbox();
-            if(player.getIsFacingRight())
-                if(!kappaHitbox.intersects(player.getRightAttackHitBox())) return;
-                else if(kappaHitbox.intersects(player.getLeftAttackHitBox())) return;
-
-            kappa.decreaseHealth(player.getCurrentDamagePerAttack());
-            player.setHasAttacked(true);
         }
     }
 
