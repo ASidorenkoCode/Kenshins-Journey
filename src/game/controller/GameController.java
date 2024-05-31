@@ -87,7 +87,7 @@ public class GameController {
             loadNewMap();
             return;
         }
-        entityController.update(mapController, gameObjectController, highscore, loadingScreen, deathScreen);
+        entityController.update(mapController, gameObjectController, highscore);
         itemController.update(entityController);
         highscore.decreaseHighScoreAfterOneSecond();
         screenController.update(highscore, entityController.getPlayer(), itemController.getMenu());
