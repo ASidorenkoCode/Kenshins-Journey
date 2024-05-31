@@ -1,6 +1,4 @@
 package entities.logic;
-
-import entities.ui.PlayerUI;
 import game.UI.GameView;
 import maps.logic.Map;
 
@@ -81,6 +79,8 @@ public class Player extends Entity {
         if(!attack) {
             attackHitBoxIsActive = false;
         }
+
+        handlePlayerAttacksEntity(boss);
 
 
         if(isResting) {
@@ -197,6 +197,22 @@ public class Player extends Entity {
     public void attack() {
         if (!attack) {
             setAttack(true);
+        }
+    }
+
+    private void handlePlayerAttacksEntity(Entity entity) {
+        if(!hasAttacked) {
+            //only attack if attack hitbox is active
+            if(!attackHitBoxIsActive) return;
+            Rectangle2D.Float bossHitbox = entity.getHitbox();
+
+            Rectangle2D.Float attackHitbox = leftAttackHitBox;
+            if(isFacingRight) attackHitbox = rightAttackHitBox;
+
+            if(attackHitbox.intersects(bossHitbox)) {
+                entity.decreaseHealth(currentDamagePerAttack);
+                setHasAttacked(true);
+            }
         }
     }
 

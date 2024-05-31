@@ -21,6 +21,8 @@ public class Boss extends Entity {
     private boolean inAir;
     private float previosY;
 
+    private boolean isScoreIncreased = false;
+
 
     public Boss(float x, float y) {
         super(x,y, new Rectangle2D.Float(0,0,0,0), false, 20);
@@ -46,10 +48,10 @@ public class Boss extends Entity {
         }
     }
 
-    public void update(int offset) {
+    public void update(int offset, Player player) {
         if(!isDead) {
 
-            attack(offset);
+            attack(offset, player);
 
             if(inAir) {
                 //TODO: Static movement or based on hitbox?
@@ -93,17 +95,23 @@ public class Boss extends Entity {
     }
 
 
-    private void attack(int offset) {
+    private void attack(int offset, Player player) {
         if(isUsingBigProjectile) {
-            bigProjectileAttack(offset);
+            bigProjectileAttack(offset, player);
+
         } else {
-            miniProjectileAttack(offset);
+            miniProjectileAttack(offset, player);
         }
     }
 
     //attack one
-    private void bigProjectileAttack(int offset) {
+    private void bigProjectileAttack(int offset, Player player) {
         moveProjectile();
+        if(player.getHitbox().intersects(projectileHitbox)) {
+            player.decreaseHealth(1);
+            resetProjectile();
+            return;
+        }
         checkIfProjectileIsOutOfBounds(offset);
 
     }
@@ -121,8 +129,15 @@ public class Boss extends Entity {
     }
 
     //attack two
-    private void miniProjectileAttack(int offset) {
+    private void miniProjectileAttack(int offset, Player player) {
         moveMiniProjectiles();
+        for(Rectangle2D.Float hitbox: miniProjectileHitboxes) {
+            if(player.getHitbox().intersects(hitbox)) {
+                resetAllMiniProjectiles();
+                player.decreaseHealth(1);
+                return;
+            }
+        }
         checkIfAllMiniProjectilesAreOutOfBounds(offset);
     }
 
@@ -146,9 +161,6 @@ public class Boss extends Entity {
     }
 
     //Getter
-    public Rectangle2D.Float getHitbox() {
-        return hitbox;
-    }
 
     public Rectangle2D.Float getProjectileHitbox() {
         return projectileHitbox;
@@ -163,5 +175,13 @@ public class Boss extends Entity {
 
     public boolean getIsDead() {
         return isDead;
+    }
+
+    public void setScoreIncreased(boolean isScoreIncreased) {
+        this.isScoreIncreased = isScoreIncreased;
+    }
+
+    public boolean isScoreIncreased() {
+        return isScoreIncreased;
     }
 }

@@ -17,6 +17,7 @@ import java.util.Random;
 public class ItemController {
     //Rebuild of class
     private boolean showHitBox;
+    private final static int MENU_SIZE = 5;
 
 
 
@@ -29,7 +30,7 @@ public class ItemController {
     public ItemController(MapController mapController, boolean showHitBox) {
         this.showHitBox = showHitBox;
         this.itemUI = new ItemUI();
-        menu = new Item[5];
+        menu = new Item[MENU_SIZE];
         loadAnimations();
         initItems(mapController);
     }
@@ -68,6 +69,10 @@ public class ItemController {
                 }
             }
         }
+    }
+
+    public void deleteAllItemsFromMenu() {
+        menu = new Item[MENU_SIZE];
     }
 
     public void update(EntityController entityController) {
