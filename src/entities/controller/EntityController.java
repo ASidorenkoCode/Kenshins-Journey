@@ -30,56 +30,11 @@ public class EntityController {
         initBoss(mapController, showHitBox);
     }
 
-    public void update(MapController mapController, GameObjectController gameObjectController, Highscore highscore, LoadingScreen loadingScreen, DeathScreen deathScreen) {
+    public void update(MapController mapController, GameObjectController gameObjectController, Highscore highscore) {
+        player.update(mapController.getCurrentMap(), currentBoss, kappas, highscore);
+        for (Kappa kap : kappas) kap.update(mapController.getCurrentMap(), player, highscore);
 
-
-        if (highscore.getCurrentHighscore() == 0) {
-            player.setPlayerHealth(0);
-        }
-
-        if (player.isDead() && player.getDeathAnimationFinished()) {
-
-            if(deathScreen.getTotalScore() > highscore.getCurrentHighscore()) deathScreen.updateScore(highscore.getCurrentHighscore());
-            if (!deathScreen.isPlayerContinuesGame() && !deathScreen.isDisplayDeathScreenOnlyOnce()) {
-                deathScreen.displayDeathScreen();
-            }
-            if (deathScreen.isPlayerContinuesGame() && deathScreen.isDisplayDeathScreenOnlyOnce()) {
-                loadingScreen.displayLoadingScreen();
-                player.updateSpawnPoint(mapController.getCurrentPlayerSpawn().x, mapController.getCurrentPlayerSpawn().y);
-                gameObjectController.updatePoints(mapController);
-                player.resetHealth();
-                player.resetDeath();
-                deathScreen.setDisplayDeathScreenOnlyOnce(false);
-                highscore.decreaseHighscoreForDeath();
-                highscore.increaseDeathCounter();
-            }
-        }
-
-        player.update(mapController.getCurrentMap(), currentBoss, kappas);
-        if (!kappas.isEmpty()) {
-            for (Kappa kap : kappas) {
-
-
-                if (kap.isDead() && !kap.isScoreIncreased()) {
-                    if(!kap.isScoreIncreased()) {
-                        highscore.increaseHighscoreForKappa();
-                        kap.setScoreIncreased(true);
-                    }
-                    return;
-                }
-
-
-
-
-                kap.update(mapController.getCurrentMap(), player);
-
-            }
-        }
-
-        if(currentBoss != null) {
-
-            currentBoss.update(mapController.getMapOffsetX(), player, highscore, gameObjectController.getFinish());
-        }
+        if(currentBoss != null) currentBoss.update(mapController.getMapOffsetX(), player, highscore, gameObjectController.getFinish());
     }
 
 

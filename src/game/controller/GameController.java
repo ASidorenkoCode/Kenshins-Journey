@@ -1,6 +1,7 @@
 package game.controller;
 
 import entities.controller.EntityController;
+import entities.logic.Kappa;
 import entities.logic.Player;
 import game.UI.GameView;
 import game.logic.GameEngine;
@@ -32,6 +33,7 @@ public class GameController {
     private boolean showHitbox;
 
     public GameController(boolean showHitBox) {
+        //controller
         mapController = new MapController(null);
         entityController = new EntityController(mapController, showHitBox);
         mapController.setEntityController(entityController);
@@ -40,6 +42,8 @@ public class GameController {
         gameObjectController = new GameObjectController(mapController, showHitBox);
         screenController = new ScreenController(itemController);
 
+
+        //ui
         gameView = new GameView(this, entityController, mapController, itemController, gameObjectController, screenController);
         this.deathScreen = new DeathScreen(gameView.getFrame());
         this.loadingScreen = new LoadingScreen(gameView.getFrame());
@@ -60,6 +64,25 @@ public class GameController {
     }
 
     public void update() {
+        Player player = entityController.getPlayer();
+        if (player.isDead() && player.getDeathAnimationFinished()) {
+
+            if(deathScreen.getTotalScore() > highscore.getCurrentHighscore()) deathScreen.updateScore(highscore.getCurrentHighscore());
+            if (!deathScreen.isPlayerContinuesGame() && !deathScreen.isDisplayDeathScreenOnlyOnce()) {
+                deathScreen.displayDeathScreen();
+            }
+            if (deathScreen.isPlayerContinuesGame() && deathScreen.isDisplayDeathScreenOnlyOnce()) {
+                loadingScreen.displayLoadingScreen();
+                player.updateSpawnPoint(mapController.getCurrentPlayerSpawn().x, mapController.getCurrentPlayerSpawn().y);
+                gameObjectController.updatePoints(mapController);
+                player.resetHealth();
+                player.resetDeath();
+                deathScreen.setDisplayDeathScreenOnlyOnce(false);
+                highscore.decreaseHighscoreForDeath();
+                highscore.increaseDeathCounter();
+            }
+            return;
+        }
         if (gameObjectController.checkIfPlayerIsInFinish(entityController.getPlayer()) && !entityController.getPlayer().getDeathAnimationFinished()) {
             loadNewMap();
             return;

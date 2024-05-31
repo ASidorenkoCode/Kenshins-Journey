@@ -1,4 +1,5 @@
 package entities.logic;
+import game.logic.Highscore;
 import maps.logic.Map;
 import java.awt.geom.Rectangle2D;
 
@@ -33,8 +34,17 @@ public class Kappa extends Entity {
 
 
 
-    public void update(Map map, Player player) {
-        if(isDead) return;
+    public void update(Map map, Player player, Highscore highscore) {
+
+        if (isDead) {
+            if(isScoreIncreased) {
+                highscore.increaseHighscoreForKappa();
+                setScoreIncreased(true);
+            }
+            return;
+        }
+
+
 
         boolean move = true;
         if(isEntityHitboxNextToKappa(player)) {
