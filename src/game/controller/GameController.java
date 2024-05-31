@@ -1,6 +1,5 @@
 package game.controller;
 
-import boss.controller.BossController;
 import entities.controller.EntityController;
 import entities.logic.Player;
 import game.UI.GameView;
@@ -55,7 +54,7 @@ public class GameController implements ReloadGame {
     }
 
     public void update() {
-        entityController.update(this, mapController, gameObjectController, bossController, loadingScreen, interfaceGame, deathScreen);
+        entityController.update(this, mapController, gameObjectController, loadingScreen, interfaceGame, deathScreen);
         itemController.update(entityController);
     }
 

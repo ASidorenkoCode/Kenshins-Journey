@@ -1,6 +1,5 @@
 package game.UI;
 
-import boss.controller.BossController;
 import entities.controller.EntityController;
 import game.controller.GameController;
 import gameObjects.controller.GameObjectController;

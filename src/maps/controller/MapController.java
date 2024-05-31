@@ -95,4 +95,6 @@ public class MapController {
     public Point getCurrentBossSpawn() {
         return maps.get(currentMapIndex).getBossSpawn();
     }
+
+
 }

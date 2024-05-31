@@ -1,6 +1,8 @@
 package entities.controller;
 
-import boss.controller.BossController;
+import entities.logic.Boss;
+import entities.logic.Entity;
+import entities.ui.BossUI;
 import gameObjects.controller.GameObjectController;
 import gameObjects.logic.Finish;
 import entities.logic.Kappa;
@@ -68,7 +70,7 @@ public class EntityController {
                 gameObjectController.getFinish().setIsActive(true);
                 return;
             }
-            currentBoss.update(mapController.getMapOffset());
+            currentBoss.update(mapController.getMapOffsetX());
             handlePlayerAttacksBoss();
             handleBossAttacksPlayer();
         }
@@ -255,12 +257,12 @@ public class EntityController {
 
     //handle ui
 
-    public void drawEntities(Graphics g, int offset) {
+    public void drawEntities(Graphics g, int offsetX, int offsetY) {
         playerUI.drawAnimations(g, offsetX, offsetY);
         for (KappaUI kappaUI : kappaUIS) {
             kappaUI.drawAnimations(g, offsetX, offsetY);
         }
-        if(currentBoss != null) bossUI.drawAnimations(g, offset);
+        if(currentBoss != null) bossUI.drawAnimations(g, offsetX, offsetY);
     }
 
     public Player getPlayer() {

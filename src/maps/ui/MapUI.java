@@ -71,14 +71,17 @@ public class MapUI {
             g.fillRect(0, 0, mapWidth, mapHeight);
 
             try {
-                BufferedImage mountainImage = ImageIO.read(new File("res/screens/startScreen/cloud 2.png"));
+                BufferedImage mountainImage = ImageIO.read(new File("res/screens/startScreen/forest.png"));
                 // Scale the image
-                int scaledWidth = (int) (mountainImage.getWidth() * 0.2);
-                int scaledHeight = (int) (mountainImage.getHeight() * 0.2);
+                int scaledWidth = (int) (mountainImage.getWidth() * 1.2);
+                int scaledHeight = (int) (mountainImage.getHeight() * 1.2);
                 Image scaledMountainImage = mountainImage.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_DEFAULT);
                 int imageX = 0;
-                int imageY = mapHeight - scaledHeight - 400;
-                g.drawImage(scaledMountainImage, imageX, imageY, null);
+                int imageY = mapHeight - scaledHeight - 200;
+                while (imageX < mapWidth) {
+                    g.drawImage(scaledMountainImage, imageX, imageY, null);
+                    imageX += scaledWidth;
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
