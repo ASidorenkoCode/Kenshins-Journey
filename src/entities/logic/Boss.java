@@ -48,10 +48,10 @@ public class Boss extends Entity {
         }
     }
 
-    public void update(int offset, Player player) {
+    public void update(int offsetX, Player player) {
         if(!isDead) {
 
-            attack(offset, player);
+            attack(offsetX, player);
 
             if(inAir) {
                 //TODO: Static movement or based on hitbox?

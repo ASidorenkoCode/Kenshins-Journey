@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class Player extends Entity {
 
     private boolean left, right, attack, inAir, attackHitBoxIsActive, isResting, isDashing, isFacingRight;
-    private float airMovement = -5f;
+    private float airMovement = -6f;
     private Rectangle2D.Float rightAttackHitBox;
     private Rectangle2D.Float leftAttackHitBox;
     private boolean hasDynamicAdjustedPlayerDirectionHitbox = false;
@@ -19,6 +19,7 @@ public class Player extends Entity {
     private int currentMaxHearts = 3;
     private int totalMaxHearts = 3;
     private boolean isHitByEnemy = false;
+    private boolean deathAnimationFinished = false;
 
     private final static int STANDARD_DAMAGE = 20;
 
@@ -26,6 +27,9 @@ public class Player extends Entity {
     private final static float MAX_TIME = 1;
     private float currentGroundMovement = 0;
     private float time = 0;
+
+    private boolean canDoubleJump = false;
+    private boolean hasDoubleJumped = false;
 
     //attack variables
 
@@ -41,9 +45,16 @@ public class Player extends Entity {
         isFacingRight = true;
         resetMaximumDamagePerAttack();
     }
+    public float getX() {
+        return x;
+    }
 
     public void setX(float x) {
         this.x = x;
+    }
+
+    public float getY() {
+        return y;
     }
 
     public void setY(float y) {
@@ -91,7 +102,7 @@ public class Player extends Entity {
         return;
         }
 
-        if (!isDead()) {
+        if (!getDeathAnimationFinished()) {
 
             float currentSpeed = currentGroundMovement;
             if(isDashing) {
@@ -119,14 +130,10 @@ public class Player extends Entity {
                 airMovement = 0;
                 inAir = true;
             }
-            // TODO change to include offset
-            if (this.getHitbox().x < 0 ||
-                    this.getHitbox().y < 0 || this.getHitbox().y > GameView.GAME_HEIGHT) {
-                this.setPlayerHealth(0);
+            // TODO: implement new y position, for now It's just a workaround with times 3
+            if (this.getHitbox().x < 0 || this.getHitbox().y > GameView.GAME_HEIGHT*3) {
+                this.decreaseHealth(getHealth());
             }
-
-
-
         }
     }
 
@@ -170,7 +177,7 @@ public class Player extends Entity {
             return;
 
         } else if (checkIfPlayerCollidesUnderHim(map, boss, kappas, hitbox.x, hitbox.y + by_value, hitbox.width, hitbox.height)) {
-            inAir = false;
+            landed();
 
             float playerYPos = (hitbox.y + by_value + hitbox.height);
             int groundSpriteNumber = (int) (playerYPos / (64));
@@ -190,8 +197,18 @@ public class Player extends Entity {
     public void jump() {
         if (!inAir && !isResting ) {
             inAir = true;
-            airMovement = -5f;
+            airMovement = -6f;
+            canDoubleJump = true; // Player can double jump after first jump
+        } else if (inAir && !hasDoubleJumped && canDoubleJump) {
+            airMovement = -6f; // Double jump
+            hasDoubleJumped = true; // Player has double jumped
         }
+    }
+
+    public void landed() {
+        inAir = false;
+        canDoubleJump = false;
+        hasDoubleJumped = false;
     }
 
     public void attack() {
@@ -201,15 +218,15 @@ public class Player extends Entity {
     }
 
     private void handlePlayerAttacksEntity(Entity entity) {
-        if(!hasAttacked) {
+        if(!hasAttacked && entity != null) {
             //only attack if attack hitbox is active
             if(!attackHitBoxIsActive) return;
-            Rectangle2D.Float bossHitbox = entity.getHitbox();
+            Rectangle2D.Float entityHitbox = entity.getHitbox();
 
             Rectangle2D.Float attackHitbox = leftAttackHitBox;
             if(isFacingRight) attackHitbox = rightAttackHitBox;
 
-            if(attackHitbox.intersects(bossHitbox)) {
+            if(attackHitbox.intersects(entityHitbox)) {
                 entity.decreaseHealth(currentDamagePerAttack);
                 setHasAttacked(true);
             }
@@ -257,7 +274,8 @@ public class Player extends Entity {
             }
         }
 
-        if (x < 0 || y < 0) return true;
+        if (x < 0) return true;
+        if (y < 0) return false;
 
         int[][] mapData = map.getMapData();
         int tile_x = (int) (x / 64);
@@ -267,7 +285,7 @@ public class Player extends Entity {
             return false;
         }
 
-        return mapData[tile_y][tile_x] != 11;
+        return mapData[tile_y][tile_x] < 11 || mapData[tile_y][tile_x] < 48 && mapData[tile_y][tile_x] > 11 || mapData[tile_y][tile_x] < 81 && mapData[tile_y][tile_x] > 75;
     }
 
     private boolean checkIfPlayerCanMoveToPosition(Map map, Boss boss, ArrayList<Kappa> kappas, float x, float y, float width, float height) {
@@ -327,7 +345,7 @@ public class Player extends Entity {
     }
 
     public float getAirMovement() {
-        return Math.abs(airMovement);
+        return airMovement;
     }
 
     private float calculateNewPosition(Entity entity) {
@@ -336,6 +354,11 @@ public class Player extends Entity {
         } else {
             return entity.getHitbox().x + entity.getHitbox().width;
         }
+    }
+
+    public void resetDeath() {
+        deathAnimationFinished = false;
+        isDead = false;
     }
 
 
@@ -350,11 +373,11 @@ public class Player extends Entity {
     }
 
     public boolean getDeathAnimationFinished() {
-        return this.isDead;
+        return deathAnimationFinished;
     }
 
-    public void setDeathAnimationFinished(boolean isDead) {
-        this.isDead = isDead;
+    public void setDeathAnimationFinished(boolean deathAnimationFinished) {
+        this.deathAnimationFinished = deathAnimationFinished;
     }
 
     public int resetHealth() {

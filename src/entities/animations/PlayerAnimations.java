@@ -36,4 +36,11 @@ public enum PlayerAnimations {
             case DEATH -> 17;
         };
     }
+
+    public int getAniSpeed() {
+        return switch (this) {
+            case IDLE, LANDING, RESTING, JUMP, FALL, WALL_SLIDE, BLOCK, BLOCK_HIT -> 30;
+            case RUN, WALK, RUN_SLASH, IDLE_SLASH, JUMP_SLASH, FALL_SLASH, DEATH, HEAVY_ATTACK, DASH -> 15;
+        };
+    }
 }

@@ -1,4 +1,5 @@
 package entities.controller;
+
 import entities.logic.Boss;
 import entities.logic.Entity;
 import entities.ui.BossUI;
@@ -35,7 +36,7 @@ public class EntityController {
     }
 
     public void update(ReloadGame reloadGame, MapController mapController, GameObjectController gameObjectController, Highscore highscore, LoadingScreen loadingScreen, DeathScreen deathScreen) {
-        if (gameObjectController.checkIfPlayerIsInFinish(player) && !player.isDead()) {
+        if (gameObjectController.checkIfPlayerIsInFinish(player) && !player.getDeathAnimationFinished()) {
             reloadGame.loadNewMap();
         }
 
@@ -54,7 +55,7 @@ public class EntityController {
                 player.updateSpawnPoint(mapController.getCurrentPlayerSpawn().x, mapController.getCurrentPlayerSpawn().y);
                 gameObjectController.updatePoints(mapController);
                 player.resetHealth();
-                player.setDeathAnimationFinished(false);
+                player.resetDeath();
                 deathScreen.setDisplayDeathScreenOnlyOnce(false);
                 highscore.decreaseHighscoreForDeath();
                 highscore.increaseDeathCounter();
@@ -72,7 +73,7 @@ public class EntityController {
                 }
                 return;
             }
-            currentBoss.update(mapController.getMapOffset(), player);
+            currentBoss.update(mapController.getMapOffsetX(), player);
         }
     }
 
@@ -154,17 +155,18 @@ public class EntityController {
     }
 
     private void handlePlayerAttacksKappa(Kappa kappa) {
-        if(!player.getHasAttacked()) {
+        if (!player.getHasAttacked()) {
 
-            if(!player.getAttackHitBoxIsActive()) return;
+            if (!player.getAttackHitBoxIsActive()) return;
 
             Rectangle2D.Float kappaHitbox = kappa.getHitbox();
-            if(player.getIsFacingRight())
-                if(!kappaHitbox.intersects(player.getRightAttackHitBox())) return;
-                else if(kappaHitbox.intersects(player.getLeftAttackHitBox())) return;
+            if (player.getIsFacingRight()) {
+                if (!kappaHitbox.intersects(player.getRightAttackHitBox())) return;
+                else if (kappaHitbox.intersects(player.getLeftAttackHitBox())) return;
 
-            kappa.decreaseHealth(player.getCurrentDamagePerAttack());
-            player.setHasAttacked(true);
+                kappa.decreaseHealth(player.getCurrentDamagePerAttack());
+                player.setHasAttacked(true);
+            }
         }
     }
 
@@ -224,12 +226,12 @@ public class EntityController {
 
     //handle ui
 
-    public void drawEntities(Graphics g, int offset) {
-        playerUI.drawAnimations(g, offset);
+    public void drawEntities(Graphics g, int offsetX, int offsetY) {
+        playerUI.drawAnimations(g, offsetX, offsetY);
         for (KappaUI kappaUI : kappaUIS) {
-            kappaUI.drawAnimations(g, offset);
+            kappaUI.drawAnimations(g, offsetX, offsetY);
         }
-        if(currentBoss != null) bossUI.drawAnimations(g, offset);
+        if(currentBoss != null) bossUI.drawAnimations(g, offsetX, offsetY);
     }
 
     public Player getPlayer() {

@@ -1,10 +1,12 @@
 package game.UI;
+
 import entities.controller.EntityController;
 import game.controller.GameController;
 import gameObjects.controller.GameObjectController;
 import items.controller.ItemController;
 import keyboardinputs.logic.KeyboardInputsIngame;
 import maps.controller.MapController;
+import screens.StartScreen;
 import screens.controller.ScreenController;
 
 import javax.swing.*;
@@ -56,9 +58,10 @@ public class GameView extends JPanel {
 
         JPanel container = new JPanel();
         configureContainerForGameView(container);
-
         frame.add(container);
         frame.pack();
+
+//        drawStartScreen();
         setFrameToFullScreen();
         frame.setVisible(true);
     }
@@ -103,11 +106,13 @@ public class GameView extends JPanel {
     public void render(Graphics g) {
         //TODO: Class calling inside of gameController
         //TODO: Implement rendering for more stuff
-        int mapOffset = mapController.getMapOffset();
-        mapController.draw(g);
-        entityController.drawEntities(g, mapOffset);
-        itemController.getItemUI().drawMapItems(g, mapOffset, itemController.getItemsOnMap(), itemController.isShowHitBox(), itemController.getAnimations());
-        gameObjectController.drawObjects(g, mapOffset);
+        int mapOffsetX = mapController.getMapOffsetX();
+        int mapOffsetY = mapController.getMapOffsetY();
+        mapController.draw(g, false);
+        entityController.drawEntities(g, mapOffsetX, mapOffsetY);
+        itemController.getItemUI().drawMapItems(g, mapOffsetX, mapOffsetY, itemController.getItemsOnMap(), itemController.isShowHitBox(), itemController.getAnimations());
+        gameObjectController.drawObjects(g, mapOffsetX, mapOffsetY);
+        mapController.draw(g, true);
         screenController.draw(g);
     }
 
