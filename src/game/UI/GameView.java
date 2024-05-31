@@ -110,10 +110,10 @@ public class GameView extends JPanel {
         int mapOffsetY = mapController.getMapOffsetY();
         mapController.draw(g, false);
         entityController.drawEntities(g, mapOffsetX, mapOffsetY);
-        screenController.draw(g);
         itemController.getItemUI().drawMapItems(g, mapOffsetX, mapOffsetY, itemController.getItemsOnMap(), itemController.isShowHitBox(), itemController.getAnimations());
         gameObjectController.drawObjects(g, mapOffsetX, mapOffsetY);
         mapController.draw(g, true);
+        screenController.draw(g);
     }
 
     public void showFPS_UPS(int frames, int updates) {

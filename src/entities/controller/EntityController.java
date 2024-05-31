@@ -36,7 +36,7 @@ public class EntityController {
     }
 
     public void update(ReloadGame reloadGame, MapController mapController, GameObjectController gameObjectController, Highscore highscore, LoadingScreen loadingScreen, DeathScreen deathScreen) {
-        if (gameObjectController.checkIfPlayerIsInFinish(player) && !player.isDead()) {
+        if (gameObjectController.checkIfPlayerIsInFinish(player) && !player.getDeathAnimationFinished()) {
             reloadGame.loadNewMap();
         }
 
@@ -74,8 +74,6 @@ public class EntityController {
                 return;
             }
             currentBoss.update(mapController.getMapOffsetX(), player);
-            handlePlayerAttacksBoss();
-            handleBossAttacksPlayer();
         }
     }
 

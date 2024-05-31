@@ -46,6 +46,7 @@ public class GameController implements ReloadGame {
         gameView.gameWindow();
         gameEngine.startGameLoop();
         this.showHitbox = showHitBox;
+        this.highscore = new Highscore();
     }
 
 

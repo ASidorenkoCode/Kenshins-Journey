@@ -101,7 +101,7 @@ public class Player extends Entity {
         return;
         }
 
-        if (!isDead()) {
+        if (!getDeathAnimationFinished()) {
 
             float currentSpeed = currentGroundMovement;
             if(isDashing) {
@@ -132,6 +132,7 @@ public class Player extends Entity {
             // TODO: implement new y position, for now It's just a workaround with times 3
             if (this.getHitbox().x < 0 || this.getHitbox().y > GameView.GAME_HEIGHT*3) {
                 this.setPlayerHealth(0);
+                this.setDeathAnimationFinished(true);
             }
         }
     }
@@ -217,15 +218,15 @@ public class Player extends Entity {
     }
 
     private void handlePlayerAttacksEntity(Entity entity) {
-        if(!hasAttacked) {
+        if(!hasAttacked && entity != null) {
             //only attack if attack hitbox is active
             if(!attackHitBoxIsActive) return;
-            Rectangle2D.Float bossHitbox = entity.getHitbox();
+            Rectangle2D.Float entityHitbox = entity.getHitbox();
 
             Rectangle2D.Float attackHitbox = leftAttackHitBox;
             if(isFacingRight) attackHitbox = rightAttackHitBox;
 
-            if(attackHitbox.intersects(bossHitbox)) {
+            if(attackHitbox.intersects(entityHitbox)) {
                 entity.decreaseHealth(currentDamagePerAttack);
                 setHasAttacked(true);
             }

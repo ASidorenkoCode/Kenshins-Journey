@@ -53,21 +53,23 @@ public class PlayerUI extends EntityUI {
     public void updateAnimationTick() {
         setAnimation();
 
-        aniTick ++;
+        aniTick++;
 
         if (aniTick >= aniSpeed) {
             aniTick -= aniSpeed;
             aniIndex++;
 
-            if (aniIndex >= PlayerAnimations.DEATH.getAniSize() - 1) {
-                player.setDeathAnimationFinished(true);
-            }
+
 
             if (aniIndex >= currentAnimation.getAniSize()) {
                 player.setAttack(false);
                 player.setIsDashing(false);
                 player.setHasAttacked(false);
                 aniIndex = 0;
+            }
+
+            if (aniIndex >= PlayerAnimations.DEATH.getAniSize() - 1) {
+                player.setDeathAnimationFinished(true);
             }
         }
     }
@@ -97,13 +99,8 @@ public class PlayerUI extends EntityUI {
             currentAnimation = PlayerAnimations.RUN;
         else currentAnimation = PlayerAnimations.IDLE;
 
-        if (player.isDead() && !player.getInAir()) {
-            currentAnimation = PlayerAnimations.DEATH;
-            aniSpeed = 3;
-        } else if (player.isDead() && player.getInAir()) {
-            currentAnimation = PlayerAnimations.DEATH;
-            aniSpeed = 1;
-        }
+        if (player.isDead()) currentAnimation = PlayerAnimations.DEATH;
+
 
         //reset index
         if (currentAnimation != lastAnimation) {
