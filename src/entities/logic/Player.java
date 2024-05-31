@@ -132,8 +132,7 @@ public class Player extends Entity {
             }
             // TODO: implement new y position, for now It's just a workaround with times 3
             if (this.getHitbox().x < 0 || this.getHitbox().y > GameView.GAME_HEIGHT*3) {
-                this.setPlayerHealth(0);
-                this.setDead(true);
+                this.decreaseHealth(getHealth());
             }
         }
     }
