@@ -1,7 +1,6 @@
 package game.controller;
 
 import entities.controller.EntityController;
-import entities.logic.Kappa;
 import entities.logic.Player;
 import game.UI.GameView;
 import game.logic.GameEngine;
@@ -12,9 +11,7 @@ import items.controller.ItemController;
 import maps.controller.MapController;
 import screens.controller.ScreenController;
 import screens.ui.DeathScreen;
-import screens.ui.InterfaceGame;
 import screens.ui.LoadingScreen;
-import screens.StartScreen;
 
 public class GameController {
 
@@ -34,7 +31,8 @@ public class GameController {
 
     public GameController(boolean showHitBox) {
         //controller
-        mapController = new MapController(null);
+        this.highscore = Highscore.readHighscore();
+        mapController = new MapController(null, highscore);
         entityController = new EntityController(mapController, showHitBox);
         mapController.setEntityController(entityController);
         itemController = new ItemController(mapController, showHitBox);
@@ -50,7 +48,6 @@ public class GameController {
         gameView.gameWindow();
         gameEngine.startGameLoop();
         this.showHitbox = showHitBox;
-        this.highscore = new Highscore();
     }
 
 
@@ -64,6 +61,7 @@ public class GameController {
     }
 
     public void update() {
+        System.out.println(highscore.getAllHighscores().size());
         Player player = entityController.getPlayer();
         if (player.isDead() && player.getDeathAnimationFinished()) {
 
@@ -99,11 +97,13 @@ public class GameController {
 
     public void loadNewMap() {
         Player player = entityController.getPlayer();
-        player.setTotalHearts(player.getTotalHearts() + 1);  // AMOUNT OF hearts collected
+        player.setTotalHearts(player.getTotalHearts() + 1);// AMOUNT OF hearts collected
+        highscore.addCurrentHighscoreToList();
+        highscore.writeHighscore();
         loadingScreen.displayLoadingScreen();
         loadingScreen.updateScore(highscore.getCurrentHighscore());
         deathScreen.updateScore(highscore.getCurrentHighscore());
-        mapController.loadNextMap();
+        mapController.loadCurrentMapIndex(highscore);
         Finish finish = gameObjectController.getFinish();
         finish.updateFinishPoint(mapController.getCurrentFinishSpawn().x, mapController.getCurrentFinishSpawn().y, mapController.getCurrentBossSpawn() == null);
         entityController.initKappas(mapController, showHitbox);
@@ -111,7 +111,7 @@ public class GameController {
         itemController.initItems(mapController);
         highscore.increaseHighscoreForItems(itemController.getMenu());
         itemController.deleteAllItemsFromMenu();
-        highscore.addCurrentHighscoreToList();
+
 
     }
 }

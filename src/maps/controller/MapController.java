@@ -2,6 +2,7 @@ package maps.controller;
 
 import entities.controller.EntityController;
 import game.UI.GameView;
+import game.logic.Highscore;
 import maps.logic.Map;
 import maps.ui.MapUI;
 
@@ -14,22 +15,19 @@ public class MapController {
     private EntityController entityController;
     private int mapOffsetX;
     private int mapOffsetY;
-    private int currentMapIndex = 0;
+    private int currentMapIndex;
 
-    public MapController(EntityController entityController) {
+    public MapController(EntityController entityController, Highscore highscore) {
         this.entityController = entityController;
         maps = new ArrayList<>();
         mapUI = new MapUI(this);
         mapOffsetY = getCurrentPlayerSpawn().y;
+        loadCurrentMapIndex(highscore);
 
     }
 
-    public void loadNextMap() {
-        currentMapIndex++;
-        if (currentMapIndex >= maps.size()) {
-            // TODO: For now: it resets to the first map
-            currentMapIndex = 0;
-        }
+    public void loadCurrentMapIndex(Highscore highscore) {
+        currentMapIndex = highscore.getAllHighscores().size();
     }
 
 
@@ -88,13 +86,12 @@ public class MapController {
         return maps.get(currentMapIndex).getItemSpawns();
     }
 
-    public void setEntityController(EntityController entityController) {
-        this.entityController = entityController;
-    }
-
     public Point getCurrentBossSpawn() {
         return maps.get(currentMapIndex).getBossSpawn();
     }
 
 
+    public void setEntityController(EntityController entityController) {
+        this.entityController = entityController;
+    }
 }

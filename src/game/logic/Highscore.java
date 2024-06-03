@@ -2,10 +2,15 @@ package game.logic;
 import items.logic.Heart;
 import items.logic.Item;
 import items.logic.PowerRing;
+
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 
-public class Highscore {
+public class Highscore implements Serializable {
     private final static int START_SCORE = 2000;
+    private final static String FILE_HIGHSCORE_PATH = "res/highscore.txt";
     private int currentHighscore;
     private int deathCounter;
     private ArrayList<Integer> highscores;
@@ -60,5 +65,41 @@ public class Highscore {
 
     public ArrayList<Integer> getAllHighscores() {
         return highscores;
+    }
+
+
+    public void writeHighscore() {
+
+        try (ObjectOutputStream fos = new ObjectOutputStream(Files.newOutputStream(Path.of(FILE_HIGHSCORE_PATH)))) {
+
+            fos.writeObject(this);
+            System.out.println("it was written");
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static Highscore readHighscore() {
+        Highscore highscore;
+
+        try (ObjectInputStream fis = new ObjectInputStream(Files.newInputStream(Path.of(FILE_HIGHSCORE_PATH)))){
+
+            highscore = (Highscore) fis.readObject();
+            return highscore;
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return new Highscore();
+
     }
 }
