@@ -61,7 +61,6 @@ public class GameController {
     }
 
     public void update() {
-        System.out.println(highscore.getAllHighscores().size());
         Player player = entityController.getPlayer();
         if (player.isDead() && player.getDeathAnimationFinished()) {
 
@@ -96,10 +95,13 @@ public class GameController {
     }
 
     public void loadNewMap() {
-        Player player = entityController.getPlayer();
-        player.setTotalHearts(player.getTotalHearts() + 1);// AMOUNT OF hearts collected
+        //highscore updates
         highscore.addCurrentHighscoreToList();
         highscore.writeHighscore();
+        highscore.increaseHighscoreForItems(itemController.getMenu());
+
+        Player player = entityController.getPlayer();
+        player.setTotalHearts(player.getTotalHearts() + 1);// AMOUNT OF hearts collected
         loadingScreen.displayLoadingScreen();
         loadingScreen.updateScore(highscore.getCurrentHighscore());
         deathScreen.updateScore(highscore.getCurrentHighscore());
@@ -109,7 +111,6 @@ public class GameController {
         entityController.initKappas(mapController, showHitbox);
         entityController.initOrUpdatePlayer(mapController, showHitbox);
         itemController.initItems(mapController);
-        highscore.increaseHighscoreForItems(itemController.getMenu());
         itemController.deleteAllItemsFromMenu();
 
 

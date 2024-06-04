@@ -17,10 +17,7 @@ public class Highscore implements Serializable {
     private long comparingTime;
 
     public Highscore() {
-        currentHighscore = START_SCORE;
-        highscores = new ArrayList<>();
-        comparingTime = System.currentTimeMillis();
-        deathCounter = 0;
+        resetHighscore();
     }
     public void decreaseHighScoreAfterOneSecond() {
         long currentTime = System.currentTimeMillis();
@@ -65,6 +62,13 @@ public class Highscore implements Serializable {
 
     public ArrayList<Integer> getAllHighscores() {
         return highscores;
+    }
+
+    public void resetHighscore() {
+        currentHighscore = START_SCORE;
+        highscores = new ArrayList<>();
+        comparingTime = System.currentTimeMillis();
+        deathCounter = 0;
     }
 
 
