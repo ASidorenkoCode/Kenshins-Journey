@@ -21,9 +21,7 @@ public class GameController {
     private GameObjectController gameObjectController;
     private MapController mapController;
     private ScreenController screenController;
-    private LoadingScreen loadingScreen;
     private ItemController itemController;
-    private DeathScreen deathScreen;
 
     private Highscore highscore;
 
@@ -38,13 +36,12 @@ public class GameController {
         itemController = new ItemController(mapController, showHitBox);
         gameEngine = new GameEngine( this);
         gameObjectController = new GameObjectController(mapController, showHitBox);
-        screenController = new ScreenController(itemController);
+        gameView = new GameView(this, entityController, mapController, itemController, gameObjectController, null);
+        screenController = new ScreenController(itemController, gameView.getFrame());
+        gameView.setScreenController(screenController);
 
 
         //ui
-        gameView = new GameView(this, entityController, mapController, itemController, gameObjectController, screenController);
-        this.deathScreen = new DeathScreen(gameView.getFrame());
-        this.loadingScreen = new LoadingScreen(gameView.getFrame());
         gameView.gameWindow();
         gameEngine.startGameLoop();
         this.showHitbox = showHitBox;
@@ -62,24 +59,8 @@ public class GameController {
 
     public void update() {
         Player player = entityController.getPlayer();
-        if (player.isDead() && player.getDeathAnimationFinished()) {
 
-            if(deathScreen.getTotalScore() > highscore.getCurrentHighscore()) deathScreen.updateScore(highscore.getCurrentHighscore());
-            if (!deathScreen.isPlayerContinuesGame() && !deathScreen.isDisplayDeathScreenOnlyOnce()) {
-                deathScreen.displayDeathScreen();
-            }
-            if (deathScreen.isPlayerContinuesGame() && deathScreen.isDisplayDeathScreenOnlyOnce()) {
-                loadingScreen.displayLoadingScreen();
-                player.updateSpawnPoint(mapController.getCurrentPlayerSpawn().x, mapController.getCurrentPlayerSpawn().y);
-                gameObjectController.updatePoints(mapController);
-                player.resetHealth();
-                player.resetDeath();
-                deathScreen.setDisplayDeathScreenOnlyOnce(false);
-                highscore.decreaseHighscoreForDeath();
-                highscore.increaseDeathCounter();
-            }
-            return;
-        }
+        screenController.displayDeathScreenIfPlayerIsDead(player, highscore, mapController, gameObjectController);
         if (gameObjectController.checkIfPlayerIsInFinish(entityController.getPlayer()) && !entityController.getPlayer().getDeathAnimationFinished()) {
             loadNewMap();
             return;
@@ -91,7 +72,8 @@ public class GameController {
     }
 
     public DeathScreen getDeathScreen() {
-        return deathScreen;
+        //TODO: do not handle this here
+        return screenController.getDeathScreen();
     }
 
     public void loadNewMap() {
@@ -102,9 +84,7 @@ public class GameController {
 
         Player player = entityController.getPlayer();
         player.setTotalHearts(player.getTotalHearts() + 1);// AMOUNT OF hearts collected
-        loadingScreen.displayLoadingScreen();
-        loadingScreen.updateScore(highscore.getCurrentHighscore());
-        deathScreen.updateScore(highscore.getCurrentHighscore());
+        screenController.displayLoadingScreen();
         mapController.loadCurrentMapIndex(highscore);
         Finish finish = gameObjectController.getFinish();
         finish.updateFinishPoint(mapController.getCurrentFinishSpawn().x, mapController.getCurrentFinishSpawn().y, mapController.getCurrentBossSpawn() == null);

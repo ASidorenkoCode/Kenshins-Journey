@@ -171,4 +171,8 @@ public class GameView extends JPanel {
     public JFrame getFrame() {
         return frame;
     }
+
+    public void setScreenController(ScreenController screenController) {
+        this.screenController = screenController;
+    }
 }

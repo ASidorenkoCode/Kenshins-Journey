@@ -1,6 +1,7 @@
 package screens.ui;
 
 import game.UI.GameView;
+import game.logic.Highscore;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -57,8 +58,8 @@ public class LoadingScreen {
         return scoreLabel;
     }
 
-    public void updateScore(int score) {
-        if (scoreLabel != null) scoreLabel.setText("<html>CURRENT SCORE:<br><center>" + score + "</center></html>");
+    public void update(Highscore highscore) {
+        if (scoreLabel != null) scoreLabel.setText("<html>CURRENT SCORE:<br><center>" + highscore.getCurrentHighscore() + "</center></html>");
     }
 
     private JProgressBar setupProgressBar() {
