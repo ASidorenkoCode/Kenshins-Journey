@@ -1,6 +1,7 @@
 package screens.controller;
 
 import entities.logic.Player;
+import game.UI.GameView;
 import game.logic.Highscore;
 import gameObjects.controller.GameObjectController;
 import items.controller.ItemController;
@@ -15,14 +16,15 @@ import java.awt.*;
 
 public class ScreenController {
     private InterfaceGame interfaceGame;
-
     private DeathScreen deathScreen;
     private LoadingScreen loadingScreen;
+    private boolean isDrawingDeathScreen;
 
     public ScreenController(ItemController itemController, JFrame frame) {
         this.interfaceGame = new InterfaceGame(itemController);
         this.deathScreen = new DeathScreen(frame);
         this.loadingScreen = new LoadingScreen(frame);
+        isDrawingDeathScreen = true;
     }
 
     public void update(Highscore highscore, Player player, Item[] menu) {
@@ -52,7 +54,22 @@ public class ScreenController {
     }
 
     public void draw(Graphics g) {
-        interfaceGame.draw(g);
+        //todo: check if this is a good method -> only testing purposes
+        if(isDrawingDeathScreen) {
+            g.fillRect(0, 0, GameView.GAME_WIDTH, GameView.GAME_HEIGHT);
+            String scoreText = "Score: " + 500;
+            int x = GameView.GAME_WIDTH / 2;
+            int y = 300;
+
+            g.setColor(Color.WHITE); // Set the color to white
+            g.setFont(new Font("Calibri", Font.BOLD, 32)); // Set the font to Calibri and size to 32px
+            g.drawString(scoreText, x, y); // Draw the string in the center
+            g.setColor(Color.BLACK); // Reset the color to black
+            g.setFont(new Font("Calibri", Font.BOLD, 12));
+        } else {
+            interfaceGame.draw(g);
+        }
+
     }
 
     public DeathScreen getDeathScreen() {
