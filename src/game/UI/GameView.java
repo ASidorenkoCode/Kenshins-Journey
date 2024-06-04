@@ -6,7 +6,6 @@ import gameObjects.controller.GameObjectController;
 import items.controller.ItemController;
 import keyboardinputs.logic.KeyboardInputsIngame;
 import maps.controller.MapController;
-import screens.StartScreen;
 import screens.controller.ScreenController;
 
 import javax.swing.*;
@@ -160,6 +159,8 @@ public class GameView extends JPanel {
                 break;
             case KeyEvent.VK_L:
                 gameController.restartLevelAfterDeath();
+            case KeyEvent.VK_W:
+                gameController.startGame();
             default:
                 entityController.handleUserInputKeyPressed(e, gameController.getDeathScreen());
         }

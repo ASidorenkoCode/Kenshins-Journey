@@ -8,20 +8,22 @@ import gameObjects.controller.GameObjectController;
 import items.controller.ItemController;
 import items.logic.Item;
 import maps.controller.MapController;
+import screens.ui.StartScreen;
 import screens.ui.DeathScreen;
 import screens.ui.InterfaceGame;
 import screens.ui.LoadingScreen;
 
-import javax.swing.*;
 import java.awt.*;
 
 public class ScreenController {
     private InterfaceGame interfaceGame;
     private DeathScreen deathScreen;
     private LoadingScreen loadingScreen;
+    private StartScreen startScreen;
 
     public ScreenController(ItemController itemController) {
         this.interfaceGame = new InterfaceGame(itemController);
+        this.startScreen = new StartScreen();
     }
 
     public void update(Highscore highscore, Player player, Item[] menu) {
@@ -51,7 +53,8 @@ public class ScreenController {
     public void draw(Graphics g, GameState currentGameState) {
         switch (currentGameState) {
             //TODO implement start and death screen
-            case START, LOADING, END -> drawLoadingScreen(g);
+            case START -> startScreen.draw(g);
+            case LOADING, END -> drawLoadingScreen(g);
             case DEAD -> drawDeathScreen(g);
             case PLAYING -> interfaceGame.draw(g);
         }

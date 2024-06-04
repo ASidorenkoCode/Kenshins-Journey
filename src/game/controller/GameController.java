@@ -32,7 +32,7 @@ public class GameController {
     public GameController(boolean showHitBox) {
         //controller
         //TODO: Should start with GameState.START Later on
-        currentGameState = GameState.PLAYING;
+        currentGameState = GameState.START;
         this.highscore = Highscore.readHighscore();
         mapController = new MapController(null, highscore);
         entityController = new EntityController(mapController, showHitBox);
@@ -63,7 +63,7 @@ public class GameController {
     }
 
     public void update() {
-        if(currentGameState != GameState.LOADING) {
+        if(currentGameState == GameState.PLAYING) {
             Player player = entityController.getPlayer();
             if(player.isDead()) {
                 currentGameState = GameState.DEAD;
@@ -113,6 +113,11 @@ public class GameController {
         player.resetDeath();
         highscore.decreaseHighscoreForDeath();
         highscore.increaseDeathCounter();
+        currentGameState = GameState.PLAYING;
+    }
+
+    public void startGame() {
+        if(currentGameState != GameState.START) return;
         currentGameState = GameState.PLAYING;
     }
 
