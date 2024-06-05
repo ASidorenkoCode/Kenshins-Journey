@@ -77,7 +77,6 @@ public class Highscore implements Serializable {
         try (ObjectOutputStream fos = new ObjectOutputStream(Files.newOutputStream(Path.of(FILE_HIGHSCORE_PATH)))) {
 
             fos.writeObject(this);
-            System.out.println("it was written");
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
