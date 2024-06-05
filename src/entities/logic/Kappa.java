@@ -1,4 +1,5 @@
 package entities.logic;
+import game.logic.Highscore;
 import maps.logic.Map;
 import java.awt.geom.Rectangle2D;
 
@@ -33,8 +34,23 @@ public class Kappa extends Entity {
 
 
 
-    public void update(Map map, boolean move) {
-        if(isDead) return;
+    public void update(Map map, Player player, Highscore highscore) {
+
+        if (isDead) {
+            if(isScoreIncreased) {
+                highscore.increaseHighscoreForKappa();
+                setScoreIncreased(true);
+            }
+            return;
+        }
+
+
+
+        boolean move = true;
+        if(isEntityHitboxNextToKappa(player)) {
+            updateAttackHitbox();
+            move = false;
+        }
 
         //reset attack Count, when kappa has attacked and break is over
         if(hasAttacked) {
@@ -45,6 +61,7 @@ public class Kappa extends Entity {
             }
         }
 
+        handleAttack(player);
         //dont move if is attacking or its specified
         if(isAttacking || !move) return;
 
@@ -73,12 +90,23 @@ public class Kappa extends Entity {
         hitbox.x += by_value;
     }
 
-    public void updateAttackHitbox() {
+    private void updateAttackHitbox() {
         float attackHitboxWidth = 50;
         float attackHitboxHeight = 64;
         float attackHitboxX = moveRight ? x + hitbox.width : x - attackHitboxWidth;
         float attackHitboxY = y;
         attackHitbox = new Rectangle2D.Float(attackHitboxX, attackHitboxY, attackHitboxWidth, attackHitboxHeight);
+    }
+
+    private boolean isEntityHitboxNextToKappa(Entity entity) {
+
+        Rectangle2D.Float e1Hitbox = entity.getHitbox();
+        Rectangle2D.Float kappaHitbox = hitbox;
+
+        Rectangle2D.Float e1HitboxBuffered = new Rectangle2D.Float(e1Hitbox.x - 1, e1Hitbox.y - 1, e1Hitbox.width + 2, e1Hitbox.height + 2);
+        Rectangle2D.Float kappaHitboxBuffered = new Rectangle2D.Float(kappaHitbox.x - 1, kappaHitbox.y - 1, kappaHitbox.width + 2, kappaHitbox.height + 2);
+
+        return kappaHitboxBuffered.intersects(e1HitboxBuffered);
     }
 
     public boolean checkForCollisonOnPosition(Map map, float x, float y) {
@@ -105,6 +133,20 @@ public class Kappa extends Entity {
     private boolean checkIfEnemyIsOverEdge(Map map, float x, float y, float width, float height, boolean isRight) {
         if (isRight) return checkForCollisonOnPosition(map, x + width, y + height);
         return checkForCollisonOnPosition(map, x, y + height);
+    }
+
+
+    private void handleAttack(Player player) {
+        if (isEntityInsideChecker(player) ) {
+            setMoveRight(x < player.getX());
+            if(!hasAttacked) {
+                if(attackHitbox.intersects(player.getHitbox())) {
+                    setIsAttacking(true);
+                    player.decreaseHealth(1);
+                    setHasAttacked(true);
+                }
+            }
+        }
     }
 
 

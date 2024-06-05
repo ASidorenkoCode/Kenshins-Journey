@@ -1,7 +1,5 @@
 package entities.controller;
-
 import entities.logic.Boss;
-import entities.logic.Entity;
 import entities.ui.BossUI;
 import game.logic.Highscore;
 import gameObjects.controller.GameObjectController;
@@ -9,15 +7,12 @@ import entities.logic.Kappa;
 import entities.logic.Player;
 import entities.ui.KappaUI;
 import entities.ui.PlayerUI;
-import game.controller.ReloadGame;
 import maps.controller.MapController;
 import screens.ui.DeathScreen;
-import screens.ui.InterfaceGame;
 import screens.ui.LoadingScreen;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 public class EntityController {
@@ -35,46 +30,11 @@ public class EntityController {
         initBoss(mapController, showHitBox);
     }
 
-    public void update(ReloadGame reloadGame, MapController mapController, GameObjectController gameObjectController, Highscore highscore, LoadingScreen loadingScreen, DeathScreen deathScreen) {
-        if (gameObjectController.checkIfPlayerIsInFinish(player) && !player.getDeathAnimationFinished()) {
-            reloadGame.loadNewMap();
-        }
+    public void update(MapController mapController, GameObjectController gameObjectController, Highscore highscore) {
+        player.update(mapController.getCurrentMap(), currentBoss, kappas, highscore);
+        for (Kappa kap : kappas) kap.update(mapController.getCurrentMap(), player, highscore);
 
-        if (highscore.getCurrentHighscore() == 0) {
-            player.setPlayerHealth(0);
-        }
-
-        if (player.isDead() && player.getDeathAnimationFinished()) {
-
-            if(deathScreen.getTotalScore() > highscore.getCurrentHighscore()) deathScreen.updateScore(highscore.getCurrentHighscore());
-            if (!deathScreen.isPlayerContinuesGame() && !deathScreen.isDisplayDeathScreenOnlyOnce()) {
-                deathScreen.displayDeathScreen();
-            }
-            if (deathScreen.isPlayerContinuesGame() && deathScreen.isDisplayDeathScreenOnlyOnce()) {
-                loadingScreen.displayLoadingScreen();
-                player.updateSpawnPoint(mapController.getCurrentPlayerSpawn().x, mapController.getCurrentPlayerSpawn().y);
-                gameObjectController.updatePoints(mapController);
-                player.resetHealth();
-                player.resetDeath();
-                deathScreen.setDisplayDeathScreenOnlyOnce(false);
-                highscore.decreaseHighscoreForDeath();
-                highscore.increaseDeathCounter();
-            }
-        }
-
-        player.update(mapController.getCurrentMap(), currentBoss, kappas);
-        if (!kappas.isEmpty()) handleKappas(mapController, highscore);
-        if(currentBoss != null) {
-            if(currentBoss.getIsDead()) {
-                if(!currentBoss.isScoreIncreased()) {
-                    highscore.increaseHighscoreForBoss();
-                    currentBoss.setScoreIncreased(true);
-                    gameObjectController.getFinish().setIsActive(true);
-                }
-                return;
-            }
-            currentBoss.update(mapController.getMapOffsetX(), player);
-        }
+        if(currentBoss != null) currentBoss.update(mapController.getMapOffsetX(), player, highscore, gameObjectController.getFinish());
     }
 
 
@@ -110,74 +70,6 @@ public class EntityController {
         bossUI = new BossUI(currentBoss, showHitBox);
 
     }
-
-    public boolean isEntityHitboxNextToOtherEntity(Entity e1, Entity e2) {
-
-        Rectangle2D.Float e1Hitbox = e1.getHitbox();
-        Rectangle2D.Float e2Hitbox = e2.getHitbox();
-
-        Rectangle2D.Float e1HitboxBuffered = new Rectangle2D.Float(e1Hitbox.x - 1, e1Hitbox.y - 1, e1Hitbox.width + 2, e1Hitbox.height + 2);
-        Rectangle2D.Float e2HitboxBuffered = new Rectangle2D.Float(e2Hitbox.x - 1, e2Hitbox.y - 1, e2Hitbox.width + 2, e2Hitbox.height + 2);
-
-        return e2HitboxBuffered.intersects(e1HitboxBuffered);
-    }
-
-
-    //functions for checking attacks between player and entities
-
-    public void handleKappas(MapController mapController, Highscore highscore) {
-        for (Kappa kap : kappas) {
-
-
-            if (kap.isDead() && !kap.isScoreIncreased()) {
-                if(!kap.isScoreIncreased()) {
-                    highscore.increaseHighscoreForKappa();
-                    kap.setScoreIncreased(true);
-                }
-                return;
-            }
-
-            if(isEntityHitboxNextToOtherEntity(kap, player)) {
-                kap.updateAttackHitbox();
-            }
-
-            if (kap.isEntityInsideChecker(player) ) {
-                kap.setMoveRight(kap.getX() < player.getX());
-                if(!kap.hasAttacked()) handleKappaAttacksPlayer(kap);
-            }
-
-
-            handlePlayerAttacksKappa(kap);
-
-            kap.update(mapController.getCurrentMap(), !isEntityHitboxNextToOtherEntity(kap, player));
-
-        }
-    }
-
-    private void handlePlayerAttacksKappa(Kappa kappa) {
-        if (!player.getHasAttacked()) {
-
-            if (!player.getAttackHitBoxIsActive()) return;
-
-            Rectangle2D.Float kappaHitbox = kappa.getHitbox();
-            if (player.getIsFacingRight()) {
-                if (!kappaHitbox.intersects(player.getRightAttackHitBox())) return;
-                else if (kappaHitbox.intersects(player.getLeftAttackHitBox())) return;
-
-                kappa.decreaseHealth(player.getCurrentDamagePerAttack());
-                player.setHasAttacked(true);
-            }
-        }
-    }
-
-    private void handleKappaAttacksPlayer(Kappa kappa) {
-        if(kappa.getAttackHitbox().intersects(player.getHitbox())) {
-            kappa.setIsAttacking(true);
-            player.decreaseHealth(1);
-            kappa.setHasAttacked(true);
-        }
-    }
-
 
     //handle user input
     public void handleUserInputKeyPressed(KeyEvent e, DeathScreen deathScreen) {
