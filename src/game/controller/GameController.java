@@ -106,6 +106,7 @@ public class GameController {
         finish.updateFinishPoint(mapController.getCurrentFinishSpawn().x, mapController.getCurrentFinishSpawn().y, mapController.getCurrentBossSpawn() == null);
         entityController.initKappas(mapController, showHitbox);
         entityController.initOrUpdatePlayer(mapController, showHitbox);
+        entityController.initBoss(mapController, showHitbox);
         itemController.initItems(mapController);
         itemController.deleteAllItemsFromMenu();
         currentGameState = GameState.PLAYING;
@@ -131,6 +132,16 @@ public class GameController {
     public void resetGame() {
         highscore.resetHighscore();
         highscore.writeHighscore();
+        Player player = entityController.getPlayer();
+        player.setTotalHearts(player.getTotalHearts() + 1);// AMOUNT OF hearts collected
+        mapController.loadCurrentMapIndex(highscore);
+        Finish finish = gameObjectController.getFinish();
+        finish.updateFinishPoint(mapController.getCurrentFinishSpawn().x, mapController.getCurrentFinishSpawn().y, mapController.getCurrentBossSpawn() == null);
+        entityController.initKappas(mapController, showHitbox);
+        entityController.initOrUpdatePlayer(mapController, showHitbox);
+        entityController.initBoss(mapController, showHitbox);
+        itemController.initItems(mapController);
+        itemController.deleteAllItemsFromMenu();
         currentGameState = GameState.START;
     }
 
