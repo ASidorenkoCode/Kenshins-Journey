@@ -82,6 +82,10 @@ public class ItemController {
         }
     }
 
+    public void draw(Graphics g, int mapOffsetX, int mapOffsetY) {
+        itemUI.drawMapItems(g, mapOffsetX, mapOffsetY, itemsOnMap, showHitBox, getAnimations());
+    }
+
 
     //TODO: Move to ItemUI
     private void loadAnimations() {
