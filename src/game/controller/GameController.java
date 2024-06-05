@@ -130,6 +130,7 @@ public class GameController {
 
     public void resetGame() {
         highscore.resetHighscore();
+        highscore.writeHighscore();
         currentGameState = GameState.START;
     }
 
