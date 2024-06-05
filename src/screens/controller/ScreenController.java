@@ -31,6 +31,7 @@ public class ScreenController {
     }
 
     public void displayDeathScreenIfPlayerIsDead(Player player, Highscore highscore, MapController mapController, GameObjectController gameObjectController) {
+        //TODO: Should be deprecated
         if (player.isDead() && player.getDeathAnimationFinished()) {
 
             if (!deathScreen.isPlayerContinuesGame() && !deathScreen.isDisplayDeathScreenOnlyOnce()) {
@@ -40,7 +41,7 @@ public class ScreenController {
                 //TODO: no game logic in screen controller
                 loadingScreen.displayLoadingScreen();
                 player.updateSpawnPoint(mapController.getCurrentPlayerSpawn().x, mapController.getCurrentPlayerSpawn().y);
-                gameObjectController.updatePoints(mapController);
+                gameObjectController.updatePoints(mapController, true);
                 player.resetHealth();
                 player.resetDeath();
                 deathScreen.setDisplayDeathScreenOnlyOnce(false);

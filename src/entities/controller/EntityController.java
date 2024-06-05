@@ -130,5 +130,8 @@ public class EntityController {
         return player;
     }
 
+    public Boss getCurrentBoss() {
+        return currentBoss;
+    }
 }
 

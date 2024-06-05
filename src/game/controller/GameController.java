@@ -115,7 +115,7 @@ public class GameController {
         if(currentGameState != GameState.DEAD) return;
         Player player = entityController.getPlayer();
         player.updateSpawnPoint(mapController.getCurrentPlayerSpawn().x, mapController.getCurrentPlayerSpawn().y);
-        gameObjectController.updatePoints(mapController);
+        gameObjectController.updatePoints(mapController, entityController.getCurrentBoss() == null || entityController.getCurrentBoss().getIsDead());
         player.resetHealth();
         player.resetDeath();
         highscore.decreaseHighscoreForDeath();
