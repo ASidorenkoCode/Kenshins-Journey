@@ -31,7 +31,6 @@ public class GameController {
 
     public GameController(boolean showHitBox) {
         //controller
-        //TODO: Should start with GameState.START Later on
         currentGameState = GameState.START;
         this.highscore = Highscore.readHighscore();
         mapController = new MapController(null, highscore);
@@ -77,6 +76,7 @@ public class GameController {
             itemController.update(entityController);
             highscore.decreaseHighScoreAfterOneSecond();
             screenController.update(highscore, entityController.getPlayer(), itemController.getMenu());
+
         }
     }
 
@@ -91,6 +91,13 @@ public class GameController {
         highscore.addCurrentHighscoreToList();
         highscore.writeHighscore();
         highscore.increaseHighscoreForItems(itemController.getMenu());
+
+
+        //handle option of game is finished
+        if(mapController.getMaps().size() == highscore.getAllHighscores().size()) {
+            //Game is finished
+            resetGame();
+        }
 
         Player player = entityController.getPlayer();
         player.setTotalHearts(player.getTotalHearts() + 1);// AMOUNT OF hearts collected
@@ -119,6 +126,11 @@ public class GameController {
     public void startGame() {
         if(currentGameState != GameState.START) return;
         currentGameState = GameState.PLAYING;
+    }
+
+    public void resetGame() {
+        highscore.resetHighscore();
+        currentGameState = GameState.START;
     }
 
     public GameState getCurrentGameState() {

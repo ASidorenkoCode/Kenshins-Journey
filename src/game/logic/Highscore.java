@@ -87,12 +87,11 @@ public class Highscore implements Serializable {
     }
 
     public static Highscore readHighscore() {
-        Highscore highscore;
+        Highscore highscore = new Highscore();
 
         try (ObjectInputStream fis = new ObjectInputStream(Files.newInputStream(Path.of(FILE_HIGHSCORE_PATH)))){
 
             highscore = (Highscore) fis.readObject();
-            return highscore;
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -102,7 +101,7 @@ public class Highscore implements Serializable {
             e.printStackTrace();
         }
 
-        return new Highscore();
+        return highscore;
 
     }
 }
