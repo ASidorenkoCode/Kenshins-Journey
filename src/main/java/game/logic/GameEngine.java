@@ -1,6 +1,7 @@
 package game.logic;
 
 import game.controller.GameController;
+import network.Client;
 
 public class GameEngine implements Runnable {
 
@@ -21,6 +22,7 @@ public class GameEngine implements Runnable {
     }
     @Override
     public void run() {
+        new Client().sendDataToServer();
         final double timePerUpdate = 1e9 / UPS_SET;
         long prevTime = System.nanoTime();
         double updateAccumulator = 0;
