@@ -31,7 +31,7 @@ public class Client {
                 e.printStackTrace();
             }
             // Create a JSON string
-            String json = "{\"highScore\":\"3250\",\"deathCounter\":5,\"currentLevel\":2,\"x\":5,\"playerId\":" + playerId + "}";
+            String json = "{\"currentLevel\":2,\"highScore\":\"3250\",\"deathCounter\":5,\"horizontalPlayerPosition\":5,\"playerId\":" + playerId + "}";
 
 
             // Send the JSON string to the server

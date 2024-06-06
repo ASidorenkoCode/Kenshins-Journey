@@ -12,8 +12,11 @@ public class GameEngine implements Runnable {
     private int frames = 0;
     private int updates = 0;
 
+    private Client client;
+
     public GameEngine(GameController gameController) {
         this.gameController = gameController;
+        this.client = new Client();
     }
 
     public void startGameLoop() {
@@ -22,7 +25,6 @@ public class GameEngine implements Runnable {
     }
     @Override
     public void run() {
-        new Client().sendDataToServer();
         final double timePerUpdate = 1e9 / UPS_SET;
         long prevTime = System.nanoTime();
         double updateAccumulator = 0;
@@ -36,6 +38,7 @@ public class GameEngine implements Runnable {
 
             while (updateAccumulator >= timePerUpdate) {
                 updateAccumulator -= timePerUpdate;
+                client.sendDataToServer();
                 gameController.update();
                 updates++;
             }
