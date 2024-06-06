@@ -1,6 +1,8 @@
 package network;
 
 public class ServerObject {
+
+
     private String name;
     private int age;
 
