@@ -1,6 +1,8 @@
 package entities.logic;
+
 import game.logic.Highscore;
 import maps.logic.Map;
+
 import java.awt.geom.Rectangle2D;
 
 public class Kappa extends Entity {

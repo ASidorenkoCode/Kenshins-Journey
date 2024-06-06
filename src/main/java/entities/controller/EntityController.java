@@ -1,15 +1,15 @@
 package entities.controller;
+
 import entities.logic.Boss;
-import entities.ui.BossUI;
-import game.logic.Highscore;
-import gameObjects.controller.GameObjectController;
 import entities.logic.Kappa;
 import entities.logic.Player;
+import entities.ui.BossUI;
 import entities.ui.KappaUI;
 import entities.ui.PlayerUI;
+import game.logic.Highscore;
+import gameObjects.controller.GameObjectController;
 import maps.controller.MapController;
 import screens.ui.DeathScreen;
-import screens.ui.LoadingScreen;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;

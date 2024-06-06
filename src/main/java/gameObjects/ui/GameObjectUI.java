@@ -1,6 +1,5 @@
 package gameObjects.ui;
 
-import entities.ui.EntityUI;
 import gameObjects.logic.Finish;
 import gameObjects.logic.GameObject;
 import spriteControl.SpriteManager;

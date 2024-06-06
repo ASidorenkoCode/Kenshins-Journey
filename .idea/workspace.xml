@@ -4,14 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b91aae81-7ada-4dc7-9d93-d4383ba70810" name="Changes" comment="added kappa and enemy_Scale TODO: change bigOrc to Kappa">
+    <list default="true" id="b91aae81-7ada-4dc7-9d93-d4383ba70810" name="Changes" comment="map test gradient">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Start_the_game__DEBUG_ON_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Start_the_game__DEBUG_ON_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/controller/EntityController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/controller/EntityController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/logic/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/logic/Entity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/logic/Finish.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/logic/Finish.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/logic/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/logic/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/logic/kappa.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/logic/kappa.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/ui/kappaUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/ui/kappaUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,13 +22,22 @@
       </list>
     </option>
   </component>
+  <component name="Git.Rebase.Settings">
+    <option name="NEW_BASE" value="master" />
+  </component>
   <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="ASidorenkoCode &lt;artur.sidorenko@std.dhsh.de&gt;" />
+      </list>
+    </option>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="item-implementation" />
+        <entry key="$PROJECT_DIR$" value="screens" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -40,20 +45,12 @@
     &quot;assignee&quot;: &quot;ASidorenkoCode&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">
-    <option name="recentNewPullRequestHead">
-      <RepoCoordinatesHolder>
-        <option name="owner" value="ASidorenkoCode" />
-        <option name="repository" value="Kenshins-Journey" />
-      </RepoCoordinatesHolder>
-    </option>
-    <option name="selectedUrlAndAccountId">
-      <UrlAndAccount>
-        <option name="accountId" value="fcb2563f-1a4b-4036-9708-b6905752992e" />
-        <option name="url" value="https://github.com/ASidorenkoCode/Kenshins-Journey.git" />
-      </UrlAndAccount>
-    </option>
-  </component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/ASidorenkoCode/Kenshins-Journey.git&quot;,
+    &quot;accountId&quot;: &quot;55a98266-43df-497e-aae2-9a7cd4ec4839&quot;
+  }
+}</component>
   <component name="KubernetesApiProvider">{
   &quot;isMigrated&quot;: true
 }</component>
@@ -77,27 +74,36 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "healthbar-logic-and-ui",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Artur/Documents/Uni/JAVA/Kenshins-Journey/res/kenshin",
+    "last_opened_file_path": "C:/Users/Artur/IdeaProjects/Kenshins-Journey/res/screens/startScreen",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "show.migrate.to.gradle.popup": "false",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Artur\Documents\Uni\JAVA\Kenshins-Journey\res\kenshin" />
+      <recent name="C:\Users\Artur\IdeaProjects\Kenshins-Journey\res\screens\startScreen" />
+      <recent name="C:\Users\Artur\IdeaProjects\Kenshins-Journey\res\lvls" />
+      <recent name="C:\Users\Artur\IdeaProjects\Kenshins-Journey\res" />
+      <recent name="C:\Users\Artur\IdeaProjects\Kenshins-Journey\res\maps" />
+      <recent name="C:\Users\Artur\IdeaProjects\Kenshins-Journey\res\mapsprites" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Artur\IdeaProjects\Kenshins-Journey\res\screens\startScreen" />
+      <recent name="C:\Users\Artur\IdeaProjects\Kenshins-Journey\res\lvls" />
+      <recent name="C:\Users\Artur\IdeaProjects\Kenshins-Journey\res\mapsprites" />
       <recent name="C:\Users\Artur\Documents\Uni\JAVA\Kenshins-Journey\res\enemies\kappa" />
       <recent name="C:\Users\Artur\Documents\Uni\JAVA\Kenshins-Journey\res\enemies" />
-      <recent name="C:\Users\Artur\Documents\Uni\JAVA\Kenshins-Journey\res\healthPlayer" />
-      <recent name="C:\Users\Artur\Documents\Uni\JAVA\Kenshins-Journey\res\bigOrc" />
-      <recent name="$PROJECT_DIR$/res/kenshin" />
     </key>
   </component>
   <component name="RunManager" selected="Application.Start the game (DEBUG ON)">
@@ -123,7 +129,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="jdk-21.0.1-openjdk-21.0.1-f644763e9732-2f79fb23" />
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.15989.150" />
+        <option value="bundled-js-predefined-1d06a55b98c1-91d5c284f522-JavaScript-IU-241.15989.150" />
       </set>
     </attachedChunks>
   </component>
@@ -137,6 +144,32 @@
       <updated>1714329269192</updated>
       <workItem from="1714329270267" duration="1000" />
       <workItem from="1714454641245" duration="13377000" />
+      <workItem from="1715845423861" duration="197000" />
+      <workItem from="1715845646862" duration="2349000" />
+      <workItem from="1715897870063" duration="95000" />
+      <workItem from="1715898173284" duration="212000" />
+      <workItem from="1715898979111" duration="215000" />
+      <workItem from="1715899741476" duration="129000" />
+      <workItem from="1715902229311" duration="6721000" />
+      <workItem from="1715944803310" duration="1454000" />
+      <workItem from="1715975339828" duration="1538000" />
+      <workItem from="1715990844701" duration="1564000" />
+      <workItem from="1716194425958" duration="5659000" />
+      <workItem from="1716229780518" duration="4015000" />
+      <workItem from="1716276617703" duration="6988000" />
+      <workItem from="1716292755208" duration="1875000" />
+      <workItem from="1716303822650" duration="300000" />
+      <workItem from="1716304648835" duration="2925000" />
+      <workItem from="1716317150576" duration="10152000" />
+      <workItem from="1716333731882" duration="2891000" />
+      <workItem from="1716365856814" duration="446000" />
+      <workItem from="1716372774351" duration="3508000" />
+      <workItem from="1716450765763" duration="4521000" />
+      <workItem from="1716543362346" duration="2470000" />
+      <workItem from="1716797409561" duration="10567000" />
+      <workItem from="1716820574747" duration="1460000" />
+      <workItem from="1716822184173" duration="2507000" />
+      <workItem from="1717006947474" duration="13698000" />
     </task>
     <task id="LOCAL-00001" summary="constants for entityUI and playerUI">
       <option name="closed" value="true" />
@@ -338,26 +371,172 @@
       <option name="project" value="LOCAL" />
       <updated>1714909559212</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="player animation update + first mapsprite">
+      <option name="closed" value="true" />
+      <created>1716196659727</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1716196659728</updated>
+    </task>
+    <task id="LOCAL-00027" summary="refactoring maps">
+      <option name="closed" value="true" />
+      <created>1716197432730</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1716197432731</updated>
+    </task>
+    <task id="LOCAL-00028" summary="refactoring maps + items">
+      <option name="closed" value="true" />
+      <created>1716199316184</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1716199316185</updated>
+    </task>
+    <task id="LOCAL-00029" summary="new interfaceGame layout for the character">
+      <option name="closed" value="true" />
+      <created>1716289626783</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1716289626783</updated>
+    </task>
+    <task id="LOCAL-00030" summary="new interfaceGame layout for the character">
+      <option name="closed" value="true" />
+      <created>1716292802459</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1716292802459</updated>
+    </task>
+    <task id="LOCAL-00031" summary="deleted health">
+      <option name="closed" value="true" />
+      <created>1716292917245</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1716292917245</updated>
+    </task>
+    <task id="LOCAL-00032" summary="updated character portrait">
+      <option name="closed" value="true" />
+      <created>1716305813279</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1716305813279</updated>
+    </task>
+    <task id="LOCAL-00033" summary="made importTileSheets dynamic">
+      <option name="closed" value="true" />
+      <created>1716322549436</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1716322549436</updated>
+    </task>
+    <task id="LOCAL-00034" summary="player death">
+      <option name="closed" value="true" />
+      <created>1716453085320</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1716453085320</updated>
+    </task>
+    <task id="LOCAL-00035" summary="player shouldnt die if out of x-view">
+      <option name="closed" value="true" />
+      <created>1716453957097</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1716453957097</updated>
+    </task>
+    <task id="LOCAL-00036" summary="updated TODO">
+      <option name="closed" value="true" />
+      <created>1716454842245</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1716454842245</updated>
+    </task>
+    <task id="LOCAL-00037" summary="added item menu and some rejections if full hp">
+      <option name="closed" value="true" />
+      <created>1716461489945</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1716461489945</updated>
+    </task>
+    <task id="LOCAL-00038" summary="moved item number string a bit">
+      <option name="closed" value="true" />
+      <created>1716461676471</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1716461676471</updated>
+    </task>
+    <task id="LOCAL-00039" summary="moved the interface screen a bit">
+      <option name="closed" value="true" />
+      <created>1716463715950</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1716463715950</updated>
+    </task>
+    <task id="LOCAL-00040" summary="test fullscreen">
+      <option name="closed" value="true" />
+      <created>1716814909556</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1716814909556</updated>
+    </task>
+    <task id="LOCAL-00041" summary="new map test">
+      <option name="closed" value="true" />
+      <created>1716823961786</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1716823961786</updated>
+    </task>
+    <task id="LOCAL-00042" summary="map test gradient">
+      <option name="closed" value="true" />
+      <created>1717013144339</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1717013144339</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/serialization" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="constants for entityUI and playerUI" />
-    <MESSAGE value="player is shown on screen" />
-    <MESSAGE value="started with connection between input and player logic" />
-    <MESSAGE value="add res folder to git" />
-    <MESSAGE value="init EntityController" />
-    <MESSAGE value="init player movement" />
-    <MESSAGE value="player left and right movement" />
-    <MESSAGE value="improved switch with switch expression" />
-    <MESSAGE value="implement last and current animation" />
-    <MESSAGE value="added DEBUG ON and OFF" />
-    <MESSAGE value="added first enemy" />
-    <MESSAGE value="added collision with Entities" />
-    <MESSAGE value="- added bigOrc handler, to check if enemy is present on map&#10;- healthbar for the player&#10;- for now the player health can only be decreased by pressing the key &quot;I&quot;&#10;- added jump slash and fall slash&#10;- added dynamic hitbox and attack hitbox is sticked to player hitbox" />
     <MESSAGE value="added death animation" />
     <MESSAGE value="added score and death if score = 0 and updated health png" />
     <MESSAGE value="optimized health, health is now displayed in 2 rows if hearts &gt; 10, added currentMaxHealth" />
@@ -367,6 +546,25 @@
     <MESSAGE value="optimized attack + attack bug fix" />
     <MESSAGE value="hearts system approach" />
     <MESSAGE value="added kappa and enemy_Scale TODO: change bigOrc to Kappa" />
-    <option name="LAST_COMMIT_MESSAGE" value="added kappa and enemy_Scale TODO: change bigOrc to Kappa" />
+    <MESSAGE value="player animation update + first mapsprite" />
+    <MESSAGE value="refactoring maps" />
+    <MESSAGE value="refactoring maps + items" />
+    <MESSAGE value="new interfaceGame layout for the character" />
+    <MESSAGE value="deleted health" />
+    <MESSAGE value="updated character portrait" />
+    <MESSAGE value="made importTileSheets dynamic" />
+    <MESSAGE value="player death" />
+    <MESSAGE value="player shouldnt die if out of x-view" />
+    <MESSAGE value="updated TODO" />
+    <MESSAGE value="added item menu and some rejections if full hp" />
+    <MESSAGE value="moved item number string a bit" />
+    <MESSAGE value="moved the interface screen a bit" />
+    <MESSAGE value="test fullscreen" />
+    <MESSAGE value="new map test" />
+    <MESSAGE value="map test gradient" />
+    <option name="LAST_COMMIT_MESSAGE" value="map test gradient" />
+    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
 </project>

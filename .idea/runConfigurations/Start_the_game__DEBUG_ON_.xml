@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Start the game (DEBUG ON)" type="Application" factoryName="Application">
+  <configuration default="false" name="Start the game (DEBUG ON)" type="Application" factoryName="Application" singleton="false">
     <option name="MAIN_CLASS_NAME" value="GameStart" />
     <module name="Kenshins-Journey" />
     <option name="PROGRAM_PARAMETERS" value="true true" />
