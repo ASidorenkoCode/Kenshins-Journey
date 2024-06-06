@@ -11,7 +11,6 @@ import items.controller.ItemController;
 import maps.controller.MapController;
 import screens.controller.ScreenController;
 import screens.ui.DeathScreen;
-import screens.ui.LoadingScreen;
 
 public class GameController {
 

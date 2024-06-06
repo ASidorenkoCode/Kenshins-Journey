@@ -1,6 +1,4 @@
-import game.UI.GameView;
 import game.controller.GameController;
-import game.logic.GameEngine;
 
 import javax.swing.*;
 

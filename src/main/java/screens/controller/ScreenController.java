@@ -8,10 +8,10 @@ import gameObjects.controller.GameObjectController;
 import items.controller.ItemController;
 import items.logic.Item;
 import maps.controller.MapController;
-import screens.ui.StartScreen;
 import screens.ui.DeathScreen;
 import screens.ui.InterfaceGame;
 import screens.ui.LoadingScreen;
+import screens.ui.StartScreen;
 
 import java.awt.*;
 
