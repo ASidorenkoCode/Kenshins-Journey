@@ -86,13 +86,16 @@ public class Highscore implements Serializable {
 
     }
 
-    public static Highscore readHighscore() {
+    public static Highscore readHighscore() throws IOException {
+        Path filePath = Path.of(FILE_HIGHSCORE_PATH);
+        if (!Files.exists(filePath) || Files.size(filePath) == 0) {
+            return new Highscore();
+        }
+
         Highscore highscore = new Highscore();
 
-        try (ObjectInputStream fis = new ObjectInputStream(Files.newInputStream(Path.of(FILE_HIGHSCORE_PATH)))){
-
+        try (ObjectInputStream fis = new ObjectInputStream(Files.newInputStream(filePath))) {
             highscore = (Highscore) fis.readObject();
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -102,6 +105,5 @@ public class Highscore implements Serializable {
         }
 
         return highscore;
-
     }
 }

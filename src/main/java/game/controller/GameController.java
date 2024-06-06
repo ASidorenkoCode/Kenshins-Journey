@@ -12,6 +12,8 @@ import maps.controller.MapController;
 import screens.controller.ScreenController;
 import screens.ui.DeathScreen;
 
+import java.io.IOException;
+
 public class GameController {
 
     private GameEngine gameEngine;
@@ -28,7 +30,7 @@ public class GameController {
 
     private boolean showHitbox;
 
-    public GameController(boolean showHitBox) {
+    public GameController(boolean showHitBox) throws IOException {
         //controller
         currentGameState = GameState.START;
         this.highscore = Highscore.readHighscore();
