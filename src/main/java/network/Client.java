@@ -4,7 +4,9 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.net.InetAddress;
 import java.net.Socket;
+import java.net.UnknownHostException;
 
 public class Client {
     private static final String SERVER_ADDRESS = "localhost";
@@ -19,8 +21,18 @@ public class Client {
             PrintWriter writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()), true);
             BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
+            //get hostname for playerID
+
+            String playerId = "";
+            try {
+                InetAddress inetAddress = InetAddress.getLocalHost();
+                playerId = inetAddress.getHostName();
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
+            }
             // Create a JSON string
-            String json = "{\"name\":\"John Doe\",\"age\":30}";
+            String json = "{\"highScore\":\"3250\",\"deathCounter\":5,\"currentLevel\":2,\"x\":5,\"playerId\":" + playerId + "}";
+
 
             // Send the JSON string to the server
             writer.println(json);

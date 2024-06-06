@@ -11,11 +11,8 @@ public class HostApplication {
             System.out.println("Server is listening on port " + PORT);
 
             while (true) {
-                Socket socket = serverSocket.accept();
-                System.out.println("New client connected");
-
-                // Handle each client in a new thread
-                new ClientHandler(socket).start();
+                Socket clientSocket = serverSocket.accept();
+                new ClientHandler(clientSocket).start();
             }
         } catch (Exception e) {
             e.printStackTrace();
