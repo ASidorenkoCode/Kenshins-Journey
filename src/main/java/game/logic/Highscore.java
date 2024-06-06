@@ -9,10 +9,11 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class Highscore implements Serializable {
+    private static final long serialVersionUID = -5815020676293054824L;
     private final static int START_SCORE = 2000;
     private final static String FILE_HIGHSCORE_PATH = "res/highscore.txt";
     private int currentHighscore;
-    private int deathCounter;
+    private int deathCounter = 0;
     private ArrayList<Integer> highscores;
     private long comparingTime;
 
@@ -102,6 +103,9 @@ public class Highscore implements Serializable {
         }
 
         return highscore;
+    }
 
+    public int getDeathCounter() {
+        return deathCounter;
     }
 }

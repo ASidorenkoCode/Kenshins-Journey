@@ -44,6 +44,7 @@ public class EntityController {
         Point playerSpawnPoint = mapController.getCurrentPlayerSpawn();
         if (player != null) {
             player.updateSpawnPoint(playerSpawnPoint.x, playerSpawnPoint.y);
+            return;
         }
         player = new Player(playerSpawnPoint.x, playerSpawnPoint.y);
         playerUI = new PlayerUI(player, showHitBox);

@@ -144,6 +144,10 @@ public class GameController {
         currentGameState = GameState.START;
     }
 
+    public Highscore getHighscore() {
+        return highscore;
+    }
+
     public GameState getCurrentGameState() {
         return currentGameState;
     }
