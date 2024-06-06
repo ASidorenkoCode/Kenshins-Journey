@@ -27,6 +27,7 @@ public class MapUI {
     }
 
     public void draw(Graphics g, int mapOffsetX, int mapOffsetY, int mapIndex, boolean isForeGround) {
+
         if (!isForeGround) {
             BufferedImage background = getBackgroundImage();
             g.drawImage(background, -mapOffsetX, -mapOffsetY, null);
@@ -70,21 +71,23 @@ public class MapUI {
             g.setPaint(gradientPaint);
             g.fillRect(0, 0, mapWidth, mapHeight);
 
-            try {
-                BufferedImage mountainImage = ImageIO.read(new File("res/screens/startScreen/forest.png"));
-                // Scale the image
-                int scaledWidth = (int) (mountainImage.getWidth() * 1.2);
-                int scaledHeight = (int) (mountainImage.getHeight() * 1.2);
-                Image scaledMountainImage = mountainImage.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_DEFAULT);
-                int imageX = 0;
-                int imageY = mapHeight - scaledHeight - 200;
-                while (imageX < mapWidth) {
-                    g.drawImage(scaledMountainImage, imageX, imageY, null);
-                    imageX += scaledWidth;
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+
+            //TODO: Implement Background image
+//            try {
+//                BufferedImage mountainImage = ImageIO.read(new File("res/screens/startScreen/forest.png"));
+//                // Scale the image
+//                int scaledWidth = (int) (mountainImage.getWidth() * 1.2);
+//                int scaledHeight = (int) (mountainImage.getHeight() * 1.2);
+//                Image scaledMountainImage = mountainImage.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_DEFAULT);
+//                int imageX = 0;
+//                int imageY = mapHeight - scaledHeight - 200;
+//                while (imageX < mapWidth) {
+//                    g.drawImage(scaledMountainImage, imageX, imageY, null);
+//                    imageX += scaledWidth;
+//                }
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
 
             g.dispose();
         }

@@ -1,4 +1,6 @@
-package screens;
+package screens.ui;
+
+import game.UI.GameView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -6,7 +8,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import java.io.File;
 
-public class StartScreen extends JPanel {
+public class StartScreen {
     private Image backgroundImage;
 
     public StartScreen() {
@@ -17,9 +19,7 @@ public class StartScreen extends JPanel {
         }
     }
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+    public void draw(Graphics g) {
+        g.drawImage(backgroundImage, 0, 0, GameView.GAME_WIDTH, GameView.GAME_HEIGHT, null);
     }
 }

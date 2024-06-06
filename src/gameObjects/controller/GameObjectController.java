@@ -27,9 +27,8 @@ public class GameObjectController {
         return finish.checkIfPlayerIsInFinish(player);
     }
 
-    public void updatePoints(MapController mapController) {
+    public void updatePoints(MapController mapController, boolean finishIsActive) {
         Point finishPoint = mapController.getCurrentFinishSpawn();
-        boolean finishIsActive = mapController.getCurrentBossSpawn() == null;
         finish.updateFinishPoint(finishPoint.x, finishPoint.y, finishIsActive);
     }
 

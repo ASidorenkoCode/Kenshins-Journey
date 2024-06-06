@@ -36,12 +36,12 @@ public class ItemController {
     }
 
     public void initItems(MapController mapController) {
+        itemsOnMap = new ArrayList<>();
         if (mapController.getCurrentItemSpawns().isEmpty()) return;
         //if Power Ring is placed set to true, because it is only allowed to use one power ring on one map
         boolean powerRingIsPlaced = false;
 
         //choose Items
-        itemsOnMap = new ArrayList<>();
         int itemPlacementCount = 0;
         while (itemPlacementCount == 0) {
             for (Point p : mapController.getCurrentItemSpawns()) {
@@ -80,6 +80,10 @@ public class ItemController {
             if (entityController.getPlayer().getHitbox().intersects(itemsOnMap.get(i).getHitbox()))
                 collectItem(itemsOnMap.get(i));
         }
+    }
+
+    public void draw(Graphics g, int mapOffsetX, int mapOffsetY) {
+        itemUI.drawMapItems(g, mapOffsetX, mapOffsetY, itemsOnMap, showHitBox, getAnimations());
     }
 
 

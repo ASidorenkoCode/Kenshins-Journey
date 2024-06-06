@@ -2,20 +2,22 @@ package game.logic;
 import items.logic.Heart;
 import items.logic.Item;
 import items.logic.PowerRing;
+
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 
-public class Highscore {
+public class Highscore implements Serializable {
     private final static int START_SCORE = 2000;
+    private final static String FILE_HIGHSCORE_PATH = "res/highscore.txt";
     private int currentHighscore;
     private int deathCounter;
     private ArrayList<Integer> highscores;
     private long comparingTime;
 
     public Highscore() {
-        currentHighscore = START_SCORE;
-        highscores = new ArrayList<>();
-        comparingTime = System.currentTimeMillis();
-        deathCounter = 0;
+        resetHighscore();
     }
     public void decreaseHighScoreAfterOneSecond() {
         long currentTime = System.currentTimeMillis();
@@ -60,5 +62,46 @@ public class Highscore {
 
     public ArrayList<Integer> getAllHighscores() {
         return highscores;
+    }
+
+    public void resetHighscore() {
+        currentHighscore = START_SCORE;
+        highscores = new ArrayList<>();
+        comparingTime = System.currentTimeMillis();
+        deathCounter = 0;
+    }
+
+
+    public void writeHighscore() {
+
+        try (ObjectOutputStream fos = new ObjectOutputStream(Files.newOutputStream(Path.of(FILE_HIGHSCORE_PATH)))) {
+
+            fos.writeObject(this);
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static Highscore readHighscore() {
+        Highscore highscore = new Highscore();
+
+        try (ObjectInputStream fis = new ObjectInputStream(Files.newInputStream(Path.of(FILE_HIGHSCORE_PATH)))){
+
+            highscore = (Highscore) fis.readObject();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return highscore;
+
     }
 }

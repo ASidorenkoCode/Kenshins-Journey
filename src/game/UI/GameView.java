@@ -6,7 +6,6 @@ import gameObjects.controller.GameObjectController;
 import items.controller.ItemController;
 import keyboardinputs.logic.KeyboardInputsIngame;
 import maps.controller.MapController;
-import screens.StartScreen;
 import screens.controller.ScreenController;
 
 import javax.swing.*;
@@ -110,10 +109,10 @@ public class GameView extends JPanel {
         int mapOffsetY = mapController.getMapOffsetY();
         mapController.draw(g, false);
         entityController.drawEntities(g, mapOffsetX, mapOffsetY);
-        itemController.getItemUI().drawMapItems(g, mapOffsetX, mapOffsetY, itemController.getItemsOnMap(), itemController.isShowHitBox(), itemController.getAnimations());
+        itemController.draw(g, mapOffsetX, mapOffsetY);
         gameObjectController.drawObjects(g, mapOffsetX, mapOffsetY);
         mapController.draw(g, true);
-        screenController.draw(g);
+        screenController.draw(g, gameController.getCurrentGameState());
     }
 
     public void showFPS_UPS(int frames, int updates) {
@@ -158,7 +157,10 @@ public class GameView extends JPanel {
             case KeyEvent.VK_9:
                 itemController.selectItem(entityController.getPlayer(), 9);
                 break;
-
+            case KeyEvent.VK_L:
+                gameController.restartLevelAfterDeath();
+            case KeyEvent.VK_W:
+                gameController.startGame();
             default:
                 entityController.handleUserInputKeyPressed(e, gameController.getDeathScreen());
         }
@@ -170,5 +172,9 @@ public class GameView extends JPanel {
 
     public JFrame getFrame() {
         return frame;
+    }
+
+    public void setScreenController(ScreenController screenController) {
+        this.screenController = screenController;
     }
 }

@@ -1,7 +1,6 @@
 package game.controller;
 
 import entities.controller.EntityController;
-import entities.logic.Kappa;
 import entities.logic.Player;
 import game.UI.GameView;
 import game.logic.GameEngine;
@@ -12,9 +11,7 @@ import items.controller.ItemController;
 import maps.controller.MapController;
 import screens.controller.ScreenController;
 import screens.ui.DeathScreen;
-import screens.ui.InterfaceGame;
 import screens.ui.LoadingScreen;
-import screens.StartScreen;
 
 public class GameController {
 
@@ -24,33 +21,34 @@ public class GameController {
     private GameObjectController gameObjectController;
     private MapController mapController;
     private ScreenController screenController;
-    private LoadingScreen loadingScreen;
     private ItemController itemController;
-    private DeathScreen deathScreen;
 
     private Highscore highscore;
+
+    private GameState currentGameState;
 
     private boolean showHitbox;
 
     public GameController(boolean showHitBox) {
         //controller
-        mapController = new MapController(null);
+        currentGameState = GameState.START;
+        this.highscore = Highscore.readHighscore();
+        mapController = new MapController(null, highscore);
         entityController = new EntityController(mapController, showHitBox);
         mapController.setEntityController(entityController);
         itemController = new ItemController(mapController, showHitBox);
         gameEngine = new GameEngine( this);
         gameObjectController = new GameObjectController(mapController, showHitBox);
         screenController = new ScreenController(itemController);
+        gameView = new GameView(this, entityController, mapController, itemController, gameObjectController, screenController);
+
+
 
 
         //ui
-        gameView = new GameView(this, entityController, mapController, itemController, gameObjectController, screenController);
-        this.deathScreen = new DeathScreen(gameView.getFrame());
-        this.loadingScreen = new LoadingScreen(gameView.getFrame());
         gameView.gameWindow();
         gameEngine.startGameLoop();
         this.showHitbox = showHitBox;
-        this.highscore = new Highscore();
     }
 
 
@@ -64,54 +62,90 @@ public class GameController {
     }
 
     public void update() {
-        Player player = entityController.getPlayer();
-        if (player.isDead() && player.getDeathAnimationFinished()) {
+        if(currentGameState == GameState.PLAYING) {
+            Player player = entityController.getPlayer();
+            if(player.isDead()) {
+                currentGameState = GameState.DEAD;
+                return;
+            }
+            if (gameObjectController.checkIfPlayerIsInFinish(entityController.getPlayer()) && !entityController.getPlayer().getDeathAnimationFinished()) {
+                loadNewMap();
+                return;
+            }
+            entityController.update(mapController, gameObjectController, highscore);
+            itemController.update(entityController);
+            highscore.decreaseHighScoreAfterOneSecond();
+            screenController.update(highscore, entityController.getPlayer(), itemController.getMenu());
 
-            if(deathScreen.getTotalScore() > highscore.getCurrentHighscore()) deathScreen.updateScore(highscore.getCurrentHighscore());
-            if (!deathScreen.isPlayerContinuesGame() && !deathScreen.isDisplayDeathScreenOnlyOnce()) {
-                deathScreen.displayDeathScreen();
-            }
-            if (deathScreen.isPlayerContinuesGame() && deathScreen.isDisplayDeathScreenOnlyOnce()) {
-                loadingScreen.displayLoadingScreen();
-                player.updateSpawnPoint(mapController.getCurrentPlayerSpawn().x, mapController.getCurrentPlayerSpawn().y);
-                gameObjectController.updatePoints(mapController);
-                player.resetHealth();
-                player.resetDeath();
-                deathScreen.setDisplayDeathScreenOnlyOnce(false);
-                highscore.decreaseHighscoreForDeath();
-                highscore.increaseDeathCounter();
-            }
-            return;
         }
-        if (gameObjectController.checkIfPlayerIsInFinish(entityController.getPlayer()) && !entityController.getPlayer().getDeathAnimationFinished()) {
-            loadNewMap();
-            return;
-        }
-        entityController.update(mapController, gameObjectController, highscore);
-        itemController.update(entityController);
-        highscore.decreaseHighScoreAfterOneSecond();
-        screenController.update(highscore, entityController.getPlayer(), itemController.getMenu());
     }
 
     public DeathScreen getDeathScreen() {
-        return deathScreen;
+        //TODO: do not handle this here
+        return screenController.getDeathScreen();
     }
 
     public void loadNewMap() {
+        currentGameState = GameState.LOADING;
+        //highscore update
+        highscore.addCurrentHighscoreToList();
+        highscore.writeHighscore();
+        highscore.increaseHighscoreForItems(itemController.getMenu());
+
+
+        //handle option of game is finished
+        if(mapController.getMaps().size() == highscore.getAllHighscores().size()) {
+            //Game is finished
+            resetGame();
+        }
+
         Player player = entityController.getPlayer();
-        player.setTotalHearts(player.getTotalHearts() + 1);  // AMOUNT OF hearts collected
-        loadingScreen.displayLoadingScreen();
-        loadingScreen.updateScore(highscore.getCurrentHighscore());
-        deathScreen.updateScore(highscore.getCurrentHighscore());
-        mapController.loadNextMap();
+        player.setTotalHearts(player.getTotalHearts() + 1);// AMOUNT OF hearts collected
+        mapController.loadCurrentMapIndex(highscore);
         Finish finish = gameObjectController.getFinish();
         finish.updateFinishPoint(mapController.getCurrentFinishSpawn().x, mapController.getCurrentFinishSpawn().y, mapController.getCurrentBossSpawn() == null);
         entityController.initKappas(mapController, showHitbox);
         entityController.initOrUpdatePlayer(mapController, showHitbox);
+        entityController.initBoss(mapController, showHitbox);
         itemController.initItems(mapController);
-        highscore.increaseHighscoreForItems(itemController.getMenu());
         itemController.deleteAllItemsFromMenu();
-        highscore.addCurrentHighscoreToList();
+        currentGameState = GameState.PLAYING;
+    }
 
+    public void restartLevelAfterDeath() {
+        if(currentGameState != GameState.DEAD) return;
+        Player player = entityController.getPlayer();
+        player.updateSpawnPoint(mapController.getCurrentPlayerSpawn().x, mapController.getCurrentPlayerSpawn().y);
+        gameObjectController.updatePoints(mapController, entityController.getCurrentBoss() == null || entityController.getCurrentBoss().getIsDead());
+        player.resetHealth();
+        player.resetDeath();
+        highscore.decreaseHighscoreForDeath();
+        highscore.increaseDeathCounter();
+        currentGameState = GameState.PLAYING;
+    }
+
+    public void startGame() {
+        if(currentGameState != GameState.START) return;
+        currentGameState = GameState.PLAYING;
+    }
+
+    public void resetGame() {
+        highscore.resetHighscore();
+        highscore.writeHighscore();
+        Player player = entityController.getPlayer();
+        player.setTotalHearts(player.getTotalHearts() + 1);// AMOUNT OF hearts collected
+        mapController.loadCurrentMapIndex(highscore);
+        Finish finish = gameObjectController.getFinish();
+        finish.updateFinishPoint(mapController.getCurrentFinishSpawn().x, mapController.getCurrentFinishSpawn().y, mapController.getCurrentBossSpawn() == null);
+        entityController.initKappas(mapController, showHitbox);
+        entityController.initOrUpdatePlayer(mapController, showHitbox);
+        entityController.initBoss(mapController, showHitbox);
+        itemController.initItems(mapController);
+        itemController.deleteAllItemsFromMenu();
+        currentGameState = GameState.START;
+    }
+
+    public GameState getCurrentGameState() {
+        return currentGameState;
     }
 }

@@ -1,6 +1,7 @@
 package screens.ui;
 
 import game.UI.GameView;
+import game.logic.Highscore;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -51,8 +52,8 @@ public class DeathScreen {
         return scoreLabel;
     }
 
-    public void updateScore(int score) {
-        this.totalScore = score;
+    public void update(Highscore highscore) {
+        this.totalScore = highscore.getCurrentHighscore();
         scoreLabel.setText("<html>YOUR SCORE:<br><center>"+ totalScore + "</center></html>");
     }
 
