@@ -14,8 +14,9 @@ import network.ServerObject;
 import screens.controller.ScreenController;
 import screens.ui.DeathScreen;
 
-
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 public class GameController {
@@ -30,6 +31,7 @@ public class GameController {
 
     private Highscore highscore;
     private Client client;
+    private String playerId;
     private Player.PlayerSerializer playerSerializer;
 
     private GameState currentGameState;
@@ -38,6 +40,15 @@ public class GameController {
 
     public GameController(boolean showHitBox) throws IOException {
         //controller
+        try {
+            InetAddress inetAddress = InetAddress.getLocalHost();
+            playerId = inetAddress.getHostName();
+
+            //for testing purposes on one device
+            //playerId = "4711";
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
         this.client = new Client();
         currentGameState = GameState.START;
         this.highscore = Highscore.readHighscore();
@@ -74,7 +85,7 @@ public class GameController {
         if(currentGameState == GameState.PLAYING) {
 
             //TODO: Implement option to differentiate between multiplayer and one player
-            ArrayList<ServerObject> serverObjects = client.sendDataToServer(highscore, entityController.getPlayer());
+            ArrayList<ServerObject> serverObjects = client.sendDataToServer(highscore, entityController.getPlayer(), playerId);
             System.out.println(serverObjects.size());
 
             //TODO: Handle objects
@@ -170,5 +181,9 @@ public class GameController {
 
     public GameState getCurrentGameState() {
         return currentGameState;
+    }
+
+    public String getPlayerId() {
+        return playerId;
     }
 }

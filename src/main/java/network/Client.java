@@ -10,9 +10,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.lang.reflect.Type;
-import java.net.InetAddress;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 public class Client {
@@ -22,22 +20,14 @@ public class Client {
     public Client() {
     }
 
-    public ArrayList<ServerObject> sendDataToServer(Highscore highscore, Player player) {
+    public ArrayList<ServerObject> sendDataToServer(Highscore highscore, Player player, String playerId) {
         try {
             Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT);
             PrintWriter writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()), true);
             BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             Gson gson = new Gson();
 
-            //get hostname for playerID
 
-            String playerId = "";
-            try {
-                InetAddress inetAddress = InetAddress.getLocalHost();
-                playerId = inetAddress.getHostName();
-            } catch (UnknownHostException e) {
-                e.printStackTrace();
-            }
             // Create a JSON string
             String json = STR."{\"currentLevel\":\{highscore.getAllHighscores().size()},\"highScore\":\"\{highscore.getCurrentHighscore()}\",\"deathCounter\":\{highscore.getDeathCounter()},\"horizontalPlayerPosition\":\{player.getX()},\"playerId\":\{playerId}}";
 

@@ -36,7 +36,7 @@ public class InterfaceGame {
         this.itemController = itemController;
     }
 
-    public void draw(Graphics g, int mapOffsetX) {
+    public void draw(Graphics g, int mapOffsetX, String playerId) {
 
         int x = 0;
         int y = 0;
@@ -75,7 +75,7 @@ public class InterfaceGame {
             }
         }
 
-        drawServerObjects(g, mapOffsetX);
+        drawServerObjects(g, mapOffsetX, playerId);
     }
 
     public void update(Highscore highscore, Player player, Item[] menu, ArrayList<ServerObject> serverObjects) {
@@ -129,8 +129,9 @@ public class InterfaceGame {
         g.drawString(text, textX, textY);
     }
 
-    private void drawServerObjects(Graphics g, int mapOffsetX) {
+    private void drawServerObjects(Graphics g, int mapOffsetX, String playerId) {
         for (ServerObject object : serverObjects) {
+            if (object.getPlayerId().equals(playerId)) continue;
             g.drawRect((int) object.getHorizontalPlayerPosition() - mapOffsetX, 0, 10, 10);
         }
     }
