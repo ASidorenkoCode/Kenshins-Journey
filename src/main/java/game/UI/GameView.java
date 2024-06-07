@@ -113,7 +113,7 @@ public class GameView extends JPanel {
         itemController.draw(g, mapOffsetX, mapOffsetY);
         gameObjectController.drawObjects(g, mapOffsetX, mapOffsetY);
         mapController.draw(g, true);
-        screenController.draw(g, gameController.getCurrentGameState(), gameController.getHighscore().getCurrentHighscore(), gameController.getHighscore().getDeathCounter());
+        screenController.draw(g, gameController.getCurrentGameState(), gameController.getHighscore().getCurrentHighscore(), gameController.getHighscore().getDeathCounter(), gameController.getHighscore());
     }
 
     public void showFPS_UPS(int frames, int updates) {
@@ -160,8 +160,16 @@ public class GameView extends JPanel {
                 break;
             case KeyEvent.VK_L:
                 gameController.restartLevelAfterDeath();
+                break;
             case KeyEvent.VK_W:
                 gameController.startGame();
+                break;
+            case KeyEvent.VK_P:
+                gameController.loadNewMap();
+                break;
+            case KeyEvent.VK_K:
+                gameController.resetGame();
+                break;
             default:
                 entityController.handleUserInputKeyPressed(e, gameController.getDeathScreen());
         }

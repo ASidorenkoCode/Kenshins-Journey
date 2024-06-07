@@ -89,6 +89,7 @@ public class GameController {
     }
 
     public void loadNewMap() throws IOException {
+        screenController.setFrame(gameView.getFrame());
         currentGameState = GameState.LOADING;
         //highscore update
         highscore.addCurrentHighscoreToList();
@@ -96,10 +97,10 @@ public class GameController {
         highscore.writeHighscore();
 
 
-        //handle option if game is finished
+        //handle option of game is finished
         if(mapController.getMaps().size() == highscore.getAllHighscores().size()) {
-            //Game is finished
-            resetGame();
+            currentGameState = GameState.END;
+            return;
         }
 
         Player player = entityController.getPlayer();
@@ -109,7 +110,7 @@ public class GameController {
     }
 
     private void initOrUpdateGame() throws IOException {
-        mapController.loadCurrentMapIndex(highscore);
+        mapController.loadCurrentMapIndex(highscore.getAllHighscores().size());
         Finish finish = gameObjectController.getFinish();
         finish.updateFinishPoint(mapController.getCurrentFinishSpawn().x, mapController.getCurrentFinishSpawn().y, mapController.getCurrentBossSpawn() == null);
         entityController.initKappas(mapController, showHitbox);
@@ -117,6 +118,7 @@ public class GameController {
         entityController.initBoss(mapController, showHitbox);
         itemController.initItems(mapController);
         itemController.deleteAllItemsFromMenu();
+        currentGameState = GameState.PLAYING;
     }
 
     public void restartLevelAfterDeath() {
@@ -141,7 +143,8 @@ public class GameController {
         currentGameState = GameState.PLAYING;
     }
 
-    public void resetGame() throws IOException {
+    public void resetGame() throws IOException{
+        if (currentGameState != GameState.END) return;
         highscore.resetHighscore();
         highscore.writeHighscore();
         Player player = entityController.getPlayer();
