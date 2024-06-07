@@ -17,6 +17,7 @@ public class Highscore implements Serializable {
     private int currentHighscore;
     private int deathCounter = 0;
     private ArrayList<Integer> highscores;
+    private ArrayList<Integer> bestHighscores;
     private long comparingTime;
 
     public Highscore() {
@@ -73,6 +74,7 @@ public class Highscore implements Serializable {
 
     public void addCurrentHighscoreToList() {
         highscores.add(currentHighscore);
+        findBestHighscores();
     }
 
     public int getCurrentHighscore() {
@@ -159,7 +161,41 @@ public class Highscore implements Serializable {
         }
     }
 
+    public void findBestHighscores() {
+        Path filePath = Path.of("res/highscores.txt");
+        bestHighscores = new ArrayList<>();
+        int bestSum = Integer.MIN_VALUE;
+        try {
+            if (Files.exists(filePath)) {
+                try (BufferedReader reader = Files.newBufferedReader(filePath)) {
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        String[] parts = line.split(":");
+                        String[] scores = parts[1].trim().split(",");
+                        ArrayList<Integer> currentScores = new ArrayList<>();
+                        int lastScore = 0;
+                        for (String score : scores) {
+                            int currentScore = Integer.parseInt(score.trim());
+                            currentScores.add(currentScore);
+                            lastScore = currentScore; // Keep updating the lastScore with the currentScore
+                        }
+                        if (lastScore > bestSum) { // Check if the lastScore is greater than the bestSum
+                            bestSum = lastScore;
+                            bestHighscores = currentScores;
+                        }
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public int getDeathCounter() {
         return deathCounter;
+    }
+
+    public ArrayList<Integer> getBestHighscores() {
+        return bestHighscores;
     }
 }

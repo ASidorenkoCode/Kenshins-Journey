@@ -41,7 +41,7 @@ public class EntityController {
 
 
     //init functions for init instances and updating instances
-    public void initOrUpdatePlayer(MapController mapController, boolean showHitBox) throws IOException {
+    public void initOrUpdatePlayer(MapController mapController, boolean showHitBox) {
         Point playerSpawnPoint = mapController.getCurrentPlayerSpawn();
         if (player != null) {
             player.updateSpawnPoint(playerSpawnPoint.x, playerSpawnPoint.y);

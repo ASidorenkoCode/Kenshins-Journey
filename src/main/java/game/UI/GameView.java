@@ -2,6 +2,7 @@ package game.UI;
 
 import entities.controller.EntityController;
 import game.controller.GameController;
+import game.controller.GameState;
 import gameObjects.controller.GameObjectController;
 import items.controller.ItemController;
 import keyboardinputs.logic.KeyboardInputsIngame;
@@ -159,16 +160,22 @@ public class GameView extends JPanel {
                 itemController.selectItem(entityController.getPlayer(), 9);
                 break;
             case KeyEvent.VK_L:
-                gameController.restartLevelAfterDeath();
+                if (gameController.getCurrentGameState() == GameState.DEAD) gameController.restartLevelAfterDeath();
                 break;
             case KeyEvent.VK_W:
-                gameController.startGame();
+                if (gameController.getCurrentGameState() == GameState.START) gameController.startGame();
                 break;
             case KeyEvent.VK_P:
-                gameController.loadNewMap();
+                if (gameController.getCurrentGameState() == GameState.PLAYING) gameController.loadNewMap();
                 break;
-            case KeyEvent.VK_K:
-                gameController.resetGame();
+            case KeyEvent.VK_ENTER:
+                if (gameController.getCurrentGameState() == GameState.END) gameController.resetGame();
+                break;
+            case KeyEvent.VK_ESCAPE:
+                if (gameController.getCurrentGameState() == GameState.END) {
+                    gameController.getHighscore().writeAllHighscores();
+                    System.exit(0);
+                }
                 break;
             default:
                 entityController.handleUserInputKeyPressed(e, gameController.getDeathScreen());

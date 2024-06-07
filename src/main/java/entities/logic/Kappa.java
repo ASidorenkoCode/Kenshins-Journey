@@ -39,7 +39,7 @@ public class Kappa extends Entity {
     public void update(Map map, Player player, Highscore highscore) {
 
         if (isDead) {
-            if(isScoreIncreased) {
+            if (!isScoreIncreased) {
                 highscore.increaseHighscoreForKappa();
                 setScoreIncreased(true);
             }

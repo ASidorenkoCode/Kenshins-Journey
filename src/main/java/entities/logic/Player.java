@@ -1,4 +1,5 @@
 package entities.logic;
+
 import game.UI.GameView;
 import game.logic.Highscore;
 import maps.logic.Map;
@@ -24,8 +25,7 @@ public class Player extends Entity implements Serializable {
     private boolean hasAttacked = false;
     private int currentDamagePerAttack = 20;
     private int damageDealtInCurrentAttack = 0;
-    private int currentMaxHearts = 3;
-    private int totalMaxHearts = 3;
+    private final int totalHealth = 6;
     private boolean isHitByEnemy = false;
     private boolean deathAnimationFinished = false;
 
@@ -43,7 +43,7 @@ public class Player extends Entity implements Serializable {
 
 
     public Player(float x, float y) {
-        super(x, y, new Rectangle2D.Float(x + 50, y + 32, (96 - 69) * 2, (96 - 48) * 2), false, 2);
+        super(x, y, new Rectangle2D.Float(x + 50, y + 32, (96 - 69) * 2, (96 - 48) * 2), false, 6);
         rightAttackHitBox = new Rectangle2D.Float((x + 50) + 64, y + 16, (96 - 64) * 2, (96 - 48) * 2);
         leftAttackHitBox = new Rectangle2D.Float((x + 50) - 64, y + 16, (96 - 64) * 2, (96 - 48) * 2);
         left = false;
@@ -112,7 +112,7 @@ public class Player extends Entity implements Serializable {
 
         if(isResting) {
         //TODO: better suiting resting
-        if(health<totalMaxHearts*2) {
+            if (health < 6) {
             health++;
         }
         return;
@@ -397,15 +397,11 @@ public class Player extends Entity implements Serializable {
     }
 
     public int resetHealth() {
-        return health = totalMaxHearts * 2;
+        return health = totalHealth;
     }
 
-    public int getTotalHearts() {
-        return totalMaxHearts;
-    }
-
-    public void setTotalHearts(int totalHearts) {
-        this.totalMaxHearts = totalHearts;
+    public int getTotalHealth() {
+        return totalHealth;
     }
 
     public boolean isJumping() {
@@ -445,15 +441,8 @@ public class Player extends Entity implements Serializable {
         this.currentDamagePerAttack = STANDARD_DAMAGE;
     }
 
-    public boolean getIsFacingRight() {
-        return isFacingRight;
-    }
-
     public void setHasAttacked(boolean hasAttacked) {
         this.hasAttacked = hasAttacked;
-    }
-    public boolean getHasAttacked() {
-        return hasAttacked;
     }
 
 
