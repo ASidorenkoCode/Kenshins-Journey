@@ -1,6 +1,7 @@
 package network;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import entities.logic.Player;
 import game.logic.Highscore;
 
@@ -8,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.lang.reflect.Type;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -43,7 +45,10 @@ public class Client {
             // Send the JSON string to the server
             writer.println(json);
 
+            Type serverObjectListType = new TypeToken<ArrayList<ServerObject>>() {
+            }.getType();
             String responseJson = reader.readLine();
+            ArrayList<ServerObject> response = gson.fromJson(responseJson, serverObjectListType);
             System.out.println("Response JSON from server: " + responseJson);
 
             socket.close();

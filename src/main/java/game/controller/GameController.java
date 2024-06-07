@@ -10,10 +10,12 @@ import gameObjects.logic.Finish;
 import items.controller.ItemController;
 import maps.controller.MapController;
 import network.Client;
+import network.ServerObject;
 import screens.controller.ScreenController;
 import screens.ui.DeathScreen;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class GameController {
 
@@ -67,7 +69,13 @@ public class GameController {
 
     public void update() {
         if(currentGameState == GameState.PLAYING) {
-            client.sendDataToServer(highscore, entityController.getPlayer());
+
+            //TODO: Implement option to differentiate between multiplayer and one player
+            ArrayList<ServerObject> serverObjects = client.sendDataToServer(highscore, entityController.getPlayer());
+
+            //TODO: Handle objects
+
+
             Player player = entityController.getPlayer();
             if(player.isDead()) {
                 currentGameState = GameState.DEAD;
