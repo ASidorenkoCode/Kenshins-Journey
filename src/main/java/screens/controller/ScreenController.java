@@ -51,17 +51,18 @@ public class ScreenController {
         }
     }
 
-    public void draw(Graphics g, GameState currentGameState) {
+    public void draw(Graphics g, GameState currentGameState, int highscore, int deathCounter) {
         switch (currentGameState) {
             //TODO implement start and death screen
             case START -> startScreen.draw(g);
             case LOADING, END -> drawLoadingScreen(g);
-            case DEAD -> drawDeathScreen(g);
+            case DEAD -> drawDeathScreen(g, highscore, deathCounter);
             case PLAYING -> interfaceGame.draw(g);
         }
 
     }
-    private void drawDeathScreen(Graphics g) {
+
+    private void drawDeathScreen(Graphics g, int highscore, int deathCounter) {
         Graphics2D g2d = (Graphics2D) g;
 
         // Background
@@ -73,41 +74,39 @@ public class ScreenController {
         Font statsFont = new Font("Arial", Font.PLAIN, 20);
         Font restartFont = new Font("Arial", Font.BOLD, 25);
 
-        FontMetrics gameOverMetrics = g2d.getFontMetrics(gameOverFont);
-        FontMetrics statsMetrics = g2d.getFontMetrics(statsFont);
-        FontMetrics restartMetrics = g2d.getFontMetrics(restartFont);
-
         // Game Over Text
-        String gameOverText = "GAME OVER";
-        int gameOverX = (GameView.GAME_WIDTH - gameOverMetrics.stringWidth(gameOverText)) / 2;
-        int gameOverY = GameView.GAME_HEIGHT / 4;
+        String gameOverText = "YOU DIED!";
+        int gameOverX = (GameView.GAME_WIDTH - g2d.getFontMetrics(gameOverFont).stringWidth(gameOverText)) / 2;
+        int gameOverY = GameView.GAME_HEIGHT / 3;
 
         g2d.setColor(Color.RED);
         g2d.setFont(gameOverFont);
         g2d.drawString(gameOverText, gameOverX, gameOverY);
 
         // Game Statistics
-        String scoreText = "Score: 12345";
-        String highScoreText = "High Score: 67890";
-        String enemiesText = "Enemies Defeated: 50";
+        String scoreText = STR."Your current Score is \{highscore} points";
+        String deaths = STR."You currently died \{deathCounter + 1} times!";
 
-        int statsX = (GameView.GAME_WIDTH - statsMetrics.stringWidth(scoreText)) / 2;
-        int scoreY = gameOverY + 50;
-        int highScoreY = scoreY + 30;
-        int enemiesY = highScoreY + 30;
+        int statsX = (GameView.GAME_WIDTH - g2d.getFontMetrics(statsFont).stringWidth(scoreText)) / 2;
+        int scoreY = gameOverY + 100;
+        int enemiesY = scoreY + 30;
 
         g2d.setColor(Color.WHITE);
         g2d.setFont(statsFont);
         g2d.drawString(scoreText, statsX, scoreY);
-        g2d.drawString(highScoreText, statsX, highScoreY);
-        g2d.drawString(enemiesText, statsX, enemiesY);
+        g2d.drawString(deaths, statsX, enemiesY);
 
-        String restartText = "Press L to Restart";
-        int restartX = (GameView.GAME_WIDTH - restartMetrics.stringWidth(restartText)) / 2;
-        int restartY = GameView.GAME_HEIGHT * 3 / 4;
+        String restartTextLine1 = "Press L to Respawn!";
+        String restartTextLine2 = "You will lose 100 score points on respawn!";
+        int restartYLine1 = enemiesY + 100;
+        int restartYLine2 = restartYLine1 + 30;
+
+        int restartXLine1 = (GameView.GAME_WIDTH - g2d.getFontMetrics(restartFont).stringWidth(restartTextLine1)) / 2;
+        int restartXLine2 = (GameView.GAME_WIDTH - g2d.getFontMetrics(restartFont).stringWidth(restartTextLine2)) / 2;
 
         g2d.setFont(restartFont);
-        g2d.drawString(restartText, restartX, restartY);
+        g2d.drawString(restartTextLine1, restartXLine1, restartYLine1);
+        g2d.drawString(restartTextLine2, restartXLine2, restartYLine2);
     }
     private void drawLoadingScreen(Graphics g) {
         g.setColor(Color.BLACK);
@@ -133,6 +132,10 @@ public class ScreenController {
 
     public DeathScreen getDeathScreen() {
         return deathScreen;
+    }
+
+    public void displayDeathScreen() {
+        deathScreen.displayDeathScreen();
     }
 
     public void displayLoadingScreen() {

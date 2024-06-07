@@ -9,10 +9,11 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class Highscore implements Serializable {
+    private static final long serialVersionUID = -5815020676293054824L;
     private final static int START_SCORE = 2000;
     private final static String FILE_HIGHSCORE_PATH = "res/highscore.txt";
     private int currentHighscore;
-    private int deathCounter;
+    private int deathCounter = 0;
     private ArrayList<Integer> highscores;
     private long comparingTime;
 
@@ -64,10 +65,6 @@ public class Highscore implements Serializable {
         return highscores;
     }
 
-    public int getDeathCounter() {
-        return deathCounter;
-    }
-
     public void resetHighscore() {
         currentHighscore = START_SCORE;
         highscores = new ArrayList<>();
@@ -90,16 +87,13 @@ public class Highscore implements Serializable {
 
     }
 
-    public static Highscore readHighscore() throws IOException {
-        Path filePath = Path.of(FILE_HIGHSCORE_PATH);
-        if (!Files.exists(filePath) || Files.size(filePath) == 0) {
-            return new Highscore();
-        }
-
+    public static Highscore readHighscore() {
         Highscore highscore = new Highscore();
 
-        try (ObjectInputStream fis = new ObjectInputStream(Files.newInputStream(filePath))) {
+        try (ObjectInputStream fis = new ObjectInputStream(Files.newInputStream(Path.of(FILE_HIGHSCORE_PATH)))){
+
             highscore = (Highscore) fis.readObject();
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -109,5 +103,9 @@ public class Highscore implements Serializable {
         }
 
         return highscore;
+    }
+
+    public int getDeathCounter() {
+        return deathCounter;
     }
 }
