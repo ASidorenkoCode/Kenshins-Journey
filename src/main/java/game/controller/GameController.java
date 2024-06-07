@@ -71,6 +71,11 @@ public class GameController {
             if (gameObjectController.checkIfPlayerIsInFinish(entityController.getPlayer()) && !entityController.getPlayer().getDeathAnimationFinished()) {
                 loadNewMap();
             }
+
+            if (highscore.getCurrentHighscore() <= 0) {
+                currentGameState = GameState.END;
+                return;
+            }
             entityController.update(mapController, gameObjectController, highscore);
             itemController.update(entityController);
             highscore.decreaseHighScoreAfterOneSecond();
@@ -88,8 +93,8 @@ public class GameController {
         screenController.setFrame(gameView.getFrame());
         currentGameState = GameState.LOADING;
         //highscore update
-        highscore.addCurrentHighscoreToList();
         highscore.increaseHighscoreForItems(itemController.getMenu());
+        highscore.addCurrentHighscoreToList();
         highscore.writeHighscore();
 
 
@@ -157,5 +162,9 @@ public class GameController {
 
     public GameState getCurrentGameState() {
         return currentGameState;
+    }
+
+    public void setCurrentGameState(GameState currentGameState) {
+        this.currentGameState = currentGameState;
     }
 }

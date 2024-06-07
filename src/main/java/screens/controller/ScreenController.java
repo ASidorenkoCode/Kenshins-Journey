@@ -17,6 +17,7 @@ public class ScreenController {
     private LoadingScreen loadingScreen;
     private StartScreen startScreen;
     private EndScreen endScreen;
+    private HighScoreScreen highScoreScreen;
 
     public ScreenController(ItemController itemController) {
         this.interfaceGame = new InterfaceGame(itemController);
@@ -24,13 +25,14 @@ public class ScreenController {
         this.loadingScreen = new LoadingScreen();
         this.deathScreen = new DeathScreen();
         this.endScreen = new EndScreen();
+        this.highScoreScreen = new HighScoreScreen();
     }
 
     public void update(Highscore highscore, Player player, Item[] menu) {
         interfaceGame.update(highscore, player, menu);
     }
 
-    public void draw(Graphics g, GameState currentGameState, int highscore, int deathCounter, Highscore highscores) {
+    public void draw(Graphics g, GameState currentGameState, int highscore, int deathCounter, Highscore highscores, int mapCount) {
         switch (currentGameState) {
             //TODO implement start and death screen
             case START -> startScreen.draw(g);
@@ -39,12 +41,17 @@ public class ScreenController {
                 loadingScreen.displayLoadingScreen();
             }
             case END -> {
-                setMapCount(highscores.getAllHighscores().size());
+                setMapCountEndScreen(mapCount);
                 endScreen.draw(g, highscores);
                 highscores.deleteHighscoreFile();
             }
             case DEAD -> deathScreen.draw(g, highscore, deathCounter);
             case PLAYING -> interfaceGame.draw(g);
+            case HIGHSCORE -> {
+                setMapCountHighScoreScreen(mapCount);
+                highscores.findBestHighscores();
+                highScoreScreen.draw(g, highscores);
+            }
         }
     }
 
@@ -56,7 +63,19 @@ public class ScreenController {
         this.frame = frame;
     }
 
-    public void setMapCount(int mapCount) {
+    public void setMapCountEndScreen(int mapCount) {
         endScreen.setMapCount(mapCount);
+    }
+
+    public void setMapCountHighScoreScreen(int mapCount) {
+        highScoreScreen.setMapCount(mapCount);
+    }
+
+    public StartScreen getStartScreen() {
+        return startScreen;
+    }
+
+    public HighScoreScreen getHighScoreScreen() {
+        return highScoreScreen;
     }
 }

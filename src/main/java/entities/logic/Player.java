@@ -1,7 +1,6 @@
 package entities.logic;
 
 import game.UI.GameView;
-import game.logic.Highscore;
 import maps.logic.Map;
 
 import java.awt.*;
@@ -93,11 +92,7 @@ public class Player extends Entity implements Serializable {
         resetMaximumDamagePerAttack();
     }
 
-    public void update(Map map, Boss boss, ArrayList<Kappa> kappas, Highscore highscore) {
-
-        if (highscore.getCurrentHighscore() == 0) {
-            setPlayerHealth(0);
-        }
+    public void update(Map map, Boss boss, ArrayList<Kappa> kappas) {
 
 
         if(!attack) {
