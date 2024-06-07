@@ -1,4 +1,5 @@
 package game.logic;
+
 import items.logic.Heart;
 import items.logic.Item;
 import items.logic.PowerRing;
@@ -20,6 +21,7 @@ public class Highscore implements Serializable {
     public Highscore() {
         resetHighscore();
     }
+
     public void decreaseHighScoreAfterOneSecond() {
         long currentTime = System.currentTimeMillis();
 
@@ -29,6 +31,7 @@ public class Highscore implements Serializable {
             currentHighscore--;
         }
     }
+
     public void increaseHighscoreForKappa() {
         currentHighscore += 200;
     }
@@ -41,14 +44,28 @@ public class Highscore implements Serializable {
         currentHighscore -= 100;
     }
 
-    public void increaseHighscoreForItems(Item[] items) {
-        for(Item item: items) {
-            if(item != null) {
-                if(item instanceof Heart) currentHighscore += 50;
-                else if(item instanceof PowerRing) currentHighscore += 100;
+    public static Highscore readHighscore() {
+        Highscore highscore = new Highscore();
+        Path filePath = Path.of(FILE_HIGHSCORE_PATH);
+
+        try {
+            if (!Files.exists(filePath) || Files.size(filePath) == 0) {
+                return highscore;
             }
+            try (ObjectInputStream fis = new ObjectInputStream(Files.newInputStream(filePath))) {
+                highscore = (Highscore) fis.readObject();
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
+
+        return highscore;
     }
+
     public void increaseDeathCounter() {
         deathCounter++;
     }
@@ -72,37 +89,27 @@ public class Highscore implements Serializable {
         deathCounter = 0;
     }
 
-
-    public void writeHighscore() {
-
-        try (ObjectOutputStream fos = new ObjectOutputStream(Files.newOutputStream(Path.of(FILE_HIGHSCORE_PATH)))) {
-
-            fos.writeObject(this);
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+    public void increaseHighscoreForItems(Item[] items) {
+        for (Item item : items) {
+            if (item != null) {
+                if (item instanceof Heart) currentHighscore += 50;
+                else if (item instanceof PowerRing) currentHighscore += 100;
+            }
         }
-
     }
 
-    public static Highscore readHighscore() {
-        Highscore highscore = new Highscore();
-
-        try (ObjectInputStream fis = new ObjectInputStream(Files.newInputStream(Path.of(FILE_HIGHSCORE_PATH)))){
-
-            highscore = (Highscore) fis.readObject();
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+    public void writeHighscore() {
+        Path filePath = Path.of(FILE_HIGHSCORE_PATH);
+        try {
+            if (!Files.exists(filePath)) {
+                Files.createFile(filePath);
+            }
+            try (ObjectOutputStream fos = new ObjectOutputStream(Files.newOutputStream(filePath))) {
+                fos.writeObject(this);
+            }
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
-
-        return highscore;
     }
 
     public int getDeathCounter() {

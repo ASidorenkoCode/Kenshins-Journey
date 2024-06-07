@@ -14,6 +14,7 @@ import network.ServerObject;
 import screens.controller.ScreenController;
 import screens.ui.DeathScreen;
 
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -29,6 +30,7 @@ public class GameController {
 
     private Highscore highscore;
     private Client client;
+    private Player.PlayerSerializer playerSerializer;
 
     private GameState currentGameState;
 
@@ -39,6 +41,7 @@ public class GameController {
         this.client = new Client();
         currentGameState = GameState.START;
         this.highscore = Highscore.readHighscore();
+
         mapController = new MapController(null, highscore);
         entityController = new EntityController(mapController, showHitBox);
         mapController.setEntityController(entityController);
@@ -67,7 +70,7 @@ public class GameController {
         gameView.repaint();
     }
 
-    public void update() {
+    public void update() throws IOException {
         if(currentGameState == GameState.PLAYING) {
 
             //TODO: Implement option to differentiate between multiplayer and one player
@@ -99,7 +102,7 @@ public class GameController {
         return screenController.getDeathScreen();
     }
 
-    public void loadNewMap() {
+    public void loadNewMap() throws IOException {
         currentGameState = GameState.LOADING;
         //highscore update
         highscore.addCurrentHighscoreToList();
@@ -114,7 +117,12 @@ public class GameController {
         }
 
         Player player = entityController.getPlayer();
-        player.setTotalHearts(player.getTotalHearts() + 1);// AMOUNT OF hearts collected
+        playerSerializer.writePlayer(player);
+        initOrUpdateGame();
+        currentGameState = GameState.PLAYING;
+    }
+
+    private void initOrUpdateGame() throws IOException {
         mapController.loadCurrentMapIndex(highscore);
         Finish finish = gameObjectController.getFinish();
         finish.updateFinishPoint(mapController.getCurrentFinishSpawn().x, mapController.getCurrentFinishSpawn().y, mapController.getCurrentBossSpawn() == null);
@@ -123,7 +131,6 @@ public class GameController {
         entityController.initBoss(mapController, showHitbox);
         itemController.initItems(mapController);
         itemController.deleteAllItemsFromMenu();
-        currentGameState = GameState.PLAYING;
     }
 
     public void restartLevelAfterDeath() {
@@ -138,24 +145,22 @@ public class GameController {
         currentGameState = GameState.PLAYING;
     }
 
-    public void startGame() {
+    public void startGame() throws IOException {
         if(currentGameState != GameState.START) return;
+        Player player = entityController.getPlayer();
+        int loadedHealth = playerSerializer.readPlayerHealth();
+        if (loadedHealth != -1) {
+            player.setHealth(loadedHealth);
+        }
         currentGameState = GameState.PLAYING;
     }
 
-    public void resetGame() {
+    public void resetGame() throws IOException {
         highscore.resetHighscore();
         highscore.writeHighscore();
         Player player = entityController.getPlayer();
-        player.setTotalHearts(player.getTotalHearts() + 1);// AMOUNT OF hearts collected
-        mapController.loadCurrentMapIndex(highscore);
-        Finish finish = gameObjectController.getFinish();
-        finish.updateFinishPoint(mapController.getCurrentFinishSpawn().x, mapController.getCurrentFinishSpawn().y, mapController.getCurrentBossSpawn() == null);
-        entityController.initKappas(mapController, showHitbox);
-        entityController.initOrUpdatePlayer(mapController, showHitbox);
-        entityController.initBoss(mapController, showHitbox);
-        itemController.initItems(mapController);
-        itemController.deleteAllItemsFromMenu();
+        Player.PlayerSerializer.writePlayer(player);
+        initOrUpdateGame();
         currentGameState = GameState.START;
     }
 
