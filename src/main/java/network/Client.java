@@ -52,6 +52,7 @@ public class Client {
             System.out.println("Response JSON from server: " + responseJson);
 
             socket.close();
+            return response;
         } catch (Exception e) {
             e.printStackTrace();
         }

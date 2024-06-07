@@ -72,6 +72,7 @@ public class GameController {
 
             //TODO: Implement option to differentiate between multiplayer and one player
             ArrayList<ServerObject> serverObjects = client.sendDataToServer(highscore, entityController.getPlayer());
+            System.out.println(serverObjects.size());
 
             //TODO: Handle objects
 
@@ -88,7 +89,7 @@ public class GameController {
             entityController.update(mapController, gameObjectController, highscore);
             itemController.update(entityController);
             highscore.decreaseHighScoreAfterOneSecond();
-            screenController.update(highscore, entityController.getPlayer(), itemController.getMenu());
+            screenController.update(highscore, entityController.getPlayer(), itemController.getMenu(), serverObjects);
 
         }
     }

@@ -8,12 +8,14 @@ import gameObjects.controller.GameObjectController;
 import items.controller.ItemController;
 import items.logic.Item;
 import maps.controller.MapController;
+import network.ServerObject;
 import screens.ui.DeathScreen;
 import screens.ui.InterfaceGame;
 import screens.ui.LoadingScreen;
 import screens.ui.StartScreen;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class ScreenController {
     private InterfaceGame interfaceGame;
@@ -26,8 +28,8 @@ public class ScreenController {
         this.startScreen = new StartScreen();
     }
 
-    public void update(Highscore highscore, Player player, Item[] menu) {
-        interfaceGame.update(highscore, player, menu);
+    public void update(Highscore highscore, Player player, Item[] menu, ArrayList<ServerObject> serverObjects) {
+        interfaceGame.update(highscore, player, menu, serverObjects);
     }
 
     public void displayDeathScreenIfPlayerIsDead(Player player, Highscore highscore, MapController mapController, GameObjectController gameObjectController) {
@@ -51,13 +53,13 @@ public class ScreenController {
         }
     }
 
-    public void draw(Graphics g, GameState currentGameState, int highscore, int deathCounter) {
+    public void draw(Graphics g, GameState currentGameState, int highscore, int deathCounter, int mapOffsetX) {
         switch (currentGameState) {
             //TODO implement start and death screen
             case START -> startScreen.draw(g);
             case LOADING, END -> drawLoadingScreen(g);
             case DEAD -> drawDeathScreen(g, highscore, deathCounter);
-            case PLAYING -> interfaceGame.draw(g);
+            case PLAYING -> interfaceGame.draw(g, mapOffsetX);
         }
 
     }

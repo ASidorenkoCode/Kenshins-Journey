@@ -20,4 +20,8 @@ public class ServerObject {
         return playerId;
     }
 
+    public float getHorizontalPlayerPosition() {
+        return horizontalPlayerPosition;
+    }
+
 }

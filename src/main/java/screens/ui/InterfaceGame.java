@@ -5,12 +5,14 @@ import game.UI.GameView;
 import game.logic.Highscore;
 import items.controller.ItemController;
 import items.logic.Item;
+import network.ServerObject;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class InterfaceGame {
     private int playerHealth;
@@ -19,6 +21,7 @@ public class InterfaceGame {
     private int score;
     private Item[] menu;
     private ItemController itemController;
+    private ArrayList<ServerObject> serverObjects;
     private BufferedImage characterPortraitAndStats;
 
 
@@ -33,7 +36,8 @@ public class InterfaceGame {
         this.itemController = itemController;
     }
 
-    public void draw(Graphics g) {
+    public void draw(Graphics g, int mapOffsetX) {
+
         int x = 0;
         int y = 0;
         g.drawImage(characterPortraitAndStats, x, y, (int) (characterPortraitAndStats.getWidth() * 1.5), (int) (characterPortraitAndStats.getHeight() * 1.5), null);
@@ -70,14 +74,17 @@ public class InterfaceGame {
                 index++;
             }
         }
+
+        drawServerObjects(g, mapOffsetX);
     }
 
-    public void update(Highscore highscore, Player player, Item[] menu) {
+    public void update(Highscore highscore, Player player, Item[] menu, ArrayList<ServerObject> serverObjects) {
         score = highscore.getCurrentHighscore();
         playerCurrentDamagePerAttack = player.getCurrentDamagePerAttack();
         playerHealth = player.getHealth();
         playerDeathCount = highscore.getDeathCounter();
         this.menu = menu;
+        this.serverObjects = serverObjects;
     }
 
     private void drawScore(Graphics g, int score) {
@@ -120,5 +127,11 @@ public class InterfaceGame {
         int textX = totalX + 90 + (int) (characterPortraitAndStats.getWidth() * 1.5) / 2 - textWidth / 2;
         int textY = totalY + (int) (characterPortraitAndStats.getHeight() * 1.5) / 2 + textHeight / 2;
         g.drawString(text, textX, textY);
+    }
+
+    private void drawServerObjects(Graphics g, int mapOffsetX) {
+        for (ServerObject object : serverObjects) {
+            g.drawRect((int) object.getHorizontalPlayerPosition() - mapOffsetX, 0, 10, 10);
+        }
     }
 }
