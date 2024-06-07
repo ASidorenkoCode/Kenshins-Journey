@@ -16,6 +16,9 @@ public abstract class Entity {
         this.health = health;
     }
 
+    public Entity() {
+    }
+
     public void decreaseHealth(int amount) {
         health -= amount;
         if (health <= 0) {
@@ -44,5 +47,9 @@ public abstract class Entity {
 
     public int getHealth() {
         return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
     }
 }

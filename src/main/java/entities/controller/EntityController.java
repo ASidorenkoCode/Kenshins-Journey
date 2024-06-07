@@ -13,6 +13,7 @@ import screens.ui.DeathScreen;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class EntityController {
@@ -24,7 +25,7 @@ public class EntityController {
     private Boss currentBoss;
     private BossUI bossUI;
 
-    public EntityController(MapController mapController, boolean showHitBox) {
+    public EntityController(MapController mapController, boolean showHitBox) throws IOException {
         initOrUpdatePlayer(mapController, showHitBox);
         initKappas(mapController, showHitBox);
         initBoss(mapController, showHitBox);
@@ -40,7 +41,7 @@ public class EntityController {
 
 
     //init functions for init instances and updating instances
-    public void initOrUpdatePlayer(MapController mapController, boolean showHitBox) {
+    public void initOrUpdatePlayer(MapController mapController, boolean showHitBox) throws IOException {
         Point playerSpawnPoint = mapController.getCurrentPlayerSpawn();
         if (player != null) {
             player.updateSpawnPoint(playerSpawnPoint.x, playerSpawnPoint.y);
@@ -130,6 +131,10 @@ public class EntityController {
 
     public Boss getCurrentBoss() {
         return currentBoss;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 }
 
