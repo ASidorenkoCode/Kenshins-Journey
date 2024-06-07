@@ -99,8 +99,8 @@ public class GameController {
 
         //handle option of game is finished
         if(mapController.getMaps().size() == highscore.getAllHighscores().size()) {
-            //Game is finished
-            resetGame();
+            currentGameState = GameState.END;
+            return;
         }
 
         Player player = entityController.getPlayer();
@@ -110,7 +110,7 @@ public class GameController {
     }
 
     private void initOrUpdateGame() throws IOException {
-        mapController.loadCurrentMapIndex(highscore);
+        mapController.loadCurrentMapIndex(highscore.getAllHighscores().size());
         Finish finish = gameObjectController.getFinish();
         finish.updateFinishPoint(mapController.getCurrentFinishSpawn().x, mapController.getCurrentFinishSpawn().y, mapController.getCurrentBossSpawn() == null);
         entityController.initKappas(mapController, showHitbox);
