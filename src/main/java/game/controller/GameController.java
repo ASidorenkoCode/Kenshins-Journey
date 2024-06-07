@@ -67,7 +67,7 @@ public class GameController {
 
     public void update() {
         if(currentGameState == GameState.PLAYING) {
-            client.sendDataToServer();
+            client.sendDataToServer(highscore, entityController.getPlayer());
             Player player = entityController.getPlayer();
             if(player.isDead()) {
                 currentGameState = GameState.DEAD;

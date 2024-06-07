@@ -5,7 +5,7 @@ public class ServerObject {
     private int currentLevel;
     private int highScore;
     private int deathCounter;
-    private int horizontalPlayerPosition;
+    private float horizontalPlayerPosition;
     private String playerId;
 
     public void updateObject(ServerObject object) {

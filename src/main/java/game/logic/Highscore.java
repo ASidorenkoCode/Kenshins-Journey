@@ -64,6 +64,10 @@ public class Highscore implements Serializable {
         return highscores;
     }
 
+    public int getDeathCounter() {
+        return deathCounter;
+    }
+
     public void resetHighscore() {
         currentHighscore = START_SCORE;
         highscores = new ArrayList<>();
