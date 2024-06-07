@@ -186,4 +186,8 @@ public class GameController {
     public String getPlayerId() {
         return playerId;
     }
+
+    public void setIsDrawingListOfCurrentPlayersForInterfaceGame(boolean isDrawingListOfCurrentPlayers) {
+        screenController.getInterfaceGame().setIsDrawingCurrentListOfPlayers(isDrawingListOfCurrentPlayers);
+    }
 }

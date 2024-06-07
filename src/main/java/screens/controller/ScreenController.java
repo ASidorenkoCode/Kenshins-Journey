@@ -32,6 +32,7 @@ public class ScreenController {
         interfaceGame.update(highscore, player, menu, serverObjects);
     }
 
+
     public void displayDeathScreenIfPlayerIsDead(Player player, Highscore highscore, MapController mapController, GameObjectController gameObjectController) {
         //TODO: Should be deprecated
         if (player.isDead() && player.getDeathAnimationFinished()) {
@@ -142,5 +143,9 @@ public class ScreenController {
 
     public void displayLoadingScreen() {
         loadingScreen.displayLoadingScreen();
+    }
+
+    public InterfaceGame getInterfaceGame() {
+        return interfaceGame;
     }
 }

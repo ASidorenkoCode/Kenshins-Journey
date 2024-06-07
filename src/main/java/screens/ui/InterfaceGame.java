@@ -24,6 +24,8 @@ public class InterfaceGame {
     private ArrayList<ServerObject> serverObjects;
     private BufferedImage characterPortraitAndStats;
 
+    private boolean isDrawingListOfCurrentPlayers;
+
 
     public InterfaceGame(ItemController itemController) {
         try {
@@ -34,6 +36,7 @@ public class InterfaceGame {
 
         //TODO: remove itemController
         this.itemController = itemController;
+        this.isDrawingListOfCurrentPlayers = false;
     }
 
     public void draw(Graphics g, int mapOffsetX, String playerId, int currentLevel) {
@@ -76,7 +79,8 @@ public class InterfaceGame {
         }
 
         drawServerObjects(g, mapOffsetX, playerId, currentLevel);
-        drawListOfCurrentPlayers(g);
+
+        if (isDrawingListOfCurrentPlayers) drawListOfCurrentPlayers(g);
     }
 
     public void update(Highscore highscore, Player player, Item[] menu, ArrayList<ServerObject> serverObjects) {
@@ -153,20 +157,53 @@ public class InterfaceGame {
         int margin = GameView.GAME_HEIGHT / 15;
         int startX = padding + margin;
         int startY = padding + margin + GameView.GAME_HEIGHT / 20;
-        int lineHeight = 30;
+        int screenWidth = GameView.GAME_WIDTH - (2 * padding);
+        int screenHeight = GameView.GAME_HEIGHT - (2 * padding);
+        int columnLength = (screenWidth - margin) / 4;
+
+
+        //TODO: Responsive calculation
+        int lineHeight = GameView.HEIGHT / 28;
+        int linePadding = GameView.GAME_HEIGHT / 30;
 
         g.setColor(Color.WHITE);
-        g.fillRect(padding, padding, GameView.GAME_WIDTH - (2 * padding), GameView.GAME_HEIGHT - (2 * padding));
+        g.fillRect(padding, padding, screenWidth, screenHeight);
+
 
         g.setColor(Color.BLACK);
         g.setFont(new Font("Arial", Font.PLAIN, GameView.GAME_WIDTH / 30));
         g.drawString("Current Players", padding + margin, padding + margin);
 
+
+        g.setFont(new Font("Arial", Font.PLAIN, GameView.GAME_WIDTH / 65));
+        g.setColor(Color.BLACK);
+        int columnPosition = margin;
+        g.drawString("Player Name", padding + columnPosition, startY);
+        columnPosition += columnLength;
+        g.drawString("High Score", padding + columnPosition, startY);
+        columnPosition += columnLength;
+        g.drawString("Current Level", padding + columnPosition, startY);
+        columnPosition += columnLength;
+        g.drawString("Death Counter", padding + columnPosition, startY);
+
+        startY += lineHeight + linePadding;
+
+
         for (ServerObject object : serverObjects) {
-            g.setFont(new Font("Arial", Font.PLAIN, 18));
-            g.setColor(Color.BLACK);
-            g.drawString(STR."Player Name: \{object.getPlayerId()} High Score: \{object.getHighScore()} Current Level: \{object.getCurrentLevel()} Death Counter: \{object.getDeathCounter()}", startX, startY);
-            startY += lineHeight + padding; // Move to the next block
+
+            columnPosition = margin;
+            g.drawString(object.getPlayerId(), padding + columnPosition, startY);
+            columnPosition += columnLength;
+            g.drawString(String.valueOf(object.getHighScore()), padding + columnPosition, startY);
+            columnPosition += columnLength;
+            g.drawString(String.valueOf(object.getCurrentLevel()), padding + columnPosition, startY);
+            columnPosition += columnLength;
+            g.drawString(String.valueOf(object.getDeathCounter()), padding + columnPosition, startY);
+            startY += lineHeight + linePadding;
         }
+    }
+
+    public void setIsDrawingCurrentListOfPlayers(boolean isDrawingListOfCurrentPlayers) {
+        this.isDrawingListOfCurrentPlayers = isDrawingListOfCurrentPlayers;
     }
 }

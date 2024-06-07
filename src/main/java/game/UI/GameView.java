@@ -160,15 +160,26 @@ public class GameView extends JPanel {
                 break;
             case KeyEvent.VK_L:
                 gameController.restartLevelAfterDeath();
+                break;
             case KeyEvent.VK_W:
                 gameController.startGame();
+                break;
+            case KeyEvent.VK_O:
+                gameController.setIsDrawingListOfCurrentPlayersForInterfaceGame(true);
+                break;
             default:
                 entityController.handleUserInputKeyPressed(e, gameController.getDeathScreen());
         }
     }
 
     public void handleUserInputKeyReleased(KeyEvent e) {
-        entityController.handleUserInputKeyReleased(e);
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_O:
+                gameController.setIsDrawingListOfCurrentPlayersForInterfaceGame(false);
+                break;
+            default:
+                entityController.handleUserInputKeyReleased(e);
+        }
     }
 
     public JFrame getFrame() {
