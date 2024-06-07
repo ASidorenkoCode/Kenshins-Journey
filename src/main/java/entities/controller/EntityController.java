@@ -136,5 +136,9 @@ public class EntityController {
     public void setPlayer(Player player) {
         this.player = player;
     }
+
+    public PlayerUI getPlayerUI() {
+        return playerUI;
+    }
 }
 
