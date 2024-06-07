@@ -145,8 +145,8 @@ public class GameController {
 
     public void resetGame() throws IOException{
         if (currentGameState != GameState.END) return;
+        highscore.writeAllHighscores();
         highscore.resetHighscore();
-        highscore.writeHighscore();
         Player player = entityController.getPlayer();
         Player.PlayerSerializer.writePlayer(player);
         initOrUpdateGame();

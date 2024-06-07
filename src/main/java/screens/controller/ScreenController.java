@@ -41,11 +41,11 @@ public class ScreenController {
             case END -> {
                 setMapCount(highscores.getAllHighscores().size());
                 endScreen.draw(g, highscores);
+                highscores.deleteHighscoreFile();
             }
             case DEAD -> deathScreen.draw(g, highscore, deathCounter);
             case PLAYING -> interfaceGame.draw(g);
         }
-
     }
 
     public DeathScreen getDeathScreen() {
