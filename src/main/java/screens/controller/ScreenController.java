@@ -134,6 +134,10 @@ public class ScreenController {
         return deathScreen;
     }
 
+    public void displayDeathScreen() {
+        deathScreen.displayDeathScreen();
+    }
+
     public void displayLoadingScreen() {
         loadingScreen.displayLoadingScreen();
     }

@@ -88,8 +88,8 @@ public class GameController {
         currentGameState = GameState.LOADING;
         //highscore update
         highscore.addCurrentHighscoreToList();
-        highscore.writeHighscore();
         highscore.increaseHighscoreForItems(itemController.getMenu());
+        highscore.writeHighscore();
 
 
         //handle option of game is finished
