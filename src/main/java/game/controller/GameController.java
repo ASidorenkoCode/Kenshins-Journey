@@ -85,6 +85,7 @@ public class GameController {
     }
 
     public void loadNewMap() {
+        screenController.setFrame(gameView.getFrame());
         currentGameState = GameState.LOADING;
         //highscore update
         highscore.addCurrentHighscoreToList();

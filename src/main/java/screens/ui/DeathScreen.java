@@ -1,115 +1,53 @@
 package screens.ui;
 
 import game.UI.GameView;
-import game.logic.Highscore;
 
-import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 
-import static game.UI.GameView.GAME_HEIGHT;
-import static game.UI.GameView.GAME_WIDTH;
-
 public class DeathScreen {
-    private JFrame frame;
-    private Dimension originalSize;
     private boolean playerContinuesGame = false;
-    private JPanel centerPanel;
-    private JLabel scoreLabel;
-    private int totalScore = 0;
     private boolean displayDeathScreenOnlyOnce = false;
 
-    public DeathScreen(JFrame frame) {
-        this.frame = frame;
-        this.originalSize = frame.getSize();
-        scoreLabel = createScoreLabel();
-    }
+    public void draw(Graphics g, int highscore, int deathCounter) {
+        Graphics2D g2d = (Graphics2D) g;
 
-    public void displayDeathScreen() {
-        displayDeathScreenOnlyOnce = true;
+        g2d.setColor(Color.BLACK);
+        g2d.fillRect(0, 0, GameView.GAME_WIDTH, GameView.GAME_HEIGHT);
 
-        frame.setPreferredSize(new Dimension(GameView.GAME_WIDTH, GameView.GAME_HEIGHT));
+        Font gameOverFont = new Font("Arial", Font.BOLD, 40);
+        Font statsFont = new Font("Arial", Font.PLAIN, 20);
+        Font restartFont = new Font("Arial", Font.BOLD, 25);
 
-        JLabel deathLabel = createDeathLabel();
+        String gameOverText = "YOU DIED!";
+        int gameOverX = (GameView.GAME_WIDTH - g2d.getFontMetrics(gameOverFont).stringWidth(gameOverText)) / 2;
+        int gameOverY = GameView.GAME_HEIGHT / 3;
 
-        centerPanel = setupCenterPanel(deathLabel);
+        g2d.setColor(Color.RED);
+        g2d.setFont(gameOverFont);
+        g2d.drawString(gameOverText, gameOverX, gameOverY);
 
-        centerPanel.add(scoreLabel, 0);
-        JLayeredPane layeredPane = frame.getLayeredPane();
-        layeredPane.add(centerPanel, JLayeredPane.POPUP_LAYER);
+        String scoreText = STR."Your current Score is \{highscore} points";
+        String deaths = STR."You currently died \{deathCounter + 1} times!";
 
-        frame.setVisible(true);
-    }
+        int statsX = (GameView.GAME_WIDTH - g2d.getFontMetrics(statsFont).stringWidth(scoreText)) / 2;
+        int scoreY = gameOverY + 100;
+        int enemiesY = scoreY + 30;
 
-    private JLabel createScoreLabel() {
-        JLabel scoreLabel = new JLabel("<html>YOUR SCORE:<br><center>"+ totalScore + "</center></html>");
-        scoreLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 30));
-        scoreLabel.setForeground(Color.WHITE);
-        scoreLabel.setHorizontalAlignment(JLabel.CENTER);
-        scoreLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        Border border = BorderFactory.createEmptyBorder(20, 0, 0, 0);
-        scoreLabel.setBorder(border);
-        return scoreLabel;
-    }
+        g2d.setColor(Color.WHITE);
+        g2d.setFont(statsFont);
+        g2d.drawString(scoreText, statsX, scoreY);
+        g2d.drawString(deaths, statsX, enemiesY);
 
-    public void update(Highscore highscore) {
-        this.totalScore = highscore.getCurrentHighscore();
-        scoreLabel.setText("<html>YOUR SCORE:<br><center>"+ totalScore + "</center></html>");
-    }
+        String restartTextLine1 = "Press L to Respawn!";
+        String restartTextLine2 = "You will lose 100 score points on respawn!";
+        int restartYLine1 = enemiesY + 100;
+        int restartYLine2 = restartYLine1 + 30;
 
-    public int getTotalScore() {
-        return totalScore;
-    }
+        int restartXLine1 = (GameView.GAME_WIDTH - g2d.getFontMetrics(restartFont).stringWidth(restartTextLine1)) / 2;
+        int restartXLine2 = (GameView.GAME_WIDTH - g2d.getFontMetrics(restartFont).stringWidth(restartTextLine2)) / 2;
 
-    public void removeDeathScreen() {
-        setPlayerContinuesGame(true);
-        JLayeredPane layeredPane = frame.getLayeredPane();
-        layeredPane.remove(centerPanel);
-        frame.repaint();
-    }
-
-    private JPanel setupCenterPanel(JLabel deathLabel) {
-        centerPanel = new JPanel();
-        centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
-        centerPanel.setOpaque(true);
-        centerPanel.setBackground(Color.BLACK);
-        centerPanel.setSize(GAME_WIDTH, GAME_HEIGHT);
-
-        centerPanel.add(Box.createVerticalGlue());
-        centerPanel.add(deathLabel);
-        centerPanel.add(Box.createVerticalGlue());
-        centerPanel.setBounds(0, 0, frame.getWidth(), frame.getHeight());
-
-        return centerPanel;
-    }
-
-    private JLabel createDeathLabel() {
-        JLabel deathLabel = new JLabel("<html>YOU DIED<br><center>Press ENTER to continue</center></html>");
-        deathLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 30));
-        deathLabel.setForeground(Color.WHITE);
-        deathLabel.setHorizontalAlignment(JLabel.CENTER);
-        deathLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        Border border = BorderFactory.createEmptyBorder(20, 0, 0, 0);
-        deathLabel.setBorder(border);
-        return deathLabel;
-    }
-
-
-
-    public boolean isPlayerContinuesGame() {
-        return playerContinuesGame;
-    }
-
-    public void setPlayerContinuesGame(boolean playerContinuesGame) {
-        this.playerContinuesGame = playerContinuesGame;
-    }
-
-    public void setDisplayDeathScreenOnlyOnce(boolean displayDeathScreenOnlyOnce) {
-        this.setPlayerContinuesGame(false);
-        this.displayDeathScreenOnlyOnce = displayDeathScreenOnlyOnce;
-    }
-
-    public boolean isDisplayDeathScreenOnlyOnce() {
-        return displayDeathScreenOnlyOnce;
+        g2d.setFont(restartFont);
+        g2d.drawString(restartTextLine1, restartXLine1, restartYLine1);
+        g2d.drawString(restartTextLine2, restartXLine2, restartYLine2);
     }
 }
