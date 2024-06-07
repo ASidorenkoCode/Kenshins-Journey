@@ -5,8 +5,6 @@ import game.UI.GameView;
 import java.awt.*;
 
 public class DeathScreen {
-    private boolean playerContinuesGame = false;
-    private boolean displayDeathScreenOnlyOnce = false;
 
     public void draw(Graphics g, int highscore, int deathCounter) {
         Graphics2D g2d = (Graphics2D) g;
@@ -19,17 +17,13 @@ public class DeathScreen {
         Font restartFont = new Font("Arial", Font.BOLD, 25);
 
         String gameOverText = "YOU DIED!";
-        int gameOverX = (GameView.GAME_WIDTH - g2d.getFontMetrics(gameOverFont).stringWidth(gameOverText)) / 2;
-        int gameOverY = GameView.GAME_HEIGHT / 3;
-
-        g2d.setColor(Color.RED);
-        g2d.setFont(gameOverFont);
-        g2d.drawString(gameOverText, gameOverX, gameOverY);
+        textSettings(g2d, gameOverFont, gameOverText);
 
         String scoreText = STR."Your current Score is \{highscore} points";
         String deaths = STR."You currently died \{deathCounter + 1} times!";
 
         int statsX = (GameView.GAME_WIDTH - g2d.getFontMetrics(statsFont).stringWidth(scoreText)) / 2;
+        int gameOverY = GameView.GAME_HEIGHT / 3;
         int scoreY = gameOverY + 100;
         int enemiesY = scoreY + 30;
 
@@ -49,5 +43,14 @@ public class DeathScreen {
         g2d.setFont(restartFont);
         g2d.drawString(restartTextLine1, restartXLine1, restartYLine1);
         g2d.drawString(restartTextLine2, restartXLine2, restartYLine2);
+    }
+
+    private void textSettings(Graphics2D g2d, Font gameOverFont, String gameOverText) {
+        int gameOverX = (GameView.GAME_WIDTH - g2d.getFontMetrics(gameOverFont).stringWidth(gameOverText)) / 2;
+        int gameOverY = GameView.GAME_HEIGHT / 3;
+
+        g2d.setColor(Color.RED);
+        g2d.setFont(gameOverFont);
+        g2d.drawString(gameOverText, gameOverX, gameOverY);
     }
 }

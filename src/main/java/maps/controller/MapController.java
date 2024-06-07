@@ -22,12 +22,11 @@ public class MapController {
         maps = new ArrayList<>();
         mapUI = new MapUI(this);
         mapOffsetY = getCurrentPlayerSpawn().y;
-        loadCurrentMapIndex(highscore);
-
+        loadCurrentMapIndex(highscore.getAllHighscores().size());
     }
 
-    public void loadCurrentMapIndex(Highscore highscore) {
-        currentMapIndex = highscore.getAllHighscores().size();
+    public void loadCurrentMapIndex(int mapIndex) {
+        currentMapIndex = mapIndex;
     }
 
 
@@ -90,8 +89,9 @@ public class MapController {
         return maps.get(currentMapIndex).getBossSpawn();
     }
 
-
     public void setEntityController(EntityController entityController) {
         this.entityController = entityController;
     }
+
+
 }

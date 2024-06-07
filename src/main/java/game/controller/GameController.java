@@ -25,7 +25,6 @@ public class GameController {
     private Highscore highscore;
 
     private GameState currentGameState;
-
     private boolean showHitbox;
 
     public GameController(boolean showHitBox) {
@@ -95,13 +94,12 @@ public class GameController {
 
         //handle option of game is finished
         if(mapController.getMaps().size() == highscore.getAllHighscores().size()) {
-            //Game is finished
-            resetGame();
+            currentGameState = GameState.END;
+            return;
         }
 
         Player player = entityController.getPlayer();
-        player.setTotalHearts(player.getTotalHearts() + 1);// AMOUNT OF hearts collected
-        mapController.loadCurrentMapIndex(highscore);
+        mapController.loadCurrentMapIndex(highscore.getAllHighscores().size());
         Finish finish = gameObjectController.getFinish();
         finish.updateFinishPoint(mapController.getCurrentFinishSpawn().x, mapController.getCurrentFinishSpawn().y, mapController.getCurrentBossSpawn() == null);
         entityController.initKappas(mapController, showHitbox);
@@ -130,11 +128,11 @@ public class GameController {
     }
 
     public void resetGame() {
+        if (currentGameState != GameState.END) return;
         highscore.resetHighscore();
         highscore.writeHighscore();
         Player player = entityController.getPlayer();
-        player.setTotalHearts(player.getTotalHearts() + 1);// AMOUNT OF hearts collected
-        mapController.loadCurrentMapIndex(highscore);
+        mapController.loadCurrentMapIndex(0);
         Finish finish = gameObjectController.getFinish();
         finish.updateFinishPoint(mapController.getCurrentFinishSpawn().x, mapController.getCurrentFinishSpawn().y, mapController.getCurrentBossSpawn() == null);
         entityController.initKappas(mapController, showHitbox);
