@@ -24,4 +24,7 @@ public class ServerObject {
         return horizontalPlayerPosition;
     }
 
+    public int getCurrentLevel() {
+        return currentLevel;
+    }
 }

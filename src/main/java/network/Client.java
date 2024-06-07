@@ -29,7 +29,7 @@ public class Client {
 
 
             // Create a JSON string
-            String json = STR."{\"currentLevel\":\{highscore.getAllHighscores().size()},\"highScore\":\"\{highscore.getCurrentHighscore()}\",\"deathCounter\":\{highscore.getDeathCounter()},\"horizontalPlayerPosition\":\{player.getX()},\"playerId\":\{playerId}}";
+            String json = STR."{\"currentLevel\":\{highscore.getAllHighscores().size() + 1},\"highScore\":\"\{highscore.getCurrentHighscore()}\",\"deathCounter\":\{highscore.getDeathCounter()},\"horizontalPlayerPosition\":\{player.getX()},\"playerId\":\{playerId}}";
 
 
             // Send the JSON string to the server

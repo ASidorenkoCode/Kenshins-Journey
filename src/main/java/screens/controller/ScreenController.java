@@ -53,13 +53,13 @@ public class ScreenController {
         }
     }
 
-    public void draw(Graphics g, GameState currentGameState, int highscore, int deathCounter, int mapOffsetX, String playerId) {
+    public void draw(Graphics g, GameState currentGameState, int highscore, int deathCounter, int mapOffsetX, String playerId, int currentLevel) {
         switch (currentGameState) {
             //TODO implement start and death screen
             case START -> startScreen.draw(g);
             case LOADING, END -> drawLoadingScreen(g);
             case DEAD -> drawDeathScreen(g, highscore, deathCounter);
-            case PLAYING -> interfaceGame.draw(g, mapOffsetX, playerId);
+            case PLAYING -> interfaceGame.draw(g, mapOffsetX, playerId, currentLevel);
         }
 
     }

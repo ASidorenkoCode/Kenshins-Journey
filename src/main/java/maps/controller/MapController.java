@@ -90,6 +90,10 @@ public class MapController {
         return maps.get(currentMapIndex).getBossSpawn();
     }
 
+    public int getCurrentLevelNumber() {
+        return currentMapIndex + 1;
+    }
+
 
     public void setEntityController(EntityController entityController) {
         this.entityController = entityController;
