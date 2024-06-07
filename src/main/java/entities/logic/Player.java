@@ -5,10 +5,17 @@ import maps.logic.Map;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 
-public class Player extends Entity {
+public class Player extends Entity implements Serializable {
 
+    private static final long serialVersionUID = -8236329990641323382L;
     private boolean left, right, attack, inAir, attackHitBoxIsActive, isResting, isDashing, isFacingRight;
     private float airMovement = -6f;
     private Rectangle2D.Float rightAttackHitBox;
@@ -46,6 +53,7 @@ public class Player extends Entity {
         isFacingRight = true;
         resetMaximumDamagePerAttack();
     }
+
     public float getX() {
         return x;
     }
@@ -446,5 +454,36 @@ public class Player extends Entity {
     }
     public boolean getHasAttacked() {
         return hasAttacked;
+    }
+
+
+    public static class PlayerSerializer {
+
+        private static final String FILE_PLAYER_PATH = "res/player.txt";
+
+        public static void writePlayer(Player player) {
+            try (ObjectOutputStream oos = new ObjectOutputStream(Files.newOutputStream(Path.of(FILE_PLAYER_PATH)))) {
+                oos.writeInt(player.getHealth());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        public static int readPlayerHealth() throws IOException {
+            Path filePath = Path.of(FILE_PLAYER_PATH);
+            if (!Files.exists(filePath) || Files.size(filePath) == 0) {
+                return -1; // return -1 or any other value to indicate that the file doesn't exist or is empty
+            }
+
+            int health = -1;
+
+            try (ObjectInputStream ois = new ObjectInputStream(Files.newInputStream(filePath))) {
+                health = ois.readInt();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return health;
+        }
     }
 }
