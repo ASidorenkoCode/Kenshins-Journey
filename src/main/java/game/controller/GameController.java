@@ -105,10 +105,12 @@ public class GameController {
             highscore.decreaseHighScoreAfterOneSecond();
             screenController.update(highscore, entityController.getPlayer(), itemController.getMenu(), serverObjects);
 
-            try {
-                SharedData.gameToNetworkQueue.put(new ServerObject(highscore, entityController.getPlayer(), playerId));
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            if (SharedData.gameToNetworkQueue.isEmpty()) {
+                try {
+                    SharedData.gameToNetworkQueue.put(new ServerObject(highscore, entityController.getPlayer(), playerId));
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
 
         }

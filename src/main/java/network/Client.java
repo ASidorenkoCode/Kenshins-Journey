@@ -12,8 +12,8 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 public class Client extends Thread {
-    private static final String SERVER_ADDRESS = "192.168.178.67";
-    private static final int SERVER_PORT = 4511;
+    private static final String SERVER_ADDRESS = "localhost";
+    private static final int SERVER_PORT = 4711;
 
     private long comparingTime = System.currentTimeMillis();
 
