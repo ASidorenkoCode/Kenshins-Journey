@@ -2,6 +2,8 @@ package game.logic;
 
 import game.controller.GameController;
 
+import java.io.IOException;
+
 public class GameEngine implements Runnable {
 
     private Thread gameThread;
@@ -34,7 +36,11 @@ public class GameEngine implements Runnable {
 
             while (updateAccumulator >= timePerUpdate) {
                 updateAccumulator -= timePerUpdate;
-                gameController.update();
+                try {
+                    gameController.update();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
                 updates++;
             }
 

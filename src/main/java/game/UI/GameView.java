@@ -12,6 +12,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
+import java.io.IOException;
 
 public class GameView extends JPanel {
 
@@ -125,7 +126,7 @@ public class GameView extends JPanel {
         frame.setTitle(fpsUpsText);
     }
 
-    public void handleUserInputKeyPressed(KeyEvent e) {
+    public void handleUserInputKeyPressed(KeyEvent e) throws IOException {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_0:
                 itemController.selectItem(entityController.getPlayer(), 0);
