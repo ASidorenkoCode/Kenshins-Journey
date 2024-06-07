@@ -1,7 +1,6 @@
 package game.logic;
 
 import game.controller.GameController;
-import network.Client;
 
 public class GameEngine implements Runnable {
 
@@ -12,11 +11,9 @@ public class GameEngine implements Runnable {
     private int frames = 0;
     private int updates = 0;
 
-    private Client client;
 
     public GameEngine(GameController gameController) {
         this.gameController = gameController;
-        this.client = new Client();
     }
 
     public void startGameLoop() {
@@ -38,7 +35,6 @@ public class GameEngine implements Runnable {
 
             while (updateAccumulator >= timePerUpdate) {
                 updateAccumulator -= timePerUpdate;
-                client.sendDataToServer();
                 gameController.update();
                 updates++;
             }

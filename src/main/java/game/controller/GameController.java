@@ -9,6 +9,7 @@ import gameObjects.controller.GameObjectController;
 import gameObjects.logic.Finish;
 import items.controller.ItemController;
 import maps.controller.MapController;
+import network.Client;
 import screens.controller.ScreenController;
 import screens.ui.DeathScreen;
 
@@ -25,6 +26,7 @@ public class GameController {
     private ItemController itemController;
 
     private Highscore highscore;
+    private Client client;
 
     private GameState currentGameState;
 
@@ -32,6 +34,7 @@ public class GameController {
 
     public GameController(boolean showHitBox) throws IOException {
         //controller
+        this.client = new Client();
         currentGameState = GameState.START;
         this.highscore = Highscore.readHighscore();
         mapController = new MapController(null, highscore);
@@ -64,6 +67,7 @@ public class GameController {
 
     public void update() {
         if(currentGameState == GameState.PLAYING) {
+            client.sendDataToServer();
             Player player = entityController.getPlayer();
             if(player.isDead()) {
                 currentGameState = GameState.DEAD;
