@@ -4,6 +4,7 @@ import game.UI.GameView;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
 
 public class KeyboardInputsIngame implements KeyListener {
     private GameView gameView;
@@ -19,7 +20,11 @@ public class KeyboardInputsIngame implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        gameView.handleUserInputKeyPressed(e);
+        try {
+            gameView.handleUserInputKeyPressed(e);
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     @Override
