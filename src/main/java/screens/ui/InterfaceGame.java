@@ -76,6 +76,7 @@ public class InterfaceGame {
         }
 
         drawServerObjects(g, mapOffsetX, playerId, currentLevel);
+        drawListOfCurrentPlayers(g);
     }
 
     public void update(Highscore highscore, Player player, Item[] menu, ArrayList<ServerObject> serverObjects) {
@@ -133,7 +134,39 @@ public class InterfaceGame {
         for (ServerObject object : serverObjects) {
             if (object.getPlayerId().equals(playerId)) continue;
             if (currentLevel != object.getCurrentLevel()) continue;
-            g.drawRect((int) object.getHorizontalPlayerPosition() - mapOffsetX, 0, 10, 10);
+
+            Graphics2D g2d = (Graphics2D) g;
+
+            // Set anti-aliasing for smoother edges
+            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+            // Draw the triangle
+            int[] xPoints = {(int) object.getHorizontalPlayerPosition() - mapOffsetX, (int) object.getHorizontalPlayerPosition() + 30 - mapOffsetX, (int) object.getHorizontalPlayerPosition() + 15 - mapOffsetX};
+            int[] yPoints = {0, 0, 30};
+            g2d.setColor(Color.BLUE);
+            g2d.fillPolygon(xPoints, yPoints, 3);
+        }
+    }
+
+    private void drawListOfCurrentPlayers(Graphics g) {
+        int padding = GameView.GAME_WIDTH / 8;
+        int margin = GameView.GAME_HEIGHT / 15;
+        int startX = padding + margin;
+        int startY = padding + margin + GameView.GAME_HEIGHT / 20;
+        int lineHeight = 30;
+
+        g.setColor(Color.WHITE);
+        g.fillRect(padding, padding, GameView.GAME_WIDTH - (2 * padding), GameView.GAME_HEIGHT - (2 * padding));
+
+        g.setColor(Color.BLACK);
+        g.setFont(new Font("Arial", Font.PLAIN, GameView.GAME_WIDTH / 30));
+        g.drawString("Current Players", padding + margin, padding + margin);
+
+        for (ServerObject object : serverObjects) {
+            g.setFont(new Font("Arial", Font.PLAIN, 18));
+            g.setColor(Color.BLACK);
+            g.drawString(STR."Player Name: \{object.getPlayerId()} High Score: \{object.getHighScore()} Current Level: \{object.getCurrentLevel()} Death Counter: \{object.getDeathCounter()}", startX, startY);
+            startY += lineHeight + padding; // Move to the next block
         }
     }
 }

@@ -27,4 +27,12 @@ public class ServerObject {
     public int getCurrentLevel() {
         return currentLevel;
     }
+
+    public int getHighScore() {
+        return highScore;
+    }
+
+    public int getDeathCounter() {
+        return deathCounter;
+    }
 }
