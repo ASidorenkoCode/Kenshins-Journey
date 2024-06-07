@@ -34,12 +34,10 @@ public class ClientHandler extends Thread {
             ServerObject serverObject = gson.fromJson(request, ServerObject.class);
             addOrUpdateServerObject(serverObject);
 
-            System.out.println("Received from client: " + serverObject);
 
             // Send a response to the client
             String response = gson.toJson(serverObjects);
             out.println(response);
-            System.out.println("Sent to client: " + request);
 
         } catch (IOException e) {
             System.out.println(e.getMessage());

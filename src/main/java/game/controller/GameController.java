@@ -9,8 +9,8 @@ import gameObjects.controller.GameObjectController;
 import gameObjects.logic.Finish;
 import items.controller.ItemController;
 import maps.controller.MapController;
-import network.Client;
 import network.ServerObject;
+import network.SharedData;
 import screens.controller.ScreenController;
 import screens.ui.DeathScreen;
 
@@ -30,26 +30,25 @@ public class GameController {
     private ItemController itemController;
 
     private Highscore highscore;
-    private Client client;
     private String playerId;
     private Player.PlayerSerializer playerSerializer;
 
     private GameState currentGameState;
+    private long comparingTime;
+    private ArrayList<ServerObject> serverObjects;
 
     private boolean showHitbox;
 
     public GameController(boolean showHitBox) throws IOException {
+        comparingTime = System.currentTimeMillis();
+        serverObjects = new ArrayList<>();
         //controller
         try {
             InetAddress inetAddress = InetAddress.getLocalHost();
             playerId = inetAddress.getHostName();
-
-            //for testing purposes on one device
-            //playerId = "4711";
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
-        this.client = new Client();
         currentGameState = GameState.START;
         this.highscore = Highscore.readHighscore();
 
@@ -84,12 +83,13 @@ public class GameController {
     public void update() throws IOException {
         if(currentGameState == GameState.PLAYING) {
 
-            //TODO: Implement option to differentiate between multiplayer and one player
-            ArrayList<ServerObject> serverObjects = client.sendDataToServer(highscore, entityController.getPlayer(), playerId);
-            System.out.println(serverObjects.size());
-
-            //TODO: Handle objects
-
+            if (!SharedData.networkToGameQueue.isEmpty()) {
+                try {
+                    serverObjects = SharedData.networkToGameQueue.take();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
 
             Player player = entityController.getPlayer();
             if(player.isDead()) {
@@ -105,7 +105,15 @@ public class GameController {
             highscore.decreaseHighScoreAfterOneSecond();
             screenController.update(highscore, entityController.getPlayer(), itemController.getMenu(), serverObjects);
 
+            try {
+                SharedData.gameToNetworkQueue.put(new ServerObject(highscore, entityController.getPlayer(), playerId));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
         }
+
+
     }
 
     public DeathScreen getDeathScreen() {

@@ -1,5 +1,8 @@
 package network;
 
+import entities.logic.Player;
+import game.logic.Highscore;
+
 public class ServerObject {
 
     private int currentLevel;
@@ -7,6 +10,15 @@ public class ServerObject {
     private int deathCounter;
     private float horizontalPlayerPosition;
     private String playerId;
+
+
+    public ServerObject(Highscore currentHighScore, Player player, String playerId) {
+        this.currentLevel = currentHighScore.getAllHighscores().size() + 1;
+        this.highScore = currentHighScore.getCurrentHighscore();
+        this.deathCounter = currentHighScore.getDeathCounter();
+        this.horizontalPlayerPosition = player.getX();
+        this.playerId = playerId;
+    }
 
     public void updateObject(ServerObject object) {
         this.highScore = object.highScore;
@@ -35,4 +47,5 @@ public class ServerObject {
     public int getDeathCounter() {
         return deathCounter;
     }
+
 }

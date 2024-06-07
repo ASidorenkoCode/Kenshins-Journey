@@ -1,12 +1,15 @@
 package game.logic;
 
 import game.controller.GameController;
+import network.Client;
 
 import java.io.IOException;
 
 public class GameEngine implements Runnable {
 
     private Thread gameThread;
+
+    private Client client;
     private GameController gameController;
     private final int UPS_SET = 200;
     private long lastCheck;
@@ -21,6 +24,8 @@ public class GameEngine implements Runnable {
     public void startGameLoop() {
         gameThread = new Thread(this);
         gameThread.start();
+        client = new Client();
+        client.start();
     }
     @Override
     public void run() {
@@ -29,7 +34,6 @@ public class GameEngine implements Runnable {
         double updateAccumulator = 0;
 
         while (true) {
-
             long currTime = System.nanoTime();
             double elapsed = currTime - prevTime;
             prevTime = currTime;
@@ -39,10 +43,12 @@ public class GameEngine implements Runnable {
                 updateAccumulator -= timePerUpdate;
                 try {
                     gameController.update();
+
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
                 updates++;
+
             }
 
             gameController.callRepaint();
