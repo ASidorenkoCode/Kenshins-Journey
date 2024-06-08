@@ -20,14 +20,14 @@ public class Map {
     private int maxMapOffsetY;
     private Point playerSpawn;
     private Point finishSpawn;
-    private ArrayList<Point> kappaSpawns;
+    private ArrayList<Point> enemySpawns;
 
     private ArrayList<Point> itemSpawns;
     private Point bossSpawn;
     int tileSize = GameView.TILES_DEFAULT_SIZE * 2;
 
     public Map(BufferedImage img) {
-        this.kappaSpawns = new ArrayList<>();
+        this.enemySpawns = new ArrayList<>();
         this.itemSpawns = new ArrayList<>();
         this.mapImage = img;
         mapData = new int[img.getHeight()][img.getWidth()];
@@ -67,7 +67,7 @@ public class Map {
         switch (greenValue) {
             case 100 -> playerSpawn = new Point(scaledX, scaledY);
             case 101 -> finishSpawn = new Point(originalX, originalY);
-            case 102 -> kappaSpawns.add(new Point(originalX, originalY));
+            case 102 -> enemySpawns.add(new Point(originalX, originalY));
             case 104 -> bossSpawn = new Point(originalX, originalY);
         }
     }
@@ -110,8 +110,8 @@ public class Map {
         return finishSpawn;
     }
 
-    public ArrayList<Point> getKappaSpawns() {
-        return kappaSpawns;
+    public ArrayList<Point> getEnemySpawns() {
+        return enemySpawns;
     }
 
     public ArrayList<Point> getItemSpawns() {

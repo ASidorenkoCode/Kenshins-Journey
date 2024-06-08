@@ -118,7 +118,7 @@ public class GameController {
         mapController.loadCurrentMapIndex(highscore.getAllHighscores().size());
         Finish finish = gameObjectController.getFinish();
         finish.updateFinishPoint(mapController.getCurrentFinishSpawn().x, mapController.getCurrentFinishSpawn().y, mapController.getCurrentBossSpawn() == null);
-        entityController.initKappas(mapController, showHitbox);
+        entityController.initEnemies(mapController, showHitbox);
         entityController.initOrUpdatePlayer(mapController, showHitbox);
         entityController.initBoss(mapController, showHitbox);
         itemController.initItems(mapController);

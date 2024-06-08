@@ -1,5 +1,7 @@
 package entities.animations;
 
+import entities.ui.EnemyUI;
+
 public enum EnemyAnimations {
     IDLE, RUN, ATTACK, DEAD;
 
@@ -12,11 +14,12 @@ public enum EnemyAnimations {
         };
     }
 
-    public int getAniSize() {
+    public int getAniSize(EnemyUI enemyUI) {
         return switch (this) {
-            case IDLE, RUN -> 4;
-            case DEAD -> 1;
-            case ATTACK -> 8;
+            case IDLE -> enemyUI.getIdleAniSize();
+            case RUN -> enemyUI.getRunAniSize();
+            case DEAD -> enemyUI.getDeadAniSize();
+            case ATTACK -> enemyUI.getAttackAniSize();
         };
     }
 }
