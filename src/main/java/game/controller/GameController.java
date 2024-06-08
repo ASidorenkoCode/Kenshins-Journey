@@ -1,5 +1,6 @@
 package game.controller;
 
+import entities.animations.PlayerAnimations;
 import entities.controller.EntityController;
 import entities.logic.Player;
 import game.UI.GameView;
@@ -8,9 +9,11 @@ import game.logic.Highscore;
 import gameObjects.controller.GameObjectController;
 import gameObjects.logic.Finish;
 import items.controller.ItemController;
+import javazoom.jl.decoder.JavaLayerException;
 import maps.controller.MapController;
 import screens.controller.ScreenController;
 import screens.ui.DeathScreen;
+import sound.SoundController;
 
 import java.io.IOException;
 
@@ -23,7 +26,7 @@ public class GameController {
     private MapController mapController;
     private ScreenController screenController;
     private ItemController itemController;
-
+    private SoundController soundController;
     private Highscore highscore;
     private Player.PlayerSerializer playerSerializer;
 
@@ -43,6 +46,7 @@ public class GameController {
         gameEngine = new GameEngine(this);
         gameObjectController = new GameObjectController(mapController, showHitBox);
         screenController = new ScreenController(itemController);
+        soundController = new SoundController();
         gameView = new GameView(this, entityController, mapController, itemController, gameObjectController, screenController);
 
 
@@ -61,7 +65,7 @@ public class GameController {
         gameView.repaint();
     }
 
-    public void update() throws IOException {
+    public void update() throws IOException, JavaLayerException {
         if (currentGameState == GameState.PLAYING) {
             Player player = entityController.getPlayer();
             if (player.isDead()) {
@@ -80,8 +84,8 @@ public class GameController {
             itemController.update(entityController);
             highscore.decreaseHighScoreAfterOneSecond();
             screenController.update(highscore, entityController.getPlayer(), itemController.getMenu());
-
         }
+        switchSound();
     }
 
     public DeathScreen getDeathScreen() {
@@ -162,6 +166,35 @@ public class GameController {
 
     public GameState getCurrentGameState() {
         return currentGameState;
+    }
+
+    public void switchSound() throws JavaLayerException {
+        if (currentGameState != soundController.getCurrentGameState()) {
+            soundController.setCurrentGameState(currentGameState);
+            soundController.soundControl();
+        }
+        if (currentGameState == GameState.PLAYING) {
+            if (!soundController.isSoundEffectPlaying()) {
+                if (entityController.getPlayerUI().getCurrentAnimation() == PlayerAnimations.RUN) {
+                    soundController.playSoundEffect("res/sounds/soundeffects/run.mp3");
+                }
+                if (entityController.getPlayerUI().getCurrentAnimation() == PlayerAnimations.IDLE_SLASH ||
+                        entityController.getPlayerUI().getCurrentAnimation() == PlayerAnimations.RUN_SLASH ||
+                        entityController.getPlayerUI().getCurrentAnimation() == PlayerAnimations.JUMP_SLASH ||
+                        entityController.getPlayerUI().getCurrentAnimation() == PlayerAnimations.FALL_SLASH) {
+                    soundController.playSoundEffect("res/sounds/soundeffects/attack.mp3");
+                }
+                if (entityController.getPlayerUI().getCurrentAnimation() == PlayerAnimations.DASH) {
+                    soundController.playSoundEffect("res/sounds/soundeffects/dash.mp3");
+                }
+                if (entityController.getPlayerUI().getCurrentAnimation() == PlayerAnimations.JUMP) {
+                    soundController.playSoundEffect("res/sounds/soundeffects/jump.mp3");
+                }
+                if (entityController.getPlayerUI().getCurrentAnimation() == PlayerAnimations.FALL) {
+                    soundController.playSoundEffect("res/sounds/soundeffects/land.mp3");
+                }
+            }
+        }
     }
 
     public void setCurrentGameState(GameState currentGameState) {

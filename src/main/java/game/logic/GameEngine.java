@@ -1,6 +1,7 @@
 package game.logic;
 
 import game.controller.GameController;
+import javazoom.jl.decoder.JavaLayerException;
 
 import java.io.IOException;
 
@@ -39,6 +40,8 @@ public class GameEngine implements Runnable {
                 try {
                     gameController.update();
                 } catch (IOException e) {
+                    throw new RuntimeException(e);
+                } catch (JavaLayerException e) {
                     throw new RuntimeException(e);
                 }
                 updates++;
