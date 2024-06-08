@@ -5,7 +5,7 @@ import game.logic.Highscore;
 
 import java.awt.*;
 
-public class EndScreen {
+public class HighScoreScreen {
     private int mapCount;
 
     public void draw(Graphics g, Highscore highscore) {
@@ -17,7 +17,7 @@ public class EndScreen {
         Font gameOverFont = new Font("Arial", Font.BOLD, 40);
         Font statsFont = new Font("Arial", Font.PLAIN, 20);
 
-        String gameOverText = mapCount == highscore.getAllHighscores().size() ? "YOU FINISHED THE GAME" : "GAME OVER";
+        String gameOverText = "HIGHSCORE TABLE";
         int gameOverY = GameView.GAME_HEIGHT / 4;
         textSettings(g2d, gameOverFont, gameOverText, gameOverY);
 
@@ -63,14 +63,13 @@ public class EndScreen {
             int mapCountTextWidth = g2d.getFontMetrics().stringWidth(mapCountText);
             int currentGameTextWidth = g2d.getFontMetrics().stringWidth(currentGameText);
             int bestHighscoreTextWidth = g2d.getFontMetrics().stringWidth(bestHighscoreText);
-            int differenceTextWidth = g2d.getFontMetrics().stringWidth(differenceText);
 
             g2d.drawString(mapCountText, statsX + columnWidth / 2 - mapCountTextWidth / 2, statsY);
             g2d.drawString(currentGameText, statsX + columnWidth + columnWidth / 2 - currentGameTextWidth / 2, statsY);
             g2d.drawString(bestHighscoreText, statsX + columnWidth * 2 + columnWidth / 2 - bestHighscoreTextWidth / 2, statsY);
 
 
-            if (!bestHighscoreText.equals("-") && highscore.getAllHighscores().size() > i) {
+            if (!bestHighscoreText.equals("-") && !currentGameText.equals("-") && highscore.getAllHighscores().size() > i) {
                 if (Integer.parseInt(bestHighscoreText) < highscore.getAllHighscores().get(i)) {
                     g2d.setColor(Color.GREEN);
                     differenceText = STR."+\{differenceText}";
@@ -80,27 +79,19 @@ public class EndScreen {
                 } else {
                     differenceText = "-";
                 }
+            } else {
+                differenceText = "-";
             }
 
+            int differenceTextWidth = g2d.getFontMetrics().stringWidth(differenceText);
             g2d.drawString(differenceText, statsX + columnWidth * 3 + columnWidth / 2 - differenceTextWidth / 2, statsY);
 
             statsY += 30;
         }
 
-        if (!highscore.getBestHighscores().isEmpty() && highscore.getAllHighscores().get(highscore.getAllHighscores().size() - 1) > highscore.getBestHighscores().get(highscore.getBestHighscores().size() - 1)) {
-            String message = "You have beaten your best high score in the game!";
-            g2d.setColor(Color.GREEN);
-            g2d.setFont(new Font("Arial", Font.BOLD, 30));
-            int messageWidth = g2d.getFontMetrics().stringWidth(message);
-            int messageX = (GameView.GAME_WIDTH - messageWidth) / 2;
-            g2d.drawString(message, messageX, statsY + 50);
-        }
-
-        String gameOverRestart = "Press ENTER to restart or ESCAPE to quit the game";
+        String gameOverRestart = "Press ESCAPE to return to the Start Screen";
         int gameOverRestartY = statsY + 100;
         textSettings(g2d, statsFont, gameOverRestart, gameOverRestartY);
-
-
     }
 
     private void textSettings(Graphics2D g2d, Font gameOverFont, String gameOverText, int gameOverY) {

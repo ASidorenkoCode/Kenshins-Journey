@@ -114,7 +114,7 @@ public class GameView extends JPanel {
         itemController.draw(g, mapOffsetX, mapOffsetY);
         gameObjectController.drawObjects(g, mapOffsetX, mapOffsetY);
         mapController.draw(g, true);
-        screenController.draw(g, gameController.getCurrentGameState(), gameController.getHighscore().getCurrentHighscore(), gameController.getHighscore().getDeathCounter(), gameController.getHighscore());
+        screenController.draw(g, gameController.getCurrentGameState(), gameController.getHighscore().getCurrentHighscore(), gameController.getHighscore().getDeathCounter(), gameController.getHighscore(), mapController.getMaps().size());
     }
 
     public void showFPS_UPS(int frames, int updates) {
@@ -171,12 +171,21 @@ public class GameView extends JPanel {
             case KeyEvent.VK_ENTER:
                 if (gameController.getCurrentGameState() == GameState.END) gameController.resetGame();
                 break;
+            case KeyEvent.VK_H:
+                if (gameController.getCurrentGameState() == GameState.START) {
+                    gameController.setCurrentGameState(GameState.HIGHSCORE);
+                }
+                break;
             case KeyEvent.VK_ESCAPE:
                 if (gameController.getCurrentGameState() == GameState.END) {
                     gameController.getHighscore().writeAllHighscores();
                     System.exit(0);
                 }
+                if (gameController.getCurrentGameState() == GameState.HIGHSCORE) {
+                    gameController.setCurrentGameState(GameState.START);
+                }
                 break;
+
             default:
                 entityController.handleUserInputKeyPressed(e, gameController.getDeathScreen());
         }
