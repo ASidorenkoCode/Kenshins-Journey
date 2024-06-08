@@ -39,7 +39,7 @@ public class InterfaceGame {
         this.isDrawingListOfCurrentPlayers = false;
     }
 
-    public void draw(Graphics g, int mapOffsetX, String playerId, int currentLevel) {
+    public void draw(Graphics g, String playerId, int currentLevel) {
 
         int x = 0;
         int y = 0;
@@ -78,7 +78,7 @@ public class InterfaceGame {
             }
         }
 
-        drawServerObjects(g, mapOffsetX, playerId, currentLevel);
+        drawServerObjects(g, playerId, currentLevel);
 
         if (isDrawingListOfCurrentPlayers) drawListOfCurrentPlayers(g);
     }
@@ -134,7 +134,7 @@ public class InterfaceGame {
         g.drawString(text, textX, textY);
     }
 
-    private void drawServerObjects(Graphics g, int mapOffsetX, String playerId, int currentLevel) {
+    private void drawServerObjects(Graphics g, String playerId, int currentLevel) {
         for (ServerObject object : serverObjects) {
             if (object.getPlayerId().equals(playerId)) continue;
             if (currentLevel != object.getCurrentLevel()) continue;
@@ -145,7 +145,7 @@ public class InterfaceGame {
             g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
             // Draw the triangle
-            int[] xPoints = {(int) object.getHorizontalPlayerPosition() - mapOffsetX, (int) object.getHorizontalPlayerPosition() + 30 - mapOffsetX, (int) object.getHorizontalPlayerPosition() + 15 - mapOffsetX};
+            int[] xPoints = {(int) object.getHorizontalPlayerPosition(), (int) object.getHorizontalPlayerPosition() + 30, (int) object.getHorizontalPlayerPosition() + 15};
             int[] yPoints = {0, 0, 30};
             g2d.setColor(Color.BLUE);
             g2d.fillPolygon(xPoints, yPoints, 3);

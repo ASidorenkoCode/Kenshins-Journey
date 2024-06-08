@@ -4,16 +4,12 @@ import entities.logic.Player;
 import game.UI.GameView;
 import game.controller.GameState;
 import game.logic.Highscore;
-import gameObjects.controller.GameObjectController;
 import items.controller.ItemController;
 import items.logic.Item;
-import maps.controller.MapController;
 import network.ServerObject;
-import screens.ui.DeathScreen;
-import screens.ui.InterfaceGame;
-import screens.ui.LoadingScreen;
-import screens.ui.StartScreen;
+import screens.ui.*;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -35,11 +31,11 @@ public class ScreenController {
         this.highScoreScreen = new HighScoreScreen();
     }
 
-    public void update(Highscore highscore, Player player, Item[] menu) {
-        interfaceGame.update(highscore, player, menu);
+    public void update(Highscore highscore, Player player, Item[] menu, ArrayList<ServerObject> serverObjects) {
+        interfaceGame.update(highscore, player, menu, serverObjects);
     }
 
-    public void draw(Graphics g, GameState currentGameState, int highscore, int deathCounter, Highscore highscores, int mapCount) {
+    public void draw(Graphics g, GameState currentGameState, int highscore, int deathCounter, Highscore highscores, int mapCount, String playerId, int currentLevel) {
         switch (currentGameState) {
             //TODO implement start and death screen
             case START -> startScreen.draw(g);
@@ -53,7 +49,7 @@ public class ScreenController {
                 highscores.deleteHighscoreFile();
             }
             case DEAD -> deathScreen.draw(g, highscore, deathCounter);
-            case PLAYING -> interfaceGame.draw(g);
+            case PLAYING -> interfaceGame.draw(g, playerId, currentLevel);
             case HIGHSCORE -> {
                 setMapCountHighScoreScreen(mapCount);
                 highscores.findBestHighscores();
@@ -87,11 +83,23 @@ public class ScreenController {
         return deathScreen;
     }
 
-    public void displayDeathScreen() {
-        deathScreen.displayDeathScreen();
-    }
-
     public void displayLoadingScreen() {
         loadingScreen.displayLoadingScreen();
+    }
+
+    public void setMapCountEndScreen(int mapCount) {
+        endScreen.setMapCount(mapCount);
+    }
+
+    public void setMapCountHighScoreScreen(int mapCount) {
+        highScoreScreen.setMapCount(mapCount);
+    }
+
+    public void setFrame(JFrame frame) {
+        this.frame = frame;
+    }
+
+    public InterfaceGame getInterfaceGame() {
+        return interfaceGame;
     }
 }

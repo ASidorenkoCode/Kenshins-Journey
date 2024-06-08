@@ -85,8 +85,6 @@ public class GameController {
     }
 
     public void update() throws IOException, JavaLayerException {
-        if (currentGameState == GameState.PLAYING) {
-    public void update() throws IOException {
         if(currentGameState == GameState.PLAYING) {
 
             if (!SharedData.networkToGameQueue.isEmpty()) {
