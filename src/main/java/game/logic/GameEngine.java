@@ -2,6 +2,7 @@ package game.logic;
 
 import game.controller.GameController;
 import network.Client;
+import javazoom.jl.decoder.JavaLayerException;
 
 import java.io.IOException;
 
@@ -15,7 +16,6 @@ public class GameEngine implements Runnable {
     private long lastCheck;
     private int frames = 0;
     private int updates = 0;
-
 
     public GameEngine(GameController gameController) {
         this.gameController = gameController;
@@ -34,6 +34,7 @@ public class GameEngine implements Runnable {
         double updateAccumulator = 0;
 
         while (true) {
+
             long currTime = System.nanoTime();
             double elapsed = currTime - prevTime;
             prevTime = currTime;
@@ -43,12 +44,12 @@ public class GameEngine implements Runnable {
                 updateAccumulator -= timePerUpdate;
                 try {
                     gameController.update();
-
                 } catch (IOException e) {
+                    throw new RuntimeException(e);
+                } catch (JavaLayerException e) {
                     throw new RuntimeException(e);
                 }
                 updates++;
-
             }
 
             gameController.callRepaint();

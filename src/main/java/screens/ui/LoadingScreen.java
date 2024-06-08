@@ -1,7 +1,6 @@
 package screens.ui;
 
 import game.UI.GameView;
-import game.logic.Highscore;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -14,8 +13,6 @@ import java.util.*;
 public class LoadingScreen {
     private JFrame frame;
     private JLabel loadingLabel;
-    private JLabel scoreLabel;
-    private Dimension originalSize;
 
     List<String> facts = Arrays.asList(
             "Did you know? Game development with Java Swing is not fun.",
@@ -23,9 +20,7 @@ public class LoadingScreen {
             "Did you know? This loading screen is useless, because the map is already loaded."
     );
 
-    public LoadingScreen(JFrame frame) {
-        this.frame = frame;
-        this.originalSize = frame.getSize();
+    public LoadingScreen() {
     }
 
     public void displayLoadingScreen() {
@@ -35,31 +30,12 @@ public class LoadingScreen {
         JPanel progressBarPanel = setupProgressBarPanel(progressBar);
         JPanel centerPanel = setupCenterPanel(progressBarPanel);
 
-        scoreLabel = createScoreLabel();
-
-        centerPanel.add(scoreLabel, 0);
-
         JLayeredPane layeredPane = frame.getLayeredPane();
         layeredPane.add(centerPanel, JLayeredPane.POPUP_LAYER);
 
         frame.setVisible(true);
 
         startProgressUpdateTimer(progressBar, centerPanel, layeredPane);
-    }
-
-    private JLabel createScoreLabel() {
-        JLabel scoreLabel = new JLabel("<html>CURRENT SCORE:<br><center>0</center></html>");
-        scoreLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 30));
-        scoreLabel.setForeground(Color.WHITE);
-        scoreLabel.setHorizontalAlignment(JLabel.CENTER);
-        scoreLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        Border border = BorderFactory.createEmptyBorder(20, 0, 0, 0);
-        scoreLabel.setBorder(border);
-        return scoreLabel;
-    }
-
-    public void update(Highscore highscore) {
-        if (scoreLabel != null) scoreLabel.setText("<html>CURRENT SCORE:<br><center>" + highscore.getCurrentHighscore() + "</center></html>");
     }
 
     private JProgressBar setupProgressBar() {
@@ -163,5 +139,9 @@ public class LoadingScreen {
                 }
             }
         }, 0, 500); // Update every 0.5 seconds
+    }
+
+    public void setFrame(JFrame frame) {
+        this.frame = frame;
     }
 }

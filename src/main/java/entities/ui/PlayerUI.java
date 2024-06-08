@@ -131,4 +131,8 @@ public class PlayerUI extends EntityUI {
     public int getCurrentAniIndex() {
         return aniIndex;
     }
+
+    public PlayerAnimations getCurrentAnimation() {
+        return currentAnimation;
+    }
 }

@@ -7,6 +7,7 @@ import items.logic.PowerRing;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 
 public class Highscore implements Serializable {
@@ -16,6 +17,7 @@ public class Highscore implements Serializable {
     private int currentHighscore;
     private int deathCounter = 0;
     private ArrayList<Integer> highscores;
+    private ArrayList<Integer> bestHighscores;
     private long comparingTime;
 
     public Highscore() {
@@ -72,6 +74,7 @@ public class Highscore implements Serializable {
 
     public void addCurrentHighscoreToList() {
         highscores.add(currentHighscore);
+        findBestHighscores();
     }
 
     public int getCurrentHighscore() {
@@ -112,7 +115,87 @@ public class Highscore implements Serializable {
         }
     }
 
+    public void deleteHighscoreFile() {
+        Path filePath = Path.of(FILE_HIGHSCORE_PATH);
+        try {
+            Files.deleteIfExists(filePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void writeAllHighscores() {
+        Path filePath = Path.of("res/highscores.txt");
+        int startScore = 1;
+        try {
+            if (Files.exists(filePath)) {
+                try (BufferedReader reader = Files.newBufferedReader(filePath)) {
+                    String lastLine = "";
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        lastLine = line;
+                    }
+                    if (!lastLine.isEmpty()) {
+                        String[] parts = lastLine.split(":");
+                        String lastScore = parts[0].trim();
+                        startScore = Integer.parseInt(lastScore.substring(10)) + 1;
+                    }
+                }
+            } else {
+                Files.createFile(filePath);
+            }
+            try (BufferedWriter writer = Files.newBufferedWriter(filePath, StandardOpenOption.APPEND)) {
+                for (int i = 0; i < highscores.size(); i += 5) {
+                    writer.write(STR."highscore_\{startScore + i / 5}: ");
+                    for (int j = i; j < Math.min(i + 5, highscores.size()); j++) {
+                        writer.write(highscores.get(j).toString());
+                        if (j != Math.min(i + 5, highscores.size()) - 1) {
+                            writer.write(", ");
+                        }
+                    }
+                    writer.newLine();
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void findBestHighscores() {
+        Path filePath = Path.of("res/highscores.txt");
+        bestHighscores = new ArrayList<>();
+        int bestSum = Integer.MIN_VALUE;
+        try {
+            if (Files.exists(filePath)) {
+                try (BufferedReader reader = Files.newBufferedReader(filePath)) {
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        String[] parts = line.split(":");
+                        String[] scores = parts[1].trim().split(",");
+                        ArrayList<Integer> currentScores = new ArrayList<>();
+                        int lastScore = 0;
+                        for (String score : scores) {
+                            int currentScore = Integer.parseInt(score.trim());
+                            currentScores.add(currentScore);
+                            lastScore = currentScore; // Keep updating the lastScore with the currentScore
+                        }
+                        if (lastScore > bestSum) { // Check if the lastScore is greater than the bestSum
+                            bestSum = lastScore;
+                            bestHighscores = currentScores;
+                        }
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public int getDeathCounter() {
         return deathCounter;
+    }
+
+    public ArrayList<Integer> getBestHighscores() {
+        return bestHighscores;
     }
 }

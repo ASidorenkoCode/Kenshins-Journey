@@ -32,7 +32,7 @@ public class EntityController {
     }
 
     public void update(MapController mapController, GameObjectController gameObjectController, Highscore highscore) {
-        player.update(mapController.getCurrentMap(), currentBoss, kappas, highscore);
+        player.update(mapController.getCurrentMap(), currentBoss, kappas);
         for (Kappa kap : kappas) kap.update(mapController.getCurrentMap(), player, highscore);
 
         if(currentBoss != null) currentBoss.update(mapController.getMapOffsetX(), player, highscore, gameObjectController.getFinish());
@@ -41,7 +41,7 @@ public class EntityController {
 
 
     //init functions for init instances and updating instances
-    public void initOrUpdatePlayer(MapController mapController, boolean showHitBox) throws IOException {
+    public void initOrUpdatePlayer(MapController mapController, boolean showHitBox) {
         Point playerSpawnPoint = mapController.getCurrentPlayerSpawn();
         if (player != null) {
             player.updateSpawnPoint(playerSpawnPoint.x, playerSpawnPoint.y);
@@ -97,9 +97,6 @@ public class EntityController {
             case KeyEvent.VK_S:
                 player.setIsDashing(true);
                 break;
-            case KeyEvent.VK_ENTER:
-                if (player.isDead()) deathScreen.removeDeathScreen();
-                break;
         }
     }
 
@@ -138,6 +135,10 @@ public class EntityController {
 
     public void setPlayer(Player player) {
         this.player = player;
+    }
+
+    public PlayerUI getPlayerUI() {
+        return playerUI;
     }
 }
 
