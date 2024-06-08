@@ -17,6 +17,8 @@ public class SoundController {
     private Thread backgroundMusicThread;
     private GameState currentGameState;
     private boolean isSoundEffectPlaying;
+    private boolean isStartScreenPlaying;
+    private boolean isPlayScreenPlaying;
     private long lastPlayedTime = 0;
 
 
@@ -107,12 +109,15 @@ public class SoundController {
     }
 
     public void soundControl() {
-        if (currentGameState == GameState.START) {
+        if (currentGameState == GameState.START && !isStartScreenPlaying) {
             playBackgroundMusic("res/sounds/startScreenSound.mp3");
-        } else if (currentGameState == GameState.PLAYING) {
+            setStartScreenPlaying(true);
+        } else if (currentGameState == GameState.PLAYING && !isPlayScreenPlaying) {
             playBackgroundMusic("res/sounds/playScreenSound.mp3");
+            setPlayScreenPlaying(true);
             stopBackgroundMusic();
-        } else {
+        } else if (currentGameState == GameState.END) {
+            stopBackgroundMusic();
         }
     }
 
@@ -126,5 +131,21 @@ public class SoundController {
 
     public boolean isSoundEffectPlaying() {
         return isSoundEffectPlaying;
+    }
+
+    public boolean isPlayScreenPlaying() {
+        return isPlayScreenPlaying;
+    }
+
+    public void setPlayScreenPlaying(boolean playScreenPlaying) {
+        isPlayScreenPlaying = playScreenPlaying;
+    }
+
+    public boolean isStartScreenPlaying() {
+        return isStartScreenPlaying;
+    }
+
+    public void setStartScreenPlaying(boolean startScreenPlaying) {
+        isStartScreenPlaying = startScreenPlaying;
     }
 }
