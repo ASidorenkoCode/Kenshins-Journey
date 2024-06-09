@@ -11,10 +11,7 @@ import gameObjects.logic.Finish;
 import items.controller.ItemController;
 import javazoom.jl.decoder.JavaLayerException;
 import maps.controller.MapController;
-import network.Client;
-import network.Host;
-import network.ServerObject;
-import network.SharedData;
+import network.*;
 import screens.controller.ScreenController;
 import screens.ui.DeathScreen;
 import sound.SoundController;
@@ -36,6 +33,7 @@ public class GameController {
     private SoundController soundController;
     private Highscore highscore;
     private String playerId;
+    private String ipAddress;
     private Player.PlayerSerializer playerSerializer;
 
     private GameState currentGameState;
@@ -56,6 +54,7 @@ public class GameController {
         try {
             InetAddress inetAddress = InetAddress.getLocalHost();
             playerId = inetAddress.getHostName();
+            ipAddress = inetAddress.getHostAddress();
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
@@ -259,14 +258,21 @@ public class GameController {
 
     public void useMultiplayer() {
         if (isPlayingMultiplayer) return;
+
+
+        try {
+            if (!GitHubClient.hostIsRunning()) {
+                new Host().start();
+                GitHubClient.writeFile(ipAddress);
+            }
+            client = new Client(GitHubClient.readFile());
+            client.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
+
         isPlayingMultiplayer = true;
-
-        //TODO: Check if host is running or not
-        new Host().start();
-
-        client = new Client("localhost");
-        client.start();
-
     }
 
     public boolean getIsPlayingMultiplayer() {
