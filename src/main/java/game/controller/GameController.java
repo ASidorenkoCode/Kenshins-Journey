@@ -29,8 +29,8 @@ public class GameController {
     private SoundController soundController;
     private Highscore highscore;
     private Player.PlayerSerializer playerSerializer;
-
     private GameState currentGameState;
+    private int getAmountOfCurrentItemsRegistered;
 
     private boolean showHitbox;
 
@@ -68,7 +68,7 @@ public class GameController {
     public void update() throws IOException, JavaLayerException {
         if (currentGameState == GameState.PLAYING) {
             Player player = entityController.getPlayer();
-            if (player.isDead()) {
+            if (player.isDead() && player.getDeathAnimationFinished()) {
                 currentGameState = GameState.DEAD;
                 return;
             }
@@ -85,6 +85,11 @@ public class GameController {
             highscore.decreaseHighScoreAfterOneSecond();
             screenController.update(highscore, entityController.getPlayer(), itemController.getMenu());
         }
+
+        if (currentGameState == GameState.LOADING && screenController.getLoadingScreen().isLoadingFinished()) {
+            currentGameState = GameState.PLAYING;
+        }
+
         switchSound();
     }
 
@@ -94,7 +99,6 @@ public class GameController {
     }
 
     public void loadNewMap() throws IOException {
-        screenController.setFrame(gameView.getFrame());
         currentGameState = GameState.LOADING;
         //highscore update
         highscore.increaseHighscoreForItems(itemController.getMenu());
@@ -111,7 +115,6 @@ public class GameController {
         Player player = entityController.getPlayer();
         playerSerializer.writePlayer(player);
         initOrUpdateGame();
-        currentGameState = GameState.PLAYING;
     }
 
     private void initOrUpdateGame() throws IOException {
@@ -123,7 +126,7 @@ public class GameController {
         entityController.initBoss(mapController, showHitbox);
         itemController.initItems(mapController);
         itemController.deleteAllItemsFromMenu();
-        currentGameState = GameState.PLAYING;
+        getAmountOfCurrentItemsRegistered = 0;
     }
 
     public void restartLevelAfterDeath() {
@@ -147,7 +150,7 @@ public class GameController {
                 player.setHealth(loadedHealth);
             }
         }
-        currentGameState = GameState.PLAYING;
+        currentGameState = GameState.LOADING;
     }
 
     public void resetGame() throws IOException {
@@ -175,23 +178,34 @@ public class GameController {
         }
         if (currentGameState == GameState.PLAYING) {
             if (!soundController.isSoundEffectPlaying()) {
+                if (entityController.getPlayer().isDead()) {
+                    soundController.playSoundEffect("res/sounds/soundeffects/death.mp3", 1200);
+                    return;
+                }
+                if (getAmountOfCurrentItemsRegistered < itemController.getActualItemCount()) {
+                    soundController.playSoundEffect("res/sounds/soundeffects/pickup_item.mp3", 100);
+                    getAmountOfCurrentItemsRegistered++;
+                    return;
+                }
                 if (entityController.getPlayerUI().getCurrentAnimation() == PlayerAnimations.RUN) {
-                    soundController.playSoundEffect("res/sounds/soundeffects/run.mp3");
+                    soundController.playSoundEffect("res/sounds/soundeffects/run.mp3", 350);
                 }
                 if (entityController.getPlayerUI().getCurrentAnimation() == PlayerAnimations.IDLE_SLASH ||
                         entityController.getPlayerUI().getCurrentAnimation() == PlayerAnimations.RUN_SLASH ||
                         entityController.getPlayerUI().getCurrentAnimation() == PlayerAnimations.JUMP_SLASH ||
                         entityController.getPlayerUI().getCurrentAnimation() == PlayerAnimations.FALL_SLASH) {
-                    soundController.playSoundEffect("res/sounds/soundeffects/attack.mp3");
+                    soundController.playSoundEffect("res/sounds/soundeffects/attack.mp3", 650);
                 }
                 if (entityController.getPlayerUI().getCurrentAnimation() == PlayerAnimations.DASH) {
-                    soundController.playSoundEffect("res/sounds/soundeffects/dash.mp3");
+                    soundController.playSoundEffect("res/sounds/soundeffects/dash.mp3", 350);
+                    return;
                 }
                 if (entityController.getPlayerUI().getCurrentAnimation() == PlayerAnimations.JUMP) {
-                    soundController.playSoundEffect("res/sounds/soundeffects/jump.mp3");
+                    soundController.playSoundEffect("res/sounds/soundeffects/jump.mp3", 350);
+                    return;
                 }
-                if (entityController.getPlayerUI().getCurrentAnimation() == PlayerAnimations.FALL) {
-                    soundController.playSoundEffect("res/sounds/soundeffects/land.mp3");
+                if (entityController.getPlayerUI().getCurrentAnimation() == PlayerAnimations.FALL && entityController.getPlayer().getAirMovement() > 5.5f && entityController.getPlayer().getAirMovement() < 6.0f) {
+                    soundController.playSoundEffect("res/sounds/soundeffects/land.mp3", 350);
                 }
             }
         }

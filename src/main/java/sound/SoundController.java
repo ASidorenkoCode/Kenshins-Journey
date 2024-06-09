@@ -10,7 +10,6 @@ import java.util.Map;
 
 public class SoundController {
 
-    private static final long COOLDOWN_PERIOD = 350;
     private Player backgroundMusicPlayer;
     private Map<String, Player> soundEffectPlayers = new HashMap<>();
     private Map<String, Boolean> isSoundEffectPlayingMap = new HashMap<>();
@@ -73,10 +72,10 @@ public class SoundController {
         }
     }
 
-    public void playSoundEffect(String filename) {
+    public void playSoundEffect(String filename, int cooldown) {
 
         long currentTime = System.currentTimeMillis();
-        if (currentTime - lastPlayedTime < COOLDOWN_PERIOD) {
+        if (currentTime - lastPlayedTime < cooldown) {
             return;
         }
 
@@ -118,6 +117,8 @@ public class SoundController {
             stopBackgroundMusic();
         } else if (currentGameState == GameState.END) {
             stopBackgroundMusic();
+            setStartScreenPlaying(false);
+            setPlayScreenPlaying(false);
         }
     }
 
@@ -133,16 +134,8 @@ public class SoundController {
         return isSoundEffectPlaying;
     }
 
-    public boolean isPlayScreenPlaying() {
-        return isPlayScreenPlaying;
-    }
-
     public void setPlayScreenPlaying(boolean playScreenPlaying) {
         isPlayScreenPlaying = playScreenPlaying;
-    }
-
-    public boolean isStartScreenPlaying() {
-        return isStartScreenPlaying;
     }
 
     public void setStartScreenPlaying(boolean startScreenPlaying) {

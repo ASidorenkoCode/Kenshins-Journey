@@ -20,7 +20,6 @@ public class ItemController {
     private final static int MENU_SIZE = 5;
 
 
-
     //TODO: animations should be part of item as seen with object
     private BufferedImage[][] animations;
     private Item[] menu;
@@ -80,6 +79,16 @@ public class ItemController {
             if (entityController.getPlayer().getHitbox().intersects(itemsOnMap.get(i).getHitbox()))
                 collectItem(itemsOnMap.get(i));
         }
+    }
+
+    public int getActualItemCount() {
+        int count = 0;
+        for (Item item : menu) {
+            if (item != null) {
+                count++;
+            }
+        }
+        return count;
     }
 
     public void draw(Graphics g, int mapOffsetX, int mapOffsetY) {
