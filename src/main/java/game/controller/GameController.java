@@ -11,6 +11,8 @@ import gameObjects.logic.Finish;
 import items.controller.ItemController;
 import javazoom.jl.decoder.JavaLayerException;
 import maps.controller.MapController;
+import network.Client;
+import network.HostRunner;
 import network.ServerObject;
 import network.SharedData;
 import screens.controller.ScreenController;
@@ -37,14 +39,19 @@ public class GameController {
     private Player.PlayerSerializer playerSerializer;
 
     private GameState currentGameState;
+
+
+    //network vars
     private long comparingTime;
     private ArrayList<ServerObject> serverObjects;
-
+    private boolean isPlayingMultiplayer;
+    private Client client;
     private boolean showHitbox;
 
     public GameController(boolean showHitBox) throws IOException {
         comparingTime = System.currentTimeMillis();
         serverObjects = new ArrayList<>();
+        isPlayingMultiplayer = false;
         //controller
         try {
             InetAddress inetAddress = InetAddress.getLocalHost();
@@ -87,7 +94,7 @@ public class GameController {
     public void update() throws IOException, JavaLayerException {
         if(currentGameState == GameState.PLAYING) {
 
-            if (!SharedData.networkToGameQueue.isEmpty()) {
+            if (isPlayingMultiplayer && !SharedData.networkToGameQueue.isEmpty()) {
                 try {
                     serverObjects = SharedData.networkToGameQueue.take();
                 } catch (InterruptedException e) {
@@ -113,7 +120,7 @@ public class GameController {
             highscore.decreaseHighScoreAfterOneSecond();
             screenController.update(highscore, entityController.getPlayer(), itemController.getMenu(), serverObjects);
 
-            if (SharedData.gameToNetworkQueue.isEmpty()) {
+            if (isPlayingMultiplayer && SharedData.gameToNetworkQueue.isEmpty()) {
                 try {
                     SharedData.gameToNetworkQueue.put(new ServerObject(highscore, entityController.getPlayer(), playerId));
                 } catch (InterruptedException e) {
@@ -246,7 +253,22 @@ public class GameController {
     }
 
     public void quitGame() {
-        gameEngine.getClient().playerQuitsGame();
+        if (isPlayingMultiplayer) return;
+        client.playerQuitsGame();
     }
 
+    public void useMultiplayer() {
+        if (isPlayingMultiplayer) return;
+        isPlayingMultiplayer = true;
+        new Thread(() -> {
+
+            //TODO: Check if host is available
+            String[] args = {};
+            HostRunner.main(args);
+        }).start();
+
+        client = new Client("localhost");
+        client.start();
+
+    }
 }

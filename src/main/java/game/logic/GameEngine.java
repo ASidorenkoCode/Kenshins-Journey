@@ -2,15 +2,12 @@ package game.logic;
 
 import game.controller.GameController;
 import javazoom.jl.decoder.JavaLayerException;
-import network.Client;
 
 import java.io.IOException;
 
 public class GameEngine implements Runnable {
 
     private Thread gameThread;
-
-    private Client client;
     private GameController gameController;
     private final int UPS_SET = 200;
     private long lastCheck;
@@ -24,8 +21,6 @@ public class GameEngine implements Runnable {
     public void startGameLoop() {
         gameThread = new Thread(this);
         gameThread.start();
-        client = new Client();
-        client.start();
     }
 
     @Override
@@ -64,9 +59,5 @@ public class GameEngine implements Runnable {
 
     public int getUpdates() {
         return updates;
-    }
-
-    public Client getClient() {
-        return client;
     }
 }

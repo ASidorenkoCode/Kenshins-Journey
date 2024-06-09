@@ -12,12 +12,12 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 public class Client extends Thread {
-    private static final String SERVER_ADDRESS = "localhost";
-    private static final int SERVER_PORT = 4711;
+    private String serverAdress;
 
     private long comparingTime = System.currentTimeMillis();
 
-    public Client() {
+    public Client(String serverAdress) {
+        this.serverAdress = serverAdress;
     }
 
     @Override
@@ -42,7 +42,7 @@ public class Client extends Thread {
 
     public ArrayList<ServerObject> sendDataToServer(ServerObject object) {
         try {
-            Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT);
+            Socket socket = new Socket(serverAdress, SharedData.SERVER_PORT);
             PrintWriter writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()), true);
             BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             Gson gson = new Gson();
@@ -70,7 +70,7 @@ public class Client extends Thread {
     public void playerQuitsGame() {
         try {
             System.out.println(true);
-            Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT);
+            Socket socket = new Socket(serverAdress, SharedData.SERVER_PORT);
             PrintWriter writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()), true);
             writer.println("quit");
 

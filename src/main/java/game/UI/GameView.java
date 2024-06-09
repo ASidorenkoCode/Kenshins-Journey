@@ -198,6 +198,10 @@ public class GameView extends JPanel {
             case KeyEvent.VK_O:
                 gameController.setIsDrawingListOfCurrentPlayersForInterfaceGame(true);
                 break;
+            case KeyEvent.VK_M:
+                gameController.useMultiplayer();
+                this.requestFocusInWindow();
+                break;
             default:
                 entityController.handleUserInputKeyPressed(e, gameController.getDeathScreen());
         }
