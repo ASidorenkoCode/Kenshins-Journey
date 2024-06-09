@@ -12,7 +12,7 @@ import items.controller.ItemController;
 import javazoom.jl.decoder.JavaLayerException;
 import maps.controller.MapController;
 import network.Client;
-import network.HostRunner;
+import network.Host;
 import network.ServerObject;
 import network.SharedData;
 import screens.controller.ScreenController;
@@ -260,12 +260,9 @@ public class GameController {
     public void useMultiplayer() {
         if (isPlayingMultiplayer) return;
         isPlayingMultiplayer = true;
-        new Thread(() -> {
 
-            //TODO: Check if host is available
-            String[] args = {};
-            HostRunner.main(args);
-        }).start();
+        //TODO: Check if host is running or not
+        new Host().start();
 
         client = new Client("localhost");
         client.start();

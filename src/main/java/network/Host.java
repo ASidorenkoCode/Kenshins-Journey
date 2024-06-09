@@ -4,12 +4,13 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
-public class Host {
+public class Host extends Thread {
 
     private static ArrayList<ServerObject> serverObjects = new ArrayList<>();
 
 
-    public void runApplication() {
+    @Override
+    public void run() {
         try (ServerSocket serverSocket = new ServerSocket(SharedData.SERVER_PORT)) {
             System.out.println("Server is listening on port " + SharedData.SERVER_PORT);
 
@@ -23,6 +24,7 @@ public class Host {
             e.printStackTrace();
         }
     }
+
 
     public void refreshServerObjects() {
         serverObjects.clear();
