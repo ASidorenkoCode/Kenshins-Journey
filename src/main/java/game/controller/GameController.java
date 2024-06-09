@@ -271,4 +271,8 @@ public class GameController {
         client.start();
 
     }
+
+    public boolean getIsPlayingMultiplayer() {
+        return isPlayingMultiplayer;
+    }
 }

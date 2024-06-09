@@ -35,7 +35,7 @@ public class ScreenController {
         interfaceGame.update(highscore, player, menu, serverObjects);
     }
 
-    public void draw(Graphics g, GameState currentGameState, int highscore, int deathCounter, Highscore highscores, int mapCount, String playerId, int currentLevel) {
+    public void draw(Graphics g, GameState currentGameState, int highscore, int deathCounter, Highscore highscores, int mapCount, String playerId, int currentLevel, boolean isPlayingMultiplayer) {
         switch (currentGameState) {
             //TODO implement start and death screen
             case START -> startScreen.draw(g);
@@ -49,7 +49,7 @@ public class ScreenController {
                 highscores.deleteHighscoreFile();
             }
             case DEAD -> deathScreen.draw(g, highscore, deathCounter);
-            case PLAYING -> interfaceGame.draw(g, playerId, currentLevel);
+            case PLAYING -> interfaceGame.draw(g, playerId, currentLevel, isPlayingMultiplayer);
             case HIGHSCORE -> {
                 setMapCountHighScoreScreen(mapCount);
                 highscores.findBestHighscores();

@@ -39,7 +39,7 @@ public class InterfaceGame {
         this.isDrawingListOfCurrentPlayers = false;
     }
 
-    public void draw(Graphics g, String playerId, int currentLevel) {
+    public void draw(Graphics g, String playerId, int currentLevel, boolean isPlayingMultiplayer) {
 
         int x = 0;
         int y = 0;
@@ -80,7 +80,7 @@ public class InterfaceGame {
 
         drawServerObjects(g, playerId, currentLevel);
 
-        if (isDrawingListOfCurrentPlayers) drawListOfCurrentPlayers(g);
+        if (isDrawingListOfCurrentPlayers) drawListOfCurrentPlayers(g, isPlayingMultiplayer);
     }
 
     public void update(Highscore highscore, Player player, Item[] menu, ArrayList<ServerObject> serverObjects) {
@@ -152,7 +152,7 @@ public class InterfaceGame {
         }
     }
 
-    private void drawListOfCurrentPlayers(Graphics g) {
+    private void drawListOfCurrentPlayers(Graphics g, boolean isPlayingMultiplayer) {
         int padding = GameView.GAME_WIDTH / 8;
         int margin = GameView.GAME_HEIGHT / 15;
         int startX = padding + margin;
@@ -161,20 +161,24 @@ public class InterfaceGame {
         int screenHeight = GameView.GAME_HEIGHT - (2 * padding);
         int columnLength = (screenWidth - margin) / 4;
 
-
-        //TODO: Responsive calculation
         int lineHeight = GameView.HEIGHT / 28;
         int linePadding = GameView.GAME_HEIGHT / 30;
 
         g.setColor(Color.WHITE);
         g.fillRect(padding, padding, screenWidth, screenHeight);
 
-
         g.setColor(Color.BLACK);
         g.setFont(new Font("Arial", Font.PLAIN, GameView.GAME_WIDTH / 30));
+
+        if (!isPlayingMultiplayer) {
+            g.drawString("No List available because you play offline", padding + margin, padding + margin);
+            g.setFont(new Font("Arial", Font.PLAIN, GameView.GAME_WIDTH / 65));
+            g.drawString("Press M to show data", padding + margin, startY);
+            return;
+        }
+
+
         g.drawString("Current Players", padding + margin, padding + margin);
-
-
         g.setFont(new Font("Arial", Font.PLAIN, GameView.GAME_WIDTH / 65));
         g.setColor(Color.BLACK);
         int columnPosition = margin;
