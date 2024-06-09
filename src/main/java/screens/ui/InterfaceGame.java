@@ -5,7 +5,7 @@ import game.UI.GameView;
 import game.logic.Highscore;
 import items.controller.ItemController;
 import items.logic.Item;
-import network.ServerObject;
+import network.data.ServerObject;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

@@ -1,4 +1,4 @@
-package network;
+package network.client;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -18,7 +18,7 @@ public class GitHubClient {
     private static final String API_URL = "https://api.github.com/repos/" + REPO_OWNER + "/" + REPO_NAME + "/contents/" + FILE_PATH;
     private static final Gson gson = new Gson();
 
-    public static boolean hostIsRunning() {
+    public static boolean fileContainsHostAddress() {
         try {
             String content = readFile();
             System.out.println(content);
@@ -120,7 +120,7 @@ public class GitHubClient {
         }
     }
 
-    private static void deleteFileContent() throws Exception {
+    public static void deleteFileContent() throws Exception {
         URL url = new URL(API_URL);
         HttpURLConnection getConnection = (HttpURLConnection) url.openConnection();
         getConnection.setRequestMethod("GET");

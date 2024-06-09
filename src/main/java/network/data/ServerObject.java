@@ -1,4 +1,4 @@
-package network;
+package network.data;
 
 import entities.logic.Player;
 import game.logic.Highscore;

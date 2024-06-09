@@ -1,4 +1,4 @@
-package network;
+package network.data;
 
 import java.util.ArrayList;
 import java.util.concurrent.BlockingQueue;

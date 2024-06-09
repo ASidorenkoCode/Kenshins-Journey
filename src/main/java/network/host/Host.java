@@ -1,4 +1,8 @@
-package network;
+package network.host;
+
+import network.client.ClientHandler;
+import network.data.ServerObject;
+import network.data.SharedData;
 
 import java.net.ServerSocket;
 import java.net.Socket;

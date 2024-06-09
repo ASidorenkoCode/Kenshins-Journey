@@ -1,7 +1,9 @@
-package network;
+package network.client;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import network.data.ServerObject;
+import network.data.SharedData;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

@@ -6,7 +6,7 @@ import game.controller.GameState;
 import game.logic.Highscore;
 import items.controller.ItemController;
 import items.logic.Item;
-import network.ServerObject;
+import network.data.ServerObject;
 import screens.ui.*;
 
 import javax.swing.*;

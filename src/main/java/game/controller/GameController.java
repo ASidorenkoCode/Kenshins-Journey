@@ -11,7 +11,11 @@ import gameObjects.logic.Finish;
 import items.controller.ItemController;
 import javazoom.jl.decoder.JavaLayerException;
 import maps.controller.MapController;
-import network.*;
+import network.client.Client;
+import network.client.GitHubClient;
+import network.data.ServerObject;
+import network.data.SharedData;
+import network.host.Host;
 import screens.controller.ScreenController;
 import screens.ui.DeathScreen;
 import sound.SoundController;
@@ -258,13 +262,14 @@ public class GameController {
 
     public void useMultiplayer() {
         if (isPlayingMultiplayer) return;
-
-
         try {
-            if (!GitHubClient.hostIsRunning()) {
+            if (!GitHubClient.fileContainsHostAddress()) {
                 new Host().start();
                 GitHubClient.writeFile(ipAddress);
             }
+
+            //TODO: check if host is actually running, if not create own host and write ip address to file
+            //TODO: also create own host if player is using host from different device, but player with host quits game
             client = new Client(GitHubClient.readFile());
             client.start();
         } catch (Exception e) {

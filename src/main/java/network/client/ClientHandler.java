@@ -1,6 +1,8 @@
-package network;
+package network.client;
 
 import com.google.gson.Gson;
+import network.data.ServerObject;
+import network.host.Host;
 
 import java.io.BufferedReader;
 import java.io.IOException;
