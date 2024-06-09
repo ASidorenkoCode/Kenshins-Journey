@@ -244,4 +244,9 @@ public class GameController {
     public void setCurrentGameState(GameState currentGameState) {
         this.currentGameState = currentGameState;
     }
+
+    public void quitGame() {
+        gameEngine.getClient().playerQuitsGame();
+    }
+
 }

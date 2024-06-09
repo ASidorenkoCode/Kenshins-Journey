@@ -24,18 +24,19 @@ public class Client extends Thread {
     public void run() {
         while (true) {
 
-
             if (SharedData.gameToNetworkQueue.isEmpty()) continue;
 
             try {
+
                 ServerObject currentObject = SharedData.gameToNetworkQueue.take();
 
                 SharedData.networkToGameQueue.put(sendDataToServer(currentObject));
+
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        }
 
+        }
 
     }
 
@@ -63,6 +64,20 @@ public class Client extends Thread {
             e.printStackTrace();
         }
         return new ArrayList<>();
+    }
+
+
+    public void playerQuitsGame() {
+        try {
+            System.out.println(true);
+            Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT);
+            PrintWriter writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()), true);
+            writer.println("quit");
+
+            socket.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

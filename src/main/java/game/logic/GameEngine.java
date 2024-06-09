@@ -1,8 +1,8 @@
 package game.logic;
 
 import game.controller.GameController;
-import network.Client;
 import javazoom.jl.decoder.JavaLayerException;
+import network.Client;
 
 import java.io.IOException;
 
@@ -27,6 +27,7 @@ public class GameEngine implements Runnable {
         client = new Client();
         client.start();
     }
+
     @Override
     public void run() {
         final double timePerUpdate = 1e9 / UPS_SET;
@@ -63,5 +64,9 @@ public class GameEngine implements Runnable {
 
     public int getUpdates() {
         return updates;
+    }
+
+    public Client getClient() {
+        return client;
     }
 }

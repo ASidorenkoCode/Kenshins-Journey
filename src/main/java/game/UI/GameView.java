@@ -12,6 +12,8 @@ import screens.controller.ScreenController;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.geom.AffineTransform;
 import java.io.IOException;
 
@@ -65,6 +67,14 @@ public class GameView extends JPanel {
 //        drawStartScreen();
         setFrameToFullScreen();
         frame.setVisible(true);
+
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                gameController.quitGame();
+            }
+        });
+
     }
 
     public void calculateScaleFactors() {

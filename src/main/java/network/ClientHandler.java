@@ -7,16 +7,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.ArrayList;
 
 public class ClientHandler extends Thread {
     private Socket socket;
+    private Host hostApplication;
 
-    private ArrayList<ServerObject> serverObjects;
-
-    public ClientHandler(Socket socket, ArrayList<ServerObject> serverObjects) {
+    public ClientHandler(Socket socket, Host hostApplication) {
         this.socket = socket;
-        this.serverObjects = serverObjects;
+        this.hostApplication = hostApplication;
     }
 
     @Override
@@ -31,12 +29,19 @@ public class ClientHandler extends Thread {
 
             // Read a message sent by the client
             String request = in.readLine();
+
+            if (request.equals("quit")) {
+                hostApplication.refreshServerObjects();
+                return;
+            }
+
+
             ServerObject serverObject = gson.fromJson(request, ServerObject.class);
-            addOrUpdateServerObject(serverObject);
+            hostApplication.addOrUpdateServerObject(serverObject);
 
 
             // Send a response to the client
-            String response = gson.toJson(serverObjects);
+            String response = gson.toJson(hostApplication.getServerObjects());
             out.println(response);
 
         } catch (IOException e) {
@@ -44,13 +49,5 @@ public class ClientHandler extends Thread {
         }
     }
 
-    private void addOrUpdateServerObject(ServerObject currentObject) {
-        for (ServerObject object : serverObjects) {
-            if (object.getPlayerId().equals(currentObject.getPlayerId())) {
-                object.updateObject(currentObject);
-                return;
-            }
-        }
-        serverObjects.add(currentObject);
-    }
+
 }
