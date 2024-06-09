@@ -183,7 +183,7 @@ public class GameController {
                     return;
                 }
                 if (getAmountOfCurrentItemsRegistered < itemController.getActualItemCount()) {
-                    soundController.playSoundEffect("res/sounds/soundeffects/pickup_item.mp3", 100);
+                    soundController.playSoundEffect("res/sounds/soundeffects/pickup_item.mp3", 10);
                     getAmountOfCurrentItemsRegistered++;
                     return;
                 }
