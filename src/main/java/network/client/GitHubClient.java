@@ -18,17 +18,6 @@ public class GitHubClient {
     private static final String API_URL = "https://api.github.com/repos/" + REPO_OWNER + "/" + REPO_NAME + "/contents/" + FILE_PATH;
     private static final Gson gson = new Gson();
 
-    public static boolean fileContainsHostAddress() {
-        try {
-            String content = readFile();
-            System.out.println(content);
-            return !content.isEmpty();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
     public static String readFile() throws Exception {
         URL url = new URL(API_URL);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
