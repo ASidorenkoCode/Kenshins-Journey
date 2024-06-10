@@ -267,7 +267,7 @@ public class GameController {
         if (isPlayingMultiplayer) return;
         try {
             String fileContent = GitHubClient.readFile();
-            if (!fileContent.isEmpty()) {
+            if (fileContent.isEmpty()) {
                 new Host().start();
                 GitHubClient.writeFile(ipAddress);
             } else {
