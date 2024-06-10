@@ -18,6 +18,7 @@ public class GitHubClient {
     private static final String API_URL = "https://api.github.com/repos/" + REPO_OWNER + "/" + REPO_NAME + "/contents/" + FILE_PATH;
     private static final Gson gson = new Gson();
 
+
     public static String readFile() throws Exception {
 
         HttpClient client = HttpClient.newHttpClient();
