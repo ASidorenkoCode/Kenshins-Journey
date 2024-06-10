@@ -19,7 +19,6 @@ public class Host extends Thread {
             System.out.println("Server is listening on port " + SharedData.SERVER_PORT);
 
             while (true) {
-                System.out.println(serverObjects.size());
                 Socket clientSocket = serverSocket.accept();
                 new ClientHandler(clientSocket, this).start();
 

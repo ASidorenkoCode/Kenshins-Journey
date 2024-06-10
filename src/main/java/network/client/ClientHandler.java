@@ -22,7 +22,6 @@ public class ClientHandler extends Thread {
     @Override
     public void run() {
         try {
-            System.out.println("New client connected");
             Gson gson = new Gson();
 
             // Create input and output streams to read from and write to the client
