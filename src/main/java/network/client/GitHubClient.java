@@ -3,11 +3,11 @@ package network.client;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.URL;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.Base64;
 
 public class GitHubClient {
@@ -19,24 +19,21 @@ public class GitHubClient {
     private static final Gson gson = new Gson();
 
     public static String readFile() throws Exception {
-        URL url = new URL(API_URL);
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("GET");
-        connection.setRequestProperty("Authorization", "token " + GITHUB_TOKEN);
-        connection.setRequestProperty("Accept", "application/vnd.github.v3+json");
 
-        int responseCode = connection.getResponseCode();
+        HttpClient client = HttpClient.newHttpClient();
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(new URI(API_URL))
+                .header("Authorization", "token " + GITHUB_TOKEN)
+                .header("Accept", "application/vnd.github.v3+json")
+                .GET()
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        int responseCode = response.statusCode();
         if (responseCode == HttpURLConnection.HTTP_OK) {
-            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            StringBuilder content = new StringBuilder();
-            String inputLine;
-            while ((inputLine = in.readLine()) != null) {
-                content.append(inputLine);
-            }
-            in.close();
-            connection.disconnect();
-
-            JsonObject json = gson.fromJson(content.toString(), JsonObject.class);
+            JsonObject json = gson.fromJson(response.body(), JsonObject.class);
             String base64Content = json.get("content").getAsString().replaceAll("\n", "").replaceAll("\r", "");
 
             // Decode Base64 content
@@ -44,127 +41,89 @@ public class GitHubClient {
             String fileContent = new String(decodedBytes);
             return fileContent.trim();
         } else {
-            connection.disconnect();
             System.out.println("GET request failed. Response Code: " + responseCode);
             return "";
         }
     }
 
     public static void writeFile(String content) throws Exception {
-        URL url = new URL(API_URL);
-        HttpURLConnection getConnection = (HttpURLConnection) url.openConnection();
-        getConnection.setRequestMethod("GET");
-        getConnection.setRequestProperty("Authorization", "token " + GITHUB_TOKEN);
-        getConnection.setRequestProperty("Accept", "application/vnd.github.v3+json");
+        String sha = fetchSha();
 
-        int getResponseCode = getConnection.getResponseCode();
-        if (getResponseCode == HttpURLConnection.HTTP_OK) {
-            BufferedReader in = new BufferedReader(new InputStreamReader(getConnection.getInputStream()));
-            StringBuilder getResponse = new StringBuilder();
-            String inputLine;
-            while ((inputLine = in.readLine()) != null) {
-                getResponse.append(inputLine);
-            }
-            in.close();
-            JsonObject getJson = gson.fromJson(getResponse.toString(), JsonObject.class);
-            String sha = getJson.get("sha").getAsString();
-
-            getConnection.disconnect();
-
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("PUT");
-            connection.setRequestProperty("Authorization", "token " + GITHUB_TOKEN);
-            connection.setRequestProperty("Accept", "application/vnd.github.v3+json");
-            connection.setRequestProperty("Content-Type", "application/json");
+        if (sha != null) {
+            HttpClient client = HttpClient.newHttpClient();
 
             JsonObject json = new JsonObject();
             json.addProperty("message", "Updating data.txt");
             json.addProperty("content", Base64.getEncoder().encodeToString(content.getBytes()));
             json.addProperty("sha", sha);
 
-            connection.setDoOutput(true);
-            OutputStream os = connection.getOutputStream();
-            os.write(gson.toJson(json).getBytes());
-            os.flush();
-            os.close();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(new URI(API_URL))
+                    .header("Authorization", "token " + GITHUB_TOKEN)
+                    .header("Accept", "application/vnd.github.v3+json")
+                    .header("Content-Type", "application/json")
+                    .PUT(HttpRequest.BodyPublishers.ofString(json.toString()))
+                    .build();
 
-            int responseCode = connection.getResponseCode();
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            int responseCode = response.statusCode();
             if (responseCode == HttpURLConnection.HTTP_CREATED || responseCode == HttpURLConnection.HTTP_OK) {
-                BufferedReader inPut = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                String inputLinePut;
-                StringBuilder responsePut = new StringBuilder();
-                while ((inputLinePut = inPut.readLine()) != null) {
-                    responsePut.append(inputLinePut);
-                }
-                inPut.close();
-                System.out.println("Response: " + responsePut.toString());
+                System.out.println("Response: " + response.body());
             } else {
                 System.out.println("PUT request failed. Response Code: " + responseCode);
             }
-
-            connection.disconnect();
-        } else {
-            getConnection.disconnect();
-            System.out.println("GET request failed. Response Code: " + getResponseCode);
         }
     }
 
     public static void deleteFileContent() throws Exception {
-        URL url = new URL(API_URL);
-        HttpURLConnection getConnection = (HttpURLConnection) url.openConnection();
-        getConnection.setRequestMethod("GET");
-        getConnection.setRequestProperty("Authorization", "token " + GITHUB_TOKEN);
-        getConnection.setRequestProperty("Accept", "application/vnd.github.v3+json");
+        String sha = fetchSha();
 
-        int getResponseCode = getConnection.getResponseCode();
-        if (getResponseCode == HttpURLConnection.HTTP_OK) {
-            BufferedReader in = new BufferedReader(new InputStreamReader(getConnection.getInputStream()));
-            StringBuilder getResponse = new StringBuilder();
-            String inputLine;
-            while ((inputLine = in.readLine()) != null) {
-                getResponse.append(inputLine);
-            }
-            in.close();
-            JsonObject getJson = gson.fromJson(getResponse.toString(), JsonObject.class);
-            String sha = getJson.get("sha").getAsString();
-
-            getConnection.disconnect();
-
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("PUT");
-            connection.setRequestProperty("Authorization", "token " + GITHUB_TOKEN);
-            connection.setRequestProperty("Accept", "application/vnd.github.v3+json");
-            connection.setRequestProperty("Content-Type", "application/json");
+        if (sha != null) {
+            HttpClient client = HttpClient.newHttpClient();
 
             JsonObject json = new JsonObject();
             json.addProperty("message", "Deleting content of data.txt");
             json.addProperty("content", Base64.getEncoder().encodeToString("".getBytes()));
             json.addProperty("sha", sha);
 
-            connection.setDoOutput(true);
-            OutputStream os = connection.getOutputStream();
-            os.write(gson.toJson(json).getBytes());
-            os.flush();
-            os.close();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(new URI(API_URL))
+                    .header("Authorization", "token " + GITHUB_TOKEN)
+                    .header("Accept", "application/vnd.github.v3+json")
+                    .header("Content-Type", "application/json")
+                    .PUT(HttpRequest.BodyPublishers.ofString(json.toString()))
+                    .build();
 
-            int responseCode = connection.getResponseCode();
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            int responseCode = response.statusCode();
             if (responseCode == HttpURLConnection.HTTP_CREATED || responseCode == HttpURLConnection.HTTP_OK) {
-                BufferedReader inPut = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                String inputLinePut;
-                StringBuilder responsePut = new StringBuilder();
-                while ((inputLinePut = inPut.readLine()) != null) {
-                    responsePut.append(inputLinePut);
-                }
-                inPut.close();
-                System.out.println("Response: " + responsePut.toString());
+                System.out.println("Response: " + response.body());
             } else {
                 System.out.println("PUT request failed. Response Code: " + responseCode);
             }
+        }
+    }
 
-            connection.disconnect();
+    private static String fetchSha() throws Exception {
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(new URI(API_URL))
+                .header("Authorization", "token " + GITHUB_TOKEN)
+                .header("Accept", "application/vnd.github.v3+json")
+                .GET()
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        int responseCode = response.statusCode();
+        if (responseCode == HttpURLConnection.HTTP_OK) {
+            JsonObject json = gson.fromJson(response.body(), JsonObject.class);
+            return json.get("sha").getAsString();
         } else {
-            getConnection.disconnect();
-            System.out.println("GET request failed. Response Code: " + getResponseCode);
+            System.out.println("GET request failed. Response Code: " + responseCode);
+            return null;
         }
     }
 }
