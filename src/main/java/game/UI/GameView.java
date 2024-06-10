@@ -73,6 +73,8 @@ public class GameView extends JPanel {
             public void windowClosing(WindowEvent e) {
                 gameController.quitGame();
             }
+
+
         });
 
     }
@@ -124,6 +126,7 @@ public class GameView extends JPanel {
         itemController.draw(g, mapOffsetX, mapOffsetY);
         gameObjectController.drawObjects(g, mapOffsetX, mapOffsetY);
         mapController.draw(g, true);
+
         screenController.draw(g, gameController.getCurrentGameState(), gameController.getHighscore().getCurrentHighscore(), gameController.getHighscore().getDeathCounter(), gameController.getHighscore(), mapController.getMaps().size(), gameController.getPlayerId(), gameController.getHighscore().getAllHighscores().size() + 1, gameController.getIsPlayingMultiplayer());
     }
 
@@ -203,7 +206,14 @@ public class GameView extends JPanel {
                 this.requestFocusInWindow();
                 break;
             default:
-                entityController.handleUserInputKeyPressed(e, gameController.getDeathScreen());
+                if (e.getKeyCode() == KeyEvent.VK_F4 && e.isAltDown()) {
+                    gameController.quitGame();
+                } else if (e.getKeyCode() == KeyEvent.VK_Q && e.isMetaDown()) {
+                    gameController.quitGame();
+                } else {
+                    entityController.handleUserInputKeyPressed(e, gameController.getDeathScreen());
+                }
+
         }
     }
 

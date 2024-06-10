@@ -130,6 +130,8 @@ public class GameController {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+            } else if (!isPlayingMultiplayer) {
+                serverObjects.clear();
             }
 
         }
@@ -257,7 +259,7 @@ public class GameController {
     }
 
     public void quitGame() {
-        if (isPlayingMultiplayer) return;
+        if (client == null || isPlayingMultiplayer) return;
         client.playerQuitsGame();
     }
 
@@ -276,8 +278,10 @@ public class GameController {
                     GitHubClient.writeFile(ipAddress);
                 }
             }
-            client = new Client(GitHubClient.readFile());
+            client = new Client(GitHubClient.readFile(), this);
             client.start();
+
+
         } catch (Exception e) {
             e.printStackTrace();
             return;
@@ -288,5 +292,13 @@ public class GameController {
 
     public boolean getIsPlayingMultiplayer() {
         return isPlayingMultiplayer;
+    }
+
+    public void setIsPlayingMultiplayer(boolean isPlayingMultiplayer) {
+        this.isPlayingMultiplayer = isPlayingMultiplayer;
+    }
+
+    public String getIpAddress() {
+        return ipAddress;
     }
 }

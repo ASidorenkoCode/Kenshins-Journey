@@ -2,6 +2,7 @@ package network.client;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import game.controller.GameController;
 import network.data.ServerObject;
 import network.data.SharedData;
 
@@ -15,15 +16,17 @@ import java.util.ArrayList;
 
 public class Client extends Thread {
     private String serverAdress;
-
+    private GameController gameController;
     private long comparingTime = System.currentTimeMillis();
 
-    public Client(String serverAdress) {
+    public Client(String serverAdress, GameController gameController) {
         this.serverAdress = serverAdress;
+        this.gameController = gameController;
     }
 
     @Override
     public void run() {
+
         while (true) {
 
             if (SharedData.gameToNetworkQueue.isEmpty()) continue;
@@ -63,7 +66,8 @@ public class Client extends Thread {
             socket.close();
             return response;
         } catch (Exception e) {
-            e.printStackTrace();
+            gameController.setIsPlayingMultiplayer(false);
+            serverAdress = gameController.getIpAddress();
         }
         return new ArrayList<>();
     }
@@ -71,7 +75,6 @@ public class Client extends Thread {
 
     public void playerQuitsGame() {
         try {
-            System.out.println(true);
             Socket socket = new Socket(serverAdress, SharedData.SERVER_PORT);
             PrintWriter writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()), true);
             writer.println("quit");
@@ -81,5 +84,6 @@ public class Client extends Thread {
             e.printStackTrace();
         }
     }
+
 
 }
