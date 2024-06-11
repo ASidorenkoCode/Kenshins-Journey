@@ -147,7 +147,6 @@ public class GameController {
     }
 
     public void loadNewMap() throws IOException {
-        screenController.setFrame(gameView.getFrame());
         currentGameState = GameState.LOADING;
         //highscore update
         highscore.increaseHighscoreForItems(itemController.getMenu());
