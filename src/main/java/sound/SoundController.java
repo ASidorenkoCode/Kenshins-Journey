@@ -10,13 +10,14 @@ import java.util.Map;
 
 public class SoundController {
 
-    private static final long COOLDOWN_PERIOD = 350;
     private Player backgroundMusicPlayer;
     private Map<String, Player> soundEffectPlayers = new HashMap<>();
     private Map<String, Boolean> isSoundEffectPlayingMap = new HashMap<>();
     private Thread backgroundMusicThread;
     private GameState currentGameState;
     private boolean isSoundEffectPlaying;
+    private boolean isStartScreenPlaying;
+    private boolean isPlayScreenPlaying;
     private long lastPlayedTime = 0;
 
 
@@ -71,10 +72,10 @@ public class SoundController {
         }
     }
 
-    public void playSoundEffect(String filename) {
+    public void playSoundEffect(String filename, int cooldown) {
 
         long currentTime = System.currentTimeMillis();
-        if (currentTime - lastPlayedTime < COOLDOWN_PERIOD) {
+        if (currentTime - lastPlayedTime < cooldown) {
             return;
         }
 
@@ -107,12 +108,17 @@ public class SoundController {
     }
 
     public void soundControl() {
-        if (currentGameState == GameState.START) {
+        if (currentGameState == GameState.START && !isStartScreenPlaying) {
             playBackgroundMusic("res/sounds/startScreenSound.mp3");
-        } else if (currentGameState == GameState.PLAYING) {
+            setStartScreenPlaying(true);
+        } else if (currentGameState == GameState.PLAYING && !isPlayScreenPlaying) {
             playBackgroundMusic("res/sounds/playScreenSound.mp3");
+            setPlayScreenPlaying(true);
             stopBackgroundMusic();
-        } else {
+        } else if (currentGameState == GameState.END) {
+            stopBackgroundMusic();
+            setStartScreenPlaying(false);
+            setPlayScreenPlaying(false);
         }
     }
 
@@ -126,5 +132,13 @@ public class SoundController {
 
     public boolean isSoundEffectPlaying() {
         return isSoundEffectPlaying;
+    }
+
+    public void setPlayScreenPlaying(boolean playScreenPlaying) {
+        isPlayScreenPlaying = playScreenPlaying;
+    }
+
+    public void setStartScreenPlaying(boolean startScreenPlaying) {
+        isStartScreenPlaying = startScreenPlaying;
     }
 }

@@ -34,7 +34,7 @@ public class Highscore implements Serializable {
         }
     }
 
-    public void increaseHighscoreForKappa() {
+    public void increaseHighscoreForEnemies() {
         currentHighscore += 200;
     }
 

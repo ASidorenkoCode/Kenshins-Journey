@@ -37,8 +37,8 @@ public class ScreenController {
             //TODO implement start and death screen
             case START -> startScreen.draw(g);
             case LOADING -> {
-                loadingScreen.setFrame(frame);
-                loadingScreen.displayLoadingScreen();
+                loadingScreen.startLoading();
+                loadingScreen.draw(g);
             }
             case END -> {
                 setMapCountEndScreen(mapCount);
@@ -46,7 +46,10 @@ public class ScreenController {
                 highscores.deleteHighscoreFile();
             }
             case DEAD -> deathScreen.draw(g, highscore, deathCounter);
-            case PLAYING -> interfaceGame.draw(g);
+            case PLAYING -> {
+                loadingScreen.resetProgress();
+                interfaceGame.draw(g);
+            }
             case HIGHSCORE -> {
                 setMapCountHighScoreScreen(mapCount);
                 highscores.findBestHighscores();
@@ -77,5 +80,9 @@ public class ScreenController {
 
     public HighScoreScreen getHighScoreScreen() {
         return highScoreScreen;
+    }
+
+    public LoadingScreen getLoadingScreen() {
+        return loadingScreen;
     }
 }

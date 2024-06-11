@@ -22,6 +22,7 @@ public class GameEngine implements Runnable {
         gameThread = new Thread(this);
         gameThread.start();
     }
+
     @Override
     public void run() {
         final double timePerUpdate = 1e9 / UPS_SET;
@@ -39,6 +40,7 @@ public class GameEngine implements Runnable {
                 updateAccumulator -= timePerUpdate;
                 try {
                     gameController.update();
+                    gameController.callRepaint();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 } catch (JavaLayerException e) {
@@ -47,7 +49,6 @@ public class GameEngine implements Runnable {
                 updates++;
             }
 
-            gameController.callRepaint();
             frames++;
         }
     }

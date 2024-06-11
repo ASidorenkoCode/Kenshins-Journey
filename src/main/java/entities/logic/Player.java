@@ -92,15 +92,15 @@ public class Player extends Entity implements Serializable {
         resetMaximumDamagePerAttack();
     }
 
-    public void update(Map map, Boss boss, ArrayList<Kappa> kappas) {
+    public void update(Map map, Boss boss, ArrayList<Enemy> enemies) {
 
 
         if(!attack) {
             attackHitBoxIsActive = false;
         } else {
             handlePlayerAttacksEntity(boss);
-            for (Kappa kappa: kappas) {
-                handlePlayerAttacksEntity(kappa);
+            for (Enemy enemy : enemies) {
+                handlePlayerAttacksEntity(enemy);
             }
         }
 
@@ -121,23 +121,23 @@ public class Player extends Entity implements Serializable {
             }
             if (right && !left) {
                 isFacingRight = true;
-                updateXPos(map, boss, kappas, currentSpeed);
+                updateXPos(map, boss, enemies, currentSpeed);
                 updateGroundMovement();
             } else if (left && !right) {
-                updateXPos(map, boss, kappas, -currentSpeed);
+                updateXPos(map, boss, enemies, -currentSpeed);
                 updateGroundMovement();
                 isFacingRight = false;
             } else time = 0;
 
             if (inAir && !isDashing) {
 
-                updateYPos(map, boss, kappas, airMovement);
+                updateYPos(map, boss, enemies, airMovement);
 
                 if (inAir) {
                     airMovement += 0.1f;
                 }
 
-            } else if (!checkIfPlayerCollidesUnderHim(map, boss, kappas, hitbox.x, hitbox.y + 1, hitbox.width, hitbox.height)) {
+            } else if (!checkIfPlayerCollidesUnderHim(map, boss, enemies, hitbox.x, hitbox.y + 1, hitbox.width, hitbox.height)) {
                 airMovement = 0;
                 inAir = true;
             }
@@ -149,25 +149,25 @@ public class Player extends Entity implements Serializable {
     }
 
 
-
-    private void updateXPos(Map map, Boss boss, ArrayList<Kappa> kappas, float byValue) {
-        if (!checkIfPlayerCanMoveToPosition(map, boss, kappas, hitbox.x + byValue, hitbox.y, hitbox.width, hitbox.height)) return;
+    private void updateXPos(Map map, Boss boss, ArrayList<Enemy> enemies, float byValue) {
+        if (!checkIfPlayerCanMoveToPosition(map, boss, enemies, hitbox.x + byValue, hitbox.y, hitbox.width, hitbox.height))
+            return;
         x += byValue;
         hitbox.x += byValue;
-        adjustPlayerHitboxPosition(map, boss, kappas);
+        adjustPlayerHitboxPosition(map, boss, enemies);
         rightAttackHitBox.x = hitbox.x + hitbox.width;
         leftAttackHitBox.x = hitbox.x - leftAttackHitBox.width;
     }
 
-    private void adjustPlayerHitboxPosition(Map map, Boss boss, ArrayList<Kappa> kappas) {
+    private void adjustPlayerHitboxPosition(Map map, Boss boss, ArrayList<Enemy> enemies) {
         //TODO: Change hitbox movement bug
         if (getLeft() && !getRight() && !hasDynamicAdjustedPlayerDirectionHitbox) {
-            if (checkIfPlayerCanMoveToPosition(map, boss, kappas,hitbox.x + 20, hitbox.y, hitbox.width, hitbox.height)) {
+            if (checkIfPlayerCanMoveToPosition(map, boss, enemies, hitbox.x + 20, hitbox.y, hitbox.width, hitbox.height)) {
                 hitbox.x += 20;
                 hasDynamicAdjustedPlayerDirectionHitbox = true;
             }
         } else if (!getLeft() && getRight() && hasDynamicAdjustedPlayerDirectionHitbox) {
-            if (checkIfPlayerCanMoveToPosition(map, boss,kappas, hitbox.x - 20, hitbox.y, hitbox.width, hitbox.height)) {
+            if (checkIfPlayerCanMoveToPosition(map, boss, enemies, hitbox.x - 20, hitbox.y, hitbox.width, hitbox.height)) {
                 hitbox.x -= 20;
                 hasDynamicAdjustedPlayerDirectionHitbox = false;
             }
@@ -180,14 +180,13 @@ public class Player extends Entity implements Serializable {
     }
 
 
-
-    private void updateYPos(Map map, Boss boss, ArrayList<Kappa> kappas, float by_value) {
-        if (checkIfPlayerCollidesOverHim(map, boss, kappas, hitbox.x, hitbox.y + by_value, hitbox.width)) {
+    private void updateYPos(Map map, Boss boss, ArrayList<Enemy> enemies, float by_value) {
+        if (checkIfPlayerCollidesOverHim(map, boss, enemies, hitbox.x, hitbox.y + by_value, hitbox.width)) {
 
             airMovement = 0;
             return;
 
-        } else if (checkIfPlayerCollidesUnderHim(map, boss, kappas, hitbox.x, hitbox.y + by_value, hitbox.width, hitbox.height)) {
+        } else if (checkIfPlayerCollidesUnderHim(map, boss, enemies, hitbox.x, hitbox.y + by_value, hitbox.width, hitbox.height)) {
             landed();
 
             float playerYPos = (hitbox.y + by_value + hitbox.height);
@@ -268,12 +267,12 @@ public class Player extends Entity implements Serializable {
         this.attackHitBoxIsActive = attackHitBoxIsActive;
     }
 
-    public boolean collidesOnPosition(Map map, Boss boss, ArrayList<Kappa> kappas, float x, float y) {
+    public boolean collidesOnPosition(Map map, Boss boss, ArrayList<Enemy> enemies, float x, float y) {
 
-        for(Kappa kappa: kappas) {
-            if(!kappa.isDead()) {
-                Rectangle2D.Float kappaHitbox = kappa.getHitbox();
-                if(kappaHitbox.contains(new Point((int) x, (int) y))) return true;
+        for (Enemy enemy : enemies) {
+            if (!enemy.isDead()) {
+                Rectangle2D.Float enemyHitbox = enemy.getHitbox();
+                if (enemyHitbox.contains(new Point((int) x, (int) y))) return true;
             }
         }
 
@@ -299,37 +298,37 @@ public class Player extends Entity implements Serializable {
         return mapData[tile_y][tile_x] < 11 || mapData[tile_y][tile_x] < 48 && mapData[tile_y][tile_x] > 11 || mapData[tile_y][tile_x] < 81 && mapData[tile_y][tile_x] > 75;
     }
 
-    private boolean checkIfPlayerCanMoveToPosition(Map map, Boss boss, ArrayList<Kappa> kappas, float x, float y, float width, float height) {
-        if (checkIfPlayerCollidesOverHim(map, boss, kappas, x, y, width)) return false;
-        if (checkIfPlayerCollidesOnRight(map, boss, kappas, x, y, width, height)) return false;
-        if (checkIfPlayerCollidesOnLeft(map, boss, kappas, x, y, height)) return false;
-        return !checkIfPlayerCollidesUnderHim(map, boss, kappas, x, y, width, height);
+    private boolean checkIfPlayerCanMoveToPosition(Map map, Boss boss, ArrayList<Enemy> enemies, float x, float y, float width, float height) {
+        if (checkIfPlayerCollidesOverHim(map, boss, enemies, x, y, width)) return false;
+        if (checkIfPlayerCollidesOnRight(map, boss, enemies, x, y, width, height)) return false;
+        if (checkIfPlayerCollidesOnLeft(map, boss, enemies, x, y, height)) return false;
+        return !checkIfPlayerCollidesUnderHim(map, boss, enemies, x, y, width, height);
     }
 
-    private boolean checkIfPlayerCollidesUnderHim(Map map, Boss boss, ArrayList<Kappa> kappas,  float x, float y, float width, float height) {
+    private boolean checkIfPlayerCollidesUnderHim(Map map, Boss boss, ArrayList<Enemy> enemies, float x, float y, float width, float height) {
         for(int i=0; i<=width; i++) {
-            if(collidesOnPosition(map,boss,kappas,x+i, y+height)) return true;
+            if (collidesOnPosition(map, boss, enemies, x + i, y + height)) return true;
         }
         return false;
     }
 
-    private boolean checkIfPlayerCollidesOverHim(Map map, Boss boss, ArrayList<Kappa> kappas, float x, float y, float width) {
+    private boolean checkIfPlayerCollidesOverHim(Map map, Boss boss, ArrayList<Enemy> enemies, float x, float y, float width) {
         for(int i=0; i<=width; i++) {
-            if(collidesOnPosition(map,boss,kappas,x+i, y)) return true;
+            if (collidesOnPosition(map, boss, enemies, x + i, y)) return true;
         }
         return false;
     }
 
-    private boolean checkIfPlayerCollidesOnRight(Map map, Boss boss, ArrayList<Kappa> kappas, float x, float y, float width, float height) {
+    private boolean checkIfPlayerCollidesOnRight(Map map, Boss boss, ArrayList<Enemy> enemies, float x, float y, float width, float height) {
         for(int i=0; i<=height; i++) {
-            if(collidesOnPosition(map,boss, kappas, x+width, y+i)) return true;
+            if (collidesOnPosition(map, boss, enemies, x + width, y + i)) return true;
         }
         return false;
     }
 
-    private boolean checkIfPlayerCollidesOnLeft(Map map, Boss boss, ArrayList<Kappa> kappas, float x, float y, float height) {
+    private boolean checkIfPlayerCollidesOnLeft(Map map, Boss boss, ArrayList<Enemy> enemies, float x, float y, float height) {
         for(int i=0; i<=height; i++) {
-            if(collidesOnPosition(map,boss, kappas, x, y+i)) return true;
+            if (collidesOnPosition(map, boss, enemies, x, y + i)) return true;
         }
         return false;
     }
