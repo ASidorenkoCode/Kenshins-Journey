@@ -40,6 +40,7 @@ public class GameEngine implements Runnable {
                 updateAccumulator -= timePerUpdate;
                 try {
                     gameController.update();
+                    gameController.callRepaint();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 } catch (JavaLayerException e) {
@@ -48,7 +49,6 @@ public class GameEngine implements Runnable {
                 updates++;
             }
 
-            gameController.callRepaint();
             frames++;
         }
     }

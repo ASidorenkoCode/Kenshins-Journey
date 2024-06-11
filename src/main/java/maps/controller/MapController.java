@@ -77,8 +77,8 @@ public class MapController {
         return maps.get(currentMapIndex).getFinishSpawn();
     }
 
-    public ArrayList<Point> getCurrentKappaSpawns() {
-        return maps.get(currentMapIndex).getKappaSpawns();
+    public ArrayList<Point> getCurrentEnemySpawns() {
+        return maps.get(currentMapIndex).getEnemySpawns();
     }
 
     public ArrayList<Point> getCurrentItemSpawns() {

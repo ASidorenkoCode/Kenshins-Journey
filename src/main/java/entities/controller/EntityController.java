@@ -1,10 +1,10 @@
 package entities.controller;
 
 import entities.logic.Boss;
-import entities.logic.Kappa;
+import entities.logic.Enemy;
 import entities.logic.Player;
 import entities.ui.BossUI;
-import entities.ui.KappaUI;
+import entities.ui.EnemyUI;
 import entities.ui.PlayerUI;
 import game.logic.Highscore;
 import gameObjects.controller.GameObjectController;
@@ -20,20 +20,20 @@ public class EntityController {
 
     private PlayerUI playerUI;
     private Player player;
-    private ArrayList<Kappa> kappas;
-    private ArrayList<KappaUI> kappaUIS;
+    private ArrayList<Enemy> enemies;
+    private ArrayList<EnemyUI> enemyUIS;
     private Boss currentBoss;
     private BossUI bossUI;
 
     public EntityController(MapController mapController, boolean showHitBox) throws IOException {
         initOrUpdatePlayer(mapController, showHitBox);
-        initKappas(mapController, showHitBox);
+        initEnemies(mapController, showHitBox);
         initBoss(mapController, showHitBox);
     }
 
     public void update(MapController mapController, GameObjectController gameObjectController, Highscore highscore) {
-        player.update(mapController.getCurrentMap(), currentBoss, kappas);
-        for (Kappa kap : kappas) kap.update(mapController.getCurrentMap(), player, highscore);
+        player.update(mapController.getCurrentMap(), currentBoss, enemies);
+        for (Enemy kap : enemies) kap.update(mapController.getCurrentMap(), player, highscore);
 
         if(currentBoss != null) currentBoss.update(mapController.getMapOffsetX(), player, highscore, gameObjectController.getFinish());
     }
@@ -50,15 +50,16 @@ public class EntityController {
         player = new Player(playerSpawnPoint.x, playerSpawnPoint.y);
         playerUI = new PlayerUI(player, showHitBox);
     }
-    public void initKappas(MapController mapController, boolean showHitBox) {
-        kappas = new ArrayList<>();
-        kappaUIS = new ArrayList<>();
-        for(Point p: mapController.getCurrentKappaSpawns()) {
-            Kappa kappa = new Kappa(p.x, p.y, 0.6f);
-            KappaUI kappaUI = new KappaUI(kappa, showHitBox);
-            kappa.resetHealth();
-            kappas.add(kappa);
-            kappaUIS.add(kappaUI);
+
+    public void initEnemies(MapController mapController, boolean showHitBox) {
+        enemies = new ArrayList<>();
+        enemyUIS = new ArrayList<>();
+        for (Point p : mapController.getCurrentEnemySpawns()) {
+            Enemy enemy = new Enemy(p.x, p.y, 0.6f);
+            EnemyUI enemyUI = new EnemyUI(enemy, showHitBox);
+            enemy.resetHealth();
+            enemies.add(enemy);
+            enemyUIS.add(enemyUI);
         }
     }
 
@@ -119,8 +120,8 @@ public class EntityController {
 
     public void drawEntities(Graphics g, int offsetX, int offsetY) {
         playerUI.drawAnimations(g, offsetX, offsetY);
-        for (KappaUI kappaUI : kappaUIS) {
-            kappaUI.drawAnimations(g, offsetX, offsetY);
+        for (EnemyUI enemyUI : enemyUIS) {
+            enemyUI.drawAnimations(g, offsetX, offsetY);
         }
         if(currentBoss != null) bossUI.drawAnimations(g, offsetX, offsetY);
     }
