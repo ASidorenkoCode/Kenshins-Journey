@@ -67,7 +67,6 @@ public class BossUI extends EntityUI {
     @Override
     public void drawAnimations(Graphics g, int offsetX, int offsetY) {
         if (currentBoss != null) {
-            //TODO: fitting animations and death animation
             if (!currentBoss.getIsDead()) {
                 drawBoss(g, offsetX, offsetY);
                 if (currentBoss.getIsDead()) return;
@@ -158,6 +157,7 @@ public class BossUI extends EntityUI {
     }
 
     public void drawBigProjectileHitbox(Graphics g, int offsetX, int offsetY) {
+        System.out.println(true);
         Rectangle2D.Float hitbox = currentBoss.getProjectileHitbox();
         g.drawRect((int) hitbox.x - offsetX, (int) hitbox.y - offsetY, (int) hitbox.width, (int) hitbox.height);
     }
@@ -175,7 +175,6 @@ public class BossUI extends EntityUI {
     }
     public void drawBigProjectile(Graphics g, int offsetX, int offsetY) {
         Rectangle2D.Float hitbox = currentBoss.getProjectileHitbox();
-        g.drawRect((int) hitbox.x - offsetX, (int) hitbox.y - offsetY, (int) hitbox.width, (int) hitbox.height);
         g.drawImage(bigProjectile[bigProjectileAniIndex],
                 (int) hitbox.x - offsetX,
                 (int) hitbox.y - offsetY,

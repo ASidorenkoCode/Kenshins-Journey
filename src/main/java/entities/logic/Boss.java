@@ -20,12 +20,6 @@ public class Boss extends Entity {
     private Rectangle2D.Float projectileHitbox;
     private ArrayList<Rectangle2D.Float> miniProjectileHitboxes;
     private boolean isUsingBigProjectile;
-    private final static int JUMP_SPEED = 500;
-    private int jumpCount;
-    private float airMovement;
-    private boolean inAir;
-    private float previosY;
-
     private boolean isScoreIncreased = false;
 
 
@@ -41,8 +35,6 @@ public class Boss extends Entity {
         initNewMiniProjectiles();
         this.health = MAX_HEALTH;
         this.isUsingBigProjectile = true;
-        this.airMovement = -5f;
-        this.inAir = false;
     }
 
 
@@ -58,45 +50,12 @@ public class Boss extends Entity {
 
             attack(offsetX, player);
 
-            if(inAir) {
-                //TODO: Static movement or based on hitbox?
-                if(previosY < y) {
-                    y = previosY;
-                    hitbox.y = previosY;
-                    inAir = false;
-                    airMovement = -5f;
-                } else {
-                    updateYPosByAirMovement();
-                    airMovement += 0.1f;
-                }
-            } else {
-                jumpCount++;
-                if(jumpCount >= JUMP_SPEED) {
-                    jumpCount = 0;
-                    inAir = true;
-                    previosY = y;
-                }
-            }
-        } else {
-            if(!isScoreIncreased) {
+            if (!isScoreIncreased) {
                 highscore.increaseHighscoreForBoss();
                 setScoreIncreased(true);
                 finish.setIsActive(true);
             }
         }
-
-    }
-
-    private void updateYPosByAirMovement() {
-        y += airMovement;
-        hitbox.y += airMovement;
-
-        //only update not used projectiles
-        if(isUsingBigProjectile) {
-            for (Rectangle2D.Float miniProjectileHitbox : miniProjectileHitboxes) {
-                miniProjectileHitbox.y += airMovement;
-            }
-        } else projectileHitbox.y += airMovement;
 
     }
 
