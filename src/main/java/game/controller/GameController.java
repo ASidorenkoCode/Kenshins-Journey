@@ -11,11 +11,20 @@ import gameObjects.logic.Finish;
 import items.controller.ItemController;
 import javazoom.jl.decoder.JavaLayerException;
 import maps.controller.MapController;
+import network.client.Client;
+import network.client.GitHubClient;
+import network.data.ServerObject;
+import network.data.SharedData;
+import network.host.Host;
+import network.host.HostChecker;
 import screens.controller.ScreenController;
 import screens.ui.DeathScreen;
 import sound.SoundController;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
 
 public class GameController {
 
@@ -28,14 +37,33 @@ public class GameController {
     private ItemController itemController;
     private SoundController soundController;
     private Highscore highscore;
+    private String playerId;
+    private String ipAddress;
     private Player.PlayerSerializer playerSerializer;
+
     private GameState currentGameState;
     private int getAmountOfCurrentItemsRegistered;
 
+
+    //network vars
+    private long comparingTime;
+    private ArrayList<ServerObject> serverObjects;
+    private boolean isPlayingMultiplayer;
+    private Client client;
     private boolean showHitbox;
 
     public GameController(boolean showHitBox) throws IOException {
+        comparingTime = System.currentTimeMillis();
+        serverObjects = new ArrayList<>();
+        isPlayingMultiplayer = false;
         //controller
+        try {
+            InetAddress inetAddress = InetAddress.getLocalHost();
+            playerId = inetAddress.getHostName();
+            ipAddress = inetAddress.getHostAddress();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
         currentGameState = GameState.START;
         this.highscore = Highscore.readHighscore();
 
@@ -66,7 +94,16 @@ public class GameController {
     }
 
     public void update() throws IOException, JavaLayerException {
-        if (currentGameState == GameState.PLAYING) {
+        if(currentGameState == GameState.PLAYING) {
+
+            if (isPlayingMultiplayer && !SharedData.networkToGameQueue.isEmpty()) {
+                try {
+                    serverObjects = SharedData.networkToGameQueue.take();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
             Player player = entityController.getPlayer();
             if (player.isDead() && player.getDeathAnimationFinished()) {
                 currentGameState = GameState.DEAD;
@@ -83,7 +120,18 @@ public class GameController {
             entityController.update(mapController, gameObjectController, highscore);
             itemController.update(entityController);
             highscore.decreaseHighScoreAfterOneSecond();
-            screenController.update(highscore, entityController.getPlayer(), itemController.getMenu());
+            screenController.update(highscore, entityController.getPlayer(), itemController.getMenu(), serverObjects);
+
+            if (isPlayingMultiplayer && SharedData.gameToNetworkQueue.isEmpty()) {
+                try {
+                    SharedData.gameToNetworkQueue.put(new ServerObject(highscore, entityController.getPlayer(), playerId));
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            } else if (!isPlayingMultiplayer) {
+                serverObjects.clear();
+            }
+
         }
 
         if (currentGameState == GameState.LOADING && screenController.getLoadingScreen().isLoadingFinished()) {
@@ -115,6 +163,7 @@ public class GameController {
         Player player = entityController.getPlayer();
         playerSerializer.writePlayer(player);
         initOrUpdateGame();
+        currentGameState = GameState.PLAYING;
     }
 
     private void initOrUpdateGame() throws IOException {
@@ -171,6 +220,14 @@ public class GameController {
         return currentGameState;
     }
 
+    public String getPlayerId() {
+        return playerId;
+    }
+
+    public void setIsDrawingListOfCurrentPlayersForInterfaceGame(boolean isDrawingListOfCurrentPlayers) {
+        screenController.getInterfaceGame().setIsDrawingCurrentListOfPlayers(isDrawingListOfCurrentPlayers);
+    }
+
     public void switchSound() throws JavaLayerException {
         if (currentGameState != soundController.getCurrentGameState()) {
             soundController.setCurrentGameState(currentGameState);
@@ -213,5 +270,49 @@ public class GameController {
 
     public void setCurrentGameState(GameState currentGameState) {
         this.currentGameState = currentGameState;
+    }
+
+    public void quitGame() {
+        if (client == null || isPlayingMultiplayer) return;
+        client.playerQuitsGame();
+    }
+
+
+    //TODO: Maybe remove from gameController to a network class, but not quite sure
+    public void useMultiplayer() {
+        if (isPlayingMultiplayer) return;
+        try {
+            String fileContent = GitHubClient.readFile();
+            if (fileContent.isEmpty()) {
+                new Host().start();
+                GitHubClient.writeFile(ipAddress);
+            } else {
+                if (!HostChecker.isServerRunning(fileContent)) {
+                    new Host().start();
+                    GitHubClient.writeFile(ipAddress);
+                }
+            }
+            client = new Client(GitHubClient.readFile(), this);
+            client.start();
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
+
+        isPlayingMultiplayer = true;
+    }
+
+    public boolean getIsPlayingMultiplayer() {
+        return isPlayingMultiplayer;
+    }
+
+    public void setIsPlayingMultiplayer(boolean isPlayingMultiplayer) {
+        this.isPlayingMultiplayer = isPlayingMultiplayer;
+    }
+
+    public String getIpAddress() {
+        return ipAddress;
     }
 }

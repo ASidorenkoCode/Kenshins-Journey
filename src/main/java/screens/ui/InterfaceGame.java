@@ -5,12 +5,14 @@ import game.UI.GameView;
 import game.logic.Highscore;
 import items.controller.ItemController;
 import items.logic.Item;
+import network.data.ServerObject;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class InterfaceGame {
     private int playerHealth;
@@ -19,7 +21,10 @@ public class InterfaceGame {
     private int score;
     private Item[] menu;
     private ItemController itemController;
+    private ArrayList<ServerObject> serverObjects;
     private BufferedImage characterPortraitAndStats;
+
+    private boolean isDrawingListOfCurrentPlayers;
 
 
     public InterfaceGame(ItemController itemController) {
@@ -31,9 +36,11 @@ public class InterfaceGame {
 
         //TODO: remove itemController
         this.itemController = itemController;
+        this.isDrawingListOfCurrentPlayers = false;
     }
 
-    public void draw(Graphics g) {
+    public void draw(Graphics g, String playerId, int currentLevel, boolean isPlayingMultiplayer) {
+
         int x = 0;
         int y = 0;
         g.drawImage(characterPortraitAndStats, x, y, (int) (characterPortraitAndStats.getWidth() * 1.5), (int) (characterPortraitAndStats.getHeight() * 1.5), null);
@@ -70,14 +77,19 @@ public class InterfaceGame {
                 index++;
             }
         }
+
+        drawServerObjects(g, playerId, currentLevel);
+
+        if (isDrawingListOfCurrentPlayers) drawListOfCurrentPlayers(g, isPlayingMultiplayer);
     }
 
-    public void update(Highscore highscore, Player player, Item[] menu) {
+    public void update(Highscore highscore, Player player, Item[] menu, ArrayList<ServerObject> serverObjects) {
         score = highscore.getCurrentHighscore();
         playerCurrentDamagePerAttack = player.getCurrentDamagePerAttack();
         playerHealth = player.getHealth();
         playerDeathCount = highscore.getDeathCounter();
         this.menu = menu;
+        this.serverObjects = serverObjects;
     }
 
     private void drawScore(Graphics g, int score) {
@@ -120,5 +132,82 @@ public class InterfaceGame {
         int textX = totalX + 90 + (int) (characterPortraitAndStats.getWidth() * 1.5) / 2 - textWidth / 2;
         int textY = totalY + (int) (characterPortraitAndStats.getHeight() * 1.5) / 2 + textHeight / 2;
         g.drawString(text, textX, textY);
+    }
+
+    private void drawServerObjects(Graphics g, String playerId, int currentLevel) {
+        for (ServerObject object : serverObjects) {
+            if (object.getPlayerId().equals(playerId)) continue;
+            if (currentLevel != object.getCurrentLevel()) continue;
+
+            Graphics2D g2d = (Graphics2D) g;
+
+            // Set anti-aliasing for smoother edges
+            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+            // Draw the triangle
+            int[] xPoints = {(int) object.getHorizontalPlayerPosition(), (int) object.getHorizontalPlayerPosition() + 30, (int) object.getHorizontalPlayerPosition() + 15};
+            int[] yPoints = {0, 0, 30};
+            g2d.setColor(Color.BLUE);
+            g2d.fillPolygon(xPoints, yPoints, 3);
+        }
+    }
+
+    private void drawListOfCurrentPlayers(Graphics g, boolean isPlayingMultiplayer) {
+        int padding = GameView.GAME_WIDTH / 8;
+        int margin = GameView.GAME_HEIGHT / 15;
+        int startX = padding + margin;
+        int startY = padding + margin + GameView.GAME_HEIGHT / 20;
+        int screenWidth = GameView.GAME_WIDTH - (2 * padding);
+        int screenHeight = GameView.GAME_HEIGHT - (2 * padding);
+        int columnLength = (screenWidth - margin) / 4;
+
+        int lineHeight = GameView.HEIGHT / 28;
+        int linePadding = GameView.GAME_HEIGHT / 30;
+
+        g.setColor(Color.WHITE);
+        g.fillRect(padding, padding, screenWidth, screenHeight);
+
+        g.setColor(Color.BLACK);
+        g.setFont(new Font("Arial", Font.PLAIN, GameView.GAME_WIDTH / 30));
+
+        if (!isPlayingMultiplayer) {
+            g.drawString("No List available because you play offline", padding + margin, padding + margin);
+            g.setFont(new Font("Arial", Font.PLAIN, GameView.GAME_WIDTH / 65));
+            g.drawString("Press M to show data", padding + margin, startY);
+            return;
+        }
+
+
+        g.drawString("Current Players", padding + margin, padding + margin);
+        g.setFont(new Font("Arial", Font.PLAIN, GameView.GAME_WIDTH / 65));
+        g.setColor(Color.BLACK);
+        int columnPosition = margin;
+        g.drawString("Player Name", padding + columnPosition, startY);
+        columnPosition += columnLength;
+        g.drawString("High Score", padding + columnPosition, startY);
+        columnPosition += columnLength;
+        g.drawString("Current Level", padding + columnPosition, startY);
+        columnPosition += columnLength;
+        g.drawString("Death Counter", padding + columnPosition, startY);
+
+        startY += lineHeight + linePadding;
+
+
+        for (ServerObject object : serverObjects) {
+
+            columnPosition = margin;
+            g.drawString(object.getPlayerId(), padding + columnPosition, startY);
+            columnPosition += columnLength;
+            g.drawString(String.valueOf(object.getHighScore()), padding + columnPosition, startY);
+            columnPosition += columnLength;
+            g.drawString(String.valueOf(object.getCurrentLevel()), padding + columnPosition, startY);
+            columnPosition += columnLength;
+            g.drawString(String.valueOf(object.getDeathCounter()), padding + columnPosition, startY);
+            startY += lineHeight + linePadding;
+        }
+    }
+
+    public void setIsDrawingCurrentListOfPlayers(boolean isDrawingListOfCurrentPlayers) {
+        this.isDrawingListOfCurrentPlayers = isDrawingListOfCurrentPlayers;
     }
 }

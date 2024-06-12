@@ -12,6 +12,8 @@ import screens.controller.ScreenController;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.geom.AffineTransform;
 import java.io.IOException;
 
@@ -65,6 +67,16 @@ public class GameView extends JPanel {
 //        drawStartScreen();
         setFrameToFullScreen();
         frame.setVisible(true);
+
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                gameController.quitGame();
+            }
+
+
+        });
+
     }
 
     public void calculateScaleFactors() {
@@ -114,7 +126,8 @@ public class GameView extends JPanel {
         itemController.draw(g, mapOffsetX, mapOffsetY);
         gameObjectController.drawObjects(g, mapOffsetX, mapOffsetY);
         mapController.draw(g, true);
-        screenController.draw(g, gameController.getCurrentGameState(), gameController.getHighscore().getCurrentHighscore(), gameController.getHighscore().getDeathCounter(), gameController.getHighscore(), mapController.getMaps().size());
+
+        screenController.draw(g, gameController.getCurrentGameState(), gameController.getHighscore().getCurrentHighscore(), gameController.getHighscore().getDeathCounter(), gameController.getHighscore(), mapController.getMaps().size(), gameController.getPlayerId(), gameController.getHighscore().getAllHighscores().size() + 1, gameController.getIsPlayingMultiplayer());
     }
 
     public void showFPS_UPS(int frames, int updates) {
@@ -185,14 +198,33 @@ public class GameView extends JPanel {
                     gameController.setCurrentGameState(GameState.START);
                 }
                 break;
-
+            case KeyEvent.VK_O:
+                gameController.setIsDrawingListOfCurrentPlayersForInterfaceGame(true);
+                break;
+            case KeyEvent.VK_M:
+                gameController.useMultiplayer();
+                this.requestFocusInWindow();
+                break;
             default:
-                entityController.handleUserInputKeyPressed(e, gameController.getDeathScreen());
+                if (e.getKeyCode() == KeyEvent.VK_F4 && e.isAltDown()) {
+                    gameController.quitGame();
+                } else if (e.getKeyCode() == KeyEvent.VK_Q && e.isMetaDown()) {
+                    gameController.quitGame();
+                } else {
+                    entityController.handleUserInputKeyPressed(e, gameController.getDeathScreen());
+                }
+
         }
     }
 
     public void handleUserInputKeyReleased(KeyEvent e) {
-        entityController.handleUserInputKeyReleased(e);
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_O:
+                gameController.setIsDrawingListOfCurrentPlayersForInterfaceGame(false);
+                break;
+            default:
+                entityController.handleUserInputKeyReleased(e);
+        }
     }
 
     public JFrame getFrame() {
