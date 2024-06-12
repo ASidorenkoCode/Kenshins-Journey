@@ -21,6 +21,7 @@ public class Boss extends Entity {
     private ArrayList<Rectangle2D.Float> miniProjectileHitboxes;
     private boolean isUsingBigProjectile;
     private boolean isScoreIncreased = false;
+    private String name;
 
 
     public Boss(float x, float y) {
@@ -35,6 +36,7 @@ public class Boss extends Entity {
         initNewMiniProjectiles();
         this.health = MAX_HEALTH;
         this.isUsingBigProjectile = true;
+        this.name = "Doragon The Dark Tempest";
     }
 
 
@@ -157,5 +159,9 @@ public class Boss extends Entity {
 
     public int getMaxHealth() {
         return MAX_HEALTH;
+    }
+
+    public String getName() {
+        return name;
     }
 }

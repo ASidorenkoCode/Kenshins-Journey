@@ -79,8 +79,9 @@ public class BossUI extends EntityUI {
                     if (showHitBox) drawMiniProjectileHitboxes(g, offsetX, offsetY);
                 }
                 if (showHitBox) drawBossHitbox(g, offsetX, offsetY);
-                drawHealthBar(g);
+
             }
+            drawHealthBar(g);
 
         }
     }
@@ -196,13 +197,23 @@ public class BossUI extends EntityUI {
         int healthBarHeight = GameView.GAME_HEIGHT / 30;
         int healthBarWidth = GameView.GAME_WIDTH - GameView.GAME_WIDTH / 2;
         int healthBarX = (GameView.GAME_WIDTH / 2) / 2;
-        int healthBarY = GameView.GAME_HEIGHT / 10;
+        int healthBarY = GameView.GAME_HEIGHT / 8;
+
+        g.setColor(Color.DARK_GRAY);
+        g.fillRect(healthBarX - healthBarWidth / 50, healthBarY - healthBarHeight * 2, healthBarWidth + (healthBarWidth / 50) * 2, healthBarHeight * 3 + healthBarHeight / 2);
+
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("MS GOTHIC", Font.PLAIN, GameView.GAME_WIDTH / 55));
+        g.drawString(currentBoss.getName(), healthBarX, healthBarY - healthBarHeight / 2);
 
         int currentHealthBarWidth = (int) ((currentBoss.getHealth() / (float) currentBoss.getMaxHealth()) * healthBarWidth);
 
-        g.setColor(Color.RED);
-        g.fillRect(healthBarX, healthBarY, currentHealthBarWidth, healthBarHeight);
+        g.setColor(Color.WHITE);
+        g.fillRect(healthBarX, healthBarY, healthBarWidth, healthBarHeight);
         g.setColor(Color.BLACK);
         g.drawRect(healthBarX, healthBarY, healthBarWidth, healthBarHeight);
+        g.setColor(Color.RED);
+        g.fillRect(healthBarX, healthBarY, currentHealthBarWidth, healthBarHeight);
+
     }
 }
