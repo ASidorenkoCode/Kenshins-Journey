@@ -198,4 +198,8 @@ public class Highscore implements Serializable {
     public ArrayList<Integer> getBestHighscores() {
         return bestHighscores;
     }
+
+    public void decreaseHighscoreForHeart() {
+        currentHighscore -= 50;
+    }
 }
