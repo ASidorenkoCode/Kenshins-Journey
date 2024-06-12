@@ -1,6 +1,7 @@
 package entities.ui;
 
 import entities.logic.Boss;
+import game.UI.GameView;
 import spriteControl.SpriteManager;
 
 import java.awt.*;
@@ -8,37 +9,6 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 public class BossUI extends EntityUI {
-    @Override
-    void drawAttackBox() {
-        //is not used
-    }
-
-    @Override
-    void drawHitBox(Graphics g, int offsetX, int offsetY) {
-        //empty is not used
-    }
-
-    @Override
-    public void drawAnimations(Graphics g, int offsetX, int offsetY) {
-        if(currentBoss != null) {
-            //TODO: fitting animations and death animation
-            if(!currentBoss.getIsDead()) {
-                drawBoss(g, offsetX, offsetY);
-                if(currentBoss.getIsDead()) return;
-                updateAnimationTick();
-                if(currentBoss.getIsUsingBigProjectile()) {
-                    drawBigProjectile(g, offsetX, offsetY);
-                    if(showHitBox) drawBigProjectileHitbox(g, offsetX, offsetY);
-                }
-                else {
-                    drawMiniProjectile(g, offsetX, offsetY);
-                    if(showHitBox) drawMiniProjectileHitboxes(g,offsetX, offsetY);
-                }
-                if(showHitBox) drawBossHitbox(g, offsetX, offsetY);
-            }
-
-        }
-    }
 
     //Big projectile vars
     private final static int BIG_PROJECTILE_ANI_LENGTH = 5;
@@ -82,6 +52,38 @@ public class BossUI extends EntityUI {
         this.bigProjectileAniIndex = 0;
         this.miniProjectileAniIndex = 0;
         loadAnimations();
+    }
+
+    @Override
+    void drawAttackBox() {
+        //is not used
+    }
+
+    @Override
+    void drawHitBox(Graphics g, int offsetX, int offsetY) {
+        //empty is not used
+    }
+
+    @Override
+    public void drawAnimations(Graphics g, int offsetX, int offsetY) {
+        if (currentBoss != null) {
+            //TODO: fitting animations and death animation
+            if (!currentBoss.getIsDead()) {
+                drawBoss(g, offsetX, offsetY);
+                if (currentBoss.getIsDead()) return;
+                updateAnimationTick();
+                if (currentBoss.getIsUsingBigProjectile()) {
+                    drawBigProjectile(g, offsetX, offsetY);
+                    if (showHitBox) drawBigProjectileHitbox(g, offsetX, offsetY);
+                } else {
+                    drawMiniProjectile(g, offsetX, offsetY);
+                    if (showHitBox) drawMiniProjectileHitboxes(g, offsetX, offsetY);
+                }
+                if (showHitBox) drawBossHitbox(g, offsetX, offsetY);
+                drawHealthBar(g);
+            }
+
+        }
     }
     //load animations
 
@@ -189,5 +191,19 @@ public class BossUI extends EntityUI {
                     (int) hitbox.width,
                     (int) hitbox.height, null);
         }
+    }
+
+    public void drawHealthBar(Graphics g) {
+        int healthBarHeight = GameView.GAME_HEIGHT / 30;
+        int healthBarWidth = GameView.GAME_WIDTH - GameView.GAME_WIDTH / 2;
+        int healthBarX = (GameView.GAME_WIDTH / 2) / 2;
+        int healthBarY = GameView.GAME_HEIGHT / 10;
+
+        int currentHealthBarWidth = (int) ((currentBoss.getHealth() / (float) currentBoss.getMaxHealth()) * healthBarWidth);
+
+        g.setColor(Color.RED);
+        g.fillRect(healthBarX, healthBarY, currentHealthBarWidth, healthBarHeight);
+        g.setColor(Color.BLACK);
+        g.drawRect(healthBarX, healthBarY, healthBarWidth, healthBarHeight);
     }
 }

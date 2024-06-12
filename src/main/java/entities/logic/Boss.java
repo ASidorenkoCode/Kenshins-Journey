@@ -15,6 +15,8 @@ public class Boss extends Entity {
     private static final int BOSS_WIDTH = 64;
     private static final int BOSS_HEIGHT = 64;
     private static final int BOSS_SCALE = 4;
+
+    private static final int MAX_HEALTH = 300;
     private Rectangle2D.Float projectileHitbox;
     private ArrayList<Rectangle2D.Float> miniProjectileHitboxes;
     private boolean isUsingBigProjectile;
@@ -37,7 +39,7 @@ public class Boss extends Entity {
                 BIG_PROJECTILE_WIDTH * BIG_PROJECTILE_SCALE,
                 BIG_PROJECTILE_HEIGHT * BIG_PROJECTILE_SCALE);
         initNewMiniProjectiles();
-        this.health = 20;
+        this.health = MAX_HEALTH;
         this.isUsingBigProjectile = true;
         this.airMovement = -5f;
         this.inAir = false;
@@ -192,5 +194,9 @@ public class Boss extends Entity {
 
     public boolean isScoreIncreased() {
         return isScoreIncreased;
+    }
+
+    public int getMaxHealth() {
+        return MAX_HEALTH;
     }
 }
