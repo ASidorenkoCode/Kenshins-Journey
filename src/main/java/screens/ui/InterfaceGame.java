@@ -56,13 +56,13 @@ public class InterfaceGame {
 
         int imageY = GameView.GAME_HEIGHT - itemHeight;
 
-        int totalWidth = menu.length * 55;
-        int startX = (GameView.GAME_WIDTH - totalWidth) / 2;
-
         if (menu.length > 0) {
             int index = 1;
+            int totalWidth = menu.length * 55;
+            int startX = (GameView.GAME_WIDTH - totalWidth) / 2;
             for (Item i : menu) {
                 if (i != null) {
+
                     g.setColor(Color.BLACK);
                     g.fillOval(startX, imageY + 10, itemHeight - 20, itemHeight + 20);
                     //TODO: remove itemController
@@ -122,7 +122,8 @@ public class InterfaceGame {
         int totalX = (int) (squareX * 1.5);
         int totalY = (int) (squareY * 1.5) + yOffset;
 
-        g.setColor(Color.WHITE);
+        Color backGroundColor = new Color(0, 0, 0, 100);
+        g.setColor(backGroundColor);
         g.setFont(new Font("Arial", Font.BOLD, 20));
 
         FontMetrics fm = g.getFontMetrics();
