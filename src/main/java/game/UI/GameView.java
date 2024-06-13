@@ -142,9 +142,6 @@ public class GameView extends JPanel {
 
     public void handleUserInputKeyPressed(KeyEvent e) throws IOException {
         switch (e.getKeyCode()) {
-            case KeyEvent.VK_0:
-                itemController.selectItem(entityController.getPlayer(), 0);
-                break;
             case KeyEvent.VK_1:
                 itemController.selectItem(entityController.getPlayer(), 1);
                 break;
@@ -159,18 +156,6 @@ public class GameView extends JPanel {
                 break;
             case KeyEvent.VK_5:
                 itemController.selectItem(entityController.getPlayer(), 5);
-                break;
-            case KeyEvent.VK_6:
-                itemController.selectItem(entityController.getPlayer(), 6);
-                break;
-            case KeyEvent.VK_7:
-                itemController.selectItem(entityController.getPlayer(), 7);
-                break;
-            case KeyEvent.VK_8:
-                itemController.selectItem(entityController.getPlayer(), 8);
-                break;
-            case KeyEvent.VK_9:
-                itemController.selectItem(entityController.getPlayer(), 9);
                 break;
             case KeyEvent.VK_L:
                 if (gameController.getCurrentGameState() == GameState.DEAD) gameController.restartLevelAfterDeath();
