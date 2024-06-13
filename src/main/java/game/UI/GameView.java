@@ -12,8 +12,6 @@ import screens.controller.ScreenController;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.awt.geom.AffineTransform;
 import java.io.IOException;
 
@@ -67,15 +65,6 @@ public class GameView extends JPanel {
 //        drawStartScreen();
         setFrameToFullScreen();
         frame.setVisible(true);
-
-        frame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                gameController.quitGame();
-            }
-
-
-        });
 
     }
 
@@ -191,13 +180,7 @@ public class GameView extends JPanel {
                 this.requestFocusInWindow();
                 break;
             default:
-                if (e.getKeyCode() == KeyEvent.VK_F4 && e.isAltDown()) {
-                    gameController.quitGame();
-                } else if (e.getKeyCode() == KeyEvent.VK_Q && e.isMetaDown()) {
-                    gameController.quitGame();
-                } else {
-                    entityController.handleUserInputKeyPressed(e, gameController.getDeathScreen());
-                }
+                entityController.handleUserInputKeyPressed(e, gameController.getDeathScreen());
 
         }
     }
