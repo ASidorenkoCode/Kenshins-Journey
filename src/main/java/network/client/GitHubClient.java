@@ -11,10 +11,10 @@ import java.net.http.HttpResponse;
 import java.util.Base64;
 
 public class GitHubClient {
-    private static final String REPO_OWNER = "comhendrik";
-    private static final String REPO_NAME = "Kenshins-Journey-IP_Address";
+    private static final String REPO_OWNER = "DEIN-BENUTZERNAME";
+    private static final String REPO_NAME = "NAME-DER-REPOSITORY";
     private static final String FILE_PATH = "data.txt";
-    private static final String GITHUB_TOKEN = ""; // Replace with your actual GitHub token
+    private static final String GITHUB_TOKEN = "DEINEN-KLASSISCHEN-GITHUB-TOKEN";
     private static final String API_URL = "https://api.github.com/repos/" + REPO_OWNER + "/" + REPO_NAME + "/contents/" + FILE_PATH;
     private static final Gson gson = new Gson();
 
