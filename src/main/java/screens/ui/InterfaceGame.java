@@ -80,7 +80,7 @@ public class InterfaceGame {
 
         drawServerObjects(g, playerId, currentLevel);
 
-        if (isDrawingListOfCurrentPlayers) drawListOfCurrentPlayers(g, isPlayingMultiplayer);
+        if (isDrawingListOfCurrentPlayers) drawListOfCurrentPlayers(g, isPlayingMultiplayer, playerId);
     }
 
     public void update(Highscore highscore, Player player, Item[] menu, ArrayList<ServerObject> serverObjects) {
@@ -152,7 +152,7 @@ public class InterfaceGame {
         }
     }
 
-    private void drawListOfCurrentPlayers(Graphics g, boolean isPlayingMultiplayer) {
+    private void drawListOfCurrentPlayers(Graphics g, boolean isPlayingMultiplayer, String hostname) {
         int padding = GameView.GAME_WIDTH / 8;
         int margin = GameView.GAME_HEIGHT / 15;
         int startX = padding + margin;
@@ -164,8 +164,8 @@ public class InterfaceGame {
         int lineHeight = GameView.HEIGHT / 28;
         int linePadding = GameView.GAME_HEIGHT / 30;
 
-        g.setColor(Color.WHITE);
-        g.fillRect(padding, padding, screenWidth, screenHeight);
+        g.setColor(new Color(255, 255, 255, 100));
+        g.fillRoundRect(padding, padding, screenWidth, screenHeight, 30, 30);
 
         g.setColor(Color.BLACK);
         g.setFont(new Font("Arial", Font.PLAIN, GameView.GAME_WIDTH / 30));
@@ -182,7 +182,7 @@ public class InterfaceGame {
         g.setFont(new Font("Arial", Font.PLAIN, GameView.GAME_WIDTH / 65));
         g.setColor(Color.BLACK);
         int columnPosition = margin;
-        g.drawString("Player Name", padding + columnPosition, startY);
+        g.drawString("Player ID", padding + columnPosition, startY);
         columnPosition += columnLength;
         g.drawString("High Score", padding + columnPosition, startY);
         columnPosition += columnLength;
@@ -193,10 +193,11 @@ public class InterfaceGame {
         startY += lineHeight + linePadding;
 
 
-        for (ServerObject object : serverObjects) {
+        for (int i = 0; i < serverObjects.size(); i++) {
 
+            ServerObject object = serverObjects.get(i);
             columnPosition = margin;
-            g.drawString(object.getPlayerId(), padding + columnPosition, startY);
+            g.drawString((i + 1) + (object.getPlayerId().equals(hostname) ? "(You)" : ""), padding + columnPosition, startY);
             columnPosition += columnLength;
             g.drawString(String.valueOf(object.getHighScore()), padding + columnPosition, startY);
             columnPosition += columnLength;

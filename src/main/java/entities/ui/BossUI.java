@@ -199,8 +199,10 @@ public class BossUI extends EntityUI {
         int healthBarX = (GameView.GAME_WIDTH / 2) / 2;
         int healthBarY = GameView.GAME_HEIGHT / 8;
 
+        int cornerRadius = 30;
+
         g.setColor(Color.DARK_GRAY);
-        g.fillRect(healthBarX - healthBarWidth / 50, healthBarY - healthBarHeight * 2, healthBarWidth + (healthBarWidth / 50) * 2, healthBarHeight * 3 + healthBarHeight / 2);
+        g.fillRoundRect(healthBarX - healthBarWidth / 50, healthBarY - healthBarHeight * 2, healthBarWidth + (healthBarWidth / 50) * 2, healthBarHeight * 3 + healthBarHeight / 2, cornerRadius, cornerRadius);
 
         g.setColor(Color.WHITE);
         g.setFont(new Font("MS GOTHIC", Font.PLAIN, GameView.GAME_WIDTH / 55));
@@ -209,11 +211,11 @@ public class BossUI extends EntityUI {
         int currentHealthBarWidth = (int) ((currentBoss.getHealth() / (float) currentBoss.getMaxHealth()) * healthBarWidth);
 
         g.setColor(Color.WHITE);
-        g.fillRect(healthBarX, healthBarY, healthBarWidth, healthBarHeight);
+        g.fillRoundRect(healthBarX, healthBarY, healthBarWidth, healthBarHeight, cornerRadius, cornerRadius);
         g.setColor(Color.BLACK);
-        g.drawRect(healthBarX, healthBarY, healthBarWidth, healthBarHeight);
+        g.drawRoundRect(healthBarX, healthBarY, healthBarWidth, healthBarHeight, cornerRadius, cornerRadius);
         g.setColor(Color.RED);
-        g.fillRect(healthBarX, healthBarY, currentHealthBarWidth, healthBarHeight);
+        g.fillRoundRect(healthBarX, healthBarY, currentHealthBarWidth, healthBarHeight, cornerRadius, cornerRadius);
 
     }
 }
