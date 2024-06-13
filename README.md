@@ -1,7 +1,7 @@
 # Kenshins Journey
 
-Kenshins Journey ist ein 2D-Action Plattformen. Dabei wird der aktuelle Spielstand persistiert, so dass bei Neustarten
-der Anwendung das aktuelle Level wieder gestartet wird. Mehrere Spieler können im lokalen Netz zusammen spielen, indem
+Kenshins Journey ist ein 2D-Action Plattformer. Dabei wird der aktuelle Spielstand persistiert, so dass bei Neustarten
+der Anwendung das aktuelle Level wieder gestartet wird. Mehrere Spieler können im lokalen Netz "zusammen" spielen, indem
 angezeigt wird, was der aktuelle Highscore der Personen ist und wo sie sich im Spiel befinden.
 
 ## Installation
