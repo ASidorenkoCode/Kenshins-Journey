@@ -64,32 +64,36 @@ public class MapUI {
             backgroundImage = new BufferedImage(mapWidth, mapHeight, BufferedImage.TYPE_INT_RGB);
             Graphics2D g = backgroundImage.createGraphics();
 
-            // TODO: implement color under img and above img
-            Color startColor = Color.decode("#2d434f");
-            Color endColor = Color.decode("#033750");
-
-
-            GradientPaint gradientPaint = new GradientPaint(0, 0, startColor, 0, mapHeight, endColor);
-            g.setPaint(gradientPaint);
             g.fillRect(0, 0, mapWidth, mapHeight);
 
 
             //TODO: Implement Background image
             try {
                 BufferedImage mountainImage = ImageIO.read(new File("res/screens/startScreen/beep.png"));
-                // Scale the image
-                int scaledWidth = (int) (mountainImage.getWidth() * 1.6);
-                int scaledHeight = (int) (mountainImage.getHeight() * 1.6);
+                int scaledWidth = (int) (mountainImage.getWidth() * 2.1);
+                int scaledHeight = (int) (mountainImage.getHeight() * 2.1);
                 Image scaledMountainImage = mountainImage.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_DEFAULT);
                 int imageX = 0;
                 int imageY = mapHeight - scaledHeight - 200;
+                int endOfBackgroundImageY = mapHeight - scaledHeight - 200;
+
+                GradientPaint gradientPaintAbove = new GradientPaint(0, 0, Color.decode("#2D434F"), 0, endOfBackgroundImageY, Color.decode("#2D434F"));
+                GradientPaint gradientPaintBelow = new GradientPaint(0, endOfBackgroundImageY, Color.decode("#033750"), 0, mapHeight, Color.decode("#033750"));
+
+                g.setPaint(gradientPaintAbove);
+                g.fillRect(0, 0, mapWidth, endOfBackgroundImageY);
+
+                g.setPaint(gradientPaintBelow);
+                g.fillRect(0, endOfBackgroundImageY, mapWidth, mapHeight - endOfBackgroundImageY);
                 while (imageX < mapWidth) {
                     g.drawImage(scaledMountainImage, imageX, imageY, null);
                     imageX += scaledWidth;
                 }
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
 
             g.dispose();
         }
