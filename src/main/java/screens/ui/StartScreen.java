@@ -12,7 +12,7 @@ public class StartScreen {
 
     public StartScreen() {
         try {
-            backgroundImage = ImageIO.read(new File("res/screens/startScreen/StartScreen.png"));
+            backgroundImage = ImageIO.read(new File("res/screens/startScreen/StartScreen2.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -4,8 +4,11 @@ import maps.controller.MapController;
 import maps.logic.Map;
 import spriteControl.SpriteManager;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class MapUI {
@@ -61,8 +64,10 @@ public class MapUI {
             backgroundImage = new BufferedImage(mapWidth, mapHeight, BufferedImage.TYPE_INT_RGB);
             Graphics2D g = backgroundImage.createGraphics();
 
-            Color startColor = Color.decode("#00e2c");
-            Color endColor = Color.decode("#0a95ff");
+            // TODO: implement color under img and above img
+            Color startColor = Color.decode("#2d434f");
+            Color endColor = Color.decode("#033750");
+
 
             GradientPaint gradientPaint = new GradientPaint(0, 0, startColor, 0, mapHeight, endColor);
             g.setPaint(gradientPaint);
@@ -70,21 +75,21 @@ public class MapUI {
 
 
             //TODO: Implement Background image
-//            try {
-//                BufferedImage mountainImage = ImageIO.read(new File("res/screens/startScreen/forest.png"));
-//                // Scale the image
-//                int scaledWidth = (int) (mountainImage.getWidth() * 1.2);
-//                int scaledHeight = (int) (mountainImage.getHeight() * 1.2);
-//                Image scaledMountainImage = mountainImage.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_DEFAULT);
-//                int imageX = 0;
-//                int imageY = mapHeight - scaledHeight - 200;
-//                while (imageX < mapWidth) {
-//                    g.drawImage(scaledMountainImage, imageX, imageY, null);
-//                    imageX += scaledWidth;
-//                }
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
+            try {
+                BufferedImage mountainImage = ImageIO.read(new File("res/screens/startScreen/beep.png"));
+                // Scale the image
+                int scaledWidth = (int) (mountainImage.getWidth() * 1.6);
+                int scaledHeight = (int) (mountainImage.getHeight() * 1.6);
+                Image scaledMountainImage = mountainImage.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_DEFAULT);
+                int imageX = 0;
+                int imageY = mapHeight - scaledHeight - 200;
+                while (imageX < mapWidth) {
+                    g.drawImage(scaledMountainImage, imageX, imageY, null);
+                    imageX += scaledWidth;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
             g.dispose();
         }
