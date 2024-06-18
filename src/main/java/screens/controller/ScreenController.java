@@ -18,6 +18,7 @@ public class ScreenController {
     private StartScreen startScreen;
     private EndScreen endScreen;
     private HighScoreScreen highScoreScreen;
+    private ControlScreen controlScreen;
 
     public ScreenController(ItemController itemController) {
         this.interfaceGame = new InterfaceGame(itemController);
@@ -26,6 +27,7 @@ public class ScreenController {
         this.deathScreen = new DeathScreen();
         this.endScreen = new EndScreen();
         this.highScoreScreen = new HighScoreScreen();
+        this.controlScreen = new ControlScreen();
     }
 
     public void update(Highscore highscore, Player player, Item[] menu, ArrayList<ServerObject> serverObjects) {
@@ -54,6 +56,7 @@ public class ScreenController {
                 highscores.findBestHighscores();
                 highScoreScreen.draw(g, highscores);
             }
+            case CONTROLS -> controlScreen.drawControls(g);
         }
     }
 

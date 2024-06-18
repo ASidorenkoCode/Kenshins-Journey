@@ -77,7 +77,6 @@ public class GameController {
         soundController = new SoundController();
         gameView = new GameView(this, entityController, mapController, itemController, gameObjectController, screenController);
 
-
         //ui
         gameView.gameWindow();
         gameEngine.startGameLoop();

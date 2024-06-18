@@ -31,6 +31,7 @@ public class GameView extends JPanel {
     private ItemController itemController;
     private GameObjectController gameObjectController;
     private ScreenController screenController;
+
     private JFrame frame = new JFrame("Kenshins Journey");
 
 
@@ -129,6 +130,7 @@ public class GameView extends JPanel {
         frame.setTitle(fpsUpsText);
     }
 
+
     public void handleUserInputKeyPressed(KeyEvent e) throws IOException {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_1:
@@ -150,7 +152,8 @@ public class GameView extends JPanel {
                 if (gameController.getCurrentGameState() == GameState.DEAD) gameController.restartLevelAfterDeath();
                 break;
             case KeyEvent.VK_W:
-                if (gameController.getCurrentGameState() == GameState.START) gameController.startGame();
+                if (gameController.getCurrentGameState() == GameState.START)
+                    gameController.setCurrentGameState(GameState.CONTROLS);
                 break;
             case KeyEvent.VK_P:
                 if (gameController.getCurrentGameState() == GameState.PLAYING) gameController.loadNewMap();
