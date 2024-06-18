@@ -136,6 +136,7 @@ public class GameController {
 
         if (currentGameState == GameState.LOADING && screenController.getLoadingScreen().isLoadingFinished()) {
             currentGameState = GameState.PLAYING;
+            screenController.getLoadingScreen().resetProgress();
         }
 
         switchSound();
@@ -163,7 +164,6 @@ public class GameController {
         Player player = entityController.getPlayer();
         playerSerializer.writePlayer(player);
         initOrUpdateGame();
-        currentGameState = GameState.PLAYING;
     }
 
     private void initOrUpdateGame() throws IOException {

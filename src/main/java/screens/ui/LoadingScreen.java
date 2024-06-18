@@ -54,11 +54,9 @@ public class LoadingScreen {
         Graphics2D g2d = (Graphics2D) g;
 
         int cornerRadiuse = 30;
-        // Draw the background
         g2d.setColor(Color.BLACK);
-        g2d.fillRoundRect(0, 0, GameView.GAME_WIDTH, GameView.GAME_HEIGHT, cornerRadiuse, cornerRadiuse);
+        g2d.fillRect(0, 0, GameView.GAME_WIDTH, GameView.GAME_HEIGHT);
 
-        // Draw the loading text
         g2d.setColor(Color.WHITE);
         g2d.setFont(new Font("Arial", Font.BOLD, 30));
         int textWidth = g2d.getFontMetrics().stringWidth(loadingText);
@@ -66,7 +64,6 @@ public class LoadingScreen {
         int textY = GameView.GAME_HEIGHT / 2;
         g2d.drawString(loadingText, textX, textY);
 
-        // Draw the progress bar
         int progressBarWidth = GameView.GAME_WIDTH / 2;
         int progressBarHeight = 50;
         int progressBarX = (GameView.GAME_WIDTH - progressBarWidth) / 2;
@@ -75,7 +72,6 @@ public class LoadingScreen {
         int progressWidth = (int) (progressBarWidth * ((double) progress / 100));
         g2d.fillRoundRect(progressBarX, progressBarY, progressWidth, progressBarHeight, cornerRadiuse, cornerRadiuse);
 
-        // Draw the current fact
         g2d.setFont(new Font("Arial", Font.PLAIN, 20));
         int factWidth = g2d.getFontMetrics().stringWidth(currentFact);
         int factX = (GameView.GAME_WIDTH - factWidth) / 2;

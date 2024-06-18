@@ -122,7 +122,7 @@ public class InterfaceGame {
         int totalX = (int) (squareX * 1.5);
         int totalY = (int) (squareY * 1.5) + yOffset;
 
-        Color backGroundColor = new Color(0, 0, 0, 100);
+        Color backGroundColor = Color.WHITE;
         g.setColor(backGroundColor);
         g.setFont(new Font("Arial", Font.BOLD, 20));
 

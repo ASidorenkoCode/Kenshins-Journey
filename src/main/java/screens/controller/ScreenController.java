@@ -47,7 +47,6 @@ public class ScreenController {
             }
             case DEAD -> deathScreen.draw(g, highscore, deathCounter);
             case PLAYING -> {
-                loadingScreen.resetProgress();
                 interfaceGame.draw(g, playerId, currentLevel, isPlayingMultiplayer);
             }
             case HIGHSCORE -> {

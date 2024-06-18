@@ -42,7 +42,7 @@ public class StartScreen {
                 Image buttonImage = (i == selectedButton) ? buttonSelectedImages[i] : buttonImages[i];
                 int newWidth = (int) (buttonImage.getWidth(null) / scaleFactor);
                 int newHeight = (int) (buttonImage.getHeight(null) / scaleFactor);
-                g.drawImage(buttonImage, 100, 350 + i * 100, newWidth, newHeight, null);
+                g.drawImage(buttonImage, 50, 350 + i * 100, newWidth, newHeight, null);
             }
         }
     }
