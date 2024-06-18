@@ -157,11 +157,14 @@ public class GameView extends JPanel {
                 break;
             case KeyEvent.VK_ENTER:
                 if (gameController.getCurrentGameState() == GameState.END) gameController.resetGame();
-                break;
-            case KeyEvent.VK_H:
-                if (gameController.getCurrentGameState() == GameState.START) {
+                if (gameController.getCurrentGameState() == GameState.START && screenController.getStartScreen().getSelectedButton() == 0)
+                    gameController.newGame();
+                if (gameController.getCurrentGameState() == GameState.START && screenController.getStartScreen().getSelectedButton() == 1)
+                    gameController.startGame();
+                if (gameController.getCurrentGameState() == GameState.START && screenController.getStartScreen().getSelectedButton() == 2)
                     gameController.setCurrentGameState(GameState.HIGHSCORE);
-                }
+                if (gameController.getCurrentGameState() == GameState.START && screenController.getStartScreen().getSelectedButton() == 3)
+                    System.exit(0);
                 break;
             case KeyEvent.VK_ESCAPE:
                 if (gameController.getCurrentGameState() == GameState.END) {
@@ -178,6 +181,12 @@ public class GameView extends JPanel {
             case KeyEvent.VK_M:
                 gameController.useMultiplayer();
                 this.requestFocusInWindow();
+                break;
+            case KeyEvent.VK_DOWN:
+                screenController.getStartScreen().handleDownKey();
+                break;
+            case KeyEvent.VK_UP:
+                screenController.getStartScreen().handleUpKey();
                 break;
             default:
                 entityController.handleUserInputKeyPressed(e, gameController.getDeathScreen());

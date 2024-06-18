@@ -212,6 +212,15 @@ public class GameController {
         currentGameState = GameState.START;
     }
 
+    public void newGame() throws IOException {
+        highscore.deleteHighscoreFile();
+        highscore.resetHighscore();
+        Player player = entityController.getPlayer();
+        player.resetHealth();
+        initOrUpdateGame();
+        startGame();
+    }
+
     public Highscore getHighscore() {
         return highscore;
     }
