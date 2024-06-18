@@ -272,11 +272,6 @@ public class GameController {
         this.currentGameState = currentGameState;
     }
 
-    public void quitGame() {
-        if (client == null || isPlayingMultiplayer) return;
-        client.playerQuitsGame();
-    }
-
 
     //TODO: Maybe remove from gameController to a network class, but not quite sure
     public void useMultiplayer() {

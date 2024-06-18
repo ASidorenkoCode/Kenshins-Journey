@@ -1,6 +1,7 @@
 package entities.ui;
 
 import entities.logic.Boss;
+import game.UI.GameView;
 import spriteControl.SpriteManager;
 
 import java.awt.*;
@@ -8,37 +9,6 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 public class BossUI extends EntityUI {
-    @Override
-    void drawAttackBox() {
-        //is not used
-    }
-
-    @Override
-    void drawHitBox(Graphics g, int offsetX, int offsetY) {
-        //empty is not used
-    }
-
-    @Override
-    public void drawAnimations(Graphics g, int offsetX, int offsetY) {
-        if(currentBoss != null) {
-            //TODO: fitting animations and death animation
-            if(!currentBoss.getIsDead()) {
-                drawBoss(g, offsetX, offsetY);
-                if(currentBoss.getIsDead()) return;
-                updateAnimationTick();
-                if(currentBoss.getIsUsingBigProjectile()) {
-                    drawBigProjectile(g, offsetX, offsetY);
-                    if(showHitBox) drawBigProjectileHitbox(g, offsetX, offsetY);
-                }
-                else {
-                    drawMiniProjectile(g, offsetX, offsetY);
-                    if(showHitBox) drawMiniProjectileHitboxes(g,offsetX, offsetY);
-                }
-                if(showHitBox) drawBossHitbox(g, offsetX, offsetY);
-            }
-
-        }
-    }
 
     //Big projectile vars
     private final static int BIG_PROJECTILE_ANI_LENGTH = 5;
@@ -82,6 +52,38 @@ public class BossUI extends EntityUI {
         this.bigProjectileAniIndex = 0;
         this.miniProjectileAniIndex = 0;
         loadAnimations();
+    }
+
+    @Override
+    void drawAttackBox() {
+        //is not used
+    }
+
+    @Override
+    void drawHitBox(Graphics g, int offsetX, int offsetY) {
+        //empty is not used
+    }
+
+    @Override
+    public void drawAnimations(Graphics g, int offsetX, int offsetY) {
+        if (currentBoss != null) {
+            if (!currentBoss.getIsDead()) {
+                drawBoss(g, offsetX, offsetY);
+                if (currentBoss.getIsDead()) return;
+                updateAnimationTick();
+                if (currentBoss.getIsUsingBigProjectile()) {
+                    drawBigProjectile(g, offsetX, offsetY);
+                    if (showHitBox) drawBigProjectileHitbox(g, offsetX, offsetY);
+                } else {
+                    drawMiniProjectile(g, offsetX, offsetY);
+                    if (showHitBox) drawMiniProjectileHitboxes(g, offsetX, offsetY);
+                }
+                if (showHitBox) drawBossHitbox(g, offsetX, offsetY);
+
+            }
+            drawHealthBar(g);
+
+        }
     }
     //load animations
 
@@ -156,6 +158,7 @@ public class BossUI extends EntityUI {
     }
 
     public void drawBigProjectileHitbox(Graphics g, int offsetX, int offsetY) {
+        System.out.println(true);
         Rectangle2D.Float hitbox = currentBoss.getProjectileHitbox();
         g.drawRect((int) hitbox.x - offsetX, (int) hitbox.y - offsetY, (int) hitbox.width, (int) hitbox.height);
     }
@@ -173,7 +176,6 @@ public class BossUI extends EntityUI {
     }
     public void drawBigProjectile(Graphics g, int offsetX, int offsetY) {
         Rectangle2D.Float hitbox = currentBoss.getProjectileHitbox();
-        g.drawRect((int) hitbox.x - offsetX, (int) hitbox.y - offsetY, (int) hitbox.width, (int) hitbox.height);
         g.drawImage(bigProjectile[bigProjectileAniIndex],
                 (int) hitbox.x - offsetX,
                 (int) hitbox.y - offsetY,
@@ -189,5 +191,31 @@ public class BossUI extends EntityUI {
                     (int) hitbox.width,
                     (int) hitbox.height, null);
         }
+    }
+
+    public void drawHealthBar(Graphics g) {
+        int healthBarHeight = GameView.GAME_HEIGHT / 30;
+        int healthBarWidth = GameView.GAME_WIDTH - GameView.GAME_WIDTH / 2;
+        int healthBarX = (GameView.GAME_WIDTH / 2) / 2;
+        int healthBarY = GameView.GAME_HEIGHT / 8;
+
+        int cornerRadius = 30;
+
+        g.setColor(Color.DARK_GRAY);
+        g.fillRoundRect(healthBarX - healthBarWidth / 50, healthBarY - healthBarHeight * 2, healthBarWidth + (healthBarWidth / 50) * 2, healthBarHeight * 3 + healthBarHeight / 2, cornerRadius, cornerRadius);
+
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("MS GOTHIC", Font.PLAIN, GameView.GAME_WIDTH / 55));
+        g.drawString(currentBoss.getName(), healthBarX, healthBarY - healthBarHeight / 2);
+
+        int currentHealthBarWidth = (int) ((currentBoss.getHealth() / (float) currentBoss.getMaxHealth()) * healthBarWidth);
+
+        g.setColor(Color.WHITE);
+        g.fillRoundRect(healthBarX, healthBarY, healthBarWidth, healthBarHeight, cornerRadius, cornerRadius);
+        g.setColor(Color.BLACK);
+        g.drawRoundRect(healthBarX, healthBarY, healthBarWidth, healthBarHeight, cornerRadius, cornerRadius);
+        g.setColor(Color.RED);
+        g.fillRoundRect(healthBarX, healthBarY, currentHealthBarWidth, healthBarHeight, cornerRadius, cornerRadius);
+
     }
 }
