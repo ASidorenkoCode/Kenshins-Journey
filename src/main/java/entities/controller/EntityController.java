@@ -89,9 +89,6 @@ public class EntityController {
             case KeyEvent.VK_SHIFT:
                 player.attack();
                 break;
-            case KeyEvent.VK_I:
-                player.decreaseHealth(1);
-                break;
             case KeyEvent.VK_R:
                 player.setIsRestingIfNotInAir(true);
                 break;

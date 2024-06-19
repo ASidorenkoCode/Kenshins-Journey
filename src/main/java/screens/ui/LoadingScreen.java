@@ -22,7 +22,10 @@ public class LoadingScreen {
     List<String> facts = Arrays.asList(
             "Did you know? Game development with Java Swing is not fun.",
             "Did you know? Bauer has a first name.",
-            "Did you know? This loading screen is useless, because the map is already loaded."
+            "Did you know? This loading screen is useless, because the map is already loaded.",
+            "Did you know? If you die a lot, you will loose this game.",
+            "Did you know? If you fall asleep while playing, you will loose this game.",
+            "Did you know? You can rest, to heal yourself, but you will loose score points."
     );
 
     public LoadingScreen() {

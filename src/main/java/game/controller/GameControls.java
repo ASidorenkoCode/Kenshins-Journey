@@ -5,6 +5,10 @@ import java.awt.event.KeyEvent;
 public enum GameControls {
     MOVE_RIGHT("Move right", KeyEvent.VK_D, true),
     MOVE_LEFT("Move left", KeyEvent.VK_A, true),
+    JUMP("Jump", KeyEvent.VK_SPACE, true),
+    ATTACK("Attack", KeyEvent.VK_SHIFT, true),
+    DASH("Dash", KeyEvent.VK_S, true),
+    REST("Rest", KeyEvent.VK_R, true),
     ITEM_1("Item 1", KeyEvent.VK_1, true),
     ITEM_2("Item 2", KeyEvent.VK_2, true),
     ITEM_3("Item 3", KeyEvent.VK_3, true),
@@ -36,10 +40,6 @@ public enum GameControls {
 
     public boolean isChangeable() {
         return isChangeable;
-    }
-
-    public String getControlName() {
-        return controlName;
     }
 
     public int getKeyCode() {

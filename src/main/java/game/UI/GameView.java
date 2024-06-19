@@ -43,7 +43,7 @@ public class GameView extends JPanel {
         setPreferredSize(new Dimension(GAME_WIDTH, GAME_HEIGHT));
         setFocusable(true);
         requestFocusInWindow();
-        addKeyListener(new KeyboardInputsIngame(this));
+        addKeyListener(new KeyboardInputsIngame(this, gameController));
         this.entityController = entityController;
         this.itemController = itemController;
     }

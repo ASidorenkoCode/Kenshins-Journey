@@ -318,4 +318,12 @@ public class GameController {
     public String getIpAddress() {
         return ipAddress;
     }
+
+    public EntityController getEntityController() {
+        return entityController;
+    }
+
+    public ItemController getItemController() {
+        return itemController;
+    }
 }

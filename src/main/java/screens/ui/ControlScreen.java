@@ -2,13 +2,10 @@ package screens.ui;
 
 import game.UI.GameView;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,21 +15,16 @@ public class ControlScreen implements KeyListener {
     private String selectedControl;
 
     public ControlScreen() {
-        // Initialize controls with default keys
-        controls.put("Arrow Up", KeyEvent.VK_UP);
-        controls.put("Arrow Down", KeyEvent.VK_DOWN);
-        controls.put("Arrow Left", KeyEvent.VK_LEFT);
-        controls.put("Arrow Right", KeyEvent.VK_RIGHT);
-
-        // Load control images
-        for (String control : controls.keySet()) {
-            try {
-                BufferedImage img = ImageIO.read(new File("res/controlButtons/" + control.toUpperCase().replace(" ", "") + ".png"));
-                controlImages.put(control, img); // Store the image in the map
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
+//
+//        // Load control images
+//        for (String control : controls.keySet()) {
+//            try {
+//                BufferedImage img = ImageIO.read(new File("res/controlButtons/" + control.toUpperCase().replace(" ", "") + ".png"));
+//                controlImages.put(control, img); // Store the image in the map
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
+//            }
+//        }
     }
 
     public void drawControls(Graphics g) {
