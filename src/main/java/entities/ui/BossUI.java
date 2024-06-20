@@ -158,7 +158,6 @@ public class BossUI extends EntityUI {
     }
 
     public void drawBigProjectileHitbox(Graphics g, int offsetX, int offsetY) {
-        System.out.println(true);
         Rectangle2D.Float hitbox = currentBoss.getProjectileHitbox();
         g.drawRect((int) hitbox.x - offsetX, (int) hitbox.y - offsetY, (int) hitbox.width, (int) hitbox.height);
     }

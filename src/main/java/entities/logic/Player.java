@@ -1,6 +1,5 @@
 package entities.logic;
 
-import game.UI.GameView;
 import game.logic.Highscore;
 import maps.logic.Map;
 
@@ -143,7 +142,7 @@ public class Player extends Entity implements Serializable {
                 inAir = true;
             }
             // TODO: implement new y position, for now It's just a workaround with times 3
-            if (this.getHitbox().x < 0 || this.getHitbox().y > GameView.GAME_HEIGHT*3) {
+            if (this.getHitbox().x < 0 || this.getHitbox().y > map.getMapData().length * map.getTileSize()) {
                 this.decreaseHealth(getHealth());
             }
         }

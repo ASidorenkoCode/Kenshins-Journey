@@ -43,11 +43,13 @@ public class MapController {
         mapUI.draw(g, getMapOffsetX(), getMapOffsetY(), currentMapIndex, isForeGround);
     }
 
+
+    //calculates offsets for camera
     public void checkCloseToBorder() {
         int playerX = (int) entityController.getPlayer().getHitbox().x;
         int playerY = (int) entityController.getPlayer().getHitbox().y;
         int middleOfScreenX = GameView.GAME_WIDTH / 2;
-        int quarterOfScreenY = (GameView.TILES_DEFAULT_SIZE * 2 * getCurrentMap().getHeight()) / 4;
+        int quarterOfScreenY = GameView.GAME_HEIGHT / 2;
         int maxMapOffsetX = getCurrentMap().getmaxMapOffsetX();
         int maxMapOffsetY = getCurrentMap().getmaxMapOffsetY();
         double smoothingFactor = 0.05;
