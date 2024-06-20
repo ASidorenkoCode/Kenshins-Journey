@@ -73,17 +73,4 @@ public class Client extends Thread {
     }
 
 
-    public void playerQuitsGame() {
-        try {
-            Socket socket = new Socket(serverAdress, SharedData.SERVER_PORT);
-            PrintWriter writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()), true);
-            writer.println("quit");
-
-            socket.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-
 }

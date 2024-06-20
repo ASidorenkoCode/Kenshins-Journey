@@ -4,16 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b91aae81-7ada-4dc7-9d93-d4383ba70810" name="Changes" comment="implemented tcp host and client">
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+    <list default="true" id="b91aae81-7ada-4dc7-9d93-d4383ba70810" name="Changes" comment="changed level 1">
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Kenshins-Journey.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Kenshins-Journey.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/network/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/network/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/network/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/network/ClientHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/network/HostApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/network/HostApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/network/ServerObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/network/ServerObject.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,6 +22,9 @@
       </list>
     </option>
   </component>
+  <component name="Git.Merge.Settings">
+    <option name="BRANCH" value="origin/master" />
+  </component>
   <component name="Git.Rebase.Settings">
     <option name="NEW_BASE" value="master" />
   </component>
@@ -39,7 +36,7 @@
     </option>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="43-boss-healthbar-and-animation" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -60,6 +57,9 @@
   <component name="KubernetesApiProvider">{
   &quot;isMigrated&quot;: true
 }</component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
 }</component>
@@ -71,40 +71,40 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.HostApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Start the game (DEBUG OFF).executor&quot;: &quot;Run&quot;,
-    &quot;Application.Start the game (DEBUG ON).executor&quot;: &quot;Run&quot;,
-    &quot;Application.Start the game (FPS OFF).executor&quot;: &quot;Run&quot;,
-    &quot;Application.Start the game (FPS ON).executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;46-network-function&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Artur/IdeaProjects/Kenshins-Journey/res/screens/startScreen&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.HostApplication.executor": "Run",
+    "Application.Start the game (DEBUG OFF).executor": "Run",
+    "Application.Start the game (DEBUG ON).executor": "Run",
+    "Application.Start the game (FPS OFF).executor": "Run",
+    "Application.Start the game (FPS ON).executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "last-additional-edits-to-map-and-startscreen",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/hendriksteen/Library/Mobile Documents/com~apple~CloudDocs/StudiumDHSH/Prog/Programmierung2/Kenshins-Journey/res/lvls",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "show.migrate.to.gradle.popup": "false",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/res/lvls" />
       <recent name="C:\Users\Artur\IdeaProjects\Kenshins-Journey\res\screens\startScreen" />
       <recent name="C:\Users\Artur\IdeaProjects\Kenshins-Journey\res\lvls" />
       <recent name="C:\Users\Artur\IdeaProjects\Kenshins-Journey\res" />
       <recent name="C:\Users\Artur\IdeaProjects\Kenshins-Journey\res\maps" />
-      <recent name="C:\Users\Artur\IdeaProjects\Kenshins-Journey\res\mapsprites" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Artur\IdeaProjects\Kenshins-Journey\res\screens\startScreen" />
@@ -193,14 +193,9 @@
       <workItem from="1717676679134" duration="2778000" />
       <workItem from="1717687561830" duration="974000" />
       <workItem from="1717707016597" duration="2508000" />
-    </task>
-    <task id="LOCAL-00001" summary="constants for entityUI and playerUI">
-      <option name="closed" value="true" />
-      <created>1714396517554</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1714396517554</updated>
+      <workItem from="1718277202493" duration="5365000" />
+      <workItem from="1718284705782" duration="80000" />
+      <workItem from="1718878570827" duration="3117000" />
     </task>
     <task id="LOCAL-00002" summary="player is shown on screen">
       <option name="closed" value="true" />
@@ -538,7 +533,63 @@
       <option name="project" value="LOCAL" />
       <updated>1717688062522</updated>
     </task>
-    <option name="localTasksCounter" value="44" />
+    <task id="LOCAL-00044" summary="init README.md">
+      <option name="closed" value="true" />
+      <created>1718278049721</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1718278049721</updated>
+    </task>
+    <task id="LOCAL-00045" summary="update README.md">
+      <option name="closed" value="true" />
+      <created>1718278402997</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1718278402997</updated>
+    </task>
+    <task id="LOCAL-00046" summary="screen ui changes">
+      <option name="closed" value="true" />
+      <created>1718280041234</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1718280041234</updated>
+    </task>
+    <task id="LOCAL-00047" summary="removed quit game function">
+      <option name="closed" value="true" />
+      <created>1718282296041</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1718282296041</updated>
+    </task>
+    <task id="LOCAL-00048" summary="removed quit game function">
+      <option name="closed" value="true" />
+      <created>1718282512987</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1718282512987</updated>
+    </task>
+    <task id="LOCAL-00049" summary="added new level 1">
+      <option name="closed" value="true" />
+      <created>1718880317167</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1718880317167</updated>
+    </task>
+    <task id="LOCAL-00050" summary="changed level 1">
+      <option name="closed" value="true" />
+      <created>1718882009215</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1718882009215</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -555,7 +606,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="origin/serialization" />
+                        <option value="43-boss-healthbar-and-animation" />
                       </list>
                     </value>
                   </entry>
@@ -568,12 +619,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="added score and death if score = 0 and updated health png" />
-    <MESSAGE value="optimized health, health is now displayed in 2 rows if hearts &gt; 10, added currentMaxHealth" />
-    <MESSAGE value="added player damage, enemy healthbar and reset healthbar on reload map" />
-    <MESSAGE value="added highscore increase if enemy killed, added dynamic amount of bigOrcs on map" />
-    <MESSAGE value="initBigOrcs" />
-    <MESSAGE value="optimized attack + attack bug fix" />
     <MESSAGE value="hearts system approach" />
     <MESSAGE value="added kappa and enemy_Scale TODO: change bigOrc to Kappa" />
     <MESSAGE value="player animation update + first mapsprite" />
@@ -593,7 +638,13 @@
     <MESSAGE value="new map test" />
     <MESSAGE value="map test gradient" />
     <MESSAGE value="implemented tcp host and client" />
-    <option name="LAST_COMMIT_MESSAGE" value="implemented tcp host and client" />
+    <MESSAGE value="init README.md" />
+    <MESSAGE value="update README.md" />
+    <MESSAGE value="screen ui changes" />
+    <MESSAGE value="removed quit game function" />
+    <MESSAGE value="added new level 1" />
+    <MESSAGE value="changed level 1" />
+    <option name="LAST_COMMIT_MESSAGE" value="changed level 1" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />

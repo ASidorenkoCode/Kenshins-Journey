@@ -12,8 +12,6 @@ import screens.controller.ScreenController;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.awt.geom.AffineTransform;
 import java.io.IOException;
 
@@ -67,15 +65,6 @@ public class GameView extends JPanel {
 //        drawStartScreen();
         setFrameToFullScreen();
         frame.setVisible(true);
-
-        frame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                gameController.quitGame();
-            }
-
-
-        });
 
     }
 
@@ -142,9 +131,6 @@ public class GameView extends JPanel {
 
     public void handleUserInputKeyPressed(KeyEvent e) throws IOException {
         switch (e.getKeyCode()) {
-            case KeyEvent.VK_0:
-                itemController.selectItem(entityController.getPlayer(), 0);
-                break;
             case KeyEvent.VK_1:
                 itemController.selectItem(entityController.getPlayer(), 1);
                 break;
@@ -159,18 +145,6 @@ public class GameView extends JPanel {
                 break;
             case KeyEvent.VK_5:
                 itemController.selectItem(entityController.getPlayer(), 5);
-                break;
-            case KeyEvent.VK_6:
-                itemController.selectItem(entityController.getPlayer(), 6);
-                break;
-            case KeyEvent.VK_7:
-                itemController.selectItem(entityController.getPlayer(), 7);
-                break;
-            case KeyEvent.VK_8:
-                itemController.selectItem(entityController.getPlayer(), 8);
-                break;
-            case KeyEvent.VK_9:
-                itemController.selectItem(entityController.getPlayer(), 9);
                 break;
             case KeyEvent.VK_L:
                 if (gameController.getCurrentGameState() == GameState.DEAD) gameController.restartLevelAfterDeath();
@@ -206,13 +180,7 @@ public class GameView extends JPanel {
                 this.requestFocusInWindow();
                 break;
             default:
-                if (e.getKeyCode() == KeyEvent.VK_F4 && e.isAltDown()) {
-                    gameController.quitGame();
-                } else if (e.getKeyCode() == KeyEvent.VK_Q && e.isMetaDown()) {
-                    gameController.quitGame();
-                } else {
-                    entityController.handleUserInputKeyPressed(e, gameController.getDeathScreen());
-                }
+                entityController.handleUserInputKeyPressed(e, gameController.getDeathScreen());
 
         }
     }

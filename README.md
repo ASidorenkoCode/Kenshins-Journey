@@ -17,7 +17,7 @@ git clone https://github.com/ASidorenkoCode/Kenshins-Journey.git
 
 3. Maven Build Laden
 
-4. Eine Github Repository mit einer Datei namens Data.txt erstellen
+4. Eine Github Repository mit einer Datei namens data.txt erstellen. Weitere Dateien dürfen nicht enthalten sein.
 
 5. GitHub Access Token
    generieren (https://docs.github.com/de/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens).

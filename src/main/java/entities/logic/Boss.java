@@ -15,16 +15,13 @@ public class Boss extends Entity {
     private static final int BOSS_WIDTH = 64;
     private static final int BOSS_HEIGHT = 64;
     private static final int BOSS_SCALE = 4;
+
+    private static final int MAX_HEALTH = 300;
     private Rectangle2D.Float projectileHitbox;
     private ArrayList<Rectangle2D.Float> miniProjectileHitboxes;
     private boolean isUsingBigProjectile;
-    private final static int JUMP_SPEED = 500;
-    private int jumpCount;
-    private float airMovement;
-    private boolean inAir;
-    private float previosY;
-
     private boolean isScoreIncreased = false;
+    private String name;
 
 
     public Boss(float x, float y) {
@@ -37,10 +34,9 @@ public class Boss extends Entity {
                 BIG_PROJECTILE_WIDTH * BIG_PROJECTILE_SCALE,
                 BIG_PROJECTILE_HEIGHT * BIG_PROJECTILE_SCALE);
         initNewMiniProjectiles();
-        this.health = 20;
+        this.health = MAX_HEALTH;
         this.isUsingBigProjectile = true;
-        this.airMovement = -5f;
-        this.inAir = false;
+        this.name = "Doragon The Dark Tempest";
     }
 
 
@@ -56,45 +52,12 @@ public class Boss extends Entity {
 
             attack(offsetX, player);
 
-            if(inAir) {
-                //TODO: Static movement or based on hitbox?
-                if(previosY < y) {
-                    y = previosY;
-                    hitbox.y = previosY;
-                    inAir = false;
-                    airMovement = -5f;
-                } else {
-                    updateYPosByAirMovement();
-                    airMovement += 0.1f;
-                }
-            } else {
-                jumpCount++;
-                if(jumpCount >= JUMP_SPEED) {
-                    jumpCount = 0;
-                    inAir = true;
-                    previosY = y;
-                }
-            }
-        } else {
-            if(!isScoreIncreased) {
+            if (!isScoreIncreased) {
                 highscore.increaseHighscoreForBoss();
                 setScoreIncreased(true);
                 finish.setIsActive(true);
             }
         }
-
-    }
-
-    private void updateYPosByAirMovement() {
-        y += airMovement;
-        hitbox.y += airMovement;
-
-        //only update not used projectiles
-        if(isUsingBigProjectile) {
-            for (Rectangle2D.Float miniProjectileHitbox : miniProjectileHitboxes) {
-                miniProjectileHitbox.y += airMovement;
-            }
-        } else projectileHitbox.y += airMovement;
 
     }
 
@@ -192,5 +155,13 @@ public class Boss extends Entity {
 
     public boolean isScoreIncreased() {
         return isScoreIncreased;
+    }
+
+    public int getMaxHealth() {
+        return MAX_HEALTH;
+    }
+
+    public String getName() {
+        return name;
     }
 }

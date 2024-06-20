@@ -31,11 +31,6 @@ public class ClientHandler extends Thread {
             // Read a message sent by the client
             String request = in.readLine();
 
-            if (request.equals("quit")) {
-                hostApplication.refreshServerObjects();
-                return;
-            }
-
 
             ServerObject serverObject = gson.fromJson(request, ServerObject.class);
             hostApplication.addOrUpdateServerObject(serverObject);

@@ -1,6 +1,6 @@
 package entities.logic;
 
-import game.UI.GameView;
+import game.logic.Highscore;
 import maps.logic.Map;
 
 import java.awt.*;
@@ -92,7 +92,7 @@ public class Player extends Entity implements Serializable {
         resetMaximumDamagePerAttack();
     }
 
-    public void update(Map map, Boss boss, ArrayList<Enemy> enemies) {
+    public void update(Map map, Boss boss, ArrayList<Enemy> enemies, Highscore highscore) {
 
 
         if(!attack) {
@@ -106,10 +106,10 @@ public class Player extends Entity implements Serializable {
 
 
         if(isResting) {
-        //TODO: better suiting resting
             if (health < 6) {
-            health++;
-        }
+                health++;
+                highscore.decreaseHighscoreForHeart();
+            }
         return;
         }
 
@@ -142,7 +142,7 @@ public class Player extends Entity implements Serializable {
                 inAir = true;
             }
             // TODO: implement new y position, for now It's just a workaround with times 3
-            if (this.getHitbox().x < 0 || this.getHitbox().y > GameView.GAME_HEIGHT*3) {
+            if (this.getHitbox().x < 0 || this.getHitbox().y > map.getMapData().length * map.getTileSize()) {
                 this.decreaseHealth(getHealth());
             }
         }

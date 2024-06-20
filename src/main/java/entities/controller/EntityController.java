@@ -32,7 +32,7 @@ public class EntityController {
     }
 
     public void update(MapController mapController, GameObjectController gameObjectController, Highscore highscore) {
-        player.update(mapController.getCurrentMap(), currentBoss, enemies);
+        player.update(mapController.getCurrentMap(), currentBoss, enemies, highscore);
         for (Enemy kap : enemies) kap.update(mapController.getCurrentMap(), player, highscore);
 
         if(currentBoss != null) currentBoss.update(mapController.getMapOffsetX(), player, highscore, gameObjectController.getFinish());
