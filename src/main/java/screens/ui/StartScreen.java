@@ -16,7 +16,7 @@ public class StartScreen {
 
     public StartScreen() {
         try {
-            backgroundImage = ImageIO.read(new File("res/screens/startScreen/nope/StartScreen2.png"));
+            backgroundImage = ImageIO.read(new File("res/screens/startScreen/nope/MainStartScreen.png"));
             for (int i = 0; i < 4; i++) {
                 buttonImages[i] = ImageIO.read(new File("res/screens/startScreen/Button" + (i + 1) + ".png"));
                 buttonSelectedImages[i] = ImageIO.read(new File("res/screens/startScreen/Button" + (i + 1) + "a.png"));
