@@ -93,6 +93,7 @@ public class GameController {
         gameEngine.startGameLoop();
         this.showHitbox = showHitBox;
         loadAndInitializeControls();
+
     }
 
 
@@ -175,6 +176,7 @@ public class GameController {
         Player player = entityController.getPlayer();
         playerSerializer.writePlayer(player);
         initOrUpdateGame();
+        mapController.getMapUI().setBackgroundImage(null);
     }
 
     private void initOrUpdateGame() throws IOException {

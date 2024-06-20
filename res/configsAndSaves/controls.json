@@ -21,7 +21,7 @@
   },
   {
     "name": "DASH",
-    "keyCode": 17
+    "keyCode": 83
   },
   {
     "name": "REST",
@@ -41,7 +41,7 @@
   },
   {
     "name": "ITEM_1",
-    "keyCode": 49
+    "keyCode": 55
   },
   {
     "name": "ATTACK",

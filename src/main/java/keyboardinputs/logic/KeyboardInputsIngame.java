@@ -348,6 +348,7 @@ public class KeyboardInputsIngame implements KeyListener {
     private void initializeControlActionsOnRelease(EntityController entityController, GameController gameController) {
         controlActionsOnRelease.put(GameControls.MOVE_RIGHT, () -> entityController.getPlayer().setRight(false));
         controlActionsOnRelease.put(GameControls.MOVE_LEFT, () -> entityController.getPlayer().setLeft(false));
+        controlActionsOnRelease.put(GameControls.DASH, () -> entityController.getPlayer().setIsDashing(false));
         controlActionsOnRelease.put(GameControls.REST, () -> entityController.getPlayer().setIsRestingIfNotInAir(false));
         controlActionsOnRelease.put(GameControls.OPEN_HIGHSCORE_TABLE, () -> gameController.setIsDrawingListOfCurrentPlayersForInterfaceGame(false));
     }

@@ -61,7 +61,7 @@ public class InterfaceGame {
 
         int imageY = GameView.GAME_HEIGHT - itemHeight;
 
-        if (menu.length > 0) {
+        if (menu != null && menu.length > 0) {
             int index = 1;
             int totalWidth = menu.length * 55;
             int startX = (GameView.GAME_WIDTH - totalWidth) / 2;
@@ -83,7 +83,9 @@ public class InterfaceGame {
             }
         }
 
-        drawServerObjects(g, playerId, currentLevel);
+        if (serverObjects != null) {
+            drawServerObjects(g, playerId, currentLevel);
+        }
 
         if (isDrawingListOfCurrentPlayers) drawListOfCurrentPlayers(g, isPlayingMultiplayer, playerId);
     }
