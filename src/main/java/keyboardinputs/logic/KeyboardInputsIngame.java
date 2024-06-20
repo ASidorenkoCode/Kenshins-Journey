@@ -48,6 +48,20 @@ public class KeyboardInputsIngame implements KeyListener {
     public void keyPressed(KeyEvent e) {
         handleUserInputKeyPressed(e);
 
+        // TODO: DELETE THIS LATER
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_P:
+                try {
+                    gameController.loadNewMap();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+                break;
+            default:
+                break;
+        }
+        // TODO: DELETE TO HERE
+
         if (isChangingControl) {
             switch (e.getKeyCode()) {
                 default:
@@ -92,6 +106,7 @@ public class KeyboardInputsIngame implements KeyListener {
                             controlScreen.setChangingControl(false);
                             isChangingControl = false;
                             controlScreen.drawControls(gameView.getGraphics());
+                            controlScreen.setSubtitle("You changed the key of " + controlScreen.getSelectedControl() + " to " + keyText + "! If you want to change another key select it with arrow keys and press enter.");
                         }
                     }
                     break;
@@ -145,6 +160,66 @@ public class KeyboardInputsIngame implements KeyListener {
         controlActionsOnPress.put(GameControls.OPEN_HIGHSCORE_TABLE, () -> gameController.setIsDrawingListOfCurrentPlayersForInterfaceGame(true));
         controlActionsOnPress.put(GameControls.ACTIVATE_MULTIPLAYER, gameController::useMultiplayer);
         controlActionsOnPress.put(GameControls.RESTART_AFTER_DEATH, gameController::restartLevelAfterDeath);
+        controlActionsOnPress.put(GameControls.NAVIGATE_LEFT, () -> {
+            switch (gameController.getCurrentGameState()) {
+                case CONTROLS:
+                    if (!isChangingControl) {
+                        int currentIndex = screenController.getControlScreen().getSelectedControlIndex();
+                        int controlsPerColumn = (int) Math.ceil((double) screenController.getControlScreen().getControlNames().size() / 3);
+                        int currentRow = currentIndex % controlsPerColumn;
+                        int currentColumn = currentIndex / controlsPerColumn;
+
+                        // Move to the previous column, wrapping around if necessary
+                        currentColumn--;
+                        if (currentColumn < 0) {
+                            currentColumn = 2; // Wrap around to the last column
+                        }
+
+                        // Calculate the new index
+                        int newIndex = currentRow + currentColumn * controlsPerColumn;
+                        if (newIndex >= screenController.getControlScreen().getControlNames().size()) {
+                            currentColumn--; // Move to the previous column
+                            if (currentColumn < 0) {
+                                currentColumn = 2; // Wrap around to the last column
+                            }
+                            newIndex = currentRow + currentColumn * controlsPerColumn;
+                        }
+                        screenController.getControlScreen().setSelectedControlIndex(newIndex);
+                        screenController.getControlScreen().setSelectedControl(screenController.getControlScreen().getControlNames().get(newIndex));
+                    }
+                    break;
+            }
+        });
+        controlActionsOnPress.put(GameControls.NAVIGATE_RIGHT, () -> {
+            switch (gameController.getCurrentGameState()) {
+                case CONTROLS:
+                    if (!isChangingControl) {
+                        int currentIndex = screenController.getControlScreen().getSelectedControlIndex();
+                        int controlsPerColumn = (int) Math.ceil((double) screenController.getControlScreen().getControlNames().size() / 3);
+                        int currentRow = currentIndex % controlsPerColumn;
+                        int currentColumn = currentIndex / controlsPerColumn;
+
+                        // Move to the next column, wrapping around if necessary
+                        currentColumn++;
+                        if (currentColumn > 2) {
+                            currentColumn = 0; // Wrap around to the first column
+                        }
+
+                        // Calculate the new index
+                        int newIndex = currentRow + currentColumn * controlsPerColumn;
+                        if (newIndex >= screenController.getControlScreen().getControlNames().size()) {
+                            currentColumn++; // Move to the next column
+                            if (currentColumn > 2) {
+                                currentColumn = 0; // Wrap around to the first column
+                            }
+                            newIndex = currentRow + currentColumn * controlsPerColumn;
+                        }
+                        screenController.getControlScreen().setSelectedControlIndex(newIndex);
+                        screenController.getControlScreen().setSelectedControl(screenController.getControlScreen().getControlNames().get(newIndex));
+                    }
+                    break;
+            }
+        });
         controlActionsOnPress.put(GameControls.NAVIGATE_DOWN, () -> {
             switch (gameController.getCurrentGameState()) {
                 case START:
@@ -152,11 +227,19 @@ public class KeyboardInputsIngame implements KeyListener {
                     break;
                 case CONTROLS:
                     if (!isChangingControl) {
-                        int newIndex = screenController.getControlScreen().getSelectedControlIndex();
-                        newIndex++;
-                        if (newIndex >= screenController.getControlScreen().getControlNames().size()) {
-                            newIndex = 0;
+                        int currentIndex = screenController.getControlScreen().getSelectedControlIndex();
+                        int controlsPerColumn = (int) Math.ceil((double) screenController.getControlScreen().getControlNames().size() / 3);
+                        int currentRow = currentIndex % controlsPerColumn;
+                        int currentColumn = currentIndex / controlsPerColumn;
+
+                        // Move to the next row, wrapping around if necessary
+                        currentRow++;
+                        if (currentRow >= controlsPerColumn) {
+                            currentRow = 0; // Wrap around to the first row
                         }
+
+                        // Calculate the new index
+                        int newIndex = currentRow + currentColumn * controlsPerColumn;
                         screenController.getControlScreen().setSelectedControlIndex(newIndex);
                         screenController.getControlScreen().setSelectedControl(screenController.getControlScreen().getControlNames().get(newIndex));
                     }
@@ -170,11 +253,19 @@ public class KeyboardInputsIngame implements KeyListener {
                     break;
                 case CONTROLS:
                     if (!isChangingControl) {
-                        int newIndex = screenController.getControlScreen().getSelectedControlIndex();
-                        newIndex--;
-                        if (newIndex < 0) {
-                            newIndex = screenController.getControlScreen().getControlNames().size() - 1;
+                        int currentIndex = screenController.getControlScreen().getSelectedControlIndex();
+                        int controlsPerColumn = (int) Math.ceil((double) screenController.getControlScreen().getControlNames().size() / 3);
+                        int currentRow = currentIndex % controlsPerColumn;
+                        int currentColumn = currentIndex / controlsPerColumn;
+
+                        // Move to the previous row, wrapping around if necessary
+                        currentRow--;
+                        if (currentRow < 0) {
+                            currentRow = controlsPerColumn - 1; // Wrap around to the last row
                         }
+
+                        // Calculate the new index
+                        int newIndex = currentRow + currentColumn * controlsPerColumn;
                         screenController.getControlScreen().setSelectedControlIndex(newIndex);
                         screenController.getControlScreen().setSelectedControl(screenController.getControlScreen().getControlNames().get(newIndex));
                     }
@@ -230,6 +321,25 @@ public class KeyboardInputsIngame implements KeyListener {
                         screenController.getControlScreen().setSubtitle("Please change the control of " + selectedControl + " or abort with escape");
                         break;
                     }
+            }
+        });
+        controlActionsOnPress.put(GameControls.ESCAPE, () -> {
+            switch (gameController.getCurrentGameState()) {
+                case CONTROLS:
+                    if (isChangingControl) {
+                        isChangingControl = false;
+                        screenController.getControlScreen().setChangingControl(isChangingControl);
+                        screenController.getControlScreen().setSubtitle("Select a key you want to change with arrow keys and press enter if you want to change this key");
+                    } else {
+                        gameController.setCurrentGameState(GameState.START);
+                    }
+                    break;
+                case HIGHSCORE:
+                    gameController.setCurrentGameState(GameState.START);
+                    break;
+                case END:
+                    System.exit(0);
+                    break;
             }
         });
 

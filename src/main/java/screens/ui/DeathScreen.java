@@ -1,13 +1,30 @@
 package screens.ui;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import game.UI.GameView;
 
 import java.awt.*;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class DeathScreen {
 
-    public void draw(Graphics g, int highscore, int deathCounter) {
+    public void draw(Graphics g, int highscore, int deathCounter) throws IOException {
         Graphics2D g2d = (Graphics2D) g;
+
+        String content = new String(Files.readAllBytes(Paths.get("res/configsAndSaves/controls.json")));
+        JsonArray controls = JsonParser.parseString(content).getAsJsonArray();
+        String restartDeath = "";
+        for (int i = 0; i < controls.size(); i++) {
+            JsonObject control = controls.get(i).getAsJsonObject();
+            if (control.get("name").getAsString().equals("RESTART_AFTER_DEATH")) {
+                restartDeath = String.valueOf((char) control.get("keyCode").getAsInt());
+                break;
+            }
+        }
 
         g2d.setColor(Color.BLACK);
         g2d.fillRect(0, 0, GameView.GAME_WIDTH, GameView.GAME_HEIGHT);
@@ -32,7 +49,7 @@ public class DeathScreen {
         g2d.drawString(scoreText, statsX, scoreY);
         g2d.drawString(deaths, statsX, enemiesY);
 
-        String restartTextLine1 = "Press L to Respawn!";
+        String restartTextLine1 = "Press " + restartDeath + " to Respawn!";
         String restartTextLine2 = "You will lose 100 score points on respawn!";
         int restartYLine1 = enemiesY + 100;
         int restartYLine2 = restartYLine1 + 30;

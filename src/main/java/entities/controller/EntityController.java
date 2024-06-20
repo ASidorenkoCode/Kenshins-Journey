@@ -9,10 +9,8 @@ import entities.ui.PlayerUI;
 import game.logic.Highscore;
 import gameObjects.controller.GameObjectController;
 import maps.controller.MapController;
-import screens.ui.DeathScreen;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -73,45 +71,6 @@ public class EntityController {
         bossUI = new BossUI(currentBoss, showHitBox);
 
     }
-
-    //handle user input
-    public void handleUserInputKeyPressed(KeyEvent e, DeathScreen deathScreen) {
-        switch (e.getKeyCode()) {
-            case KeyEvent.VK_A:
-                player.setLeft(true);
-                break;
-            case KeyEvent.VK_D:
-                player.setRight(true);
-                break;
-            case KeyEvent.VK_SPACE:
-                player.jump();
-                break;
-            case KeyEvent.VK_SHIFT:
-                player.attack();
-                break;
-            case KeyEvent.VK_R:
-                player.setIsRestingIfNotInAir(true);
-                break;
-            case KeyEvent.VK_S:
-                player.setIsDashing(true);
-                break;
-        }
-    }
-
-    public void handleUserInputKeyReleased(KeyEvent e) {
-        switch (e.getKeyCode()) {
-            case KeyEvent.VK_A:
-                player.setLeft(false);
-                break;
-            case KeyEvent.VK_R:
-                player.setIsRestingIfNotInAir(false);
-                break;
-            case KeyEvent.VK_D:
-                player.setRight(false);
-                break;
-        }
-    }
-
 
     //handle ui
 

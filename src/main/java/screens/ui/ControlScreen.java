@@ -3,6 +3,7 @@ package screens.ui;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import game.UI.GameView;
+import game.controller.GameControls;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -12,10 +13,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class ControlScreen {
     private Map<String, Integer> controls = new HashMap<>();
@@ -27,11 +27,27 @@ public class ControlScreen {
     private int selectedControlIndex = 0;
     private List<String> controlNames;
     private List<Map<String, String>> keyCodeToFileList;
+    private static final List<String> DISPLAYED_CONTROLS = Arrays.asList(
+            "MOVE_LEFT",
+            "MOVE_RIGHT",
+            "ATTACK",
+            "JUMP",
+            "DASH",
+            "REST",
+            "RESTART_AFTER_DEATH",
+            "OPEN_HIGHSCORE_TABLE",
+            "ACTIVATE_MULTIPLAYER",
+            "ITEM_1",
+            "ITEM_2",
+            "ITEM_3",
+            "ITEM_4",
+            "ITEM_5"
+    );
 
 
     public ControlScreen() throws IOException {
         title = "Control Settings";
-        subtitle = "\"Select a key you want to change with arrow keys and press enter if you want to change this key";
+        subtitle = "Select a key you want to change with arrow keys and press enter if you want to change this key";
 
         Gson gson = new Gson();
         Type listType = new TypeToken<List<Map<String, Object>>>() {
@@ -95,14 +111,19 @@ public class ControlScreen {
 
         // Set the first control as the selected control
         if (!controls.isEmpty()) {
-            selectedControl = controls.keySet().iterator().next();
+            selectedControl = DISPLAYED_CONTROLS.getFirst();
+
         }
 
-        controlNames = new ArrayList<>(controls.keySet());
+        controlNames = new ArrayList<>();
+        for (String control : DISPLAYED_CONTROLS) {
+            if (controls.containsKey(control)) {
+                controlNames.add(control);
+            }
+        }
     }
 
     public void drawControls(Graphics g) {
-
         int y = 50;
         Graphics2D g2d = (Graphics2D) g;
 
@@ -114,9 +135,32 @@ public class ControlScreen {
         g2d.drawString(title, 50, 20);
         g2d.drawString(subtitle, 50, 40);
 
-        for (String control : controls.keySet()) {
+        // Calculate the maximum width of the control images and the corresponding text
+        int maxWidth = 0;
+        for (String control : DISPLAYED_CONTROLS) {
             BufferedImage img = controlImages.get(control);
             if (img != null) {
+                String formattedControl = control.replace("_", " ").toLowerCase();
+                formattedControl = Character.toUpperCase(formattedControl.charAt(0)) + formattedControl.substring(1);
+                int controlWidth = img.getWidth() + g.getFontMetrics().stringWidth(formattedControl) + 10;
+                maxWidth = Math.max(maxWidth, controlWidth);
+            }
+        }
+
+        // Calculate the number of controls per column
+        int controlsPerColumn = (int) Math.ceil((double) DISPLAYED_CONTROLS.size() / 3);
+
+        int controlCount = 0;
+        int x = (GameView.GAME_WIDTH - maxWidth) / 3 - maxWidth / 3; // Start x at half the distance of maxWidth
+
+        for (String control : DISPLAYED_CONTROLS) {
+            BufferedImage img = controlImages.get(control);
+            if (img != null) {
+                // Scale the image
+                int newWidth = img.getWidth() * 2;
+                int newHeight = img.getHeight() * 2;
+                Image scaledImg = img.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
+
                 if (control.equals(selectedControl)) {
                     if (isChangingControl) {
                         g2d.setColor(Color.RED);
@@ -126,18 +170,31 @@ public class ControlScreen {
                 } else {
                     g2d.setColor(Color.WHITE);
                 }
-                g2d.drawRect(50, y, img.getWidth(), img.getHeight());
-
-                g.drawImage(img, 50, y, null);
-                g.setColor(Color.WHITE); // Set the color for the text
 
                 String formattedControl = control.replace("_", " ").toLowerCase();
                 formattedControl = Character.toUpperCase(formattedControl.charAt(0)) + formattedControl.substring(1);
+                int textWidth = g.getFontMetrics().stringWidth(formattedControl);
+                g2d.drawRect(x, y, maxWidth + 20, newHeight);
 
-                g.drawString(formattedControl, 50 + img.getWidth() + 10, y + img.getHeight() / 2); // Draw the control name next to the image
+                g.drawImage(scaledImg, x, y, null);
+                g.setColor(Color.WHITE);
+                g.drawString(formattedControl, x + maxWidth - textWidth + 10, y + newHeight / 2);
+
+                controlCount++;
+                if (controlCount % controlsPerColumn == 0 && controlCount / controlsPerColumn < 3) {
+                    x += maxWidth + 50;
+                    y = 50;
+                } else {
+                    y += newHeight + 20;
+                }
             }
-            y += img.getHeight() + 10; // Adjust y coordinate for next image
         }
+    }
+
+    public List<String> getChangeableControlNames() {
+        return controlNames.stream()
+                .filter(name -> GameControls.valueOf(name).isChangeable())
+                .collect(Collectors.toList());
     }
 
     public Map<String, Integer> getControls() {

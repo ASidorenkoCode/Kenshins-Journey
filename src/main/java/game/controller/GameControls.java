@@ -21,8 +21,11 @@ public enum GameControls implements Serializable {
     ACTIVATE_MULTIPLAYER("Activate multiplayer", KeyEvent.VK_M, true),
     NAVIGATE_DOWN("Navigate down", KeyEvent.VK_DOWN, false),
     NAVIGATE_UP("Navigate up", KeyEvent.VK_UP, false),
+    NAVIGATE_LEFT("Navigate left", KeyEvent.VK_LEFT, false),
+    NAVIGATE_RIGHT("Navigate right", KeyEvent.VK_RIGHT, false),
     CONFIRM("Confirm", KeyEvent.VK_ENTER, false),
-    OPEN_CONTROLS("Open controls", KeyEvent.VK_X, false);
+    OPEN_CONTROLS("Open controls", KeyEvent.VK_X, false),
+    ESCAPE("Escape", KeyEvent.VK_ESCAPE, false);
 
     private static final long serialVersionUID = 1L;
     private String controlName;

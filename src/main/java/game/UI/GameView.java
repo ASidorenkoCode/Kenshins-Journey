@@ -11,6 +11,7 @@ import screens.controller.ScreenController;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.io.IOException;
 
 public class GameView extends JPanel {
 
@@ -98,12 +99,16 @@ public class GameView extends JPanel {
             AffineTransform at;
             at = AffineTransform.getScaleInstance(scaleFactor, scaleFactor);
             g2d.setTransform(at);
-            render(g2d);
+            try {
+                render(g2d);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             g2d.dispose(); // Dispose the Graphics2D object when done
         }
     }
 
-    public void render(Graphics g) {
+    public void render(Graphics g) throws IOException {
         //TODO: Class calling inside of gameController
         //TODO: Implement rendering for more stuff
         int mapOffsetX = mapController.getMapOffsetX();
@@ -125,83 +130,6 @@ public class GameView extends JPanel {
         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
         frame.setTitle(fpsUpsText);
     }
-
-
-//    public void handleUserInputKeyPressed(KeyEvent e) throws IOException {
-//        switch (e.getKeyCode()) {
-//            case KeyEvent.VK_1:
-//                itemController.selectItem(entityController.getPlayer(), 1);
-//                break;
-//            case KeyEvent.VK_2:
-//                itemController.selectItem(entityController.getPlayer(), 2);
-//                break;
-//            case KeyEvent.VK_3:
-//                itemController.selectItem(entityController.getPlayer(), 3);
-//                break;
-//            case KeyEvent.VK_4:
-//                itemController.selectItem(entityController.getPlayer(), 4);
-//                break;
-//            case KeyEvent.VK_5:
-//                itemController.selectItem(entityController.getPlayer(), 5);
-//                break;
-//            case KeyEvent.VK_L:
-//                if (gameController.getCurrentGameState() == GameState.DEAD) gameController.restartLevelAfterDeath();
-//                break;
-//            case KeyEvent.VK_W:
-//                if (gameController.getCurrentGameState() == GameState.START)
-//                    gameController.setCurrentGameState(GameState.CONTROLS);
-//                break;
-//            case KeyEvent.VK_P:
-//                if (gameController.getCurrentGameState() == GameState.PLAYING) gameController.loadNewMap();
-//                break;
-//            case KeyEvent.VK_ENTER:
-//                if (gameController.getCurrentGameState() == GameState.END) gameController.resetGame();
-//                if (gameController.getCurrentGameState() == GameState.START && screenController.getStartScreen().getSelectedButton() == 0)
-//                    gameController.newGame();
-//                if (gameController.getCurrentGameState() == GameState.START && screenController.getStartScreen().getSelectedButton() == 1)
-//                    gameController.startGame();
-//                if (gameController.getCurrentGameState() == GameState.START && screenController.getStartScreen().getSelectedButton() == 2)
-//                    gameController.setCurrentGameState(GameState.HIGHSCORE);
-//                if (gameController.getCurrentGameState() == GameState.START && screenController.getStartScreen().getSelectedButton() == 3)
-//                    System.exit(0);
-//                break;
-//            case KeyEvent.VK_ESCAPE:
-//                if (gameController.getCurrentGameState() == GameState.END) {
-//                    gameController.getHighscore().writeAllHighscores();
-//                    System.exit(0);
-//                }
-//                if (gameController.getCurrentGameState() == GameState.HIGHSCORE) {
-//                    gameController.setCurrentGameState(GameState.START);
-//                }
-//                break;
-//            case KeyEvent.VK_O:
-//                gameController.setIsDrawingListOfCurrentPlayersForInterfaceGame(true);
-//                break;
-//            case KeyEvent.VK_M:
-//                gameController.useMultiplayer();
-//                this.requestFocusInWindow();
-//                break;
-//            case KeyEvent.VK_DOWN:
-//                screenController.getStartScreen().handleDownKey();
-//                break;
-//            case KeyEvent.VK_UP:
-//                screenController.getStartScreen().handleUpKey();
-//                break;
-//            default:
-//                entityController.handleUserInputKeyPressed(e, gameController.getDeathScreen());
-//
-//        }
-//    }
-//
-//    public void handleUserInputKeyReleased(KeyEvent e) {
-//        switch (e.getKeyCode()) {
-//            case KeyEvent.VK_O:
-//                gameController.setIsDrawingListOfCurrentPlayersForInterfaceGame(false);
-//                break;
-//            default:
-//                entityController.handleUserInputKeyReleased(e);
-//        }
-//    }
 
     public JFrame getFrame() {
         return frame;

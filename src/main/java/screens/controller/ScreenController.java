@@ -36,7 +36,7 @@ public class ScreenController {
         interfaceGame.update(highscore, player, menu, serverObjects);
     }
 
-    public void draw(Graphics g, GameState currentGameState, int highscore, int deathCounter, Highscore highscores, int mapCount, String playerId, int currentLevel, boolean isPlayingMultiplayer) {
+    public void draw(Graphics g, GameState currentGameState, int highscore, int deathCounter, Highscore highscores, int mapCount, String playerId, int currentLevel, boolean isPlayingMultiplayer) throws IOException {
         switch (currentGameState) {
             //TODO implement start and death screen
             case START -> {
