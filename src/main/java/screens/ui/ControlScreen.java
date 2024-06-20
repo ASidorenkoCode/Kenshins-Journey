@@ -124,19 +124,26 @@ public class ControlScreen {
     }
 
     public void drawControls(Graphics g) {
-        int y = 50;
         Graphics2D g2d = (Graphics2D) g;
 
         g2d.setColor(Color.BLACK);
         g2d.fillRect(0, 0, GameView.GAME_WIDTH, GameView.GAME_HEIGHT);
 
-        // Draw title and subtitle
-        g2d.setColor(Color.WHITE);
-        g2d.drawString(title, 50, 20);
-        g2d.drawString(subtitle, 50, 40);
+        g2d.setFont(new Font("default", Font.BOLD, 20));
 
-        // Calculate the maximum width of the control images and the corresponding text
+        g2d.setColor(Color.WHITE);
+        int titleWidth = g.getFontMetrics().stringWidth(title);
+        int titleX = (GameView.GAME_WIDTH - titleWidth) / 2;
+        g2d.drawString(title, titleX, 50); // Decreased from 20 to 10
+
+        int subtitleWidth = g.getFontMetrics().stringWidth(subtitle);
+        int subtitleX = (GameView.GAME_WIDTH - subtitleWidth) / 2;
+        g2d.drawString(subtitle, subtitleX, 100); // Decreased from 40 to 30
+
+        g2d.setFont(new Font("default", Font.BOLD, 12));
+
         int maxWidth = 0;
+        int totalHeight = 0;
         for (String control : DISPLAYED_CONTROLS) {
             BufferedImage img = controlImages.get(control);
             if (img != null) {
@@ -144,19 +151,19 @@ public class ControlScreen {
                 formattedControl = Character.toUpperCase(formattedControl.charAt(0)) + formattedControl.substring(1);
                 int controlWidth = img.getWidth() + g.getFontMetrics().stringWidth(formattedControl) + 10;
                 maxWidth = Math.max(maxWidth, controlWidth);
+                totalHeight += img.getHeight() * 2 + 20;
             }
         }
 
-        // Calculate the number of controls per column
         int controlsPerColumn = (int) Math.ceil((double) DISPLAYED_CONTROLS.size() / 3);
 
         int controlCount = 0;
-        int x = (GameView.GAME_WIDTH - maxWidth) / 3 - maxWidth / 3; // Start x at half the distance of maxWidth
+        int x = (GameView.GAME_WIDTH - maxWidth * 3) / 2;
+        int y = (GameView.GAME_HEIGHT - totalHeight / 3) / 2;
 
         for (String control : DISPLAYED_CONTROLS) {
             BufferedImage img = controlImages.get(control);
             if (img != null) {
-                // Scale the image
                 int newWidth = img.getWidth() * 2;
                 int newHeight = img.getHeight() * 2;
                 Image scaledImg = img.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
@@ -183,7 +190,7 @@ public class ControlScreen {
                 controlCount++;
                 if (controlCount % controlsPerColumn == 0 && controlCount / controlsPerColumn < 3) {
                     x += maxWidth + 50;
-                    y = 50;
+                    y = (GameView.GAME_HEIGHT - totalHeight / 3) / 2; // Reset y to the center of the screen for the new column
                 } else {
                     y += newHeight + 20;
                 }

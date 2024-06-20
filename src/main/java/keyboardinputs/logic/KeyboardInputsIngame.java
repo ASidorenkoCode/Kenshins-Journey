@@ -234,9 +234,8 @@ public class KeyboardInputsIngame implements KeyListener {
 
                         // Move to the next row, wrapping around if necessary
                         currentRow++;
-                        if (currentRow >= controlsPerColumn) {
-                            currentRow = 0; // Wrap around to the first row
-                        }
+                        if (currentRow >= controlsPerColumn) currentRow = 0;
+                        if (currentColumn == 2 && currentRow + 1 >= controlsPerColumn) currentRow = 0;
 
                         // Calculate the new index
                         int newIndex = currentRow + currentColumn * controlsPerColumn;
@@ -262,6 +261,7 @@ public class KeyboardInputsIngame implements KeyListener {
                         currentRow--;
                         if (currentRow < 0) {
                             currentRow = controlsPerColumn - 1; // Wrap around to the last row
+                            if (currentColumn == 2) currentRow = controlsPerColumn - 2;
                         }
 
                         // Calculate the new index
@@ -331,6 +331,7 @@ public class KeyboardInputsIngame implements KeyListener {
                         screenController.getControlScreen().setChangingControl(isChangingControl);
                         screenController.getControlScreen().setSubtitle("Select a key you want to change with arrow keys and press enter if you want to change this key");
                     } else {
+                        gameController.loadAndInitializeControls();
                         gameController.setCurrentGameState(GameState.START);
                     }
                     break;
@@ -348,7 +349,6 @@ public class KeyboardInputsIngame implements KeyListener {
     private void initializeControlActionsOnRelease(EntityController entityController, GameController gameController) {
         controlActionsOnRelease.put(GameControls.MOVE_RIGHT, () -> entityController.getPlayer().setRight(false));
         controlActionsOnRelease.put(GameControls.MOVE_LEFT, () -> entityController.getPlayer().setLeft(false));
-        controlActionsOnRelease.put(GameControls.DASH, () -> entityController.getPlayer().setIsDashing(false));
         controlActionsOnRelease.put(GameControls.REST, () -> entityController.getPlayer().setIsRestingIfNotInAir(false));
         controlActionsOnRelease.put(GameControls.OPEN_HIGHSCORE_TABLE, () -> gameController.setIsDrawingListOfCurrentPlayersForInterfaceGame(false));
     }
