@@ -9,6 +9,7 @@ import network.data.ServerObject;
 import screens.ui.*;
 
 import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class ScreenController {
@@ -20,7 +21,8 @@ public class ScreenController {
     private HighScoreScreen highScoreScreen;
     private ControlScreen controlScreen;
 
-    public ScreenController(ItemController itemController) {
+
+    public ScreenController(ItemController itemController) throws IOException {
         this.interfaceGame = new InterfaceGame(itemController);
         this.startScreen = new StartScreen();
         this.loadingScreen = new LoadingScreen();
@@ -37,7 +39,9 @@ public class ScreenController {
     public void draw(Graphics g, GameState currentGameState, int highscore, int deathCounter, Highscore highscores, int mapCount, String playerId, int currentLevel, boolean isPlayingMultiplayer) {
         switch (currentGameState) {
             //TODO implement start and death screen
-            case START -> startScreen.draw(g);
+            case START -> {
+                startScreen.draw(g);
+            }
             case LOADING -> {
                 loadingScreen.startLoading();
                 loadingScreen.draw(g);
@@ -56,7 +60,9 @@ public class ScreenController {
                 highscores.findBestHighscores();
                 highScoreScreen.draw(g, highscores);
             }
-            case CONTROLS -> controlScreen.drawControls(g);
+            case CONTROLS -> {
+                controlScreen.drawControls(g);
+            }
         }
     }
 
@@ -86,5 +92,9 @@ public class ScreenController {
 
     public InterfaceGame getInterfaceGame() {
         return interfaceGame;
+    }
+
+    public ControlScreen getControlScreen() {
+        return controlScreen;
     }
 }

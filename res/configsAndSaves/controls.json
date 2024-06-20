@@ -1,0 +1,74 @@
+[
+  {
+    "name": "ACTIVATE_MULTIPLAYER",
+    "keyCode": 77
+  },
+  {
+    "name": "MOVE_RIGHT",
+    "keyCode": 68
+  },
+  {
+    "name": "RESTART_AFTER_DEATH",
+    "keyCode": 85
+  },
+  {
+    "name": "NAVIGATE_UP",
+    "keyCode": 38
+  },
+  {
+    "name": "OPEN_HIGHSCORE_TABLE",
+    "keyCode": 79
+  },
+  {
+    "name": "NAVIGATE_DOWN",
+    "keyCode": 40
+  },
+  {
+    "name": "JUMP",
+    "keyCode": 32
+  },
+  {
+    "name": "DASH",
+    "keyCode": 83
+  },
+  {
+    "name": "REST",
+    "keyCode": 82
+  },
+  {
+    "name": "MOVE_LEFT",
+    "keyCode": 65
+  },
+  {
+    "name": "ITEM_2",
+    "keyCode": 50
+  },
+  {
+    "name": "ITEM_3",
+    "keyCode": 51
+  },
+  {
+    "name": "ITEM_1",
+    "keyCode": 49
+  },
+  {
+    "name": "ATTACK",
+    "keyCode": 16
+  },
+  {
+    "name": "ITEM_4",
+    "keyCode": 52
+  },
+  {
+    "name": "ITEM_5",
+    "keyCode": 53
+  },
+  {
+    "name": "CONFIRM",
+    "keyCode": 10
+  },
+  {
+    "name": "OPEN_CONTROLS",
+    "keyCode": 88
+  }
+]

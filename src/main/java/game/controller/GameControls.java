@@ -1,8 +1,10 @@
 package game.controller;
 
 import java.awt.event.KeyEvent;
+import java.io.Serializable;
 
-public enum GameControls {
+public enum GameControls implements Serializable {
+
     MOVE_RIGHT("Move right", KeyEvent.VK_D, true),
     MOVE_LEFT("Move left", KeyEvent.VK_A, true),
     JUMP("Jump", KeyEvent.VK_SPACE, true),
@@ -16,8 +18,13 @@ public enum GameControls {
     ITEM_5("Item 5", KeyEvent.VK_5, true),
     RESTART_AFTER_DEATH("Restart after death", KeyEvent.VK_L, true),
     OPEN_HIGHSCORE_TABLE("Open highscore table", KeyEvent.VK_O, true),
-    ACTIVATE_MULTIPLAYER("Activate multiplayer", KeyEvent.VK_M, true);
+    ACTIVATE_MULTIPLAYER("Activate multiplayer", KeyEvent.VK_M, true),
+    NAVIGATE_DOWN("Navigate down", KeyEvent.VK_DOWN, false),
+    NAVIGATE_UP("Navigate up", KeyEvent.VK_UP, false),
+    CONFIRM("Confirm", KeyEvent.VK_ENTER, false),
+    OPEN_CONTROLS("Open controls", KeyEvent.VK_X, false);
 
+    private static final long serialVersionUID = 1L;
     private String controlName;
     private int keyCode;
     private boolean isChangeable;
@@ -46,7 +53,7 @@ public enum GameControls {
         return keyCode;
     }
 
-    public void setKeyCode(int keyCode) {
-        this.keyCode = keyCode;
+    public void setKeyCode(int newKeyCode) {
+        this.keyCode = newKeyCode;
     }
 }

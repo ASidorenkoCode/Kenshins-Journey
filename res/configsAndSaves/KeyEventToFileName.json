@@ -1,0 +1,214 @@
+[
+  {
+    "fileName": "ESC.png",
+    "keyCodeName": "ESC"
+  },
+  {
+    "fileName": "BACKSPACE.png",
+    "keyCodeName": "Rücktaste"
+  },
+  {
+    "fileName": "TAB.png",
+    "keyCodeName": "Tabulator"
+  },
+  {
+    "fileName": "ENTER.png",
+    "keyCodeName": "Eingabe"
+  },
+  {
+    "fileName": "DELETE.png",
+    "keyCodeName": "Löschen"
+  },
+  {
+    "fileName": "SHIFT.png",
+    "keyCodeName": "Umschalt"
+  },
+  {
+    "fileName": "CTRL.png",
+    "keyCodeName": "Strg"
+  },
+  {
+    "fileName": "ALT.png",
+    "keyCodeName": "Alt"
+  },
+  {
+    "fileName": "PAUSE.png",
+    "keyCodeName": "Pause"
+  },
+  {
+    "fileName": "CAPS.png",
+    "keyCodeName": "Feststelltaste"
+  },
+  {
+    "fileName": "END.png",
+    "keyCodeName": "Ende"
+  },
+  {
+    "fileName": "ESC.png",
+    "keyCodeName": "ESC"
+  },
+  {
+    "fileName": "SPACE.png",
+    "keyCodeName": "Leertaste"
+  },
+  {
+    "fileName": "ARROWUP.png",
+    "keyCodeName": "Oben"
+  },
+  {
+    "fileName": "ARROWDOWN.png",
+    "keyCodeName": "Unten"
+  },
+  {
+    "fileName": "ARROWLEFT.png",
+    "keyCodeName": "Links"
+  },
+  {
+    "fileName": "ARROWRIGHT.png",
+    "keyCodeName": "Rechts"
+  },
+  {
+    "fileName": "0.png",
+    "keyCodeName": "0"
+  },
+  {
+    "fileName": "1.png",
+    "keyCodeName": "1"
+  },
+  {
+    "fileName": "2.png",
+    "keyCodeName": "2"
+  },
+  {
+    "fileName": "3.png",
+    "keyCodeName": "3"
+  },
+  {
+    "fileName": "4.png",
+    "keyCodeName": "4"
+  },
+  {
+    "fileName": "5.png",
+    "keyCodeName": "5"
+  },
+  {
+    "fileName": "6.png",
+    "keyCodeName": "6"
+  },
+  {
+    "fileName": "7.png",
+    "keyCodeName": "7"
+  },
+  {
+    "fileName": "8.png",
+    "keyCodeName": "8"
+  },
+  {
+    "fileName": "9.png",
+    "keyCodeName": "9"
+  },
+  {
+    "fileName": "A.png",
+    "keyCodeName": "A"
+  },
+  {
+    "fileName": "B.png",
+    "keyCodeName": "B"
+  },
+  {
+    "fileName": "C.png",
+    "keyCodeName": "C"
+  },
+  {
+    "fileName": "D.png",
+    "keyCodeName": "D"
+  },
+  {
+    "fileName": "E.png",
+    "keyCodeName": "E"
+  },
+  {
+    "fileName": "F.png",
+    "keyCodeName": "F"
+  },
+  {
+    "fileName": "G.png",
+    "keyCodeName": "G"
+  },
+  {
+    "fileName": "H.png",
+    "keyCodeName": "H"
+  },
+  {
+    "fileName": "I.png",
+    "keyCodeName": "I"
+  },
+  {
+    "fileName": "J.png",
+    "keyCodeName": "J"
+  },
+  {
+    "fileName": "K.png",
+    "keyCodeName": "K"
+  },
+  {
+    "fileName": "L.png",
+    "keyCodeName": "L"
+  },
+  {
+    "fileName": "M.png",
+    "keyCodeName": "M"
+  },
+  {
+    "fileName": "N.png",
+    "keyCodeName": "N"
+  },
+  {
+    "fileName": "O.png",
+    "keyCodeName": "O"
+  },
+  {
+    "fileName": "P.png",
+    "keyCodeName": "P"
+  },
+  {
+    "fileName": "Q.png",
+    "keyCodeName": "Q"
+  },
+  {
+    "fileName": "R.png",
+    "keyCodeName": "R"
+  },
+  {
+    "fileName": "S.png",
+    "keyCodeName": "S"
+  },
+  {
+    "fileName": "T.png",
+    "keyCodeName": "T"
+  },
+  {
+    "fileName": "U.png",
+    "keyCodeName": "U"
+  },
+  {
+    "fileName": "V.png",
+    "keyCodeName": "V"
+  },
+  {
+    "fileName": "W.png",
+    "keyCodeName": "W"
+  },
+  {
+    "fileName": "X.png",
+    "keyCodeName": "X"
+  },
+  {
+    "fileName": "Y.png",
+    "keyCodeName": "Y"
+  },
+  {
+    "fileName": "Z.png",
+    "keyCodeName": "Z"
+  }
+]
