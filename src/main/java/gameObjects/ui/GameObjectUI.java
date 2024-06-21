@@ -14,7 +14,7 @@ public class GameObjectUI {
     private static final int ANI_LENGTH = 5;
     private final int SPRITE_PX_WIDTH = 60;
     private final int SPRITE_PX_HEIGHT = 60;
-    private final String GAME_OBJECT_SPRITE_PATH = "flag_animation.png";
+    private final String GAME_OBJECT_SPRITE_PATH = "objects/flag_animation.png";
     private final int SPRITE_X_DIMENSION = 5;
     private final int SPRITE_Y_DIMENSION = 1;
     private int aniTick;

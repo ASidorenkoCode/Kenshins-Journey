@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b91aae81-7ada-4dc7-9d93-d4383ba70810" name="Changes" comment="changed level 1">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="b91aae81-7ada-4dc7-9d93-d4383ba70810" name="Changes" comment="changed button">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Kenshins-Journey.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Kenshins-Journey.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/configsAndSaves/controls.json" beforeDir="false" afterPath="$PROJECT_DIR$/res/configsAndSaves/controls.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/game/logic/Highscore.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/game/logic/Highscore.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,7 +37,7 @@
     </option>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="43-boss-healthbar-and-animation" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -85,7 +86,7 @@
     "git-widget-placeholder": "last-additional-edits-to-map-and-startscreen",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/hendriksteen/Library/Mobile Documents/com~apple~CloudDocs/StudiumDHSH/Prog/Programmierung2/Kenshins-Journey/res/lvls",
+    "last_opened_file_path": "C:/Users/artur/IdeaProjects/Kenshins-Journey10/res/lvls",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
@@ -93,25 +94,25 @@
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors.VCS",
     "show.migrate.to.gradle.popup": "false",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\artur\IdeaProjects\Kenshins-Journey10\res\lvls" />
       <recent name="$PROJECT_DIR$/res/lvls" />
       <recent name="C:\Users\Artur\IdeaProjects\Kenshins-Journey\res\screens\startScreen" />
       <recent name="C:\Users\Artur\IdeaProjects\Kenshins-Journey\res\lvls" />
       <recent name="C:\Users\Artur\IdeaProjects\Kenshins-Journey\res" />
-      <recent name="C:\Users\Artur\IdeaProjects\Kenshins-Journey\res\maps" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\artur\IdeaProjects\Kenshins-Journey10\res\screens\startScreen" />
       <recent name="C:\Users\Artur\IdeaProjects\Kenshins-Journey\res\screens\startScreen" />
       <recent name="C:\Users\Artur\IdeaProjects\Kenshins-Journey\res\lvls" />
       <recent name="C:\Users\Artur\IdeaProjects\Kenshins-Journey\res\mapsprites" />
       <recent name="C:\Users\Artur\Documents\Uni\JAVA\Kenshins-Journey\res\enemies\kappa" />
-      <recent name="C:\Users\Artur\Documents\Uni\JAVA\Kenshins-Journey\res\enemies" />
     </key>
   </component>
   <component name="RunManager" selected="Application.Start the game (DEBUG OFF)">
@@ -152,6 +153,13 @@
         <item itemvalue="Application.HostApplication" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-22-openjdk-22-4caba194b151-f504ca98" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -196,22 +204,7 @@
       <workItem from="1718277202493" duration="5365000" />
       <workItem from="1718284705782" duration="80000" />
       <workItem from="1718878570827" duration="3117000" />
-    </task>
-    <task id="LOCAL-00002" summary="player is shown on screen">
-      <option name="closed" value="true" />
-      <created>1714406055050</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1714406055050</updated>
-    </task>
-    <task id="LOCAL-00003" summary="started with connection between input and player logic">
-      <option name="closed" value="true" />
-      <created>1714456491894</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1714456491894</updated>
+      <workItem from="1718975892649" duration="3017000" />
     </task>
     <task id="LOCAL-00004" summary="add res folder to git">
       <option name="closed" value="true" />
@@ -589,7 +582,23 @@
       <option name="project" value="LOCAL" />
       <updated>1718882009215</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="changed button">
+      <option name="closed" value="true" />
+      <created>1718978040666</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1718978040666</updated>
+    </task>
+    <task id="LOCAL-00052" summary="changed button">
+      <option name="closed" value="true" />
+      <created>1718978726709</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1718978726709</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -619,7 +628,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="hearts system approach" />
     <MESSAGE value="added kappa and enemy_Scale TODO: change bigOrc to Kappa" />
     <MESSAGE value="player animation update + first mapsprite" />
     <MESSAGE value="refactoring maps" />
@@ -644,7 +652,8 @@
     <MESSAGE value="removed quit game function" />
     <MESSAGE value="added new level 1" />
     <MESSAGE value="changed level 1" />
-    <option name="LAST_COMMIT_MESSAGE" value="changed level 1" />
+    <MESSAGE value="changed button" />
+    <option name="LAST_COMMIT_MESSAGE" value="changed button" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
