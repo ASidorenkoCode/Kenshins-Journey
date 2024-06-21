@@ -3,8 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Kenshins-Journey.iml" filepath="$PROJECT_DIR$/Kenshins-Journey.iml" />
-      <module fileurl="file://$PROJECT_DIR$/utilityTools/KeyExtractor/KeyExtractor.iml" filepath="$PROJECT_DIR$/utilityTools/KeyExtractor/KeyExtractor.iml" />
-      <module fileurl="file://$PROJECT_DIR$/utilityTools/MapToRGBCreator/MapToRGBCreator.iml" filepath="$PROJECT_DIR$/utilityTools/MapToRGBCreator/MapToRGBCreator.iml" />
     </modules>
   </component>
 </project>
