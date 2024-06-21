@@ -81,8 +81,6 @@ public class BossUI extends EntityUI {
                 if (showHitBox) drawBossHitbox(g, offsetX, offsetY);
 
             }
-            drawHealthBar(g);
-
         }
     }
     //load animations

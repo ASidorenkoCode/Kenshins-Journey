@@ -70,13 +70,13 @@ public class StartScreen {
 
     private void selectNextButton() {
         do {
-            selectedButton = (selectedButton + 1) % 4;
+            selectedButton = (selectedButton + 1) % 5;
         } while (!buttonVisible[selectedButton]);
     }
 
     private void selectPreviousButton() {
         do {
-            selectedButton = (selectedButton + 3) % 4;
+            selectedButton = (selectedButton + 4) % 5;
         } while (!buttonVisible[selectedButton]);
     }
 

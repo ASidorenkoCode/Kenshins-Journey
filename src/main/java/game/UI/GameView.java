@@ -115,10 +115,12 @@ public class GameView extends JPanel {
         int mapOffsetY = mapController.getMapOffsetY();
         mapController.draw(g, false);
         entityController.drawEntities(g, mapOffsetX, mapOffsetY);
+        mapController.draw(g, true);
+        entityController.drawHealthBarBoss(g);
         itemController.draw(g, mapOffsetX, mapOffsetY);
         gameObjectController.drawObjects(g, mapOffsetX, mapOffsetY);
-        mapController.draw(g, true);
         screenController.draw(g, gameController.getCurrentGameState(), gameController.getHighscore().getCurrentHighscore(), gameController.getHighscore().getDeathCounter(), gameController.getHighscore(), mapController.getMaps().size(), gameController.getPlayerId(), gameController.getHighscore().getAllHighscores().size() + 1, gameController.getIsPlayingMultiplayer());
+
     }
 
     public void showFPS_UPS(int frames, int updates) {
