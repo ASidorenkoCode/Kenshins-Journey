@@ -182,7 +182,7 @@ public class GameController {
     private void initOrUpdateGame() throws IOException {
         mapController.loadCurrentMapIndex(highscore.getAllHighscores().size());
         Finish finish = gameObjectController.getFinish();
-        finish.updateFinishPoint(mapController.getCurrentFinishSpawn().x, mapController.getCurrentFinishSpawn().y, mapController.getCurrentBossSpawn() == null);
+        finish.updateFinishPoint(mapController.getCurrentFinishSpawn().x, mapController.getCurrentFinishSpawn().y, true);
         entityController.initEnemies(mapController, showHitbox);
         entityController.initOrUpdatePlayer(mapController, showHitbox);
         entityController.initBoss(mapController, showHitbox);
@@ -195,7 +195,7 @@ public class GameController {
         if (currentGameState != GameState.DEAD) return;
         Player player = entityController.getPlayer();
         player.updateSpawnPoint(mapController.getCurrentPlayerSpawn().x, mapController.getCurrentPlayerSpawn().y);
-        gameObjectController.updatePoints(mapController, entityController.getCurrentBoss() == null || entityController.getCurrentBoss().getIsDead());
+        gameObjectController.updatePoints(mapController, true);
         player.resetHealth();
         player.resetDeath();
         highscore.decreaseHighscoreForDeath();
