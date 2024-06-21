@@ -30,6 +30,8 @@ public class KeyboardInputsIngame implements KeyListener {
     private Map<GameControls, Runnable> controlActionsOnRelease = new HashMap<>();
     private boolean isChangingControl = false;
     private GameController gameController;
+    private GameControls gameControls;
+
 
 
     public KeyboardInputsIngame(GameView gameView, GameController gameController) {
@@ -47,40 +49,31 @@ public class KeyboardInputsIngame implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         handleUserInputKeyPressed(e);
-
-        // TODO: DELETE THIS LATER
-        switch (e.getKeyCode()) {
-            case KeyEvent.VK_P:
-                try {
-                    gameController.loadNewMap();
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
-                break;
-            default:
-                break;
-        }
-        // TODO: DELETE TO HERE
+        ControlScreen controlScreen = gameController.getScreenController().getControlScreen();
+        String keyText = KeyEvent.getKeyText(e.getKeyCode());
 
         if (isChangingControl) {
             switch (e.getKeyCode()) {
+                case KeyEvent.VK_RIGHT:
+                case KeyEvent.VK_LEFT:
+                case KeyEvent.VK_UP:
+                case KeyEvent.VK_DOWN:
+                    controlScreen.setSubtitle("You can't change the key from " + controlScreen.getSelectedControl() + " to " + keyText + "! Select a key and press enter if you want to change this key.");
+                    isChangingControl = false;
+                    controlScreen.setChangingControl(isChangingControl);
+                    break;
                 default:
-                    ControlScreen controlScreen = gameController.getScreenController().getControlScreen();
                     if (controlScreen.getSelectedControl() != null && controlScreen.getSubtitle().startsWith("Please change the control of")) {
-                        String keyText = KeyEvent.getKeyText(e.getKeyCode());
                         boolean keyExistsInFile = controlScreen.getKeyCodeToFileList().stream().anyMatch(map -> map.get("keyCodeName").equals(keyText));
                         if (keyExistsInFile && !controlScreen.getControls().containsValue(e.getKeyCode()) && !keyText.equals("Eingabe")) {
                             controlScreen.getControls().put(controlScreen.getSelectedControl(), e.getKeyCode());
                             gameController.saveControlsToJson("res/configsAndSaves/controls.json");
 
-
-                            // Convert the controls map to a list of Control objects
                             List<Control> controlsList = new ArrayList<>();
                             for (Map.Entry<String, Integer> entry : controlScreen.getControls().entrySet()) {
                                 controlsList.add(new Control(entry.getKey(), entry.getValue()));
                             }
 
-                            // Serialize the controlsList to JSON and write it to the file
                             try (Writer writer = new FileWriter("res/configsAndSaves/controls.json")) {
                                 Gson gson = new GsonBuilder().create();
                                 gson.toJson(controlsList, writer);
@@ -88,7 +81,6 @@ public class KeyboardInputsIngame implements KeyListener {
                                 ex.printStackTrace();
                             }
 
-                            // Load the new image and store it in the controlImages map
                             String fileName = controlScreen.getKeyCodeToFileList().stream()
                                     .filter(map -> map.get("keyCodeName").equals(keyText))
                                     .findFirst()
@@ -120,9 +112,9 @@ public class KeyboardInputsIngame implements KeyListener {
     }
 
     public void handleUserInputKeyPressed(KeyEvent e) {
-        GameControls control = GameControls.getControlByCode(e.getKeyCode());
-        if (control != null) {
-            Runnable action = controlActionsOnPress.get(control);
+        gameControls = GameControls.getControlByCode(e.getKeyCode());
+        if (gameControls != null) {
+            Runnable action = controlActionsOnPress.get(gameControls);
             if (action != null) {
                 action.run();
             }
@@ -130,17 +122,17 @@ public class KeyboardInputsIngame implements KeyListener {
     }
 
     public void handleUserInputKeyRelease(KeyEvent e) {
-        GameControls control = GameControls.getControlByCode(e.getKeyCode());
-        if (control != null) {
-            Runnable action = controlActionsOnRelease.get(control);
+        gameControls = GameControls.getControlByCode(e.getKeyCode());
+        if (gameControls != null) {
+            Runnable action = controlActionsOnRelease.get(gameControls);
             if (action != null) {
                 action.run();
             }
         }
     }
 
-    public void changeControl(GameControls control, int newKeyCode) {
-        if (control.isChangeable()) {
+    public void changeControlKey(GameControls control, int newKeyCode) {
+        if (control.isChangeable() && control.isKeyAllowed(newKeyCode)) {
             control.setKeyCode(newKeyCode);
         }
     }
@@ -272,11 +264,6 @@ public class KeyboardInputsIngame implements KeyListener {
                     break;
             }
         });
-        controlActionsOnPress.put(GameControls.OPEN_CONTROLS, () -> {
-            if (gameController.getCurrentGameState() == GameState.START) {
-                gameController.setCurrentGameState(GameState.CONTROLS);
-            }
-        });
         controlActionsOnPress.put(GameControls.CONFIRM, () -> {
             switch (gameController.getCurrentGameState()) {
                 case END:
@@ -309,6 +296,9 @@ public class KeyboardInputsIngame implements KeyListener {
                             gameController.setCurrentGameState(GameState.HIGHSCORE);
                             break;
                         case 3:
+                            gameController.setCurrentGameState(GameState.CONTROLS);
+                            break;
+                        case 4:
                             System.exit(0);
                             break;
                     }
@@ -318,7 +308,7 @@ public class KeyboardInputsIngame implements KeyListener {
                         String selectedControl = screenController.getControlScreen().getSelectedControl();
                         isChangingControl = true;
                         screenController.getControlScreen().setChangingControl(isChangingControl);
-                        screenController.getControlScreen().setSubtitle("Please change the control of " + selectedControl + " or abort with escape");
+                        screenController.getControlScreen().setSubtitle("Please change the control of " + selectedControl + " or abort with escape.");
                         break;
                     }
             }
@@ -329,7 +319,7 @@ public class KeyboardInputsIngame implements KeyListener {
                     if (isChangingControl) {
                         isChangingControl = false;
                         screenController.getControlScreen().setChangingControl(isChangingControl);
-                        screenController.getControlScreen().setSubtitle("Select a key you want to change with arrow keys and press enter if you want to change this key");
+                        screenController.getControlScreen().setSubtitle("Select a key you want to change with arrow keys and press enter if you want to change this key.");
                     } else {
                         gameController.loadAndInitializeControls();
                         gameController.setCurrentGameState(GameState.START);

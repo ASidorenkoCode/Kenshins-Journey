@@ -5,7 +5,7 @@
   },
   {
     "name": "MOVE_RIGHT",
-    "keyCode": 39
+    "keyCode": 65
   },
   {
     "name": "RESTART_AFTER_DEATH",
@@ -29,7 +29,7 @@
   },
   {
     "name": "MOVE_LEFT",
-    "keyCode": 37
+    "keyCode": 68
   },
   {
     "name": "ITEM_2",
