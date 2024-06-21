@@ -15,7 +15,7 @@ public class BossUI extends EntityUI {
     private final static String BIG_PROJECTILE_SPRITE_PATH = "boss/fireball.png";
     private final static int BIG_PROJECTILE_SPRITE_PX_WIDTH = 33;
     private final static int BIG_PROJECTILE_SPRITE_PX_HEIGHT = 17;
-    private BufferedImage[] bigProjectile;
+    private final BufferedImage[] bigProjectile;
     private int bigProjectileAniIndex;
 
     //Mini projectile vars
@@ -23,7 +23,7 @@ public class BossUI extends EntityUI {
     private final static String MINI_PROJECTILE_SPRITE_PATH = "boss/mini_fireball.png";
     private final static int MINI_PROJECTILE_SPRITE_PX_WIDTH = 24;
     private final static int MINI_PROJECTILE_SPRITE_PX_HEIGHT = 20;
-    private BufferedImage[] miniProjectile;
+    private final BufferedImage[] miniProjectile;
     private int miniProjectileAniIndex;
 
     //Boss vars
@@ -32,14 +32,14 @@ public class BossUI extends EntityUI {
     private final static String BOSS_SPRITE_PATH = "boss/boss.png";
     private final static int BOSS_SPRITE_PX_WIDTH = 64;
     private final static int BOSS_SPRITE_PX_HEIGHT = 64;
-    private BufferedImage[][] boss;
+    private final BufferedImage[][] boss;
     private int bossAniIndex;
 
     //overall used vars
     private final static int ANI_SPEED = 20;
     private int aniTick;
-    private Boss currentBoss;
-    private boolean showHitBox;
+    private final Boss currentBoss;
+    private final boolean showHitBox;
 
     public BossUI(Boss currentBoss, boolean showHitBox) {
         super();
@@ -81,8 +81,6 @@ public class BossUI extends EntityUI {
                 if (showHitBox) drawBossHitbox(g, offsetX, offsetY);
 
             }
-            drawHealthBar(g);
-
         }
     }
     //load animations
@@ -171,7 +169,6 @@ public class BossUI extends EntityUI {
     //Draw Animations
     public void drawBoss(Graphics g, int offsetX, int offsetY) {
         Rectangle2D.Float hitbox = currentBoss.getHitbox();
-        //TODO: Make multiple boss animations -> remove static 0
         g.drawImage(boss[0][bossAniIndex], (int) hitbox.x - offsetX, (int) hitbox.y - offsetY, (int) hitbox.width, (int) hitbox.height, null);
     }
     public void drawBigProjectile(Graphics g, int offsetX, int offsetY) {

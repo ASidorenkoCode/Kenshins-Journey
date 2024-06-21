@@ -18,19 +18,19 @@ public class GameView extends JPanel {
     public final static int TILES_DEFAULT_SIZE = 32;
     public final static int TILES_IN_WIDTH = 26;
     public final static int TILES_IN_HEIGHT = 14;
-    public final static int GAME_WIDTH = (int) (TILES_DEFAULT_SIZE * 2) * TILES_IN_WIDTH;
-    public final static int GAME_HEIGHT = (int) (TILES_DEFAULT_SIZE * 2) * TILES_IN_HEIGHT;
+    public final static int GAME_WIDTH = TILES_DEFAULT_SIZE * 2 * TILES_IN_WIDTH;
+    public final static int GAME_HEIGHT = TILES_DEFAULT_SIZE * 2 * TILES_IN_HEIGHT;
     private double scaleX;
     private double scaleY;
     private double scaleFactor;
-    private GameController gameController;
-    private MapController mapController;
-    private EntityController entityController;
-    private ItemController itemController;
-    private GameObjectController gameObjectController;
+    private final GameController gameController;
+    private final MapController mapController;
+    private final EntityController entityController;
+    private final ItemController itemController;
+    private final GameObjectController gameObjectController;
     private ScreenController screenController;
 
-    private JFrame frame = new JFrame("Kenshins Journey");
+    private final JFrame frame = new JFrame("Kenshins Journey");
 
 
     public GameView(GameController gameController, EntityController entityController, MapController mapController, ItemController itemController, GameObjectController gameObjectController, ScreenController screenController) {
@@ -94,7 +94,7 @@ public class GameView extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (gameController != null) {
-            Graphics2D g2d = (Graphics2D) g.create(); // Create a new Graphics2D object
+            Graphics2D g2d = (Graphics2D) g.create();
             String osName = System.getProperty("os.name");
             AffineTransform at;
             at = AffineTransform.getScaleInstance(scaleFactor, scaleFactor);
@@ -104,21 +104,21 @@ public class GameView extends JPanel {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            g2d.dispose(); // Dispose the Graphics2D object when done
+            g2d.dispose();
         }
     }
 
     public void render(Graphics g) throws IOException {
-        //TODO: Class calling inside of gameController
-        //TODO: Implement rendering for more stuff
         int mapOffsetX = mapController.getMapOffsetX();
         int mapOffsetY = mapController.getMapOffsetY();
         mapController.draw(g, false);
         entityController.drawEntities(g, mapOffsetX, mapOffsetY);
+        mapController.draw(g, true);
+        entityController.drawHealthBarBoss(g);
         itemController.draw(g, mapOffsetX, mapOffsetY);
         gameObjectController.drawObjects(g, mapOffsetX, mapOffsetY);
-        mapController.draw(g, true);
         screenController.draw(g, gameController.getCurrentGameState(), gameController.getHighscore().getCurrentHighscore(), gameController.getHighscore().getDeathCounter(), gameController.getHighscore(), mapController.getMaps().size(), gameController.getPlayerId(), gameController.getHighscore().getAllHighscores().size() + 1, gameController.getIsPlayingMultiplayer());
+
     }
 
     public void showFPS_UPS(int frames, int updates) {

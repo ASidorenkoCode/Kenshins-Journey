@@ -10,8 +10,8 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class MapController {
-    private ArrayList<Map> maps;
-    private MapUI mapUI;
+    private final ArrayList<Map> maps;
+    private final MapUI mapUI;
     private EntityController entityController;
     private int mapOffsetX;
     private int mapOffsetY;

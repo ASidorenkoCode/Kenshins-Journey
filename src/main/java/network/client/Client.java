@@ -16,8 +16,8 @@ import java.util.ArrayList;
 
 public class Client extends Thread {
     private String serverAdress;
-    private GameController gameController;
-    private long comparingTime = System.currentTimeMillis();
+    private final GameController gameController;
+    private final long comparingTime = System.currentTimeMillis();
 
     public Client(String serverAdress, GameController gameController) {
         this.serverAdress = serverAdress;

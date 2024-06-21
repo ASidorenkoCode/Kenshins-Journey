@@ -25,11 +25,11 @@ import java.util.List;
 import java.util.Map;
 
 public class KeyboardInputsIngame implements KeyListener {
-    private GameView gameView;
-    private Map<GameControls, Runnable> controlActionsOnPress = new HashMap<>();
-    private Map<GameControls, Runnable> controlActionsOnRelease = new HashMap<>();
+    private final GameView gameView;
+    private final Map<GameControls, Runnable> controlActionsOnPress = new HashMap<>();
+    private final Map<GameControls, Runnable> controlActionsOnRelease = new HashMap<>();
     private boolean isChangingControl = false;
-    private GameController gameController;
+    private final GameController gameController;
     private GameControls gameControls;
 
 

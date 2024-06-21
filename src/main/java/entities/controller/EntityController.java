@@ -82,6 +82,10 @@ public class EntityController {
         if(currentBoss != null) bossUI.drawAnimations(g, offsetX, offsetY);
     }
 
+    public void drawHealthBarBoss(Graphics g) {
+        if (currentBoss != null) bossUI.drawHealthBar(g);
+    }
+
     public Player getPlayer() {
         return player;
     }

@@ -11,8 +11,8 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 public class ClientHandler extends Thread {
-    private Socket socket;
-    private Host hostApplication;
+    private final Socket socket;
+    private final Host hostApplication;
 
     public ClientHandler(Socket socket, Host hostApplication) {
         this.socket = socket;

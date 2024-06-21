@@ -11,10 +11,10 @@ public class GameObjectController {
 
 
     //ui
-    private GameObjectUI gameObjectUI;
+    private final GameObjectUI gameObjectUI;
 
     //objects
-    private Finish finish;
+    private final Finish finish;
 
     public GameObjectController(MapController mapController, boolean showHitBox) {
         Point finishPoint = mapController.getCurrentFinishSpawn();

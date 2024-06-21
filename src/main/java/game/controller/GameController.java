@@ -22,7 +22,6 @@ import network.host.Host;
 import network.host.HostChecker;
 import screens.controller.ScreenController;
 import screens.ui.ControlScreen;
-import screens.ui.DeathScreen;
 import sound.SoundController;
 
 import java.io.FileReader;
@@ -37,15 +36,15 @@ import java.util.Map;
 
 public class GameController {
 
-    private GameEngine gameEngine;
-    private GameView gameView;
-    private EntityController entityController;
-    private GameObjectController gameObjectController;
-    private MapController mapController;
-    private ScreenController screenController;
-    private ItemController itemController;
-    private SoundController soundController;
-    private Highscore highscore;
+    private final GameEngine gameEngine;
+    private final GameView gameView;
+    private final EntityController entityController;
+    private final GameObjectController gameObjectController;
+    private final MapController mapController;
+    private final ScreenController screenController;
+    private final ItemController itemController;
+    private final SoundController soundController;
+    private final Highscore highscore;
     private String playerId;
     private String ipAddress;
     private Player.PlayerSerializer playerSerializer;
@@ -57,11 +56,11 @@ public class GameController {
     }.getType();
 
     //network vars
-    private long comparingTime;
+    private final long comparingTime;
     private ArrayList<ServerObject> serverObjects;
     private boolean isPlayingMultiplayer;
     private Client client;
-    private boolean showHitbox;
+    private final boolean showHitbox;
 
     public GameController(boolean showHitBox) throws IOException {
         comparingTime = System.currentTimeMillis();
@@ -154,11 +153,6 @@ public class GameController {
         switchSound();
     }
 
-    public DeathScreen getDeathScreen() {
-        //TODO: do not handle this here
-        return screenController.getDeathScreen();
-    }
-
     public void loadNewMap() throws IOException {
         currentGameState = GameState.LOADING;
         //highscore update
@@ -174,7 +168,7 @@ public class GameController {
         }
 
         Player player = entityController.getPlayer();
-        playerSerializer.writePlayer(player);
+        Player.PlayerSerializer.writePlayer(player);
         initOrUpdateGame();
         mapController.getMapUI().setBackgroundImage(null);
     }
@@ -182,7 +176,7 @@ public class GameController {
     private void initOrUpdateGame() throws IOException {
         mapController.loadCurrentMapIndex(highscore.getAllHighscores().size());
         Finish finish = gameObjectController.getFinish();
-        finish.updateFinishPoint(mapController.getCurrentFinishSpawn().x, mapController.getCurrentFinishSpawn().y, mapController.getCurrentBossSpawn() == null);
+        finish.updateFinishPoint(mapController.getCurrentFinishSpawn().x, mapController.getCurrentFinishSpawn().y, true);
         entityController.initEnemies(mapController, showHitbox);
         entityController.initOrUpdatePlayer(mapController, showHitbox);
         entityController.initBoss(mapController, showHitbox);
@@ -195,7 +189,7 @@ public class GameController {
         if (currentGameState != GameState.DEAD) return;
         Player player = entityController.getPlayer();
         player.updateSpawnPoint(mapController.getCurrentPlayerSpawn().x, mapController.getCurrentPlayerSpawn().y);
-        gameObjectController.updatePoints(mapController, entityController.getCurrentBoss() == null || entityController.getCurrentBoss().getIsDead());
+        gameObjectController.updatePoints(mapController, true);
         player.resetHealth();
         player.resetDeath();
         highscore.decreaseHighscoreForDeath();
@@ -207,7 +201,7 @@ public class GameController {
         if (currentGameState != GameState.START) return;
         Player player = entityController.getPlayer();
         if (!highscore.getAllHighscores().isEmpty()) {
-            int loadedHealth = playerSerializer.readPlayerHealth();
+            int loadedHealth = Player.PlayerSerializer.readPlayerHealth();
             if (loadedHealth != -1) {
                 player.setHealth(loadedHealth);
             }
@@ -295,7 +289,6 @@ public class GameController {
     }
 
 
-    //TODO: Maybe remove from gameController to a network class, but not quite sure
     public void useMultiplayer() {
         if (isPlayingMultiplayer) return;
         try {

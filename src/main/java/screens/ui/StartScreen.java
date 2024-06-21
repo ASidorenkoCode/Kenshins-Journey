@@ -9,9 +9,9 @@ import java.io.IOException;
 
 public class StartScreen {
     private Image backgroundImage;
-    private Image[] buttonImages = new Image[5];
-    private Image[] buttonSelectedImages = new Image[5];
-    private boolean[] buttonVisible = new boolean[5];
+    private final Image[] buttonImages = new Image[5];
+    private final Image[] buttonSelectedImages = new Image[5];
+    private final boolean[] buttonVisible = new boolean[5];
     private int selectedButton = 0;
 
     public StartScreen() {
@@ -70,13 +70,13 @@ public class StartScreen {
 
     private void selectNextButton() {
         do {
-            selectedButton = (selectedButton + 1) % 4;
+            selectedButton = (selectedButton + 1) % 5;
         } while (!buttonVisible[selectedButton]);
     }
 
     private void selectPreviousButton() {
         do {
-            selectedButton = (selectedButton + 3) % 4;
+            selectedButton = (selectedButton + 4) % 5;
         } while (!buttonVisible[selectedButton]);
     }
 

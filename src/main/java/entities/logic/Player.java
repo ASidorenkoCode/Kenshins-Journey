@@ -18,12 +18,12 @@ public class Player extends Entity implements Serializable {
     private static final long serialVersionUID = -8236329990641323382L;
     private boolean left, right, attack, inAir, attackHitBoxIsActive, isResting, isDashing, isFacingRight;
     private float airMovement = -6f;
-    private Rectangle2D.Float rightAttackHitBox;
-    private Rectangle2D.Float leftAttackHitBox;
+    private final Rectangle2D.Float rightAttackHitBox;
+    private final Rectangle2D.Float leftAttackHitBox;
     private boolean hasDynamicAdjustedPlayerDirectionHitbox = false;
     private boolean hasAttacked = false;
     private int currentDamagePerAttack = 20;
-    private int damageDealtInCurrentAttack = 0;
+    private final int damageDealtInCurrentAttack = 0;
     private final int totalHealth = 6;
     private boolean isHitByEnemy = false;
     private boolean deathAnimationFinished = false;
@@ -73,7 +73,6 @@ public class Player extends Entity implements Serializable {
     private void updateGroundMovement() {
 
         if(time < MAX_TIME) {
-            //TODO: Improve speed difference
             time += 0.05f;
             currentGroundMovement = time * time / (time * time + (1 - time) * (1 - time));
         }
@@ -160,7 +159,6 @@ public class Player extends Entity implements Serializable {
     }
 
     private void adjustPlayerHitboxPosition(Map map, Boss boss, ArrayList<Enemy> enemies) {
-        //TODO: Change hitbox movement bug
         if (getLeft() && !getRight() && !hasDynamicAdjustedPlayerDirectionHitbox) {
             if (checkIfPlayerCanMoveToPosition(map, boss, enemies, hitbox.x + 20, hitbox.y, hitbox.width, hitbox.height)) {
                 hitbox.x += 20;

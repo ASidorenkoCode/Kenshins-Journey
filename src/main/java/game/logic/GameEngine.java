@@ -8,7 +8,7 @@ import java.io.IOException;
 public class GameEngine implements Runnable {
 
     private Thread gameThread;
-    private GameController gameController;
+    private final GameController gameController;
     private final int UPS_SET = 200;
     private long lastCheck;
     private int frames = 0;

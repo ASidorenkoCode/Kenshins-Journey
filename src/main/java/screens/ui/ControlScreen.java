@@ -18,10 +18,10 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class ControlScreen {
-    private Map<String, Integer> controls = new HashMap<>();
+    private final Map<String, Integer> controls = new HashMap<>();
     private Map<String, BufferedImage> controlImages = new HashMap<>();
     private String selectedControl;
-    private String title;
+    private final String title;
     private String subtitle;
     private boolean isChangingControl = false;
     private int selectedControlIndex = 0;

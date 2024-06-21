@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class Host extends Thread {
 
-    private static ArrayList<ServerObject> serverObjects = new ArrayList<>();
+    private static final ArrayList<ServerObject> serverObjects = new ArrayList<>();
 
 
     @Override

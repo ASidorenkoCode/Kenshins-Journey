@@ -6,11 +6,11 @@ import maps.logic.Map;
 import java.awt.geom.Rectangle2D;
 
 public class Enemy extends Entity {
-    private float speed;
+    private final float speed;
     boolean moveRight;
     private final static int ATTACK_SPEED = 600;
     private int attackCount = 0;
-    private int maxHealth = 100;
+    private final int maxHealth = 100;
     private boolean isScoreIncreased = false;
     private boolean isEntityNear = false;
     private boolean isAttacking = false;

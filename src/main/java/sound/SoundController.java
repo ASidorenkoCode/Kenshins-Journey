@@ -11,8 +11,8 @@ import java.util.Map;
 public class SoundController {
 
     private Player backgroundMusicPlayer;
-    private Map<String, Player> soundEffectPlayers = new HashMap<>();
-    private Map<String, Boolean> isSoundEffectPlayingMap = new HashMap<>();
+    private final Map<String, Player> soundEffectPlayers = new HashMap<>();
+    private final Map<String, Boolean> isSoundEffectPlayingMap = new HashMap<>();
     private Thread backgroundMusicThread;
     private GameState currentGameState;
     private boolean isSoundEffectPlaying;

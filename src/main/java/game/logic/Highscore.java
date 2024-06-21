@@ -27,10 +27,9 @@ public class Highscore implements Serializable {
     public void decreaseHighScoreAfterOneSecond() {
         long currentTime = System.currentTimeMillis();
 
-        //check if one second has passed
         if (System.currentTimeMillis() - comparingTime >= 1000) {
             comparingTime = currentTime;
-            currentHighscore--;
+            currentHighscore -= 5;
         }
     }
 

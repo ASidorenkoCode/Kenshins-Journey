@@ -25,7 +25,7 @@ public class InterfaceGame {
     private int playerCurrentDamagePerAttack;
     private int score;
     private Item[] menu;
-    private ItemController itemController;
+    private final ItemController itemController;
     private ArrayList<ServerObject> serverObjects;
     private BufferedImage characterPortraitAndStats;
 
@@ -39,7 +39,6 @@ public class InterfaceGame {
             e.printStackTrace();
         }
 
-        //TODO: remove itemController
         this.itemController = itemController;
         this.isDrawingListOfCurrentPlayers = false;
     }
@@ -56,7 +55,6 @@ public class InterfaceGame {
 
         drawScore(g, score);
 
-        //TODO: remove itemController
         int itemHeight = itemController.getItemUI().getSPRITE_PX_HEIGHT() + 50;
 
         int imageY = GameView.GAME_HEIGHT - itemHeight;
@@ -70,7 +68,6 @@ public class InterfaceGame {
 
                     g.setColor(Color.BLACK);
                     g.fillOval(startX, imageY + 10, itemHeight - 20, itemHeight + 20);
-                    //TODO: remove itemController
                     itemController.getItemUI().drawStaticItemImage(g, i, startX, imageY - 20, itemController.getAnimations());
 
                     g.setColor(Color.WHITE);
