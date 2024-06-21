@@ -132,6 +132,20 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="KeyExtractor$Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="KeyExtractor$Main" />
+      <module name="KeyExtractor" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="MapToRGBCreator" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Start the game (DEBUG OFF)" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="GameStart" />
       <module name="Kenshins-Journey" />
@@ -149,7 +163,6 @@
     <list>
       <item itemvalue="Application.Start the game (DEBUG ON)" />
       <item itemvalue="Application.Start the game (DEBUG OFF)" />
-      <item itemvalue="Application.Main" />
     </list>
     <recent_temporary>
       <list>
