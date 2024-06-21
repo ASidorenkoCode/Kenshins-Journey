@@ -11,7 +11,7 @@ public class ItemUI {
     private static final int ANI_SPEED = 20;
     private final int SPRITE_PX_WIDTH = 32;
     private final int SPRITE_PX_HEIGHT = 32;
-    private final String ENTITY_SPRITE_PATH = "items.png";
+    private final String ENTITY_SPRITE_PATH = "items/items.png";
     private final int SPRITE_X_DIMENSION = 7;
     private final int SPRITE_Y_DIMENSION = 2;
     private int aniTick;
