@@ -24,7 +24,7 @@ public class KeyExtractor {
     public static class Main {
         public static void main(String[] args) {
             KeyExtractor keyExtractor = new KeyExtractor();
-            keyExtractor.extractKeysToFile("KeyExtractor/output/keys.txt");
+            keyExtractor.extractKeysToFile("utilityTools/KeyExtractor/output/keys.txt");
         }
     }
 }

@@ -78,7 +78,7 @@ public class MapSpritePainter {
             ImageIO.write(outputImage, "png", new File(outputPath));
 
             BufferedImage shrunkImage = shrinkImage(outputImage, tileSize);
-            ImageIO.write(shrunkImage, "png", new File("MapToRGBCreator/res/shrunk_output.png"));
+            ImageIO.write(shrunkImage, "png", new File("utilityTools/MaptoRGBCreator/res/shrunk_output.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
