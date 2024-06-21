@@ -167,7 +167,7 @@
       <recent name="C:\Users\Artur\IdeaProjects\Kenshins-Journey\res\lvls" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="Application.Start the game (DEBUG OFF)">
     <configuration name="HostApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="network.HostApplication" />
       <module name="Kenshins-Journey" />
