@@ -34,20 +34,24 @@ public class MapUI {
         }
 
         int mapHeight = mapController.getCurrentMap().getHeight();
-        for (int j = 0; j < mapHeight; j++)
-            for (int i = 0; i < maps.get(mapIndex).getMapData()[0].length; i++) {
+        int tileSize = mapController.getCurrentMap().getTileSize();
+        int mapWidth = maps.get(mapIndex).getMapData()[0].length;
+
+        for (int j = 0; j < mapHeight; j++) {
+            for (int i = 0; i < mapWidth; i++) {
                 int index = maps.get(mapIndex).getSpriteIndex(i, j);
                 if (index >= 0 && index < getMapSprites().length) {
-                    int x = mapController.getCurrentMap().getTileSize() * i - mapOffsetX;
-                    int y = mapController.getCurrentMap().getTileSize() * j - mapOffsetY;
-                    if (index > 48 && index < 75 && isForeGround) {
-                        g.drawImage(getMapSprites()[index], x, y, mapController.getCurrentMap().getTileSize(), mapController.getCurrentMap().getTileSize(), null);
-                    } else if (!isForeGround)
-                        g.drawImage(getMapSprites()[index], x, y, mapController.getCurrentMap().getTileSize(), mapController.getCurrentMap().getTileSize(), null);
+                    int x = tileSize * i - mapOffsetX;
+                    int y = tileSize * j - mapOffsetY;
+                    // Draw tiles based on foreground or background
+                    if ((isForeGround && index > 48) || (!isForeGround && index <= 48)) {
+                        g.drawImage(getMapSprites()[index], x, y, tileSize, tileSize, null);
+                    }
                 } else {
                     throw new IndexOutOfBoundsException("Index out of bounds: " + index);
                 }
             }
+        }
     }
 
     private void buildAllMaps() {

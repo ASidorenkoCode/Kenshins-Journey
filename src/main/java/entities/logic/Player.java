@@ -295,7 +295,7 @@ public class Player extends Entity implements Serializable {
             return false;
         }
 
-        return mapData[tile_y][tile_x] < 11 || mapData[tile_y][tile_x] < 48 && mapData[tile_y][tile_x] > 11 || mapData[tile_y][tile_x] < 81 && mapData[tile_y][tile_x] > 75;
+        return mapData[tile_y][tile_x] < 11 || mapData[tile_y][tile_x] < 48 && mapData[tile_y][tile_x] > 11 || mapData[tile_y][tile_x] < 81 && mapData[tile_y][tile_x] > 74 || mapData[tile_y][tile_x] < 27 && mapData[tile_y][tile_x] > 23;
     }
 
     private boolean checkIfPlayerCanMoveToPosition(Map map, Boss boss, ArrayList<Enemy> enemies, float x, float y, float width, float height) {

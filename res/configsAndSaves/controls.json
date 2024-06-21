@@ -5,7 +5,7 @@
   },
   {
     "name": "MOVE_RIGHT",
-    "keyCode": 68
+    "keyCode": 39
   },
   {
     "name": "RESTART_AFTER_DEATH",
@@ -21,7 +21,7 @@
   },
   {
     "name": "DASH",
-    "keyCode": 17
+    "keyCode": 83
   },
   {
     "name": "REST",
@@ -29,7 +29,7 @@
   },
   {
     "name": "MOVE_LEFT",
-    "keyCode": 65
+    "keyCode": 37
   },
   {
     "name": "ITEM_2",
@@ -41,11 +41,11 @@
   },
   {
     "name": "ITEM_1",
-    "keyCode": 55
+    "keyCode": 49
   },
   {
     "name": "ATTACK",
-    "keyCode": 16
+    "keyCode": 87
   },
   {
     "name": "ITEM_4",
