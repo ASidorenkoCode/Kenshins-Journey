@@ -9,6 +9,7 @@ import network.data.ServerObject;
 import screens.ui.*;
 
 import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class ScreenController {
@@ -18,24 +19,29 @@ public class ScreenController {
     private StartScreen startScreen;
     private EndScreen endScreen;
     private HighScoreScreen highScoreScreen;
+    private ControlScreen controlScreen;
 
-    public ScreenController(ItemController itemController) {
+
+    public ScreenController(ItemController itemController) throws IOException {
         this.interfaceGame = new InterfaceGame(itemController);
         this.startScreen = new StartScreen();
         this.loadingScreen = new LoadingScreen();
         this.deathScreen = new DeathScreen();
         this.endScreen = new EndScreen();
         this.highScoreScreen = new HighScoreScreen();
+        this.controlScreen = new ControlScreen();
     }
 
     public void update(Highscore highscore, Player player, Item[] menu, ArrayList<ServerObject> serverObjects) {
         interfaceGame.update(highscore, player, menu, serverObjects);
     }
 
-    public void draw(Graphics g, GameState currentGameState, int highscore, int deathCounter, Highscore highscores, int mapCount, String playerId, int currentLevel, boolean isPlayingMultiplayer) {
+    public void draw(Graphics g, GameState currentGameState, int highscore, int deathCounter, Highscore highscores, int mapCount, String playerId, int currentLevel, boolean isPlayingMultiplayer) throws IOException {
         switch (currentGameState) {
             //TODO implement start and death screen
-            case START -> startScreen.draw(g);
+            case START -> {
+                startScreen.draw(g);
+            }
             case LOADING -> {
                 loadingScreen.startLoading();
                 loadingScreen.draw(g);
@@ -47,13 +53,15 @@ public class ScreenController {
             }
             case DEAD -> deathScreen.draw(g, highscore, deathCounter);
             case PLAYING -> {
-                loadingScreen.resetProgress();
                 interfaceGame.draw(g, playerId, currentLevel, isPlayingMultiplayer);
             }
             case HIGHSCORE -> {
                 setMapCountHighScoreScreen(mapCount);
                 highscores.findBestHighscores();
                 highScoreScreen.draw(g, highscores);
+            }
+            case CONTROLS -> {
+                controlScreen.drawControls(g);
             }
         }
     }
@@ -84,5 +92,9 @@ public class ScreenController {
 
     public InterfaceGame getInterfaceGame() {
         return interfaceGame;
+    }
+
+    public ControlScreen getControlScreen() {
+        return controlScreen;
     }
 }

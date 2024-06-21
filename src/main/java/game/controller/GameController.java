@@ -1,5 +1,7 @@
 package game.controller;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import entities.animations.PlayerAnimations;
 import entities.controller.EntityController;
 import entities.logic.Player;
@@ -10,6 +12,7 @@ import gameObjects.controller.GameObjectController;
 import gameObjects.logic.Finish;
 import items.controller.ItemController;
 import javazoom.jl.decoder.JavaLayerException;
+import keyboardinputs.logic.Control;
 import maps.controller.MapController;
 import network.client.Client;
 import network.client.GitHubClient;
@@ -18,13 +21,19 @@ import network.data.SharedData;
 import network.host.Host;
 import network.host.HostChecker;
 import screens.controller.ScreenController;
+import screens.ui.ControlScreen;
 import screens.ui.DeathScreen;
 import sound.SoundController;
 
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class GameController {
 
@@ -43,7 +52,9 @@ public class GameController {
 
     private GameState currentGameState;
     private int getAmountOfCurrentItemsRegistered;
-
+    private static final Gson gson = new Gson();
+    private final Type type = new TypeToken<GameControls[]>() {
+    }.getType();
 
     //network vars
     private long comparingTime;
@@ -73,15 +84,16 @@ public class GameController {
         itemController = new ItemController(mapController, showHitBox);
         gameEngine = new GameEngine(this);
         gameObjectController = new GameObjectController(mapController, showHitBox);
-        screenController = new ScreenController(itemController);
         soundController = new SoundController();
+        screenController = new ScreenController(itemController);
         gameView = new GameView(this, entityController, mapController, itemController, gameObjectController, screenController);
-
 
         //ui
         gameView.gameWindow();
         gameEngine.startGameLoop();
         this.showHitbox = showHitBox;
+        loadAndInitializeControls();
+
     }
 
 
@@ -136,6 +148,7 @@ public class GameController {
 
         if (currentGameState == GameState.LOADING && screenController.getLoadingScreen().isLoadingFinished()) {
             currentGameState = GameState.PLAYING;
+            screenController.getLoadingScreen().resetProgress();
         }
 
         switchSound();
@@ -163,7 +176,7 @@ public class GameController {
         Player player = entityController.getPlayer();
         playerSerializer.writePlayer(player);
         initOrUpdateGame();
-        currentGameState = GameState.PLAYING;
+        mapController.getMapUI().setBackgroundImage(null);
     }
 
     private void initOrUpdateGame() throws IOException {
@@ -210,6 +223,15 @@ public class GameController {
         player.resetHealth();
         initOrUpdateGame();
         currentGameState = GameState.START;
+    }
+
+    public void newGame() throws IOException {
+        highscore.deleteHighscoreFile();
+        highscore.resetHighscore();
+        Player player = entityController.getPlayer();
+        player.resetHealth();
+        initOrUpdateGame();
+        startGame();
     }
 
     public Highscore getHighscore() {
@@ -299,6 +321,68 @@ public class GameController {
         isPlayingMultiplayer = true;
     }
 
+    public void saveControlsToJson(String filePath) {
+        ControlScreen controlScreen = this.screenController.getControlScreen();
+        Gson gson = new Gson();
+        Type listType = new TypeToken<List<Control>>() {
+        }.getType();
+        List<Control> controlsList = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : controlScreen.getControls().entrySet()) {
+            controlsList.add(new Control(entry.getKey(), entry.getValue()));
+        }
+        String json = gson.toJson(controlsList, listType);
+
+        try (FileWriter writer = new FileWriter(filePath)) {
+            writer.write(json);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public List<Map<String, Object>> loadControlsFromJson() throws IOException {
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<Map<String, Object>>>() {
+        }.getType();
+        FileReader reader = new FileReader("res/configsAndSaves/controls.json");
+        List<Map<String, Object>> controls = gson.fromJson(reader, type);
+        reader.close();
+        return controls;
+    }
+
+    public void loadAndInitializeControls() {
+        try {
+            // Load the controls from the JSON file
+            List<Map<String, Object>> controls = loadControlsFromJson();
+
+            // Initialize the controls
+            for (Map<String, Object> control : controls) {
+                String name = (String) control.get("name");
+                int keyCode = ((Double) control.get("keyCode")).intValue();
+
+                // Check if the control name is null
+                if (name == null) {
+                    System.err.println("A control name is null. Skipping this control.");
+                    continue;
+                }
+
+                // Convert the control name to a GameControls enum value
+                GameControls gameControl = GameControls.valueOf(name);
+
+                // Check if the gameControl is null
+                if (gameControl == null) {
+                    System.err.println("The control " + name + " does not exist in the GameControls enum. Skipping this control.");
+                    continue;
+                }
+
+                // Set the key code of the game control
+                gameControl.setKeyCode(keyCode);
+            }
+        } catch (IOException e) {
+            System.err.println("An error occurred while loading the controls from the JSON file: " + e.getMessage());
+        }
+    }
+
     public boolean getIsPlayingMultiplayer() {
         return isPlayingMultiplayer;
     }
@@ -310,4 +394,18 @@ public class GameController {
     public String getIpAddress() {
         return ipAddress;
     }
+
+    public ScreenController getScreenController() {
+        return screenController;
+    }
+
+    public EntityController getEntityController() {
+        return entityController;
+    }
+
+    public ItemController getItemController() {
+        return itemController;
+    }
+
+
 }

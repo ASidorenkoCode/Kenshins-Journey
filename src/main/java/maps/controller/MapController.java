@@ -95,6 +95,13 @@ public class MapController {
         return currentMapIndex + 1;
     }
 
+    public int getCurrentMapIndex() {
+        return currentMapIndex;
+    }
+
+    public MapUI getMapUI() {
+        return mapUI;
+    }
 
     public void setEntityController(EntityController entityController) {
         this.entityController = entityController;

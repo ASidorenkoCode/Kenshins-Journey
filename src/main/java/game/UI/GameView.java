@@ -2,7 +2,6 @@ package game.UI;
 
 import entities.controller.EntityController;
 import game.controller.GameController;
-import game.controller.GameState;
 import gameObjects.controller.GameObjectController;
 import items.controller.ItemController;
 import keyboardinputs.logic.KeyboardInputsIngame;
@@ -11,7 +10,6 @@ import screens.controller.ScreenController;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
 import java.io.IOException;
 
@@ -31,6 +29,7 @@ public class GameView extends JPanel {
     private ItemController itemController;
     private GameObjectController gameObjectController;
     private ScreenController screenController;
+
     private JFrame frame = new JFrame("Kenshins Journey");
 
 
@@ -42,7 +41,7 @@ public class GameView extends JPanel {
         setPreferredSize(new Dimension(GAME_WIDTH, GAME_HEIGHT));
         setFocusable(true);
         requestFocusInWindow();
-        addKeyListener(new KeyboardInputsIngame(this));
+        addKeyListener(new KeyboardInputsIngame(this, gameController));
         this.entityController = entityController;
         this.itemController = itemController;
     }
@@ -100,12 +99,16 @@ public class GameView extends JPanel {
             AffineTransform at;
             at = AffineTransform.getScaleInstance(scaleFactor, scaleFactor);
             g2d.setTransform(at);
-            render(g2d);
+            try {
+                render(g2d);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             g2d.dispose(); // Dispose the Graphics2D object when done
         }
     }
 
-    public void render(Graphics g) {
+    public void render(Graphics g) throws IOException {
         //TODO: Class calling inside of gameController
         //TODO: Implement rendering for more stuff
         int mapOffsetX = mapController.getMapOffsetX();
@@ -115,7 +118,6 @@ public class GameView extends JPanel {
         itemController.draw(g, mapOffsetX, mapOffsetY);
         gameObjectController.drawObjects(g, mapOffsetX, mapOffsetY);
         mapController.draw(g, true);
-
         screenController.draw(g, gameController.getCurrentGameState(), gameController.getHighscore().getCurrentHighscore(), gameController.getHighscore().getDeathCounter(), gameController.getHighscore(), mapController.getMaps().size(), gameController.getPlayerId(), gameController.getHighscore().getAllHighscores().size() + 1, gameController.getIsPlayingMultiplayer());
     }
 
@@ -127,72 +129,6 @@ public class GameView extends JPanel {
     public void setFrameTitle(String fpsUpsText) {
         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
         frame.setTitle(fpsUpsText);
-    }
-
-    public void handleUserInputKeyPressed(KeyEvent e) throws IOException {
-        switch (e.getKeyCode()) {
-            case KeyEvent.VK_1:
-                itemController.selectItem(entityController.getPlayer(), 1);
-                break;
-            case KeyEvent.VK_2:
-                itemController.selectItem(entityController.getPlayer(), 2);
-                break;
-            case KeyEvent.VK_3:
-                itemController.selectItem(entityController.getPlayer(), 3);
-                break;
-            case KeyEvent.VK_4:
-                itemController.selectItem(entityController.getPlayer(), 4);
-                break;
-            case KeyEvent.VK_5:
-                itemController.selectItem(entityController.getPlayer(), 5);
-                break;
-            case KeyEvent.VK_L:
-                if (gameController.getCurrentGameState() == GameState.DEAD) gameController.restartLevelAfterDeath();
-                break;
-            case KeyEvent.VK_W:
-                if (gameController.getCurrentGameState() == GameState.START) gameController.startGame();
-                break;
-            case KeyEvent.VK_P:
-                if (gameController.getCurrentGameState() == GameState.PLAYING) gameController.loadNewMap();
-                break;
-            case KeyEvent.VK_ENTER:
-                if (gameController.getCurrentGameState() == GameState.END) gameController.resetGame();
-                break;
-            case KeyEvent.VK_H:
-                if (gameController.getCurrentGameState() == GameState.START) {
-                    gameController.setCurrentGameState(GameState.HIGHSCORE);
-                }
-                break;
-            case KeyEvent.VK_ESCAPE:
-                if (gameController.getCurrentGameState() == GameState.END) {
-                    gameController.getHighscore().writeAllHighscores();
-                    System.exit(0);
-                }
-                if (gameController.getCurrentGameState() == GameState.HIGHSCORE) {
-                    gameController.setCurrentGameState(GameState.START);
-                }
-                break;
-            case KeyEvent.VK_O:
-                gameController.setIsDrawingListOfCurrentPlayersForInterfaceGame(true);
-                break;
-            case KeyEvent.VK_M:
-                gameController.useMultiplayer();
-                this.requestFocusInWindow();
-                break;
-            default:
-                entityController.handleUserInputKeyPressed(e, gameController.getDeathScreen());
-
-        }
-    }
-
-    public void handleUserInputKeyReleased(KeyEvent e) {
-        switch (e.getKeyCode()) {
-            case KeyEvent.VK_O:
-                gameController.setIsDrawingListOfCurrentPlayersForInterfaceGame(false);
-                break;
-            default:
-                entityController.handleUserInputKeyReleased(e);
-        }
     }
 
     public JFrame getFrame() {

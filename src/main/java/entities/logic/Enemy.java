@@ -19,7 +19,7 @@ public class Enemy extends Entity {
     private boolean inAir = true;
 
     public Enemy(float x, float y, float speed) {
-        super(x, y - 20, new Rectangle2D.Float(x + 10, y - 20,64,86), false, 20);
+        super(x, y - 20, new Rectangle2D.Float(x + 10, y - 20, 64, 86), false, 20);
         this.speed = speed;
         this.moveRight = true;
         this.attackHitbox = new Rectangle2D.Float();
@@ -35,7 +35,6 @@ public class Enemy extends Entity {
     }
 
 
-
     public void update(Map map, Player player, Highscore highscore) {
 
         if (isDead) {
@@ -47,7 +46,6 @@ public class Enemy extends Entity {
         }
 
 
-
         boolean move = true;
         if (isEntityHitboxNextToEnemy(player)) {
             updateAttackHitbox();
@@ -55,9 +53,9 @@ public class Enemy extends Entity {
         }
 
         //reset attack Count, when enemy has attacked and break is over
-        if(hasAttacked) {
+        if (hasAttacked) {
             attackCount++;
-            if(attackCount >= ATTACK_SPEED) {
+            if (attackCount >= ATTACK_SPEED) {
                 hasAttacked = false;
                 attackCount = 0;
             }
@@ -65,7 +63,7 @@ public class Enemy extends Entity {
 
         handleAttack(player);
         //dont move if is attacking or its specified
-        if(isAttacking || !move) return;
+        if (isAttacking || !move) return;
 
         if (inAir)
             if (!checkIfEnemyCollidesUnderHim(map, hitbox.x, hitbox.y, hitbox.width, hitbox.height)) {
@@ -73,9 +71,13 @@ public class Enemy extends Entity {
                 y++;
             } else inAir = false;
 
-        if(moveRight) {
+        if (moveRight) {
             updateXPos(map, speed);
-        } else updateXPos(map, -speed);
+            checkIfEnemyCollidesOnRight(map, hitbox.x, hitbox.y, hitbox.width, hitbox.height);
+        } else {
+            updateXPos(map, -speed);
+            checkIfEnemyCollidesOnLeft(map, hitbox.x, hitbox.y, hitbox.height);
+        }
 
 
     }
@@ -112,18 +114,19 @@ public class Enemy extends Entity {
     }
 
     public boolean checkForCollisonOnPosition(Map map, float x, float y) {
-        if (x < 0) return false;
-        if (y < 0) return false;
+        if (x < 0 || y < 0) return true;
 
         int[][] mapData = map.getMapData();
         int tile_x = (int) (x / 64);
         int tile_y = (int) (y / 64);
 
-        if (tile_x >= 0 && tile_x < mapData[0].length && tile_y >= 0 && tile_y < mapData.length) {
-            return mapData[tile_y][tile_x] >= 11 && (mapData[tile_y][tile_x] <= 11 || mapData[tile_y][tile_x] > 48) && (mapData[tile_y][tile_x] > 81 || mapData[tile_y][tile_x] <= 75);
-        } else {
-            return false;
+        if (tile_y >= mapData.length || tile_x >= mapData[0].length) {
+            return true;
         }
+
+        return (mapData[tile_y][tile_x] >= 11 && mapData[tile_y][tile_x] < 48) ||
+                (mapData[tile_y][tile_x] > 74 && mapData[tile_y][tile_x] < 81) ||
+                (mapData[tile_y][tile_x] >= 27 && mapData[tile_y][tile_x] < 75);
     }
 
     private boolean checkIfEnemyCollidesUnderHim(Map map, float x, float y, float width, float height) {
@@ -132,6 +135,21 @@ public class Enemy extends Entity {
         return true;
     }
 
+    private boolean checkIfEnemyCollidesOnLeft(Map map, float x, float y, float height) {
+        for (int i = 0; i <= height; i++) {
+            if (!checkForCollisonOnPosition(map, x, y + i)) return false;
+        }
+        return true;
+    }
+
+    private boolean checkIfEnemyCollidesOnRight(Map map, float x, float y, float width, float height) {
+        for (int i = 0; i <= height; i++) {
+            if (!checkForCollisonOnPosition(map, x + width, y + i)) return false;
+        }
+        return true;
+    }
+
+
     private boolean checkIfEnemyIsOverEdge(Map map, float x, float y, float width, float height, boolean isRight) {
         if (isRight) return checkForCollisonOnPosition(map, x + width, y + height);
         return checkForCollisonOnPosition(map, x, y + height);
@@ -139,10 +157,10 @@ public class Enemy extends Entity {
 
 
     private void handleAttack(Player player) {
-        if (isEntityInsideChecker(player) ) {
+        if (isEntityInsideChecker(player)) {
             setMoveRight(x < player.getX());
-            if(!hasAttacked) {
-                if(attackHitbox.intersects(player.getHitbox())) {
+            if (!hasAttacked) {
+                if (attackHitbox.intersects(player.getHitbox())) {
                     setIsAttacking(true);
                     player.decreaseHealth(1);
                     setHasAttacked(true);
@@ -150,7 +168,6 @@ public class Enemy extends Entity {
             }
         }
     }
-
 
 
     //getter and setter
@@ -182,6 +199,7 @@ public class Enemy extends Entity {
     public boolean isScoreIncreased() {
         return isScoreIncreased;
     }
+
     public boolean isEntityNear() {
         return isEntityNear;
     }

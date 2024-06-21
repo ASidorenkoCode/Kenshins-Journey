@@ -1,5 +1,8 @@
 package screens.ui;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import entities.logic.Player;
 import game.UI.GameView;
 import game.logic.Highscore;
@@ -12,6 +15,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class InterfaceGame {
@@ -39,7 +44,7 @@ public class InterfaceGame {
         this.isDrawingListOfCurrentPlayers = false;
     }
 
-    public void draw(Graphics g, String playerId, int currentLevel, boolean isPlayingMultiplayer) {
+    public void draw(Graphics g, String playerId, int currentLevel, boolean isPlayingMultiplayer) throws IOException {
 
         int x = 0;
         int y = 0;
@@ -56,7 +61,7 @@ public class InterfaceGame {
 
         int imageY = GameView.GAME_HEIGHT - itemHeight;
 
-        if (menu.length > 0) {
+        if (menu != null && menu.length > 0) {
             int index = 1;
             int totalWidth = menu.length * 55;
             int startX = (GameView.GAME_WIDTH - totalWidth) / 2;
@@ -78,7 +83,9 @@ public class InterfaceGame {
             }
         }
 
-        drawServerObjects(g, playerId, currentLevel);
+        if (serverObjects != null) {
+            drawServerObjects(g, playerId, currentLevel);
+        }
 
         if (isDrawingListOfCurrentPlayers) drawListOfCurrentPlayers(g, isPlayingMultiplayer, playerId);
     }
@@ -122,7 +129,7 @@ public class InterfaceGame {
         int totalX = (int) (squareX * 1.5);
         int totalY = (int) (squareY * 1.5) + yOffset;
 
-        Color backGroundColor = new Color(0, 0, 0, 100);
+        Color backGroundColor = Color.WHITE;
         g.setColor(backGroundColor);
         g.setFont(new Font("Arial", Font.BOLD, 20));
 
@@ -153,7 +160,7 @@ public class InterfaceGame {
         }
     }
 
-    private void drawListOfCurrentPlayers(Graphics g, boolean isPlayingMultiplayer, String hostname) {
+    private void drawListOfCurrentPlayers(Graphics g, boolean isPlayingMultiplayer, String hostname) throws IOException {
         int padding = GameView.GAME_WIDTH / 8;
         int margin = GameView.GAME_HEIGHT / 15;
         int startX = padding + margin;
@@ -165,6 +172,17 @@ public class InterfaceGame {
         int lineHeight = GameView.HEIGHT / 28;
         int linePadding = GameView.GAME_HEIGHT / 30;
 
+        String content = new String(Files.readAllBytes(Paths.get("res/configsAndSaves/controls.json")));
+        JsonArray controls = JsonParser.parseString(content).getAsJsonArray();
+        String multiplayerKey = "";
+        for (int i = 0; i < controls.size(); i++) {
+            JsonObject control = controls.get(i).getAsJsonObject();
+            if (control.get("name").getAsString().equals("ACTIVATE_MULTIPLAYER")) {
+                multiplayerKey = String.valueOf((char) control.get("keyCode").getAsInt());
+                break;
+            }
+        }
+
         g.setColor(new Color(255, 255, 255, 100));
         g.fillRoundRect(padding, padding, screenWidth, screenHeight, 30, 30);
 
@@ -174,7 +192,7 @@ public class InterfaceGame {
         if (!isPlayingMultiplayer) {
             g.drawString("No List available because you play offline", padding + margin, padding + margin);
             g.setFont(new Font("Arial", Font.PLAIN, GameView.GAME_WIDTH / 65));
-            g.drawString("Press M to show data", padding + margin, startY);
+            g.drawString("Press " + multiplayerKey + " to show data", padding + margin, startY);
             return;
         }
 
