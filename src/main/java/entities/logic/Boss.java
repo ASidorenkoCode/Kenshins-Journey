@@ -52,11 +52,10 @@ public class Boss extends Entity {
 
             attack(offsetX, player);
 
-            if (!isScoreIncreased) {
-                highscore.increaseHighscoreForBoss();
-                setScoreIncreased(true);
-                finish.setIsActive(true);
-            }
+        } else if (!isScoreIncreased) {
+            highscore.increaseHighscoreForBoss();
+            setScoreIncreased(true);
+            finish.setIsActive(true);
         }
 
     }

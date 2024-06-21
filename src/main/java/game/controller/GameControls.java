@@ -24,7 +24,6 @@ public enum GameControls implements Serializable {
     NAVIGATE_LEFT("Navigate left", KeyEvent.VK_LEFT, false),
     NAVIGATE_RIGHT("Navigate right", KeyEvent.VK_RIGHT, false),
     CONFIRM("Confirm", KeyEvent.VK_ENTER, false),
-    OPEN_CONTROLS("Open controls", KeyEvent.VK_X, false),
     ESCAPE("Escape", KeyEvent.VK_ESCAPE, false);
 
     private static final long serialVersionUID = 1L;
@@ -58,5 +57,9 @@ public enum GameControls implements Serializable {
 
     public void setKeyCode(int newKeyCode) {
         this.keyCode = newKeyCode;
+    }
+
+    public boolean isKeyAllowed(int keyCode) {
+        return keyCode != KeyEvent.VK_UP && keyCode != KeyEvent.VK_DOWN && keyCode != KeyEvent.VK_LEFT && keyCode != KeyEvent.VK_RIGHT;
     }
 }
