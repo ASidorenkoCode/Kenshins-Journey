@@ -6,7 +6,6 @@ import items.animations.ItemAnimations;
 import java.awt.geom.Rectangle2D;
 
 
-//TODO: Maybe another parent class for entity and item
 public abstract class Item {
 
     protected float x, y;

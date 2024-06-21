@@ -1,14 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="ANALYZE_INJECTED_CODE" value="false" />
+  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b91aae81-7ada-4dc7-9d93-d4383ba70810" name="Changes" comment="changed button">
+    <list default="true" id="b91aae81-7ada-4dc7-9d93-d4383ba70810" name="Changes" comment="cleanup">
+      <change afterPath="$PROJECT_DIR$/KeyExtractor/KeyExtractor.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/KeyExtractor/output/keys.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/KeyExtractor/src/KeyExtractor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MapToRGBCreator/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MapToRGBCreator/MapToRGBCreator.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MapToRGBCreator/res/forbidden_values.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MapToRGBCreator/res/mapsprites-export.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MapToRGBCreator/res/mapsprites.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MapToRGBCreator/res/modified_sprites.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MapToRGBCreator/res/output.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MapToRGBCreator/res/shrunk_output.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MapToRGBCreator/src/ForbiddenValues.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MapToRGBCreator/src/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MapToRGBCreator/src/MapSprite.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MapToRGBCreator/src/MapSpritePainter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MapToRGBCreator/src/ModifiedSpritesGenerator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MapToRGBCreator/src/SpriteConverter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Kenshins-Journey.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Kenshins-Journey.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/configsAndSaves/controls.json" beforeDir="false" afterPath="$PROJECT_DIR$/res/configsAndSaves/controls.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/game/logic/Highscore.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/game/logic/Highscore.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/entities/logic/Boss.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entities/logic/Boss.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/entities/logic/Enemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entities/logic/Enemy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/entities/logic/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entities/logic/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/entities/ui/BossUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entities/ui/BossUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/entities/ui/EnemyUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entities/ui/EnemyUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/entities/ui/PlayerUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entities/ui/PlayerUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/game/UI/GameView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/game/UI/GameView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/game/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/game/controller/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/game/controller/GameControls.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/game/controller/GameControls.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/game/logic/GameEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/game/logic/GameEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gameObjects/controller/GameObjectController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gameObjects/controller/GameObjectController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/items/controller/ItemController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/items/controller/ItemController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/items/logic/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/items/logic/Item.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/keyboardinputs/logic/KeyboardInputsIngame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/keyboardinputs/logic/KeyboardInputsIngame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/maps/controller/MapController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/maps/controller/MapController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/maps/logic/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/maps/logic/Map.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/maps/ui/MapUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/maps/ui/MapUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/network/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/network/client/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/network/client/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/network/client/ClientHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/network/host/Host.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/network/host/Host.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/screens/controller/ScreenController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/screens/controller/ScreenController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/screens/ui/ControlScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/screens/ui/ControlScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/screens/ui/EndScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/screens/ui/EndScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/screens/ui/HighScoreScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/screens/ui/HighScoreScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/screens/ui/InterfaceGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/screens/ui/InterfaceGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/screens/ui/LoadingScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/screens/ui/LoadingScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/screens/ui/StartScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/screens/ui/StartScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sound/SoundController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sound/SoundController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,12 +97,12 @@
     &quot;assignee&quot;: &quot;ASidorenkoCode&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/ASidorenkoCode/Kenshins-Journey.git&quot;,
-    &quot;accountId&quot;: &quot;55a98266-43df-497e-aae2-9a7cd4ec4839&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/ASidorenkoCode/Kenshins-Journey.git",
+    "accountId": "f6b50e13-05ee-4c2d-9237-d8acab2d2a13"
   }
-}</component>
+}]]></component>
   <component name="KubernetesApiProvider">{
   &quot;isMigrated&quot;: true
 }</component>
@@ -75,6 +123,8 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.HostApplication.executor": "Run",
+    "Application.KeyExtractor$Main.executor": "Run",
+    "Application.Main.executor": "Run",
     "Application.Start the game (DEBUG OFF).executor": "Run",
     "Application.Start the game (DEBUG ON).executor": "Run",
     "Application.Start the game (FPS OFF).executor": "Run",
@@ -91,10 +141,12 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
+    "onboarding.tips.debug.path": "C:/Users/artur/IdeaProjects/Kenshins-Journey10/MapToRGBCreator/src/Main.java",
+    "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors.VCS",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "show.migrate.to.gradle.popup": "false",
     "vue.rearranger.settings.migration": "true"
   }
@@ -108,14 +160,14 @@
       <recent name="C:\Users\Artur\IdeaProjects\Kenshins-Journey\res" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\artur\IdeaProjects\Kenshins-Journey10\res\sprite" />
+      <recent name="C:\Users\artur\IdeaProjects\Kenshins-Journey10\res\objects" />
       <recent name="C:\Users\artur\IdeaProjects\Kenshins-Journey10\res\screens\startScreen" />
       <recent name="C:\Users\Artur\IdeaProjects\Kenshins-Journey\res\screens\startScreen" />
       <recent name="C:\Users\Artur\IdeaProjects\Kenshins-Journey\res\lvls" />
-      <recent name="C:\Users\Artur\IdeaProjects\Kenshins-Journey\res\mapsprites" />
-      <recent name="C:\Users\Artur\Documents\Uni\JAVA\Kenshins-Journey\res\enemies\kappa" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Start the game (DEBUG OFF)">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="HostApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="network.HostApplication" />
       <module name="Kenshins-Journey" />
@@ -125,6 +177,20 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="KeyExtractor$Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="KeyExtractor$Main" />
+      <module name="KeyExtractor" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="MapToRGBCreator" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -146,10 +212,14 @@
     <list>
       <item itemvalue="Application.Start the game (DEBUG ON)" />
       <item itemvalue="Application.Start the game (DEBUG OFF)" />
+      <item itemvalue="Application.KeyExtractor$Main" />
+      <item itemvalue="Application.Main" />
       <item itemvalue="Application.HostApplication" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Main" />
+        <item itemvalue="Application.KeyExtractor$Main" />
         <item itemvalue="Application.HostApplication" />
       </list>
     </recent_temporary>
@@ -157,7 +227,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="jdk-22-openjdk-22-4caba194b151-f504ca98" />
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.18034.62" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.18034.62" />
       </set>
     </attachedChunks>
   </component>
@@ -204,23 +275,8 @@
       <workItem from="1718277202493" duration="5365000" />
       <workItem from="1718284705782" duration="80000" />
       <workItem from="1718878570827" duration="3117000" />
-      <workItem from="1718975892649" duration="3017000" />
-    </task>
-    <task id="LOCAL-00004" summary="add res folder to git">
-      <option name="closed" value="true" />
-      <created>1714458172456</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1714458172456</updated>
-    </task>
-    <task id="LOCAL-00005" summary="init EntityController">
-      <option name="closed" value="true" />
-      <created>1714459458754</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1714459458754</updated>
+      <workItem from="1718975892649" duration="3327000" />
+      <workItem from="1718979290235" duration="1660000" />
     </task>
     <task id="LOCAL-00006" summary="init player movement">
       <option name="closed" value="true" />
@@ -598,7 +654,23 @@
       <option name="project" value="LOCAL" />
       <updated>1718978726709</updated>
     </task>
-    <option name="localTasksCounter" value="53" />
+    <task id="LOCAL-00053" summary="updated small things">
+      <option name="closed" value="true" />
+      <created>1718978944764</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1718978944764</updated>
+    </task>
+    <task id="LOCAL-00054" summary="cleanup">
+      <option name="closed" value="true" />
+      <created>1718979196984</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1718979196984</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -628,8 +700,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="added kappa and enemy_Scale TODO: change bigOrc to Kappa" />
-    <MESSAGE value="player animation update + first mapsprite" />
     <MESSAGE value="refactoring maps" />
     <MESSAGE value="refactoring maps + items" />
     <MESSAGE value="new interfaceGame layout for the character" />
@@ -653,7 +723,9 @@
     <MESSAGE value="added new level 1" />
     <MESSAGE value="changed level 1" />
     <MESSAGE value="changed button" />
-    <option name="LAST_COMMIT_MESSAGE" value="changed button" />
+    <MESSAGE value="updated small things" />
+    <MESSAGE value="cleanup" />
+    <option name="LAST_COMMIT_MESSAGE" value="cleanup" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />

@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class MapUI {
     private final MapController mapController;
-    private ArrayList<Map> maps;
+    private final ArrayList<Map> maps;
     private final static String MAPSPRITE_PATH = "sprite/mapsprites.png";
     private BufferedImage[] mapSprites;
     private BufferedImage backgroundImage = null;
@@ -76,7 +76,6 @@ public class MapUI {
             g.fillRect(0, 0, mapWidth, mapHeight);
 
 
-            //TODO: Implement Background image
             try {
                 BufferedImage mountainImage = ImageIO.read(new File("res/screens/startScreen/backgroundImage.png"));
                 int scaledWidth = (int) (mountainImage.getWidth() * 2.1);

@@ -55,7 +55,7 @@ public class HighScoreScreen {
             }
             String differenceText = "-";
             if (!bestHighscoreText.equals("-")) {
-                differenceText = i < highscore.getAllHighscores().size() ? String.valueOf(Math.abs(highscore.getAllHighscores().get(i) - Integer.parseInt(bestHighscoreText))) : String.valueOf(Math.abs(0 - Integer.parseInt(bestHighscoreText)));
+                differenceText = i < highscore.getAllHighscores().size() ? String.valueOf(Math.abs(highscore.getAllHighscores().get(i) - Integer.parseInt(bestHighscoreText))) : String.valueOf(Math.abs(-Integer.parseInt(bestHighscoreText)));
             }
 
             g2d.setColor(Color.WHITE);

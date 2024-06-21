@@ -16,15 +16,14 @@ import java.util.Random;
 
 public class ItemController {
     //Rebuild of class
-    private boolean showHitBox;
+    private final boolean showHitBox;
     private final static int MENU_SIZE = 5;
 
 
-    //TODO: animations should be part of item as seen with object
     private BufferedImage[][] animations;
     private Item[] menu;
     private ArrayList<Item> itemsOnMap;
-    private ItemUI itemUI;
+    private final ItemUI itemUI;
 
     public ItemController(MapController mapController, boolean showHitBox) {
         this.showHitBox = showHitBox;
@@ -96,7 +95,6 @@ public class ItemController {
     }
 
 
-    //TODO: Move to ItemUI
     private void loadAnimations() {
         animations = new BufferedImage[itemUI.getSPRITE_Y_DIMENSION()][itemUI.getSPRITE_X_DIMENSION()];
         BufferedImage img = SpriteManager.GetSpriteAtlas(itemUI.getENTITY_SPRITE_PATH());
@@ -111,7 +109,6 @@ public class ItemController {
     }
 
     private void collectItem(Item item) {
-        //TODO: dynamic menu
         for (int i = 0; i < menu.length; i++) {
             if (menu[i] == null) {
                 menu[i] = item;

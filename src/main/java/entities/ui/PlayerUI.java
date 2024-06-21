@@ -73,7 +73,6 @@ public class PlayerUI extends EntityUI {
     }
 
 
-    //TODO: setAnimation() into Player, not sure if part of ui or not
     private void setAnimation() {
         PlayerAnimations lastAnimation = currentAnimation;
         //Set animation
@@ -123,8 +122,8 @@ public class PlayerUI extends EntityUI {
         g.drawImage(animations[currentAnimation.getAniIndex() + (showLeftAnimations ? SPRITE_Y_DIMENSION : 0)][aniIndex],
                 (int) player.getX() - offsetX,
                 (int) player.getY() - offsetY,
-                (int) (SPRITE_PX_WIDTH * 2),
-                (int) (SPRITE_PX_HEIGHT * 2), null);
+                SPRITE_PX_WIDTH * 2,
+                SPRITE_PX_HEIGHT * 2, null);
         drawHitBox(g, offsetX, offsetY);
     }
 

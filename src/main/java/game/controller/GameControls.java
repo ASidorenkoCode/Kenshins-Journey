@@ -27,9 +27,9 @@ public enum GameControls implements Serializable {
     ESCAPE("Escape", KeyEvent.VK_ESCAPE, false);
 
     private static final long serialVersionUID = 1L;
-    private String controlName;
+    private final String controlName;
     private int keyCode;
-    private boolean isChangeable;
+    private final boolean isChangeable;
 
     GameControls(String controlName, int keyCode, boolean isChangeable) {
         this.controlName = controlName;

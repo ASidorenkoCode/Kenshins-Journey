@@ -7,8 +7,8 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class Map {
-    private BufferedImage mapImage;
-    private int[][] mapData;
+    private final BufferedImage mapImage;
+    private final int[][] mapData;
     private int[][] entities;
     private int[][] objects;
 
@@ -20,9 +20,9 @@ public class Map {
     private int maxMapOffsetY;
     private Point playerSpawn;
     private Point finishSpawn;
-    private ArrayList<Point> enemySpawns;
+    private final ArrayList<Point> enemySpawns;
 
-    private ArrayList<Point> itemSpawns;
+    private final ArrayList<Point> itemSpawns;
     private Point bossSpawn;
     int tileSize = GameView.TILES_DEFAULT_SIZE * 2;
 

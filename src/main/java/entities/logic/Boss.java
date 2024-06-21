@@ -17,11 +17,11 @@ public class Boss extends Entity {
     private static final int BOSS_SCALE = 4;
 
     private static final int MAX_HEALTH = 300;
-    private Rectangle2D.Float projectileHitbox;
+    private final Rectangle2D.Float projectileHitbox;
     private ArrayList<Rectangle2D.Float> miniProjectileHitboxes;
     private boolean isUsingBigProjectile;
     private boolean isScoreIncreased = false;
-    private String name;
+    private final String name;
 
 
     public Boss(float x, float y) {
@@ -91,7 +91,7 @@ public class Boss extends Entity {
         isUsingBigProjectile = false;
     }
     private void checkIfProjectileIsOutOfBounds(int offset) {
-        if(projectileHitbox.x <= 0 + offset) {
+        if (projectileHitbox.x <= offset) {
             resetProjectile();
         }
     }
@@ -118,7 +118,7 @@ public class Boss extends Entity {
     }
     private void checkIfAllMiniProjectilesAreOutOfBounds(int offset) {
         for(Rectangle2D.Float hitbox: miniProjectileHitboxes) {
-            if(hitbox.x > 0 + offset) return;
+            if (hitbox.x > offset) return;
         }
         resetAllMiniProjectiles();
     }

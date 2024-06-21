@@ -24,9 +24,9 @@ public class EnemyUI extends EntityUI {
     private float enemyScale;
     private float enemyYPositionAlive;
     private float enemyYPositionDead;
-    private Enemy enemy;
+    private final Enemy enemy;
     private EnemyAnimations currentAnimation;
-    private boolean showHitBox;
+    private final boolean showHitBox;
     private boolean hasPlayedDeadAnimation = false;
 
 

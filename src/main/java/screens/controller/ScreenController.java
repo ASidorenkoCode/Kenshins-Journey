@@ -13,13 +13,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class ScreenController {
-    private InterfaceGame interfaceGame;
-    private DeathScreen deathScreen;
-    private LoadingScreen loadingScreen;
-    private StartScreen startScreen;
-    private EndScreen endScreen;
-    private HighScoreScreen highScoreScreen;
-    private ControlScreen controlScreen;
+    private final InterfaceGame interfaceGame;
+    private final DeathScreen deathScreen;
+    private final LoadingScreen loadingScreen;
+    private final StartScreen startScreen;
+    private final EndScreen endScreen;
+    private final HighScoreScreen highScoreScreen;
+    private final ControlScreen controlScreen;
 
 
     public ScreenController(ItemController itemController) throws IOException {
@@ -38,7 +38,6 @@ public class ScreenController {
 
     public void draw(Graphics g, GameState currentGameState, int highscore, int deathCounter, Highscore highscores, int mapCount, String playerId, int currentLevel, boolean isPlayingMultiplayer) throws IOException {
         switch (currentGameState) {
-            //TODO implement start and death screen
             case START -> {
                 startScreen.draw(g);
             }

@@ -12,8 +12,8 @@ import java.util.Random;
 
 public class LoadingScreen {
     private int progress = 0;
-    private Random random = new Random();
-    private String loadingText = "Loading...";
+    private final Random random = new Random();
+    private final String loadingText = "Loading...";
     private Timer progressTimer;
     private String currentFact;
 
