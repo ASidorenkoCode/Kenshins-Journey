@@ -7,57 +7,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b91aae81-7ada-4dc7-9d93-d4383ba70810" name="Changes" comment="cleanup">
-      <change afterPath="$PROJECT_DIR$/KeyExtractor/KeyExtractor.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/KeyExtractor/output/keys.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/KeyExtractor/src/KeyExtractor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MapToRGBCreator/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MapToRGBCreator/MapToRGBCreator.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MapToRGBCreator/res/forbidden_values.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MapToRGBCreator/res/mapsprites-export.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MapToRGBCreator/res/mapsprites.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MapToRGBCreator/res/modified_sprites.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MapToRGBCreator/res/output.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MapToRGBCreator/res/shrunk_output.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MapToRGBCreator/src/ForbiddenValues.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MapToRGBCreator/src/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MapToRGBCreator/src/MapSprite.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MapToRGBCreator/src/MapSpritePainter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MapToRGBCreator/src/ModifiedSpritesGenerator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MapToRGBCreator/src/SpriteConverter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Kenshins-Journey.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Kenshins-Journey.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/entities/logic/Boss.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entities/logic/Boss.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/entities/logic/Enemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entities/logic/Enemy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/entities/logic/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entities/logic/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/entities/ui/BossUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entities/ui/BossUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/entities/ui/EnemyUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entities/ui/EnemyUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/entities/ui/PlayerUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entities/ui/PlayerUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/game/UI/GameView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/game/UI/GameView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/game/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/game/controller/GameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/game/controller/GameControls.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/game/controller/GameControls.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/game/logic/GameEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/game/logic/GameEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gameObjects/controller/GameObjectController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gameObjects/controller/GameObjectController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/items/controller/ItemController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/items/controller/ItemController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/items/logic/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/items/logic/Item.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/keyboardinputs/logic/KeyboardInputsIngame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/keyboardinputs/logic/KeyboardInputsIngame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/maps/controller/MapController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/maps/controller/MapController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/maps/logic/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/maps/logic/Map.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/maps/ui/MapUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/maps/ui/MapUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/network/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/network/client/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/network/client/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/network/client/ClientHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/network/host/Host.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/network/host/Host.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/screens/controller/ScreenController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/screens/controller/ScreenController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/screens/ui/ControlScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/screens/ui/ControlScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/screens/ui/EndScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/screens/ui/EndScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/screens/ui/HighScoreScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/screens/ui/HighScoreScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/screens/ui/InterfaceGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/screens/ui/InterfaceGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/screens/ui/LoadingScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/screens/ui/LoadingScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/screens/ui/StartScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/screens/ui/StartScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/sound/SoundController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sound/SoundController.java" afterDir="false" />
-    </list>
+    <list default="true" id="b91aae81-7ada-4dc7-9d93-d4383ba70810" name="Changes" comment="some folder movements" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -91,16 +41,23 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RESET_MODE" value="HARD" />
   </component>
-  <component name="GitHubPullRequestSearchHistory">{
-  &quot;lastFilter&quot;: {
-    &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;ASidorenkoCode&quot;
-  }
-}</component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {}
+}]]></component>
   <component name="GithubPullRequestsUISettings"><![CDATA[{
   "selectedUrlAndAccountId": {
     "url": "https://github.com/ASidorenkoCode/Kenshins-Journey.git",
     "accountId": "f6b50e13-05ee-4c2d-9237-d8acab2d2a13"
+  },
+  "recentNewPullRequestHead": {
+    "server": {
+      "useHttp": false,
+      "host": "github.com",
+      "port": null,
+      "suffix": null
+    },
+    "owner": "ASidorenkoCode",
+    "repository": "Kenshins-Journey"
   }
 }]]></component>
   <component name="KubernetesApiProvider">{
@@ -133,7 +90,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "last-additional-edits-to-map-and-startscreen",
+    "git-widget-placeholder": "#70 on last-additional-edits-to-map-and-startscreen",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/artur/IdeaProjects/Kenshins-Journey10/res/lvls",
@@ -167,16 +124,10 @@
       <recent name="C:\Users\Artur\IdeaProjects\Kenshins-Journey\res\lvls" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Start the game (DEBUG OFF)">
-    <configuration name="HostApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="network.HostApplication" />
-      <module name="Kenshins-Journey" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="network.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
+  <component name="RunManager" selected="Application.Main">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="MapToRGBCreator" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -212,15 +163,10 @@
     <list>
       <item itemvalue="Application.Start the game (DEBUG ON)" />
       <item itemvalue="Application.Start the game (DEBUG OFF)" />
-      <item itemvalue="Application.KeyExtractor$Main" />
-      <item itemvalue="Application.Main" />
-      <item itemvalue="Application.HostApplication" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
-        <item itemvalue="Application.KeyExtractor$Main" />
-        <item itemvalue="Application.HostApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -276,31 +222,7 @@
       <workItem from="1718284705782" duration="80000" />
       <workItem from="1718878570827" duration="3117000" />
       <workItem from="1718975892649" duration="3327000" />
-      <workItem from="1718979290235" duration="1660000" />
-    </task>
-    <task id="LOCAL-00006" summary="init player movement">
-      <option name="closed" value="true" />
-      <created>1714464385993</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1714464385993</updated>
-    </task>
-    <task id="LOCAL-00007" summary="player left and right movement">
-      <option name="closed" value="true" />
-      <created>1714482335091</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1714482335091</updated>
-    </task>
-    <task id="LOCAL-00008" summary="improved switch with switch expression">
-      <option name="closed" value="true" />
-      <created>1714482764904</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1714482764904</updated>
+      <workItem from="1718979290235" duration="2019000" />
     </task>
     <task id="LOCAL-00009" summary="implement last and current animation">
       <option name="closed" value="true" />
@@ -670,7 +592,31 @@
       <option name="project" value="LOCAL" />
       <updated>1718979196984</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL-00055" summary="cleanup and adding utility tools">
+      <option name="closed" value="true" />
+      <created>1718980980219</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1718980980219</updated>
+    </task>
+    <task id="LOCAL-00056" summary="set configuration">
+      <option name="closed" value="true" />
+      <created>1718981036379</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1718981036379</updated>
+    </task>
+    <task id="LOCAL-00057" summary="some folder movements">
+      <option name="closed" value="true" />
+      <created>1718981236783</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1718981236783</updated>
+    </task>
+    <option name="localTasksCounter" value="58" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -700,9 +646,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="refactoring maps" />
-    <MESSAGE value="refactoring maps + items" />
-    <MESSAGE value="new interfaceGame layout for the character" />
     <MESSAGE value="deleted health" />
     <MESSAGE value="updated character portrait" />
     <MESSAGE value="made importTileSheets dynamic" />
@@ -725,7 +668,10 @@
     <MESSAGE value="changed button" />
     <MESSAGE value="updated small things" />
     <MESSAGE value="cleanup" />
-    <option name="LAST_COMMIT_MESSAGE" value="cleanup" />
+    <MESSAGE value="cleanup and adding utility tools" />
+    <MESSAGE value="set configuration" />
+    <MESSAGE value="some folder movements" />
+    <option name="LAST_COMMIT_MESSAGE" value="some folder movements" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
